@@ -28,20 +28,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Inject env.js from secrets
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          EMAILJS_PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
+          EMAILJS_SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}
+          EMAILJS_TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
         run: |
-          cat > public/js/env.js << EOF
-          const ENV = {
-            supabase: {
-              url: '${{ secrets.SUPABASE_URL }}',
-              anonKey: '${{ secrets.SUPABASE_ANON_KEY }}',
-            },
-            emailjs: {
-              publicKey: '${{ secrets.EMAILJS_PUBLIC_KEY }}',
-              serviceId: '${{ secrets.EMAILJS_SERVICE_ID }}',
-              templateId: '${{ secrets.EMAILJS_TEMPLATE_ID }}',
-            },
-          };
-          EOF
+          printf 'const ENV = {\n  supabase: {\n    url: "%s",\n    anonKey: "%s",\n  },\n  emailjs: {\n    publicKey: "%s",\n    serviceId: "%s",\n    templateId: "%s",\n  },\n};\n' \
+            "$SUPABASE_URL" "$SUPABASE_ANON_KEY" "$EMAILJS_PUBLIC_KEY" "$EMAILJS_SERVICE_ID" "$EMAILJS_TEMPLATE_ID" \
+            > public/js/env.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
