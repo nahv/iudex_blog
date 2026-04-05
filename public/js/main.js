@@ -150,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         apellido: contactForm.querySelector('#apellido').value.trim(),
         email: contactForm.querySelector('#email').value.trim(),
         telefono: contactForm.querySelector('#telefono').value.trim() || null,
+        perfil: contactForm.querySelector('#perfil').value || null,
         provincia: contactForm.querySelector('#provincia').value,
         fuero: contactForm.querySelector('#fuero').value || null,
         tamano: contactForm.querySelector('#tamano').value || null,
