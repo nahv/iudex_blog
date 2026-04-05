@@ -14,7 +14,7 @@ Instrucciones:
 
 **Subject:** Nueva solicitud de acceso anticipado: {{nombre}} {{apellido}}
 
-**To email:** hola@iudex.app
+**To email:** contacto@iudex.com.ar
 
 **Body (HTML):**
 
@@ -99,7 +99,7 @@ Instrucciones:
 
 **From name:** Equipo Iudex
 
-**Reply to:** hola@iudex.app
+**Reply to:** contacto@iudex.com.ar
 
 **Body (HTML):**
 
@@ -193,7 +193,7 @@ Instrucciones:
 
     <div class="footer">
       <p>Equipo Iudex<br>
-      <a href="mailto:hola@iudex.app">hola@iudex.app</a></p>
+      <a href="mailto:contacto@iudex.com.ar">contacto@iudex.com.ar</a></p>
       <p style="margin-top:12px;font-size:11px;color:#999">
         Recibiste este email porque solicitaste acceso anticipado a Iudex.
       </p>
@@ -213,7 +213,7 @@ Instrucciones:
 
 **From name:** Equipo Iudex
 
-**Reply to:** hola@iudex.app
+**Reply to:** contacto@iudex.com.ar
 
 **Body (HTML):**
 
@@ -250,7 +250,7 @@ Instrucciones:
       <a href="https://iudex.app/blog/index.html" class="cta">Visitar el blog</a>
     </div>
     <div class="footer">
-      <p><a href="mailto:hola@iudex.app">hola@iudex.app</a></p>
+      <p><a href="mailto:contacto@iudex.com.ar">contacto@iudex.com.ar</a></p>
       <p>Recibiste este email porque te suscribiste a novedades de Iudex.</p>
     </div>
   </div>
