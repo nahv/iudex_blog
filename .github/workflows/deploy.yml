@@ -27,6 +27,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Inject env.js from secrets
+        run: |
+          cat > public/js/env.js << EOF
+          const ENV = {
+            supabase: {
+              url: '${{ secrets.SUPABASE_URL }}',
+              anonKey: '${{ secrets.SUPABASE_ANON_KEY }}',
+            },
+            emailjs: {
+              publicKey: '${{ secrets.EMAILJS_PUBLIC_KEY }}',
+              serviceId: '${{ secrets.EMAILJS_SERVICE_ID }}',
+              templateId: '${{ secrets.EMAILJS_TEMPLATE_ID }}',
+            },
+          };
+          EOF
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
