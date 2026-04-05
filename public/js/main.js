@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (dbError) {
         if (dbError.duplicate) {
-          showFormFeedback(contactForm, 'Este email ya tiene una solicitud registrada. Si necesitás ayuda, escribinos a hola@iudex.app.', false);
+          showFormFeedback(contactForm, 'Este email ya tiene una solicitud registrada. Si necesitás ayuda, escribinos a contacto@iudex.com.ar.', false);
           btn.textContent = original;
           btn.disabled = false;
           return;
