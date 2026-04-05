@@ -151,13 +151,21 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 .navbar__logo-mark {
   width: 32px;
   height: 32px;
-  background: var(--ink);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
+.navbar__logo-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Fallback: if SVG is still used (legacy) */
 .navbar__logo-mark svg {
   width: 18px;
   height: 18px;
@@ -1965,6 +1973,7 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   .section { padding: 64px 0; }
   .grid-2 { grid-template-columns: 1fr; gap: 32px; }
   .grid-3 { grid-template-columns: 1fr; }
+  .pain { padding-top: 100px; }
   .pain__grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
   .blog-preview__header { flex-direction: column; align-items: flex-start; gap: 16px; }
