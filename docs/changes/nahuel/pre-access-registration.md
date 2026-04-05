@@ -81,6 +81,31 @@ Agregado el script de Supabase JS a todas las páginas que tienen formularios:
 
 Creado `assets/` en la raíz del proyecto para `icon.png` (referenciado en el template de email).
 
+### 8. Credenciales externalizadas (`public/js/env.js`)
+
+- Credenciales de Supabase y EmailJS movidas a `public/js/env.js` (gitignored)
+- `public/js/env.example.js` committed como template para otros devs
+- `main.js` lee del global `ENV` con degradación graceful si no existe
+- Historial de git limpiado para eliminar credenciales de commits anteriores
+
+### 9. Branding — icon.png en todo el sitio
+
+Reemplazo del logo SVG placeholder por `assets/icon.png` en todas las páginas:
+- **Navbar:** `<img>` dentro de `.navbar__logo-mark` (9 páginas + `ui/navbar.html`)
+- **Footer:** `<img>` en la sección de brand del footer (9 páginas)
+- **Favicon:** `<link rel="icon" type="image/png">` reemplaza el SVG inline (9 páginas)
+- **CSS:** `.navbar__logo-mark` actualizado para soportar `<img>` con `object-fit: cover`
+
+### 10. Fix mobile — overlap curva/texto en sección "El problema"
+
+- La curva decorativa (`.pain::before`, 80px) se superponía al texto "El problema" en mobile (padding 64px < altura curva 80px)
+- Fix: `padding-top: 100px` en `.pain` dentro del media query `max-width: 768px`
+
+### 11. Limpieza de archivos del sistema
+
+- `.DS_Store` (4 archivos) removidos del tracking de git
+- `.gitignore` actualizado con reglas para macOS (`.DS_Store`), Windows (`Thumbs.db`, `Desktop.ini`), y editores (`*.swp`, `*~`)
+
 ## Resumen de archivos
 
 | Archivo | Acción |
@@ -88,24 +113,30 @@ Creado `assets/` en la raíz del proyecto para `icon.png` (referenciado en el te
 | `docs/flow-audit.md` | Nuevo — auditoría de flujos |
 | `docs/workflow-plan.md` | Nuevo — plan de automatización |
 | `docs/email-templates/welcome.html` | Nuevo — template email bienvenida |
+| `docs/supabase-setup.sql` | Nuevo — SQL para tabla registrations |
+| `docs/emailjs-templates.md` | Nuevo — guía de configuración EmailJS |
 | `docs/changes/nahuel/pre-access-registration.md` | Nuevo — este archivo |
 | `public/js/main.js` | Modificado — Supabase integration, honeypot, async form handler |
-| `contacto/index.html` | Modificado — honeypot field, Supabase CDN |
-| `index.html` | Modificado — Supabase CDN |
-| `about/index.html` | Modificado — Supabase CDN |
-| `blog/index.html` | Modificado — Supabase CDN |
-| `blog/historia-fundador.html` | Modificado — Supabase CDN |
-| `blog/escritura-repetitiva.html` | Modificado — Supabase CDN |
-| `blog/gestion-expedientes.html` | Modificado — Supabase CDN |
-| `blog/ux-software-legal.html` | Modificado — Supabase CDN |
-| `blog/ia-aplicada-derecho-maxi-bury.html` | Modificado — Supabase CDN |
-| `assets/` | Nuevo directorio — para icon.png |
+| `public/js/env.example.js` | Nuevo — template de credenciales |
+| `public/css/styles.css` | Modificado — soporte img en navbar logo, fix mobile overlap |
+| `.gitignore` | Modificado — env.js, .DS_Store, system files |
+| `contacto/index.html` | Modificado — honeypot, env.js, icon.png |
+| `index.html` | Modificado — env.js, icon.png |
+| `about/index.html` | Modificado — env.js, icon.png |
+| `blog/index.html` | Modificado — env.js, icon.png |
+| `blog/historia-fundador.html` | Modificado — env.js, icon.png |
+| `blog/escritura-repetitiva.html` | Modificado — env.js, icon.png |
+| `blog/gestion-expedientes.html` | Modificado — env.js, icon.png, favicon |
+| `blog/ux-software-legal.html` | Modificado — env.js, icon.png, favicon |
+| `blog/ia-aplicada-derecho-maxi-bury.html` | Modificado — env.js, icon.png |
+| `ui/navbar.html` | Modificado — icon.png |
+| `assets/icon.png` | Nuevo — logo Iudex |
 
 ## Configuración pendiente (manual)
 
-1. **Supabase:** Crear proyecto, ejecutar SQL de `docs/workflow-plan.md`, copiar URL y anon key a `main.js`
-2. **EmailJS:** Crear templates en dashboard, copiar IDs a `main.js`
-3. **Icon:** Colocar `icon.png` en `assets/`
+1. **Supabase:** Ejecutar SQL de `docs/supabase-setup.sql` en el dashboard
+2. **EmailJS:** Pegar HTML de `docs/emailjs-templates.md` en el template del dashboard
+3. **env.js:** Copiar `public/js/env.example.js` → `public/js/env.js` y llenar con credenciales reales
 
 ## Por qué
 
