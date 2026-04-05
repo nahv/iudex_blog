@@ -1,3 +1,20 @@
 .codex
 dominio-y-correo-iudex-com-ar.md
 .claude/settings.local.json
+
+# Credentials — never commit real keys
+public/js/env.js
+
+# macOS system files
+.DS_Store
+*/.DS_Store
+**/.DS_Store
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+
+# Editor files
+*.swp
+*.swo
+*~
