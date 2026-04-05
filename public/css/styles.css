@@ -149,8 +149,8 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 }
 
 .navbar__logo-mark {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -586,6 +586,8 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 .solution__stat {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 4px;
 }
 
@@ -611,74 +613,6 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   border-bottom: 1px solid rgba(247, 244, 238, 0.08);
 }
 
-.solution__mockup {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 16px;
-  align-items: start;
-}
-
-.solution__sidebar {
-  background: rgba(247, 244, 238, 0.04);
-  border-radius: 10px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.solution__sidebar-item {
-  padding: 10px 12px;
-  border-radius: 6px;
-  font-size: 0.78rem;
-  color: rgba(247, 244, 238, 0.5);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.solution__sidebar-item.active {
-  background: rgba(201, 168, 76, 0.15);
-  color: var(--gold);
-}
-
-.solution__main-panel {
-  background: rgba(247, 244, 238, 0.03);
-  border-radius: 10px;
-  padding: 20px;
-}
-
-.solution__doc-line {
-  height: 8px;
-  border-radius: 4px;
-  background: rgba(247, 244, 238, 0.08);
-  margin-bottom: 10px;
-}
-
-.solution__doc-line--short { width: 45%; }
-.solution__doc-line--med { width: 72%; }
-.solution__doc-line--full { width: 100%; }
-
-.solution__doc-line.typing {
-  background: rgba(201, 168, 76, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-.solution__doc-line.typing::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 40%;
-  background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.6), transparent);
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(350%); }
-}
 
 /* ===========================
    FEATURES SECTION
@@ -2000,8 +1934,14 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   .newsletter__form { flex-direction: column; }
   .post-nav { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
-  .solution__mockup { grid-template-columns: 1fr; }
   .team-profiles__grid { grid-template-columns: 1fr; }
   .team-card__skills { justify-content: center; }
   .story-links { grid-template-columns: 1fr; }
+  .solution__visual { padding: 24px; }
+  .solution__stats { grid-template-columns: 1fr; gap: 24px; }
+  .solution__stat-num { font-size: 2.5rem; }
+  .feature-card { text-align: center; align-items: center; }
+  .feature-card__icon { margin-left: auto; margin-right: auto; margin-bottom: 24px; }
+  .pain__item { text-align: center; align-items: center; }
+  .pain__item-icon { margin-left: auto; margin-right: auto; }
 }
