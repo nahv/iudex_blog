@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contacto y Acceso Anticipado – Iudex</title>
-  <meta name="description" content="Solicitá acceso anticipado a Iudex, el software de gestión de expedientes y escritura legal para abogados. Respondemos en menos de 24 horas." />
+  <title>Nosotros – Iudex</title>
+  <meta name="description" content="Conocé al equipo detrás de Iudex: desarrolladores con experiencia real en el sistema judicial argentino, construyendo software legal que funciona." />
+  <meta name="keywords" content="equipo Iudex, software legal, abogados Argentina, fundadores" />
+  <meta property="og:title" content="Nosotros – Iudex" />
+  <meta property="og:description" content="Conocé al equipo que construye Iudex: software legal para abogados argentinos." />
   <link rel="stylesheet" href="../public/css/styles.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f0f0e'/><path d='M50 15L20 32v20c0 22 13.6 40 30 44 16.4-4 30-22 30-44V32L50 15z' fill='%23c9a84c'/></svg>" />
 </head>
@@ -20,209 +23,71 @@
       <ul class="navbar__links">
         <li><a href="../index.html">Inicio</a></li>
         <li><a href="../blog/index.html">Blog</a></li>
-        <li><a href="../about/index.html">Nosotros</a></li>
-        <li><a href="index.html" style="color:var(--ink);font-weight:500">Contacto</a></li>
-        <li><a href="index.html" class="navbar__cta">Solicitar acceso</a></li>
+        <li><a href="index.html">Nosotros</a></li>
+        <li><a href="../contacto/index.html">Contacto</a></li>
+        <li><a href="../contacto/index.html" class="navbar__cta">Solicitar acceso</a></li>
       </ul>
       <button class="navbar__toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
 
-<!-- CONTACT HERO -->
+<!-- HERO -->
 <section class="contact-hero">
   <div class="container">
-    <span class="section-tag">Acceso anticipado</span>
-    <h1 style="margin-top:16px;max-width:600px;margin-left:auto;margin-right:auto">
-      Empezá a usar Iudex<br><em style="font-style:italic;color:var(--gold)">antes que todos</em>
+    <span class="section-tag">Nosotros</span>
+    <h1 style="margin-top:16px;max-width:700px;margin-left:auto;margin-right:auto">
+      Quiénes construyen<br><em style="font-style:italic;color:var(--gold)">Iudex</em>
     </h1>
-    <p class="lead" style="margin-top:20px;max-width:500px;margin-left:auto;margin-right:auto">
-      Estamos seleccionando a los primeros abogados que van a probar Iudex. Si te interesa, completá el formulario y nos ponemos en contacto en menos de 24 horas.
+    <p class="lead" style="margin-top:20px;max-width:560px;margin-left:auto;margin-right:auto">
+      Dos perfiles complementarios con un objetivo en común: que la tecnología resuelva problemas reales del trabajo jurídico cotidiano.
     </p>
-
-    <!-- TRUST BADGES -->
-    <div style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:40px">
-      <div style="display:flex;align-items:center;gap:8px;color:var(--ink-muted);font-size:0.85rem">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" width="18" height="18"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Sin costo durante el acceso anticipado
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;color:var(--ink-muted);font-size:0.85rem">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" width="18" height="18"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.6 1.32h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8a16 16 0 0 0 6 6l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
-        Soporte personal en español
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;color:var(--ink-muted);font-size:0.85rem">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" width="18" height="18"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Feedback directo al equipo de producto
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- FORM + INFO -->
-<section class="contact-form-section">
-  <div class="container">
-    <div class="contact-grid">
-      <!-- FORM -->
-      <div class="contact-form animate-on-scroll">
-        <h2 style="font-size:1.5rem;margin-bottom:8px">Completá el formulario</h2>
-        <p style="color:var(--ink-muted);font-size:0.9rem;margin-bottom:32px">Te respondemos en menos de 24 horas hábiles.</p>
-
-        <form id="contact-form" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="nombre">Nombre</label>
-              <input type="text" id="nombre" name="nombre" placeholder="Juan" required />
+<!-- TEAM -->
+<section class="section">
+  <div class="container" style="max-width:900px">
+    <div class="team-profiles">
+      <div class="team-profiles__grid">
+        <!-- Nahuel -->
+        <div class="team-card animate-on-scroll">
+          <div class="team-card__avatar">
+            <span class="team-card__initial">N</span>
+            <!-- <img src="../public/assets/team/nahuel.jpg" alt="Nahuel Vallejos" /> -->
+          </div>
+          <div class="team-card__info">
+            <h3 class="team-card__name">Nahuel Vallejos</h3>
+            <span class="team-card__role">Fullstack / Apps & Devices</span>
+            <div class="team-card__skills">
+              <span class="team-card__skill">Flutter</span>
+              <span class="team-card__skill">UI/UX</span>
+              <span class="team-card__skill">SQLite / Drift</span>
+              <span class="team-card__skill">Backend</span>
+              <span class="team-card__skill">Multiplataforma</span>
             </div>
-            <div class="form-group">
-              <label for="apellido">Apellido</label>
-              <input type="text" id="apellido" name="apellido" placeholder="García" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="email">Correo electrónico</label>
-            <input type="email" id="email" name="email" placeholder="juan@estudio.com.ar" required />
-          </div>
-
-          <div class="form-group">
-            <label for="telefono">Teléfono (opcional)</label>
-            <input type="tel" id="telefono" name="telefono" placeholder="+54 9 11 0000-0000" />
-          </div>
-
-          <div class="form-group">
-            <label for="provincia">Provincia donde ejercés</label>
-            <select id="provincia" name="provincia" required>
-              <option value="" disabled selected>Seleccioná tu provincia</option>
-              <option>Buenos Aires</option>
-              <option>Córdoba</option>
-              <option>Santa Fe</option>
-              <option>Corrientes</option>
-              <option>Entre Ríos</option>
-              <option>Mendoza</option>
-              <option>Tucumán</option>
-              <option>Salta</option>
-              <option>Misiones</option>
-              <option>Chaco</option>
-              <option>San Juan</option>
-              <option>Jujuy</option>
-              <option>Río Negro</option>
-              <option>Neuquén</option>
-              <option>Formosa</option>
-              <option>Santiago del Estero</option>
-              <option>Santa Cruz</option>
-              <option>Chubut</option>
-              <option>La Rioja</option>
-              <option>Catamarca</option>
-              <option>La Pampa</option>
-              <option>San Luis</option>
-              <option>Tierra del Fuego</option>
-              <option>Ciudad Autónoma de Buenos Aires</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="fuero">Principal área de práctica</label>
-            <select id="fuero" name="fuero">
-              <option value="" disabled selected>Seleccioná un área</option>
-              <option>Derecho civil y comercial</option>
-              <option>Derecho laboral</option>
-              <option>Derecho penal</option>
-              <option>Derecho de familia</option>
-              <option>Derecho administrativo</option>
-              <option>Derecho tributario</option>
-              <option>Derecho societario</option>
-              <option>Derecho sucesorio</option>
-              <option>Varias áreas</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="tamano">Tamaño del estudio</label>
-            <select id="tamano" name="tamano">
-              <option value="" disabled selected>Cantidad de abogados</option>
-              <option>Solo yo</option>
-              <option>2 a 5 abogados</option>
-              <option>6 a 15 abogados</option>
-              <option>Más de 15 abogados</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="mensaje">¿Cuál es tu mayor dolor en el trabajo diario? (opcional)</label>
-            <textarea id="mensaje" name="mensaje" placeholder="Contanos brevemente qué problema querés resolver..."></textarea>
-          </div>
-
-          <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;padding:16px">
-            Solicitar acceso anticipado
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-
-          <p style="font-size:0.75rem;color:var(--ink-muted);text-align:center;margin-top:12px">
-            Al enviar este formulario, aceptás nuestra política de privacidad. No compartimos tus datos con terceros.
-          </p>
-        </form>
-      </div>
-
-      <!-- CONTACT INFO -->
-      <div class="contact-info animate-on-scroll delay-2">
-        <h3>¿Preferís escribirnos directamente?</h3>
-        <p>Podés contactarnos por cualquiera de estos canales. Respondemos todas las consultas personalmente.</p>
-
-        <div class="contact-detail">
-          <div class="contact-detail__icon">
-            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <strong>Email</strong>
-            <span>hola@iudex.app</span>
+            <p class="team-card__bio">Desarrollador autodidacta con más de diez años de experiencia dentro del sistema judicial. Responsable del desarrollo fullstack en Flutter, diseño de interfaz, integración con backend y builds multiplataforma.</p>
           </div>
         </div>
 
-        <div class="contact-detail">
-          <div class="contact-detail__icon">
-            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <!-- Maxi -->
+        <div class="team-card animate-on-scroll delay-1">
+          <div class="team-card__avatar">
+            <span class="team-card__initial">M</span>
+            <!-- <img src="../public/assets/team/maxi.jpg" alt="Maxi Bury" /> -->
           </div>
-          <div>
-            <strong>WhatsApp</strong>
-            <span>+54 9 [número disponible próximamente]</span>
-          </div>
-        </div>
-
-        <div class="contact-detail">
-          <div class="contact-detail__icon">
-            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-          </div>
-          <div>
-            <strong>LinkedIn</strong>
-            <span>linkedin.com/company/iudex-app</span>
-          </div>
-        </div>
-
-        <!-- WHAT TO EXPECT -->
-        <div style="margin-top:48px;padding:28px;background:var(--cream-dark);border-radius:16px">
-          <h4 style="margin-bottom:16px;font-size:1rem">¿Qué pasa después de que enviás el formulario?</h4>
-          <div style="display:flex;flex-direction:column;gap:14px">
-            <div style="display:flex;gap:12px;align-items:flex-start">
-              <div style="width:24px;height:24px;min-width:24px;background:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--gold);font-family:var(--font-mono);font-weight:500">1</div>
-              <div>
-                <strong style="font-size:0.88rem">Recibís un email de confirmación</strong>
-                <p style="font-size:0.8rem;margin-top:2px">Inmediato, para que sepas que llegó tu solicitud.</p>
-              </div>
+          <div class="team-card__info">
+            <h3 class="team-card__name">Maxi Bury</h3>
+            <span class="team-card__role">Cloud Infrastructure & AI</span>
+            <div class="team-card__skills">
+              <span class="team-card__skill">Docker</span>
+              <span class="team-card__skill">CI/CD</span>
+              <span class="team-card__skill">FastAPI</span>
+              <span class="team-card__skill">PostgreSQL</span>
+              <span class="team-card__skill">IA</span>
+              <span class="team-card__skill">Sync server-side</span>
             </div>
-            <div style="display:flex;gap:12px;align-items:flex-start">
-              <div style="width:24px;height:24px;min-width:24px;background:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--gold);font-family:var(--font-mono);font-weight:500">2</div>
-              <div>
-                <strong style="font-size:0.88rem">Te contactamos en 24 horas</strong>
-                <p style="font-size:0.8rem;margin-top:2px">Personalmente, para agendar una demo breve de 20 minutos.</p>
-              </div>
-            </div>
-            <div style="display:flex;gap:12px;align-items:flex-start">
-              <div style="width:24px;height:24px;min-width:24px;background:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--gold);font-family:var(--font-mono);font-weight:500">3</div>
-              <div>
-                <strong style="font-size:0.88rem">Acceso a la plataforma</strong>
-                <p style="font-size:0.8rem;margin-top:2px">Si es un buen fit mutuo, te damos acceso sin costo durante el período anticipado.</p>
-              </div>
-            </div>
+            <p class="team-card__bio team-card__bio--placeholder">Responsable de la infraestructura cloud, pipelines de deploy, backend con FastAPI, base de datos PostgreSQL y servicios de inteligencia artificial. Su historia completa, próximamente.</p>
           </div>
         </div>
       </div>
@@ -230,32 +95,34 @@
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="section--sm" style="background:var(--cream-dark);padding-bottom:80px">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:48px">
-      <span class="section-tag">Preguntas frecuentes</span>
-      <h2 style="margin-top:12px;font-size:1.8rem">Lo que nos preguntan seguido</h2>
+<!-- STORY LINK -->
+<section class="section--sm" style="background:var(--cream-dark);padding:64px 0">
+  <div class="container" style="max-width:700px;text-align:center">
+    <span class="section-tag" style="margin-bottom:12px">Nuestra historia</span>
+    <h2 style="font-size:1.8rem;margin-top:12px">¿Por qué construimos Iudex?</h2>
+    <p class="lead" style="margin-top:16px">
+      Conocé la historia detrás del producto: cómo la experiencia dentro del sistema judicial se cruzó con el desarrollo de software para crear una herramienta que realmente resuelve problemas.
+    </p>
+    <div style="margin-top:32px">
+      <a href="../blog/historia-fundador.html" class="btn btn--primary btn--lg">
+        Leer la historia completa
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
     </div>
+  </div>
+</section>
 
-    <div class="grid-2" style="max-width:800px;margin:0 auto;gap:20px">
-      <div style="padding:28px;background:var(--cream);border-radius:14px;border:1px solid rgba(15,15,14,0.06)">
-        <h4 style="margin-bottom:10px;font-size:1rem">¿Es completamente gratis durante el acceso anticipado?</h4>
-        <p style="font-size:0.88rem">Sí. Los primeros usuarios no pagan nada durante el período de acceso anticipado. A cambio, pedimos feedback honesto y participación activa.</p>
-      </div>
-      <div style="padding:28px;background:var(--cream);border-radius:14px;border:1px solid rgba(15,15,14,0.06)">
-        <h4 style="margin-bottom:10px;font-size:1rem">¿Qué pasa con mis datos cuando el período anticipado termina?</h4>
-        <p style="font-size:0.88rem">Todos tus datos son tuyos. Si decidís no continuar, te los exportamos en formato estándar. Sin ataduras.</p>
-      </div>
-      <div style="padding:28px;background:var(--cream);border-radius:14px;border:1px solid rgba(15,15,14,0.06)">
-        <h4 style="margin-bottom:10px;font-size:1rem">¿Necesito saber de tecnología para usar Iudex?</h4>
-        <p style="font-size:0.88rem">No. Si podés usar Gmail o WhatsApp, podés usar Iudex. Está diseñado específicamente para no requerir conocimientos técnicos.</p>
-      </div>
-      <div style="padding:28px;background:var(--cream);border-radius:14px;border:1px solid rgba(15,15,14,0.06)">
-        <h4 style="margin-bottom:10px;font-size:1rem">¿Iudex funciona para cualquier área del derecho?</h4>
-        <p style="font-size:0.88rem">El módulo de gestión de expedientes y alertas funciona para cualquier fuero. Las plantillas de escritura se van expandiendo por área de práctica.</p>
-      </div>
-    </div>
+<!-- CTA -->
+<section class="cta-section section">
+  <div class="container">
+    <span class="label" style="display:block;margin-bottom:20px;color:rgba(201,168,76,0.8)">Acceso anticipado</span>
+    <h2>¿Listo para recuperar<br><em>tu tiempo?</em></h2>
+    <p class="lead">Unite a la lista de abogados que ya están esperando Iudex.</p>
+    <form class="cta-section__form js-email-form" novalidate>
+      <input type="email" class="cta-section__input" placeholder="tu@email.com" aria-label="Tu correo electrónico" required />
+      <button type="submit" class="btn btn--gold">Solicitar acceso</button>
+    </form>
+    <p class="cta-section__disclaimer">Sin tarjeta de crédito. Sin compromisos. Solo acceso anticipado.</p>
   </div>
 </section>
 
@@ -270,12 +137,12 @@
         </a>
         <p>Software para abogados. Organizá tus expedientes y automatizá tu escritura legal.</p>
       </div>
-      <div class="footer__col"><h5>Producto</h5><ul><li><a href="../index.html#features">Funciones</a></li><li><a href="index.html">Solicitar acceso</a></li></ul></div>
+      <div class="footer__col"><h5>Producto</h5><ul><li><a href="../index.html#features">Funciones</a></li><li><a href="../contacto/index.html">Solicitar acceso</a></li></ul></div>
       <div class="footer__col"><h5>Blog</h5><ul><li><a href="../blog/index.html">Todos los artículos</a></li></ul></div>
-      <div class="footer__col"><h5>Empresa</h5><ul><li><a href="../about/index.html">Nosotros</a></li><li><a href="index.html">Contacto</a></li></ul></div>
+      <div class="footer__col"><h5>Empresa</h5><ul><li><a href="index.html">Nosotros</a></li><li><a href="../contacto/index.html">Contacto</a></li></ul></div>
     </div>
     <div class="footer__bottom">
-      <p class="footer__copy">&copy; 2025 Iudex. Todos los derechos reservados.</p>
+      <p class="footer__copy">&copy; 2026 Iudex. Todos los derechos reservados.</p>
       <div class="footer__social">
         <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
         <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
@@ -284,6 +151,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="../public/js/main.js"></script>
 </body>
 </html>
