@@ -2,7 +2,23 @@
 // IUDEX BLOG - Main JavaScript
 // ===========================
 
+// ---- EmailJS configuration ----
+const EMAILJS_CONFIG = {
+  publicKey: '0f2bFDzG8i97sRFuw',
+  serviceId: 'service_8w861ob',
+  templates: {
+    teamNotify: 'YOUR_TEMPLATE_ID_1', // Template: notification to the Iudex team
+    autoReply: 'YOUR_TEMPLATE_ID_2',  // Template: auto-reply to the user
+    newsletter: 'YOUR_TEMPLATE_ID_3', // Template: newsletter/CTA signup
+  },
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+
+  // ---- EmailJS init ----
+  if (typeof emailjs !== 'undefined') {
+    emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+  }
 
   // ---- Navbar scroll effect ----
   const navbar = document.querySelector('.navbar');
@@ -48,26 +64,38 @@ document.addEventListener('DOMContentLoaded', () => {
       const input = form.querySelector('input[type="email"]');
       const btn = form.querySelector('button');
       const email = input ? input.value.trim() : '';
+      const originalText = btn.textContent;
 
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         showFormFeedback(form, 'Por favor ingresá un email válido.', false);
         return;
       }
 
-      // Simulate submission
-      const originalText = btn.textContent;
       btn.textContent = 'Enviando...';
       btn.disabled = true;
 
-      setTimeout(() => {
-        btn.textContent = '¡Listo!';
-        if (input) input.value = '';
-        showFormFeedback(form, '¡Gracias! Te avisaremos cuando Iudex esté disponible.', true);
+      if (typeof emailjs !== 'undefined') {
+        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templates.newsletter, { email: email })
+          .then(() => {
+            btn.textContent = '¡Listo!';
+            if (input) input.value = '';
+            showFormFeedback(form, '¡Gracias! Te avisaremos cuando Iudex esté disponible.', true);
+            setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 4000);
+          })
+          .catch(() => {
+            showFormFeedback(form, 'Hubo un error. Intentá de nuevo o escribinos a hola@iudex.app.', false);
+            btn.textContent = originalText;
+            btn.disabled = false;
+          });
+      } else {
+        // Fallback if EmailJS not loaded
         setTimeout(() => {
-          btn.textContent = originalText;
-          btn.disabled = false;
-        }, 4000);
-      }, 1000);
+          btn.textContent = '¡Listo!';
+          if (input) input.value = '';
+          showFormFeedback(form, '¡Gracias! Te avisaremos cuando Iudex esté disponible.', true);
+          setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 4000);
+        }, 1000);
+      }
     });
   });
 
@@ -80,14 +108,43 @@ document.addEventListener('DOMContentLoaded', () => {
       const original = btn.textContent;
       btn.textContent = 'Enviando...';
       btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = '¡Mensaje enviado!';
-        showFormFeedback(contactForm, '¡Gracias por tu mensaje! Te responderemos a la brevedad.', true);
+
+      const templateParams = {
+        nombre: contactForm.querySelector('#nombre').value,
+        apellido: contactForm.querySelector('#apellido').value,
+        email: contactForm.querySelector('#email').value,
+        telefono: contactForm.querySelector('#telefono').value || 'No proporcionado',
+        provincia: contactForm.querySelector('#provincia').value,
+        fuero: contactForm.querySelector('#fuero').value || 'No especificado',
+        tamano: contactForm.querySelector('#tamano').value || 'No especificado',
+        mensaje: contactForm.querySelector('#mensaje').value || 'Sin mensaje',
+      };
+
+      if (typeof emailjs !== 'undefined') {
+        Promise.all([
+          emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templates.teamNotify, templateParams),
+          emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templates.autoReply, templateParams),
+        ])
+          .then(() => {
+            btn.textContent = '¡Solicitud enviada!';
+            contactForm.reset();
+            showFormFeedback(contactForm, '¡Gracias por tu interés! Te enviamos un email con información sobre Iudex.', true);
+            setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 5000);
+          })
+          .catch(() => {
+            showFormFeedback(contactForm, 'Hubo un error al enviar. Intentá de nuevo o escribinos a hola@iudex.app.', false);
+            btn.textContent = original;
+            btn.disabled = false;
+          });
+      } else {
+        // Fallback if EmailJS not loaded
         setTimeout(() => {
-          btn.textContent = original;
-          btn.disabled = false;
-        }, 4000);
-      }, 1200);
+          btn.textContent = '¡Solicitud enviada!';
+          contactForm.reset();
+          showFormFeedback(contactForm, '¡Gracias por tu interés! Te responderemos a la brevedad.', true);
+          setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 5000);
+        }, 1200);
+      }
     });
   }
 

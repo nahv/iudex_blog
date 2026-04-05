@@ -1717,6 +1717,134 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 }
 
 /* ===========================
+   TEAM PROFILES
+   =========================== */
+
+.team-profiles {
+  margin-top: 72px;
+  padding-top: 56px;
+  border-top: 1px solid rgba(15, 15, 14, 0.08);
+}
+
+.team-profiles__header {
+  margin-bottom: 40px;
+}
+
+.team-profiles__header h2 {
+  font-size: 1.8rem;
+  margin-top: 12px;
+}
+
+.team-profiles__header p {
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+  margin-top: 8px;
+}
+
+.team-profiles__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px;
+  background: var(--cream-dark);
+  border-radius: 16px;
+  border: 1px solid rgba(15, 15, 14, 0.04);
+}
+
+.team-card__avatar {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  min-width: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-card__initial {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.team-card__avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.team-card__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.team-card__avatar {
+  margin-bottom: 20px;
+}
+
+.team-card__name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+
+.team-card__role {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.team-card__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.team-card__skill {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(201, 168, 76, 0.1);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+}
+
+.team-card__bio {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.team-card__bio--placeholder {
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+/* ===========================
    RESPONSIVE
    =========================== */
 
@@ -1761,4 +1889,6 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   .post-nav { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .solution__mockup { grid-template-columns: 1fr; }
+  .team-profiles__grid { grid-template-columns: 1fr; }
+  .team-card__skills { justify-content: center; }
 }
