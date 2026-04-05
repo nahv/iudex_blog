@@ -138,12 +138,12 @@
 
 ### Tiempo de respuesta
 - **Comentarios**: responder en menos de 4 horas durante horario laboral (lunes a viernes, 9:00 a 18:00 ART).
-- **DMs**: responder en menos de 12 horas. Si requiere atencion tecnica, derivar a hola@iudex.app.
+- **DMs**: responder en menos de 12 horas. Si requiere atencion tecnica, derivar a contacto@iudex.com.ar.
 
 ### Manejo de feedback negativo
 - No borrar comentarios criticos (salvo spam o insultos).
 - Responder con empatia y profesionalismo: "Gracias por el feedback, lo tomamos en cuenta."
-- Si es un bug report, agradecer y pedir que escriban a hola@iudex.app con detalles.
+- Si es un bug report, agradecer y pedir que escriban a contacto@iudex.com.ar con detalles.
 - Nunca discutir publicamente. Si escala, llevar la conversacion a DM.
 
 ### Manejo de consultas legales
