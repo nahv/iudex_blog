@@ -266,8 +266,8 @@ Una vez creados los 3 templates, reemplazar los valores en `public/js/main.js`:
 
 ```javascript
 const EMAILJS_CONFIG = {
-  publicKey: '0f2bFDzG8i97sRFuw',
-  serviceId: 'service_8w861ob',
+  publicKey: 'YOUR_EMAILJS_PUBLIC_KEY',  // from env.js
+  serviceId: 'YOUR_EMAILJS_SERVICE_ID', // from env.js
   templates: {
     teamNotify: 'template_XXXXX',      // <-- Template 1 ID
     autoReply: 'template_XXXXX',       // <-- Template 2 ID

@@ -2,21 +2,47 @@
 // IUDEX BLOG - Main JavaScript
 // ===========================
 
-// ---- EmailJS configuration ----
-const EMAILJS_CONFIG = {
-  publicKey: '0f2bFDzG8i97sRFuw',
-  serviceId: 'service_8w861ob',
-  templates: {
-    teamNotify: 'YOUR_TEMPLATE_ID_1', // Template: notification to the Iudex team
-    autoReply: 'YOUR_TEMPLATE_ID_2',  // Template: auto-reply to the user
-    newsletter: 'YOUR_TEMPLATE_ID_3', // Template: newsletter/CTA signup
+// ---- Configuration ----
+// Credentials are loaded from public/js/env.js (gitignored).
+// See public/js/env.example.js for the template.
+// If ENV is not loaded, everything degrades gracefully.
+const EMAILJS_CONFIG = typeof ENV !== 'undefined' ? ENV.emailjs : {};
+const SUPABASE_CONFIG = typeof ENV !== 'undefined' ? ENV.supabase : {};
+
+// ---- Supabase client (lightweight REST wrapper) ----
+const iudexDB = {
+  async insert(table, data) {
+    if (!SUPABASE_CONFIG.url || SUPABASE_CONFIG.url.includes('YOUR_')) {
+      return { error: null, data: null, mock: true };
+    }
+    const response = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/${table}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_CONFIG.anonKey,
+        'Authorization': `Bearer ${SUPABASE_CONFIG.anonKey}`,
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const text = await response.text();
+      let errorDetail;
+      try { errorDetail = JSON.parse(text); } catch (e) { errorDetail = { message: text }; }
+      // Unique constraint violation (duplicate email)
+      if (response.status === 409 || (errorDetail.code === '23505')) {
+        return { error: { duplicate: true, message: 'Email ya registrado' } };
+      }
+      return { error: { duplicate: false, message: errorDetail.message || 'Error al guardar' } };
+    }
+    return { error: null, data: null };
   },
 };
 
 document.addEventListener('DOMContentLoaded', () => {
 
   // ---- EmailJS init ----
-  if (typeof emailjs !== 'undefined') {
+  if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.publicKey) {
     emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
   }
 
@@ -57,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     animEls.forEach(el => observer.observe(el));
   }
 
-  // ---- Newsletter / CTA forms ----
+  // ---- Newsletter / CTA forms (email-only) ----
   document.querySelectorAll('.js-email-form').forEach(form => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -74,77 +100,109 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.textContent = 'Enviando...';
       btn.disabled = true;
 
-      if (typeof emailjs !== 'undefined') {
-        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templates.newsletter, { email: email })
-          .then(() => {
-            btn.textContent = '¡Listo!';
-            if (input) input.value = '';
-            showFormFeedback(form, '¡Gracias! Te avisaremos cuando Iudex esté disponible.', true);
-            setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 4000);
-          })
-          .catch(() => {
-            showFormFeedback(form, 'Hubo un error. Intentá de nuevo o escribinos a hola@iudex.app.', false);
-            btn.textContent = originalText;
-            btn.disabled = false;
-          });
-      } else {
-        // Fallback if EmailJS not loaded
-        setTimeout(() => {
-          btn.textContent = '¡Listo!';
-          if (input) input.value = '';
-          showFormFeedback(form, '¡Gracias! Te avisaremos cuando Iudex esté disponible.', true);
-          setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 4000);
-        }, 1000);
+      // Save to Supabase (non-blocking for CTA forms)
+      iudexDB.insert('registrations', {
+        nombre: '',
+        apellido: '',
+        email: email,
+        source: 'cta-' + (window.location.pathname.includes('blog') ? 'blog' :
+                          window.location.pathname.includes('about') ? 'about' : 'home'),
+      }).catch(() => {});
+
+      // Send auto-reply email (single template for all flows)
+      if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.templateId) {
+        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+          email: email,
+          nombre: '',
+        }).catch(() => {});
       }
+
+      // Show success (registration is saved to Supabase regardless of email)
+      btn.textContent = '¡Listo!';
+      if (input) input.value = '';
+      showFormFeedback(form, '¡Gracias! Te avisaremos cuando Iudex esté disponible.', true);
+      setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 4000);
     });
   });
 
-  // ---- Contact form ----
+  // ---- Contact form (full pre-access registration) ----
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Honeypot check
+      const honeypot = contactForm.querySelector('input[name="website"]');
+      if (honeypot && honeypot.value) {
+        // Bot detected — simulate success silently
+        contactForm.reset();
+        showFormFeedback(contactForm, '¡Gracias por tu interés! Te enviamos un email con información sobre Iudex.', true);
+        return;
+      }
+
       const btn = contactForm.querySelector('button[type="submit"]');
       const original = btn.textContent;
       btn.textContent = 'Enviando...';
       btn.disabled = true;
 
-      const templateParams = {
-        nombre: contactForm.querySelector('#nombre').value,
-        apellido: contactForm.querySelector('#apellido').value,
-        email: contactForm.querySelector('#email').value,
-        telefono: contactForm.querySelector('#telefono').value || 'No proporcionado',
+      const formData = {
+        nombre: contactForm.querySelector('#nombre').value.trim(),
+        apellido: contactForm.querySelector('#apellido').value.trim(),
+        email: contactForm.querySelector('#email').value.trim(),
+        telefono: contactForm.querySelector('#telefono').value.trim() || null,
         provincia: contactForm.querySelector('#provincia').value,
-        fuero: contactForm.querySelector('#fuero').value || 'No especificado',
-        tamano: contactForm.querySelector('#tamano').value || 'No especificado',
-        mensaje: contactForm.querySelector('#mensaje').value || 'Sin mensaje',
+        fuero: contactForm.querySelector('#fuero').value || null,
+        tamano: contactForm.querySelector('#tamano').value || null,
+        mensaje: contactForm.querySelector('#mensaje').value.trim() || null,
+        source: 'contact-form',
       };
 
-      if (typeof emailjs !== 'undefined') {
-        Promise.all([
-          emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templates.teamNotify, templateParams),
-          emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templates.autoReply, templateParams),
-        ])
-          .then(() => {
-            btn.textContent = '¡Solicitud enviada!';
-            contactForm.reset();
-            showFormFeedback(contactForm, '¡Gracias por tu interés! Te enviamos un email con información sobre Iudex.', true);
-            setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 5000);
-          })
-          .catch(() => {
-            showFormFeedback(contactForm, 'Hubo un error al enviar. Intentá de nuevo o escribinos a hola@iudex.app.', false);
-            btn.textContent = original;
-            btn.disabled = false;
-          });
-      } else {
-        // Fallback if EmailJS not loaded
-        setTimeout(() => {
-          btn.textContent = '¡Solicitud enviada!';
-          contactForm.reset();
-          showFormFeedback(contactForm, '¡Gracias por tu interés! Te responderemos a la brevedad.', true);
-          setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 5000);
-        }, 1200);
+      // Validate required fields
+      if (!formData.nombre || !formData.apellido || !formData.email || !formData.provincia) {
+        showFormFeedback(contactForm, 'Por favor completá todos los campos requeridos.', false);
+        btn.textContent = original;
+        btn.disabled = false;
+        return;
       }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        showFormFeedback(contactForm, 'Por favor ingresá un email válido.', false);
+        btn.textContent = original;
+        btn.disabled = false;
+        return;
+      }
+
+      // Step 1: Save to Supabase
+      const { error: dbError } = await iudexDB.insert('registrations', formData);
+
+      if (dbError) {
+        if (dbError.duplicate) {
+          showFormFeedback(contactForm, 'Este email ya tiene una solicitud registrada. Si necesitás ayuda, escribinos a hola@iudex.app.', false);
+          btn.textContent = original;
+          btn.disabled = false;
+          return;
+        }
+        // Non-duplicate DB error — still try to send emails
+      }
+
+      // Step 2: Send auto-reply email via EmailJS (non-blocking)
+      // Team notification is no longer needed — registrations are visible
+      // in the Supabase dashboard (Table Editor → registrations).
+      if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.templateId) {
+        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+          nombre: formData.nombre,
+          apellido: formData.apellido,
+          email: formData.email,
+        }).catch(() => {
+          // Email failed but registration is saved in Supabase — acceptable
+        });
+      }
+
+      // Step 3: Show success
+      btn.textContent = '¡Solicitud enviada!';
+      contactForm.reset();
+      showFormFeedback(contactForm, '¡Gracias por tu interés! Te enviamos un email con información sobre Iudex.', true);
+      setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 5000);
     });
   }
 
