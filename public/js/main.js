@@ -59,18 +59,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const links = document.querySelector('.navbar__links');
   if (toggle && links) {
     toggle.addEventListener('click', () => {
-      links.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', links.classList.contains('open'));
+      const isOpen = links.classList.toggle('open');
+      toggle.classList.toggle('active', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen);
     });
     // Close on link click
     links.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => links.classList.remove('open'));
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
     });
   }
 
   // ---- Intersection Observer for scroll animations ----
-  const animEls = document.querySelectorAll('.animate-on-scroll');
-  if (animEls.length) {
+  const revealEls = document.querySelectorAll('.animate-on-scroll, .text-reveal, .stagger-children, .scale-in, .lead-reveal');
+  if (revealEls.length) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -78,9 +83,38 @@ document.addEventListener('DOMContentLoaded', () => {
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
-    animEls.forEach(el => observer.observe(el));
+    revealEls.forEach(el => observer.observe(el));
+  }
+
+  // ---- Parallax hero (subtle, Apple-style) ----
+  const heroTitle = document.querySelector('.hero__title');
+  const heroSub = document.querySelector('.hero__subtitle');
+  const heroActions = document.querySelector('.hero__actions');
+  if (heroTitle) {
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const rate = Math.min(scrollY / 3, 120);
+          const opacity = Math.max(1 - scrollY / 600, 0);
+          heroTitle.style.transform = `translateY(${rate * 0.4}px)`;
+          heroTitle.style.opacity = opacity;
+          if (heroSub) {
+            heroSub.style.transform = `translateY(${rate * 0.25}px)`;
+            heroSub.style.opacity = opacity;
+          }
+          if (heroActions) {
+            heroActions.style.transform = `translateY(${rate * 0.15}px)`;
+            heroActions.style.opacity = opacity;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
   }
 
   // ---- Newsletter / CTA forms (email-only) ----
@@ -225,26 +259,75 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ---- Animated counter ----
+  // ---- Animated counter (easeOutExpo) ----
+  function easeOutExpo(t) {
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  }
+
   document.querySelectorAll('.js-counter').forEach(el => {
     const target = parseInt(el.dataset.target, 10);
-    const duration = 1800;
-    const step = target / (duration / 16);
-    let current = 0;
+    const duration = 2200;
+    let start = null;
 
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         observer.disconnect();
-        const timer = setInterval(() => {
-          current = Math.min(current + step, target);
-          el.textContent = Math.round(current) + (el.dataset.suffix || '');
-          if (current >= target) clearInterval(timer);
-        }, 16);
+        requestAnimationFrame(function step(timestamp) {
+          if (!start) start = timestamp;
+          const progress = Math.min((timestamp - start) / duration, 1);
+          const value = Math.round(easeOutExpo(progress) * target);
+          el.textContent = value + (el.dataset.suffix || '');
+          if (progress < 1) requestAnimationFrame(step);
+        });
       }
     }, { threshold: 0.5 });
 
     observer.observe(el);
   });
+
+  // ---- Auto-reveal above-the-fold elements ----
+  document.querySelectorAll('.contact-hero .text-reveal, .hero .text-reveal, .post-hero .text-reveal').forEach(el => {
+    setTimeout(() => el.classList.add('visible'), 200);
+  });
+  document.querySelectorAll('.contact-hero .lead-reveal, .hero .lead-reveal, .post-hero .lead-reveal, .page-hero .lead-reveal').forEach(el => {
+    setTimeout(() => el.classList.add('visible'), 500);
+  });
+
+  // ---- Mobile features overlay ----
+  const featureData = [
+    { title: 'Gestión de expedientes', tag: 'Core', body: 'Organizá todos tus casos en un solo lugar. Seguimiento de estado, historial de actuaciones, vinculación de documentos y partes involucradas.' },
+    { title: 'Automatización de escritura', tag: 'IA legal', body: 'Generá escritos, demandas y notificaciones a partir de plantillas inteligentes. Solo completás los datos relevantes; Iudex hace el resto.' },
+    { title: 'Alertas de vencimientos', tag: 'Alertas', body: 'Nunca más un plazo vencido. Iudex te notifica con anticipación sobre vencimientos procesales y fechas clave de cada expediente.' },
+    { title: 'Gestión de clientes', tag: 'Clientes', body: 'Ficha completa por cliente con historial de casos, documentos y comunicaciones. Atendé mejor a tus clientes con información siempre a mano.' },
+    { title: 'Biblioteca de plantillas', tag: 'Plantillas', body: 'Accedé a un catálogo de modelos de documentos legales para los casos más frecuentes. Personalizables y actualizables por el equipo del estudio.' },
+    { title: 'Informes y métricas', tag: 'Análisis', body: 'Visualizá el estado de tu estudio: expedientes activos, tiempo promedio de resolución, carga de trabajo por abogado y más.' },
+  ];
+
+  const overlay = document.getElementById('feature-overlay');
+  if (overlay) {
+    document.querySelectorAll('.features-mobile-grid__item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.feature, 10);
+        const data = featureData[idx];
+        if (!data) return;
+        const iconEl = document.getElementById('overlay-icon');
+        iconEl.innerHTML = btn.querySelector('.feature-card__icon').innerHTML;
+        document.getElementById('overlay-title').textContent = data.title;
+        document.getElementById('overlay-tag').textContent = data.tag;
+        document.getElementById('overlay-body').textContent = data.body;
+        overlay.classList.add('active');
+      });
+    });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('active');
+    });
+
+    const handle = overlay.querySelector('.feature-overlay__handle');
+    if (handle) {
+      handle.addEventListener('click', () => overlay.classList.remove('active'));
+    }
+  }
 
   // ---- Smooth active link highlighting ----
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';
