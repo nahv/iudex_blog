@@ -143,9 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
                           window.location.pathname.includes('about') ? 'about' : 'home'),
       }).catch(() => {});
 
-      // Send auto-reply email (single template for all flows)
-      if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.templateId) {
-        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+      // Send confirmation email to user
+      if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.templateUserConfirm) {
+        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateUserConfirm, {
           email: email,
           nombre: '',
         }).catch(() => {});
@@ -220,20 +220,30 @@ document.addEventListener('DOMContentLoaded', () => {
         // Non-duplicate DB error — still try to send emails
       }
 
-      // Step 2: Send auto-reply email via EmailJS (non-blocking)
-      // Team notification is no longer needed — registrations are visible
-      // in the Supabase dashboard (Table Editor → registrations).
-      if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.templateId) {
-        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+      // Step 2: Send confirmation email to user
+      if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.templateUserConfirm) {
+        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateUserConfirm, {
+          nombre: formData.nombre,
+          email: formData.email,
+        }).catch(() => {});
+      }
+
+      // Step 3: Send notification email to founders
+      if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.templateFounderNotify) {
+        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateFounderNotify, {
           nombre: formData.nombre,
           apellido: formData.apellido,
           email: formData.email,
-        }).catch(() => {
-          // Email failed but registration is saved in Supabase — acceptable
-        });
+          telefono: formData.telefono || 'No proporcionado',
+          perfil: formData.perfil || 'No seleccionado',
+          provincia: formData.provincia,
+          fuero: formData.fuero || 'No seleccionado',
+          tamano: formData.tamano || 'No seleccionado',
+          mensaje: formData.mensaje || 'Sin mensaje',
+        }).catch(() => {});
       }
 
-      // Step 3: Show success
+      // Step 4: Show success
       btn.textContent = '¡Solicitud enviada!';
       contactForm.reset();
       showFormFeedback(contactForm, '¡Gracias por tu interés! Te enviamos un email con información sobre Iudex.', true);

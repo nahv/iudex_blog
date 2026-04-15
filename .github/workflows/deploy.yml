@@ -38,7 +38,8 @@ jobs:
             emailjs: {
               publicKey: '${{ secrets.EMAILJS_PUBLIC_KEY }}',
               serviceId: '${{ secrets.EMAILJS_SERVICE_ID }}',
-              templateId: '${{ secrets.EMAILJS_TEMPLATE_ID }}',
+              templateUserConfirm: '${{ secrets.EMAILJS_TEMPLATE_USER_CONFIRM }}',
+              templateFounderNotify: '${{ secrets.EMAILJS_TEMPLATE_FOUNDER_NOTIFY }}',
             },
           };
           EOF
