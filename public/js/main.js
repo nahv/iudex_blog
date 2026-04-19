@@ -307,6 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const featureData = [
     { title: 'Gestión de expedientes', tag: 'Core', body: 'Organizá todos tus casos en un solo lugar. Seguimiento de estado, historial de actuaciones, vinculación de documentos y partes involucradas.' },
     { title: 'Automatización de escritura', tag: 'IA legal', body: 'Generá escritos, demandas y notificaciones a partir de plantillas inteligentes. Solo completás los datos relevantes; Iudex hace el resto.' },
+    { title: 'Investigación con IA', tag: 'IA legal', body: 'Preguntá sobre jurisprudencia argentina en lenguaje natural y obtené respuestas con fallos citados. Guardá sesiones, compará fallos y generá argumentos listos para tu escrito.' },
     { title: 'Alertas de vencimientos', tag: 'Alertas', body: 'Nunca más un plazo vencido. Iudex te notifica con anticipación sobre vencimientos procesales y fechas clave de cada expediente.' },
     { title: 'Gestión de clientes', tag: 'Clientes', body: 'Ficha completa por cliente con historial de casos, documentos y comunicaciones. Atendé mejor a tus clientes con información siempre a mano.' },
     { title: 'Biblioteca de plantillas', tag: 'Plantillas', body: 'Accedé a un catálogo de modelos de documentos legales para los casos más frecuentes. Personalizables y actualizables por el equipo del estudio.' },

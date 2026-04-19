@@ -1,6 +1,22 @@
 {
   "posts": [
     {
+      "slug": "investigacion-jurisprudencial-corrientes",
+      "title": "Demanda laboral en Corrientes: de la búsqueda al escrito final",
+      "description": "Un caso práctico: cómo preparar una demanda laboral investigando jurisprudencia con IA en tres pasos concretos, sin perder horas entre buscadores y Word.",
+      "featuredDescription": "Caso real aplicado al fuero laboral correntino: investigación con IA, organización por sesiones y generación de escritos en aproximadamente una hora.",
+      "author": "Equipo Iudex",
+      "date": "19 Abr 2026",
+      "readTime": "7 min",
+      "category": "investigacion",
+      "categoryLabel": "Investigación",
+      "icon": "<circle cx=\"11\" cy=\"11\" r=\"8\"/><line x1=\"21\" y1=\"21\" x2=\"16.65\" y2=\"16.65\"/>",
+      "thumbGradient": "#1a1c22,#252a35",
+      "published": true,
+      "featured": true,
+      "placeholder": false
+    },
+    {
       "slug": "escritura-repetitiva",
       "title": "Por qué los abogados pierden tiempo en escritura repetitiva",
       "description": "El 40% del día laboral de un abogado se destina a tareas administrativas. Te explicamos por qué sucede y cómo podés cambiar eso.",
@@ -72,8 +88,8 @@
       "categoryLabel": "Historia",
       "icon": "<path d=\"M12 2l2.7 5.47L20.7 8l-4.35 4.24 1.03 5.99L12 15.4 6.62 18.23l1.03-5.99L3.3 8l6-.53L12 2z\"/>",
       "thumbGradient": "#16181b,#1f2529",
-      "published": false,
-      "featured": true,
+      "published": true,
+      "featured": false,
       "placeholder": false
     },
     {

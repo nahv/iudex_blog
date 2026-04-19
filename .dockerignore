@@ -1,0 +1,10 @@
+.git
+.github
+.claude
+.specify
+docs
+scripts
+node_modules
+*.md
+.DS_Store
+.env*
