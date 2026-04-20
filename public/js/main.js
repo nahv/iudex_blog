@@ -303,41 +303,123 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => el.classList.add('visible'), 500);
   });
 
-  // ---- Mobile features overlay ----
-  const featureData = [
-    { title: 'Gestión de expedientes', tag: 'Core', body: 'Organizá todos tus casos en un solo lugar. Seguimiento de estado, historial de actuaciones, vinculación de documentos y partes involucradas.' },
-    { title: 'Automatización de escritura', tag: 'IA legal', body: 'Generá escritos, demandas y notificaciones a partir de plantillas inteligentes. Solo completás los datos relevantes; Iudex hace el resto.' },
-    { title: 'Investigación con IA', tag: 'IA legal', body: 'Preguntá sobre jurisprudencia argentina en lenguaje natural y obtené respuestas con fallos citados. Guardá sesiones, compará fallos y generá argumentos listos para tu escrito.' },
-    { title: 'Alertas de vencimientos', tag: 'Alertas', body: 'Nunca más un plazo vencido. Iudex te notifica con anticipación sobre vencimientos procesales y fechas clave de cada expediente.' },
-    { title: 'Gestión de clientes', tag: 'Clientes', body: 'Ficha completa por cliente con historial de casos, documentos y comunicaciones. Atendé mejor a tus clientes con información siempre a mano.' },
-    { title: 'Biblioteca de plantillas', tag: 'Plantillas', body: 'Accedé a un catálogo de modelos de documentos legales para los casos más frecuentes. Personalizables y actualizables por el equipo del estudio.' },
-    { title: 'Informes y métricas', tag: 'Análisis', body: 'Visualizá el estado de tu estudio: expedientes activos, tiempo promedio de resolución, carga de trabajo por abogado y más.' },
-  ];
+  // ---- Mobile overlay content (shared drawer, multiple groups) ----
+  const overlayContent = {
+    flujo: [
+      { title: 'Definí el caso, no el query', tag: 'Paso 1 · Preguntá', body: 'Describí el problema jurídico con tus propias palabras. La respuesta llega con fallos argentinos citados, cada afirmación atada a su fuente.' },
+      { title: 'Jurisprudencia, doctrina y expediente, en el mismo hilo', tag: 'Paso 2 · Conectá', body: 'Lo que leés, lo que anotás y lo que archivás queda conectado al caso. Cada cita es rastreable. Ninguna respuesta sin fuente.' },
+      { title: 'El escrito nace del trabajo, no de una plantilla vacía', tag: 'Paso 3 · Producí', body: 'La demanda, el recurso o la notificación se arman con el contexto del caso y las citas de tu propia investigación. Solo te queda la revisión final.' },
+    ],
+    features: [
+      { title: 'Expedientes con memoria', tag: 'Expedientes', body: 'El caso entero en un hilo: estado, actuaciones, partes y documentos. Lo que pasó queda registrado. Lo que se viene, también.' },
+      { title: 'Escritura que arranca del caso', tag: 'Escritura', body: 'Demandas, recursos y notificaciones se componen con el contexto del expediente y las citas de tu investigación. Tu criterio, sobre trabajo ya hecho.' },
+      { title: 'Investigación con fuentes', tag: 'Investigación', body: 'Pregunta en lenguaje natural, respuesta con fallos argentinos citados y linkeados. Guardás sesiones por caso, comparás criterios, armás el argumento.' },
+      { title: 'Plazos que avisan a tiempo', tag: 'Plazos', body: 'Los vencimientos procesales dejan de vivir en la memoria. Iudex lee las fechas del expediente y avisa antes, no el día del vencimiento.' },
+      { title: 'Ficha de cliente con contexto', tag: 'Clientes', body: 'Cada cliente con su historia: causas, escritos, documentos y conversaciones. Antes de la reunión, el caso entero ya está leído.' },
+      { title: 'Modelos propios del estudio', tag: 'Modelos', body: 'Los escritos que ya usás, convertidos en modelos compartidos. Cambian una vez y quedan corregidos para todo el equipo.' },
+      { title: 'El pulso del estudio', tag: 'Métricas', body: 'Causas activas, carga por abogado, tiempos reales de resolución. Lectura institucional del trabajo, sin abrir una planilla.' },
+    ],
+    pain: [
+      { title: 'Escritura que arranca de cero cada vez', tag: 'Fricción', body: 'Mismo encabezado, mismos párrafos, mismas cláusulas. Reescritas a mano, caso tras caso, porque el estudio no tiene memoria propia.' },
+      { title: 'El expediente vive en doce lugares', tag: 'Fricción', body: 'Carpetas en el escritorio, PDFs en el correo, notas en papel, planilla aparte. Recomponer lo que tenés lleva más tiempo que pensar el caso.' },
+      { title: 'Los plazos los lleva la memoria', tag: 'Fricción', body: 'Un vencimiento procesal depende de una alarma en el celular o de acordarte vos. Lo importante no debería vivir en un post-it.' },
+      { title: 'Herramientas hechas para otro trabajo', tag: 'Fricción', body: 'Word, Excel y el correo no fueron pensados para el ejercicio jurídico. Te adaptás vos, todos los días, a la forma de pensar de un procesador de texto.' },
+      { title: 'Cada escrito, una versión distinta', tag: 'Fricción', body: '¿Cuál era el modelo vigente? ¿El último enviado? ¿El que ya tenía los cambios pedidos? Sin historial común, la versión correcta se pierde.' },
+      { title: 'Más causas, menos criterio', tag: 'Fricción', body: 'Crecer no debería costar horas. Sin método compartido, cada cliente nuevo agrega ruido en vez de rutina.' },
+    ],
+    detalles: [
+      { title: 'Command palette · Ctrl+K', tag: 'Oficio', body: 'Abrí un expediente, disparás un escrito o saltás a un fallo sin tocar el mouse. La mano no abandona el teclado.' },
+      { title: 'Atajos de tipeo', tag: 'Oficio', body: 'Tipeás ,dr y se expande a "Dr. [tu firma completa]". Cada uno arma sus propias abreviaciones.' },
+      { title: 'Tus causas entran de una', tag: 'Oficio', body: 'Iudex convive con los sistemas judiciales provinciales y trae el listado completo de expedientes. Sin carga manual caso por caso.' },
+      { title: 'Línea de actuaciones, sola', tag: 'Oficio', body: 'Subís los PDFs del expediente y se ordenan por fecha. Con OCR: buscás por texto dentro de cualquier documento.' },
+      { title: 'Sigue funcionando sin señal', tag: 'Oficio', body: 'Tribunales, colectivo, café con WiFi flojo. Seguís trabajando y Iudex sincroniza cuando vuelve la conexión.' },
+      { title: 'Anotaciones sobre el PDF', tag: 'Oficio', body: 'Marcás, subrayás y dejás notas sobre el documento. Volvés seis meses después y la lectura anterior te está esperando.' },
+      { title: 'Cálculos a mano', tag: 'Oficio', body: 'Valor del JUS, tasa de justicia, honorarios por etapa. Sin salir del expediente ni abrir una planilla aparte.' },
+      { title: 'Historial del escrito', tag: 'Oficio', body: 'Cada versión queda registrada. Comparás v1 contra v3, volvés atrás, nunca pisás el trabajo anterior por accidente.' },
+      { title: 'Trabajo compartido, sin copias', tag: 'Oficio', body: 'Un expediente, varios abogados del estudio. Permisos claros, una sola fuente de verdad — no tres copias en carpetas de Drive.' },
+    ],
+  };
 
   const overlay = document.getElementById('feature-overlay');
   if (overlay) {
+    const openOverlay = (btn) => {
+      const group = btn.dataset.overlayGroup || 'features';
+      // Backwards-compat: legacy .features-mobile-grid__item uses data-feature
+      const idx = parseInt(btn.dataset.overlayIndex ?? btn.dataset.feature, 10);
+      const data = (overlayContent[group] || [])[idx];
+      if (!data) return;
+      const iconEl = document.getElementById('overlay-icon');
+      const iconSource = btn.querySelector('.feature-card__icon');
+      iconEl.innerHTML = iconSource ? iconSource.innerHTML : '';
+      document.getElementById('overlay-title').textContent = data.title;
+      document.getElementById('overlay-tag').textContent = data.tag;
+      document.getElementById('overlay-body').textContent = data.body;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeOverlay = () => {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    // New group-aware grids (pain, detalles, and any future)
+    document.querySelectorAll('.mobile-overlay-grid__item').forEach(btn => {
+      btn.addEventListener('click', () => openOverlay(btn));
+    });
+    // Legacy features mobile grid
     document.querySelectorAll('.features-mobile-grid__item').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = parseInt(btn.dataset.feature, 10);
-        const data = featureData[idx];
-        if (!data) return;
-        const iconEl = document.getElementById('overlay-icon');
-        iconEl.innerHTML = btn.querySelector('.feature-card__icon').innerHTML;
-        document.getElementById('overlay-title').textContent = data.title;
-        document.getElementById('overlay-tag').textContent = data.tag;
-        document.getElementById('overlay-body').textContent = data.body;
-        overlay.classList.add('active');
-      });
+      btn.addEventListener('click', () => openOverlay(btn));
     });
 
     overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) overlay.classList.remove('active');
+      if (e.target === overlay) closeOverlay();
     });
 
     const handle = overlay.querySelector('.feature-overlay__handle');
     if (handle) {
-      handle.addEventListener('click', () => overlay.classList.remove('active'));
+      handle.addEventListener('click', closeOverlay);
     }
+
+    // ESC key closes the drawer
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) closeOverlay();
+    });
+  }
+
+  // ---- Studio canvas tabs ----
+  const studioTabs = document.querySelectorAll('[data-studio-tab]');
+  const studioPanels = document.querySelectorAll('.studio-canvas__panel');
+  const studioCaptions = document.querySelectorAll('[data-studio-caption]');
+
+  if (studioTabs.length) {
+    const activateTab = (key) => {
+      studioTabs.forEach(t => {
+        const on = t.dataset.studioTab === key;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      studioPanels.forEach(p => {
+        const on = p.id === `panel-${key}`;
+        p.classList.toggle('is-active', on);
+        // Support legacy video panels (pause when inactive) without forcing them
+        const video = p.querySelector('video');
+        if (video) {
+          if (on) {
+            try { const pp = video.play(); if (pp && pp.catch) pp.catch(() => {}); } catch (e) {}
+          } else {
+            try { video.pause(); } catch (e) {}
+          }
+        }
+      });
+      studioCaptions.forEach(c => {
+        c.classList.toggle('is-active', c.dataset.studioCaption === key);
+      });
+    };
+
+    studioTabs.forEach(tab => {
+      tab.addEventListener('click', () => activateTab(tab.dataset.studioTab));
+    });
   }
 
   // ---- Smooth active link highlighting ----
