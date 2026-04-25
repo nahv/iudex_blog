@@ -94,7 +94,7 @@
     <div class="pain__header">
       <span class="label" style="color: rgba(201,168,76,0.8)">El problema</span>
       <h2 id="pain-title" class="text-reveal" style="margin-top: 12px"><span class="text-reveal__inner">Hoy el derecho se escribe <em>entre doce pestañas</em></span></h2>
-      <p class="lead-reveal">El tiempo no se va en pensar. Se va en cambiar de pantalla: del buscador al PDF, del PDF al Word, del Word al correo, del correo al expediente.</p>
+      <p class="lead-reveal">El tiempo se va cambiando de pantalla: del buscador al PDF, del PDF al Word, del Word al expediente. Múltiples sistemas, instructivos eternos y formularios tediosos para una sola tarea.</p>
     </div>
 
     <div class="pain__grid stagger-children">
@@ -178,22 +178,23 @@
     <div class="solution__intro animate-on-scroll">
       <span class="section-tag">La idea</span>
       <h2 id="solution-title" class="text-reveal"><span class="text-reveal__inner">Del buscar <em>al investigar</em></span></h2>
-      <p class="lead lead-reveal">Antes empezabas con una palabra clave. Ahora empezás con una pregunta. El expediente, la jurisprudencia y el escrito dejan de ser tres trabajos separados y se vuelven uno solo.</p>
+      <p class="lead lead-reveal">Construimos un asistente que trabaja con IA sobre una base de jurisprudencia correntina estructurada y clasificada. Sin alucinaciones, sin citas a fallos inexistentes — solo fuentes reales y actualizadas.</p>
+      <p class="lead lead-reveal" style="margin-top:16px">Acá no se busca por palabras clave: la búsqueda es semántica y conceptual. Un verdadero asistente de investigación. A vos te queda aplicar el criterio y pensar la ciencia jurídica, no la informática.</p>
     </div>
 
     <div class="solution__visual scale-in">
       <div class="solution__stats">
         <div class="solution__stat">
-          <span class="solution__stat-num js-counter" data-target="1" data-suffix="h">0h</span>
-          <span class="solution__stat-label">De la pregunta al primer borrador</span>
+          <span class="solution__stat-num js-counter" data-target="1" data-suffix=" min">0 min</span>
+          <span class="solution__stat-label">De la pregunta a la jurisprudencia citada</span>
         </div>
         <div class="solution__stat">
-          <span class="solution__stat-num js-counter" data-target="3" data-suffix="hs">0hs</span>
-          <span class="solution__stat-label">Que vuelven al caso, cada semana</span>
+          <span class="solution__stat-num js-counter" data-target="40" data-suffix="h/mes">0h/mes</span>
+          <span class="solution__stat-label">Que vuelven al criterio y al cliente</span>
         </div>
         <div class="solution__stat">
-          <span class="solution__stat-num js-counter" data-target="1" data-suffix="">0</span>
-          <span class="solution__stat-label">Un solo hilo: expediente, investigación, escritura</span>
+          <span class="solution__stat-num js-counter" data-target="0" data-suffix="">0</span>
+          <span class="solution__stat-label">Citas a fallos inexistentes</span>
         </div>
       </div>
     </div>
@@ -215,7 +216,7 @@
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
         <span class="label" style="color:var(--gold);font-size:0.72rem">Paso 1 · Preguntá</span>
-        <h3 style="margin-top:8px">Definí el caso, no el query</h3>
+        <h3 style="margin-top:8px">Contá el caso, no busques palabras</h3>
         <p>Describí el problema jurídico con tus propias palabras. La respuesta llega con fallos argentinos citados, cada afirmación atada a su fuente.</p>
       </article>
 
@@ -263,72 +264,107 @@
   </div>
 </section>
 
-<!-- STUDIO CANVAS: real product screenshots -->
-<section class="studio-canvas section" id="por-dentro" aria-labelledby="studio-canvas-title">
+<!-- STUDIO SCROLLY: real product screenshots, scrolly-telling -->
+<section class="studio-scrolly section" id="por-dentro" aria-labelledby="studio-scrolly-title">
   <div class="container">
-    <div class="studio-canvas__header animate-on-scroll">
+    <div class="studio-scrolly__header animate-on-scroll">
       <span class="section-tag">Oficio diario</span>
-      <h2 id="studio-canvas-title" class="text-reveal" style="margin-top:8px"><span class="text-reveal__inner">El escritorio <em>por dentro</em></span></h2>
-      <p class="lead lead-reveal" style="margin-top:16px">Seis vistas del trabajo de todos los días. Expediente, agenda, notificaciones digitales, modelos. Lo que ya funciona — sin depender de IA ni de internet.</p>
+      <h2 id="studio-scrolly-title" class="text-reveal" style="margin-top:8px"><span class="text-reveal__inner">El escritorio <em>por dentro</em></span></h2>
+      <p class="lead lead-reveal" style="margin-top:16px">Vistas del trabajo de todos los días. Expedientes, agenda, notificaciones digitales, modelos. Lo que ya funciona, libre y gratuito, — sin depender de IA ni de internet.</p>
     </div>
 
-    <div class="studio-canvas__tabs" role="tablist" aria-label="Vistas del escritorio">
-      <button class="studio-canvas__tab is-active" role="tab" id="tab-inicio" aria-selected="true" aria-controls="panel-inicio" data-studio-tab="inicio" type="button">
-        <span class="studio-canvas__tab-label">01</span>
-        <span class="studio-canvas__tab-title">Inicio</span>
-      </button>
-      <button class="studio-canvas__tab" role="tab" id="tab-expediente" aria-selected="false" aria-controls="panel-expediente" data-studio-tab="expediente" type="button">
-        <span class="studio-canvas__tab-label">02</span>
-        <span class="studio-canvas__tab-title">Expediente</span>
-      </button>
-      <button class="studio-canvas__tab" role="tab" id="tab-notificaciones" aria-selected="false" aria-controls="panel-notificaciones" data-studio-tab="notificaciones" type="button">
-        <span class="studio-canvas__tab-label">03</span>
-        <span class="studio-canvas__tab-title">Notificaciones</span>
-      </button>
-      <button class="studio-canvas__tab" role="tab" id="tab-agenda" aria-selected="false" aria-controls="panel-agenda" data-studio-tab="agenda" type="button">
-        <span class="studio-canvas__tab-label">04</span>
-        <span class="studio-canvas__tab-title">Agenda</span>
-      </button>
-      <button class="studio-canvas__tab" role="tab" id="tab-ajustes" aria-selected="false" aria-controls="panel-ajustes" data-studio-tab="ajustes" type="button">
-        <span class="studio-canvas__tab-label">05</span>
-        <span class="studio-canvas__tab-title">Ajustes</span>
-      </button>
-      <button class="studio-canvas__tab" role="tab" id="tab-escrito" aria-selected="false" aria-controls="panel-escrito" data-studio-tab="escrito" type="button">
-        <span class="studio-canvas__tab-label">06</span>
-        <span class="studio-canvas__tab-title">Nuevo escrito</span>
-      </button>
-    </div>
-
-    <div class="studio-canvas__viewport scale-in">
-      <div class="studio-canvas__panels">
-        <div class="studio-canvas__panel is-active" id="panel-inicio" role="tabpanel" aria-labelledby="tab-inicio">
-          <img class="studio-canvas__media" src="public/assets/screenshots/1.png" alt="Pantalla de inicio de Iudex: expedientes recientes, agenda, valores del JUS y tasas." loading="lazy" decoding="async" />
+    <div class="studio-scrolly__stage">
+      <!-- Sticky image column (right on desktop) -->
+      <div class="studio-scrolly__sticky">
+        <div class="studio-scrolly__frame">
+          <img class="studio-scrolly__media is-active" data-scrolly-img="0" src="public/assets/screenshots/1.png" alt="Pantalla de inicio de Iudex." loading="lazy" decoding="async" />
+          <img class="studio-scrolly__media" data-scrolly-img="1" src="public/assets/screenshots/2.png" alt="Vista de un expediente en Iudex." loading="lazy" decoding="async" />
+          <img class="studio-scrolly__media" data-scrolly-img="2" src="public/assets/screenshots/3.png" alt="Notificaciones digitales en Iudex." loading="lazy" decoding="async" />
+          <img class="studio-scrolly__media" data-scrolly-img="3" src="public/assets/screenshots/4.png" alt="Agenda jurídica en Iudex." loading="lazy" decoding="async" />
+          <img class="studio-scrolly__media" data-scrolly-img="4" src="public/assets/screenshots/5.png" alt="Ajustes del estudio en Iudex." loading="lazy" decoding="async" />
+          <img class="studio-scrolly__media" data-scrolly-img="5" src="public/assets/screenshots/6.png" alt="Editor de nuevo escrito en Iudex." loading="lazy" decoding="async" />
+          <button class="studio-scrolly__expand" type="button" data-lightbox-open="active" aria-label="Ver imagen ampliada">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6"/></svg>
+          </button>
         </div>
-        <div class="studio-canvas__panel" id="panel-expediente" role="tabpanel" aria-labelledby="tab-expediente">
-          <img class="studio-canvas__media" src="public/assets/screenshots/2.png" alt="Vista de un expediente: actuaciones, partes, documentos y notas en un mismo hilo." loading="lazy" decoding="async" />
-        </div>
-        <div class="studio-canvas__panel" id="panel-notificaciones" role="tabpanel" aria-labelledby="tab-notificaciones">
-          <img class="studio-canvas__media" src="public/assets/screenshots/3.png" alt="Flujo de notificaciones digitales: QR, almacenamiento en la nube y archivado automático." loading="lazy" decoding="async" />
-        </div>
-        <div class="studio-canvas__panel" id="panel-agenda" role="tabpanel" aria-labelledby="tab-agenda">
-          <img class="studio-canvas__media" src="public/assets/screenshots/4.png" alt="Agenda jurídica: vencimientos, audiencias y recordatorios vinculados al expediente." loading="lazy" decoding="async" />
-        </div>
-        <div class="studio-canvas__panel" id="panel-ajustes" role="tabpanel" aria-labelledby="tab-ajustes">
-          <img class="studio-canvas__media" src="public/assets/screenshots/5.png" alt="Ajustes del estudio: preferencias del equipo, usuarios, permisos y plantillas." loading="lazy" decoding="async" />
-        </div>
-        <div class="studio-canvas__panel" id="panel-escrito" role="tabpanel" aria-labelledby="tab-escrito">
-          <img class="studio-canvas__media" src="public/assets/screenshots/6.png" alt="Nuevo escrito: plantillas propias del estudio con el contexto del expediente ya cargado." loading="lazy" decoding="async" />
+        <div class="studio-scrolly__progress" aria-hidden="true">
+          <span class="studio-scrolly__progress-dot is-active" data-scrolly-dot="0"></span>
+          <span class="studio-scrolly__progress-dot" data-scrolly-dot="1"></span>
+          <span class="studio-scrolly__progress-dot" data-scrolly-dot="2"></span>
+          <span class="studio-scrolly__progress-dot" data-scrolly-dot="3"></span>
+          <span class="studio-scrolly__progress-dot" data-scrolly-dot="4"></span>
+          <span class="studio-scrolly__progress-dot" data-scrolly-dot="5"></span>
         </div>
       </div>
-    </div>
 
-    <div class="studio-canvas__caption" aria-live="polite">
-      <p class="studio-canvas__caption-text is-active" data-studio-caption="inicio"><strong>Inicio.</strong> Los expedientes del día, la agenda próxima y los valores del JUS — al abrir la app.</p>
-      <p class="studio-canvas__caption-text" data-studio-caption="expediente"><strong>Expediente.</strong> Actuaciones, partes, documentos y notas: un solo hilo por caso.</p>
-      <p class="studio-canvas__caption-text" data-studio-caption="notificaciones"><strong>Notificaciones.</strong> QR y almacenamiento en la nube. Cada cédula electrónica entra, se ordena y queda archivada — sola.</p>
-      <p class="studio-canvas__caption-text" data-studio-caption="agenda"><strong>Agenda.</strong> Vencimientos, audiencias y recordatorios sincronizados con cada expediente.</p>
-      <p class="studio-canvas__caption-text" data-studio-caption="ajustes"><strong>Ajustes.</strong> Preferencias del equipo, usuarios, permisos y plantillas — en un solo panel.</p>
-      <p class="studio-canvas__caption-text" data-studio-caption="escrito"><strong>Nuevo escrito.</strong> Plantillas propias del estudio, con el contexto del expediente ya cargado.</p>
+      <!-- Scrolling text column (left on desktop) -->
+      <div class="studio-scrolly__steps">
+        <article class="studio-scrolly__step is-active" data-scrolly-step="0">
+          <div class="studio-scrolly__step-text">
+            <span class="studio-scrolly__step-num">01</span>
+            <h3 class="studio-scrolly__step-title">Inicio</h3>
+            <p class="studio-scrolly__step-body">Los expedientes del día, la agenda próxima y los valores del JUS — al abrir la app, en una sola vista.</p>
+          </div>
+          <button class="studio-scrolly__step-frame" type="button" data-lightbox-open="0" aria-label="Ampliar pantalla de inicio">
+            <img src="public/assets/screenshots/1.png" alt="Pantalla de inicio de Iudex: expedientes recientes, agenda, valores del JUS y tasas." loading="lazy" decoding="async" />
+          </button>
+        </article>
+
+        <article class="studio-scrolly__step" data-scrolly-step="1">
+          <div class="studio-scrolly__step-text">
+            <span class="studio-scrolly__step-num">02</span>
+            <h3 class="studio-scrolly__step-title">Expediente</h3>
+            <p class="studio-scrolly__step-body">Actuaciones, partes, documentos, cuentas judiciales y notas en un solo hilo por caso. Lo que pasó queda registrado; lo que se viene, también.</p>
+          </div>
+          <button class="studio-scrolly__step-frame" type="button" data-lightbox-open="1" aria-label="Ampliar vista de expediente">
+            <img src="public/assets/screenshots/2.png" alt="Vista de un expediente: actuaciones, partes, documentos y notas en un mismo hilo." loading="lazy" decoding="async" />
+          </button>
+        </article>
+
+        <article class="studio-scrolly__step" data-scrolly-step="2">
+          <div class="studio-scrolly__step-text">
+            <span class="studio-scrolly__step-num">03</span>
+            <h3 class="studio-scrolly__step-title">Notificaciones</h3>
+            <p class="studio-scrolly__step-body">QR y almacenamiento en la nube.<br>Vinculá tu cuenta de Google Drive o Dropbox. <br> Con un click tus copias para traslado se suben y se genera la cédula electrónica, con QR y la estructura requerida.</p>
+          </div>
+          <button class="studio-scrolly__step-frame" type="button" data-lightbox-open="2" aria-label="Ampliar flujo de notificaciones">
+            <img src="public/assets/screenshots/3.png" alt="Flujo de notificaciones digitales: QR, almacenamiento en la nube y archivado automático." loading="lazy" decoding="async" />
+          </button>
+        </article>
+
+        <article class="studio-scrolly__step" data-scrolly-step="3">
+          <div class="studio-scrolly__step-text">
+            <span class="studio-scrolly__step-num">04</span>
+            <h3 class="studio-scrolly__step-title">Agenda</h3>
+            <p class="studio-scrolly__step-body">Vencimientos, audiencias y recordatorios sincronizados con cada expediente. Los plazos dejan de vivir en la memoria.</p>
+          </div>
+          <button class="studio-scrolly__step-frame" type="button" data-lightbox-open="3" aria-label="Ampliar agenda jurídica">
+            <img src="public/assets/screenshots/4.png" alt="Agenda jurídica: vencimientos, audiencias y recordatorios vinculados al expediente." loading="lazy" decoding="async" />
+          </button>
+        </article>
+
+        <article class="studio-scrolly__step" data-scrolly-step="4">
+          <div class="studio-scrolly__step-text">
+            <span class="studio-scrolly__step-num">05</span>
+            <h3 class="studio-scrolly__step-title">Ajustes</h3>
+            <p class="studio-scrolly__step-body">Preferencias del equipo, usuarios, permisos y plantillas — en un solo panel. Configurás una vez y queda para todo el estudio.</p>
+          </div>
+          <button class="studio-scrolly__step-frame" type="button" data-lightbox-open="4" aria-label="Ampliar ajustes del estudio">
+            <img src="public/assets/screenshots/5.png" alt="Ajustes del estudio: preferencias del equipo, usuarios, permisos y plantillas." loading="lazy" decoding="async" />
+          </button>
+        </article>
+
+        <article class="studio-scrolly__step" data-scrolly-step="5">
+          <div class="studio-scrolly__step-text">
+            <span class="studio-scrolly__step-num">06</span>
+            <h3 class="studio-scrolly__step-title">Nuevo escrito</h3>
+            <p class="studio-scrolly__step-body">Plantillas propias del estudio, con el contexto del expediente ya cargado. La demanda arranca con el caso adentro, no con una hoja en blanco.</p>
+          </div>
+          <button class="studio-scrolly__step-frame" type="button" data-lightbox-open="5" aria-label="Ampliar editor de nuevo escrito">
+            <img src="public/assets/screenshots/6.png" alt="Nuevo escrito: plantillas propias del estudio con el contexto del expediente ya cargado." loading="lazy" decoding="async" />
+          </button>
+        </article>
+      </div>
     </div>
   </div>
 </section>
@@ -339,7 +375,7 @@
     <div class="features__header animate-on-scroll">
       <span class="section-tag">El instrumento</span>
       <h2 id="features-title" class="text-reveal"><span class="text-reveal__inner">Un solo espacio. <em>Cuatro oficios.</em></span></h2>
-      <p class="lead-reveal">Expedientes, investigación, escritura y gestión del estudio — pensados como partes del mismo trabajo, no como módulos separados.</p>
+      <p class="lead-reveal">Expedientes, investigación, escritura y gestión — partes del mismo trabajo, no módulos separados.</p>
     </div>
 
     <div class="grid-3 stagger-children">
@@ -354,15 +390,6 @@
 
       <div class="feature-card">
         <div class="feature-card__icon">
-          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </div>
-        <h3>Escritura que arranca del caso</h3>
-        <p>Demandas, recursos y notificaciones se componen con el contexto del expediente y las citas de tu investigación. Tu criterio, sobre trabajo ya hecho.</p>
-        <span class="feature-card__tag">Escritura</span>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-card__icon">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
         <h3>Investigación con fuentes</h3>
@@ -372,38 +399,20 @@
 
       <div class="feature-card">
         <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3>Escritura que arranca del caso</h3>
+        <p>Demandas, recursos y notificaciones se componen con el contexto del expediente y las citas de tu investigación. Tu criterio, sobre trabajo ya hecho.</p>
+        <span class="feature-card__tag">Escritura</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
           <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
-        <h3>Plazos que avisan a tiempo</h3>
-        <p>Los vencimientos procesales dejan de vivir en la memoria. Iudex lee las fechas del expediente y avisa antes, no el día del vencimiento.</p>
-        <span class="feature-card__tag">Plazos</span>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-card__icon">
-          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <h3>Ficha de cliente con contexto</h3>
-        <p>Cada cliente con su historia: causas, escritos, documentos y conversaciones. Antes de la reunión, el caso entero ya está leído.</p>
-        <span class="feature-card__tag">Clientes</span>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-card__icon">
-          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-        </div>
-        <h3>Modelos propios del estudio</h3>
-        <p>Los escritos que ya usás, convertidos en modelos compartidos. Cambian una vez y quedan corregidos para todo el equipo.</p>
-        <span class="feature-card__tag">Modelos</span>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-card__icon">
-          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        </div>
-        <h3>El pulso del estudio</h3>
-        <p>Causas activas, carga por abogado, tiempos reales de resolución. Lectura institucional del trabajo, sin abrir una planilla.</p>
-        <span class="feature-card__tag">Métricas</span>
+        <h3>Gestión del estudio</h3>
+        <p>Plazos que avisan antes del vencimiento, fichas de cliente con todo el contexto, modelos compartidos por el equipo y métricas reales del trabajo. Sin abrir una planilla.</p>
+        <span class="feature-card__tag">Gestión</span>
       </div>
     </div>
 
@@ -414,28 +423,16 @@
         <span class="features-mobile-grid__label">Expedientes</span>
       </button>
       <button class="features-mobile-grid__item" data-feature="1" type="button">
-        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-        <span class="features-mobile-grid__label">Escritura</span>
-      </button>
-      <button class="features-mobile-grid__item" data-feature="2" type="button">
         <div class="feature-card__icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
         <span class="features-mobile-grid__label">Investigación</span>
       </button>
+      <button class="features-mobile-grid__item" data-feature="2" type="button">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <span class="features-mobile-grid__label">Escritura</span>
+      </button>
       <button class="features-mobile-grid__item" data-feature="3" type="button">
         <div class="feature-card__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-        <span class="features-mobile-grid__label">Alertas</span>
-      </button>
-      <button class="features-mobile-grid__item" data-feature="4" type="button">
-        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <span class="features-mobile-grid__label">Clientes</span>
-      </button>
-      <button class="features-mobile-grid__item" data-feature="5" type="button">
-        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
-        <span class="features-mobile-grid__label">Plantillas</span>
-      </button>
-      <button class="features-mobile-grid__item" data-feature="6" type="button">
-        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-        <span class="features-mobile-grid__label">Métricas</span>
+        <span class="features-mobile-grid__label">Gestión</span>
       </button>
     </div>
 
@@ -546,10 +543,10 @@
 
       <div class="feature-card animate-on-scroll delay-1" style="background:rgba(247,244,238,0.04);border-color:rgba(247,244,238,0.08)">
         <div class="feature-card__icon" style="background:rgba(201,168,76,0.1)">
-          <svg viewBox="0 0 24 24" style="stroke:var(--gold)"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+          <svg viewBox="0 0 24 24" style="stroke:var(--gold)"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg>
         </div>
-        <h3 style="color:var(--cream)">Atajos de tipeo</h3>
-        <p style="color:rgba(247,244,238,0.7)">Tipeás <code style="background:rgba(201,168,76,0.15);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:0.82rem">,dr</code> y se expande a "Dr. [tu firma completa]". Cada uno arma sus propias abreviaciones.</p>
+        <h3 style="color:var(--cream)">Variables del expediente</h3>
+        <p style="color:rgba(247,244,238,0.7)">Escribís <code style="background:rgba(201,168,76,0.15);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:0.82rem">{DEMANDADO}</code> en una plantilla y se autocompleta con los datos del caso. Cada estudio arma las que usa: <code style="background:rgba(201,168,76,0.15);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:0.82rem">{ACTOR}</code>, <code style="background:rgba(201,168,76,0.15);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:0.82rem">{JUZGADO}</code>, <code style="background:rgba(201,168,76,0.15);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:0.82rem">{MONTO}</code>, fechas, número de expediente.</p>
       </div>
 
       <div class="feature-card animate-on-scroll delay-2" style="background:rgba(247,244,238,0.04);border-color:rgba(247,244,238,0.08)">
@@ -615,9 +612,9 @@
         <div class="feature-card__icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M9 9h6v6H9z"/></svg></div>
         <span class="mobile-overlay-grid__label">⌘K</span>
       </button>
-      <button class="mobile-overlay-grid__item" data-overlay-group="detalles" data-overlay-index="1" type="button" aria-label="Atajos de tipeo">
-        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg></div>
-        <span class="mobile-overlay-grid__label">Atajos</span>
+      <button class="mobile-overlay-grid__item" data-overlay-group="detalles" data-overlay-index="1" type="button" aria-label="Variables del expediente">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg></div>
+        <span class="mobile-overlay-grid__label">Variables</span>
       </button>
       <button class="mobile-overlay-grid__item" data-overlay-group="detalles" data-overlay-index="2" type="button" aria-label="Importar expedientes">
         <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
@@ -790,6 +787,31 @@
     </div>
   </div>
 </footer>
+
+<!-- IMAGE LIGHTBOX (used by studio scrolly) -->
+<div class="image-lightbox" id="image-lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de la pantalla" hidden>
+  <button class="image-lightbox__close" type="button" aria-label="Cerrar vista ampliada">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <button class="image-lightbox__nav image-lightbox__nav--prev" type="button" aria-label="Anterior">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  </button>
+  <button class="image-lightbox__nav image-lightbox__nav--next" type="button" aria-label="Siguiente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+  <div class="image-lightbox__viewport">
+    <img class="image-lightbox__img" alt="" />
+  </div>
+  <div class="image-lightbox__bar">
+    <span class="image-lightbox__caption" id="image-lightbox-caption"></span>
+    <div class="image-lightbox__zoom">
+      <button class="image-lightbox__zoom-btn" type="button" data-zoom="-1" aria-label="Reducir">−</button>
+      <span class="image-lightbox__zoom-level" id="image-lightbox-zoom-level">100%</span>
+      <button class="image-lightbox__zoom-btn" type="button" data-zoom="1" aria-label="Ampliar">+</button>
+      <button class="image-lightbox__zoom-btn image-lightbox__zoom-btn--reset" type="button" data-zoom="reset" aria-label="Restaurar zoom">1:1</button>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="public/js/env.js"></script>
