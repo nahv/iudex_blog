@@ -303,40 +303,125 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => el.classList.add('visible'), 500);
   });
 
-  // ---- Mobile features overlay ----
-  const featureData = [
-    { title: 'Gestión de expedientes', tag: 'Core', body: 'Organizá todos tus casos en un solo lugar. Seguimiento de estado, historial de actuaciones, vinculación de documentos y partes involucradas.' },
-    { title: 'Automatización de escritura', tag: 'IA legal', body: 'Generá escritos, demandas y notificaciones a partir de plantillas inteligentes. Solo completás los datos relevantes; Iudex hace el resto.' },
-    { title: 'Alertas de vencimientos', tag: 'Alertas', body: 'Nunca más un plazo vencido. Iudex te notifica con anticipación sobre vencimientos procesales y fechas clave de cada expediente.' },
-    { title: 'Gestión de clientes', tag: 'Clientes', body: 'Ficha completa por cliente con historial de casos, documentos y comunicaciones. Atendé mejor a tus clientes con información siempre a mano.' },
-    { title: 'Biblioteca de plantillas', tag: 'Plantillas', body: 'Accedé a un catálogo de modelos de documentos legales para los casos más frecuentes. Personalizables y actualizables por el equipo del estudio.' },
-    { title: 'Informes y métricas', tag: 'Análisis', body: 'Visualizá el estado de tu estudio: expedientes activos, tiempo promedio de resolución, carga de trabajo por abogado y más.' },
-  ];
+  // ---- Mobile overlay content (shared drawer, multiple groups) ----
+  const overlayContent = {
+    flujo: [
+      { title: 'Contá el caso, no busques palabras', tag: 'Paso 1 · Preguntá', body: 'Describí el problema jurídico con tus propias palabras. La respuesta llega con fallos argentinos citados, cada afirmación atada a su fuente.' },
+      { title: 'Jurisprudencia, doctrina y expediente, en el mismo hilo', tag: 'Paso 2 · Conectá', body: 'Lo que leés, lo que anotás y lo que archivás queda conectado al caso. Cada cita es rastreable. Ninguna respuesta sin fuente.' },
+      { title: 'El escrito nace del trabajo, no de una plantilla vacía', tag: 'Paso 3 · Producí', body: 'La demanda, el recurso o la notificación se arman con el contexto del caso y las citas de tu propia investigación. Solo te queda la revisión final.' },
+    ],
+    features: [
+      { title: 'Expedientes con memoria', tag: 'Expedientes', body: 'El caso entero en un hilo: estado, actuaciones, partes y documentos. Lo que pasó queda registrado. Lo que se viene, también.' },
+      { title: 'Investigación con fuentes', tag: 'Investigación', body: 'Pregunta en lenguaje natural, respuesta con fallos argentinos citados y linkeados. Guardás sesiones por caso, comparás criterios, armás el argumento.' },
+      { title: 'Escritura que arranca del caso', tag: 'Escritura', body: 'Demandas, recursos y notificaciones se componen con el contexto del expediente y las citas de tu investigación. Tu criterio, sobre trabajo ya hecho.' },
+      { title: 'Gestión del estudio', tag: 'Gestión', body: 'Plazos que avisan antes del vencimiento, fichas de cliente con todo el contexto, modelos compartidos por el equipo y métricas reales del trabajo. Sin abrir una planilla.' },
+    ],
+    pain: [
+      { title: 'Escritura que arranca de cero cada vez', tag: 'Fricción', body: 'Mismo encabezado, mismos párrafos, mismas cláusulas. Reescritas a mano, caso tras caso, porque el estudio no tiene memoria propia.' },
+      { title: 'El expediente vive en doce lugares', tag: 'Fricción', body: 'Carpetas en el escritorio, PDFs en el correo, notas en papel, planilla aparte. Recomponer lo que tenés lleva más tiempo que pensar el caso.' },
+      { title: 'Los plazos los lleva la memoria', tag: 'Fricción', body: 'Un vencimiento procesal depende de una alarma en el celular o de acordarte vos. Lo importante no debería vivir en un post-it.' },
+      { title: 'Herramientas hechas para otro trabajo', tag: 'Fricción', body: 'Word, Excel y el correo no fueron pensados para el ejercicio jurídico. Te adaptás vos, todos los días, a la forma de pensar de un procesador de texto.' },
+      { title: 'Cada escrito, una versión distinta', tag: 'Fricción', body: '¿Cuál era el modelo vigente? ¿El último enviado? ¿El que ya tenía los cambios pedidos? Sin historial común, la versión correcta se pierde.' },
+      { title: 'Más causas, menos criterio', tag: 'Fricción', body: 'Crecer no debería costar horas. Sin método compartido, cada cliente nuevo agrega ruido en vez de rutina.' },
+    ],
+    detalles: [
+      { title: 'Command palette · Ctrl+K', tag: 'Oficio', body: 'Abrí un expediente, disparás un escrito o saltás a un fallo sin tocar el mouse. La mano no abandona el teclado.' },
+      { title: 'Atajos de tipeo', tag: 'Oficio', body: 'Tipeás ,dr y se expande a "Dr. [tu firma completa]". Cada uno arma sus propias abreviaciones.' },
+      { title: 'Tus causas entran de una', tag: 'Oficio', body: 'Iudex convive con los sistemas judiciales provinciales y trae el listado completo de expedientes. Sin carga manual caso por caso.' },
+      { title: 'Línea de actuaciones, sola', tag: 'Oficio', body: 'Subís los PDFs del expediente y se ordenan por fecha. Con OCR: buscás por texto dentro de cualquier documento.' },
+      { title: 'Sigue funcionando sin señal', tag: 'Oficio', body: 'Tribunales, colectivo, café con WiFi flojo. Seguís trabajando y Iudex sincroniza cuando vuelve la conexión.' },
+      { title: 'Anotaciones sobre el PDF', tag: 'Oficio', body: 'Marcás, subrayás y dejás notas sobre el documento. Volvés seis meses después y la lectura anterior te está esperando.' },
+      { title: 'Cálculos a mano', tag: 'Oficio', body: 'Valor del JUS, tasa de justicia, honorarios por etapa. Sin salir del expediente ni abrir una planilla aparte.' },
+      { title: 'Historial del escrito', tag: 'Oficio', body: 'Cada versión queda registrada. Comparás v1 contra v3, volvés atrás, nunca pisás el trabajo anterior por accidente.' },
+      { title: 'Trabajo compartido, sin copias', tag: 'Oficio', body: 'Un expediente, varios abogados del estudio. Permisos claros, una sola fuente de verdad — no tres copias en carpetas de Drive.' },
+    ],
+  };
 
   const overlay = document.getElementById('feature-overlay');
   if (overlay) {
+    const openOverlay = (btn) => {
+      const group = btn.dataset.overlayGroup || 'features';
+      // Backwards-compat: legacy .features-mobile-grid__item uses data-feature
+      const idx = parseInt(btn.dataset.overlayIndex ?? btn.dataset.feature, 10);
+      const data = (overlayContent[group] || [])[idx];
+      if (!data) return;
+      const iconEl = document.getElementById('overlay-icon');
+      const iconSource = btn.querySelector('.feature-card__icon');
+      iconEl.innerHTML = iconSource ? iconSource.innerHTML : '';
+      document.getElementById('overlay-title').textContent = data.title;
+      document.getElementById('overlay-tag').textContent = data.tag;
+      document.getElementById('overlay-body').textContent = data.body;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeOverlay = () => {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    // New group-aware grids (pain, detalles, and any future)
+    document.querySelectorAll('.mobile-overlay-grid__item').forEach(btn => {
+      btn.addEventListener('click', () => openOverlay(btn));
+    });
+    // Legacy features mobile grid
     document.querySelectorAll('.features-mobile-grid__item').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = parseInt(btn.dataset.feature, 10);
-        const data = featureData[idx];
-        if (!data) return;
-        const iconEl = document.getElementById('overlay-icon');
-        iconEl.innerHTML = btn.querySelector('.feature-card__icon').innerHTML;
-        document.getElementById('overlay-title').textContent = data.title;
-        document.getElementById('overlay-tag').textContent = data.tag;
-        document.getElementById('overlay-body').textContent = data.body;
-        overlay.classList.add('active');
-      });
+      btn.addEventListener('click', () => openOverlay(btn));
     });
 
     overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) overlay.classList.remove('active');
+      if (e.target === overlay) closeOverlay();
     });
 
     const handle = overlay.querySelector('.feature-overlay__handle');
     if (handle) {
-      handle.addEventListener('click', () => overlay.classList.remove('active'));
+      handle.addEventListener('click', closeOverlay);
     }
+
+    // ESC key closes the drawer
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) closeOverlay();
+    });
+  }
+
+  // ---- Studio scrolly (Apple-style scroll-driven showcase) ----
+  const scrollySteps = document.querySelectorAll('.studio-scrolly__step');
+  const scrollyMedias = document.querySelectorAll('.studio-scrolly__media');
+  const scrollyDots = document.querySelectorAll('.studio-scrolly__progress-dot');
+
+  if (scrollySteps.length && scrollyMedias.length) {
+    const activateStep = (index) => {
+      scrollySteps.forEach(s => {
+        s.classList.toggle('is-active', s.dataset.scrollyStep === String(index));
+      });
+      scrollyMedias.forEach(m => {
+        m.classList.toggle('is-active', m.dataset.scrollyImg === String(index));
+      });
+      scrollyDots.forEach(d => {
+        d.classList.toggle('is-active', d.dataset.scrollyDot === String(index));
+      });
+    };
+
+    // Trigger when the step crosses the viewport's middle band (40%–60%).
+    const observer = new IntersectionObserver((entries) => {
+      // Among intersecting entries, pick the one with greatest visible ratio.
+      let best = null;
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+        }
+      });
+      if (best) {
+        const idx = parseInt(best.target.dataset.scrollyStep, 10);
+        if (!Number.isNaN(idx)) activateStep(idx);
+      }
+    }, {
+      // Triggers when the step's center is in the middle 20% of the viewport.
+      rootMargin: '-40% 0px -40% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1]
+    });
+
+    scrollySteps.forEach(step => observer.observe(step));
   }
 
   // ---- Smooth active link highlighting ----
