@@ -306,18 +306,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- Mobile overlay content (shared drawer, multiple groups) ----
   const overlayContent = {
     flujo: [
-      { title: 'Definí el caso, no el query', tag: 'Paso 1 · Preguntá', body: 'Describí el problema jurídico con tus propias palabras. La respuesta llega con fallos argentinos citados, cada afirmación atada a su fuente.' },
+      { title: 'Contá el caso, no busques palabras', tag: 'Paso 1 · Preguntá', body: 'Describí el problema jurídico con tus propias palabras. La respuesta llega con fallos argentinos citados, cada afirmación atada a su fuente.' },
       { title: 'Jurisprudencia, doctrina y expediente, en el mismo hilo', tag: 'Paso 2 · Conectá', body: 'Lo que leés, lo que anotás y lo que archivás queda conectado al caso. Cada cita es rastreable. Ninguna respuesta sin fuente.' },
       { title: 'El escrito nace del trabajo, no de una plantilla vacía', tag: 'Paso 3 · Producí', body: 'La demanda, el recurso o la notificación se arman con el contexto del caso y las citas de tu propia investigación. Solo te queda la revisión final.' },
     ],
     features: [
       { title: 'Expedientes con memoria', tag: 'Expedientes', body: 'El caso entero en un hilo: estado, actuaciones, partes y documentos. Lo que pasó queda registrado. Lo que se viene, también.' },
-      { title: 'Escritura que arranca del caso', tag: 'Escritura', body: 'Demandas, recursos y notificaciones se componen con el contexto del expediente y las citas de tu investigación. Tu criterio, sobre trabajo ya hecho.' },
       { title: 'Investigación con fuentes', tag: 'Investigación', body: 'Pregunta en lenguaje natural, respuesta con fallos argentinos citados y linkeados. Guardás sesiones por caso, comparás criterios, armás el argumento.' },
-      { title: 'Plazos que avisan a tiempo', tag: 'Plazos', body: 'Los vencimientos procesales dejan de vivir en la memoria. Iudex lee las fechas del expediente y avisa antes, no el día del vencimiento.' },
-      { title: 'Ficha de cliente con contexto', tag: 'Clientes', body: 'Cada cliente con su historia: causas, escritos, documentos y conversaciones. Antes de la reunión, el caso entero ya está leído.' },
-      { title: 'Modelos propios del estudio', tag: 'Modelos', body: 'Los escritos que ya usás, convertidos en modelos compartidos. Cambian una vez y quedan corregidos para todo el equipo.' },
-      { title: 'El pulso del estudio', tag: 'Métricas', body: 'Causas activas, carga por abogado, tiempos reales de resolución. Lectura institucional del trabajo, sin abrir una planilla.' },
+      { title: 'Escritura que arranca del caso', tag: 'Escritura', body: 'Demandas, recursos y notificaciones se componen con el contexto del expediente y las citas de tu investigación. Tu criterio, sobre trabajo ya hecho.' },
+      { title: 'Gestión del estudio', tag: 'Gestión', body: 'Plazos que avisan antes del vencimiento, fichas de cliente con todo el contexto, modelos compartidos por el equipo y métricas reales del trabajo. Sin abrir una planilla.' },
     ],
     pain: [
       { title: 'Escritura que arranca de cero cada vez', tag: 'Fricción', body: 'Mismo encabezado, mismos párrafos, mismas cláusulas. Reescritas a mano, caso tras caso, porque el estudio no tiene memoria propia.' },
@@ -329,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ],
     detalles: [
       { title: 'Command palette · Ctrl+K', tag: 'Oficio', body: 'Abrí un expediente, disparás un escrito o saltás a un fallo sin tocar el mouse. La mano no abandona el teclado.' },
-      { title: 'Atajos de tipeo', tag: 'Oficio', body: 'Tipeás ,dr y se expande a "Dr. [tu firma completa]". Cada uno arma sus propias abreviaciones.' },
+      { title: 'Variables del expediente', tag: 'Oficio', body: 'Escribís {DEMANDADO} en una plantilla y se autocompleta con los datos del caso. Cada estudio arma las que usa: {ACTOR}, {JUZGADO}, {MONTO}, fechas, número de expediente.' },
       { title: 'Tus causas entran de una', tag: 'Oficio', body: 'Iudex convive con los sistemas judiciales provinciales y trae el listado completo de expedientes. Sin carga manual caso por caso.' },
       { title: 'Línea de actuaciones, sola', tag: 'Oficio', body: 'Subís los PDFs del expediente y se ordenan por fecha. Con OCR: buscás por texto dentro de cualquier documento.' },
       { title: 'Sigue funcionando sin señal', tag: 'Oficio', body: 'Tribunales, colectivo, café con WiFi flojo. Seguís trabajando y Iudex sincroniza cuando vuelve la conexión.' },
@@ -387,39 +384,158 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---- Studio canvas tabs ----
-  const studioTabs = document.querySelectorAll('[data-studio-tab]');
-  const studioPanels = document.querySelectorAll('.studio-canvas__panel');
-  const studioCaptions = document.querySelectorAll('[data-studio-caption]');
+  // ---- Studio scrolly (vertical stack with smooth scene transitions) ----
+  const scrollySteps = document.querySelectorAll('.studio-scrolly__step');
+  const scrollyMedias = document.querySelectorAll('.studio-scrolly__media');
+  const scrollyDots = document.querySelectorAll('.studio-scrolly__progress-dot');
+  let scrollyActive = 0;
 
-  if (studioTabs.length) {
-    const activateTab = (key) => {
-      studioTabs.forEach(t => {
-        const on = t.dataset.studioTab === key;
-        t.classList.toggle('is-active', on);
-        t.setAttribute('aria-selected', on ? 'true' : 'false');
+  if (scrollySteps.length) {
+    const activateStep = (index) => {
+      scrollyActive = index;
+      scrollySteps.forEach(s => {
+        s.classList.toggle('is-active', s.dataset.scrollyStep === String(index));
       });
-      studioPanels.forEach(p => {
-        const on = p.id === `panel-${key}`;
-        p.classList.toggle('is-active', on);
-        // Support legacy video panels (pause when inactive) without forcing them
-        const video = p.querySelector('video');
-        if (video) {
-          if (on) {
-            try { const pp = video.play(); if (pp && pp.catch) pp.catch(() => {}); } catch (e) {}
-          } else {
-            try { video.pause(); } catch (e) {}
-          }
-        }
+      scrollyMedias.forEach(m => {
+        m.classList.toggle('is-active', m.dataset.scrollyImg === String(index));
       });
-      studioCaptions.forEach(c => {
-        c.classList.toggle('is-active', c.dataset.studioCaption === key);
+      scrollyDots.forEach(d => {
+        d.classList.toggle('is-active', d.dataset.scrollyDot === String(index));
       });
     };
 
-    studioTabs.forEach(tab => {
-      tab.addEventListener('click', () => activateTab(tab.dataset.studioTab));
+    const observer = new IntersectionObserver((entries) => {
+      let best = null;
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+        }
+      });
+      if (best) {
+        const idx = parseInt(best.target.dataset.scrollyStep, 10);
+        if (!Number.isNaN(idx)) activateStep(idx);
+      }
+    }, {
+      rootMargin: '-40% 0px -40% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1]
     });
+
+    scrollySteps.forEach(step => observer.observe(step));
+  }
+
+  // ---- Image lightbox (fullscreen viewer + zoom) ----
+  const lightbox = document.getElementById('image-lightbox');
+  if (lightbox && scrollyMedias.length) {
+    const lbImg = lightbox.querySelector('.image-lightbox__img');
+    const lbCaption = document.getElementById('image-lightbox-caption');
+    const lbLevel = document.getElementById('image-lightbox-zoom-level');
+    const lbClose = lightbox.querySelector('.image-lightbox__close');
+    const lbPrev = lightbox.querySelector('.image-lightbox__nav--prev');
+    const lbNext = lightbox.querySelector('.image-lightbox__nav--next');
+    const lbZoomBtns = lightbox.querySelectorAll('.image-lightbox__zoom-btn');
+    const stepTitles = Array.from(document.querySelectorAll('.studio-scrolly__step-title')).map(el => el.textContent.trim());
+
+    let currentIdx = 0;
+    let zoom = 1;
+    const ZOOM_MIN = 1;
+    const ZOOM_MAX = 4;
+    const ZOOM_STEP = 0.5;
+
+    const setZoom = (next, originX, originY) => {
+      zoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, next));
+      lbImg.style.transformOrigin = (originX != null && originY != null)
+        ? `${originX}% ${originY}%`
+        : 'center center';
+      lbImg.style.transform = `scale(${zoom})`;
+      lbImg.classList.toggle('is-zoomed', zoom > 1);
+      if (lbLevel) lbLevel.textContent = Math.round(zoom * 100) + '%';
+    };
+
+    const loadImage = (idx) => {
+      const total = scrollyMedias.length;
+      currentIdx = ((idx % total) + total) % total;
+      const src = scrollyMedias[currentIdx].getAttribute('src');
+      const alt = scrollyMedias[currentIdx].getAttribute('alt') || '';
+      lbImg.src = src;
+      lbImg.alt = alt;
+      if (lbCaption) lbCaption.textContent = `${String(currentIdx + 1).padStart(2, '0')} · ${stepTitles[currentIdx] || ''}`;
+      setZoom(1);
+    };
+
+    const openLightbox = (idx) => {
+      loadImage(idx);
+      lightbox.hidden = false;
+      // next frame so the transition runs
+      requestAnimationFrame(() => lightbox.classList.add('is-open'));
+      document.body.classList.add('has-lightbox-open');
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('is-open');
+      document.body.classList.remove('has-lightbox-open');
+      setZoom(1);
+      setTimeout(() => { lightbox.hidden = true; }, 250);
+    };
+
+    // Open triggers (sticky expand button + each mobile inline frame)
+    document.querySelectorAll('[data-lightbox-open]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const raw = btn.dataset.lightboxOpen;
+        const idx = raw === 'active' ? scrollyActive : parseInt(raw, 10) || 0;
+        openLightbox(idx);
+      });
+    });
+
+    // Close
+    lbClose.addEventListener('click', closeLightbox);
+
+    // ESC closes; arrows navigate
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') loadImage(currentIdx - 1);
+      else if (e.key === 'ArrowRight') loadImage(currentIdx + 1);
+      else if (e.key === '+' || e.key === '=') setZoom(zoom + ZOOM_STEP);
+      else if (e.key === '-' || e.key === '_') setZoom(zoom - ZOOM_STEP);
+      else if (e.key === '0') setZoom(1);
+    });
+
+    // Click backdrop (not the image) closes
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // Navigation
+    lbPrev.addEventListener('click', () => loadImage(currentIdx - 1));
+    lbNext.addEventListener('click', () => loadImage(currentIdx + 1));
+
+    // Zoom buttons
+    lbZoomBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const v = btn.dataset.zoom;
+        if (v === 'reset') setZoom(1);
+        else setZoom(zoom + parseFloat(v) * ZOOM_STEP);
+      });
+    });
+
+    // Click image to toggle zoom on desktop, with focal point at click
+    lbImg.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const rect = lbImg.getBoundingClientRect();
+      const ox = ((e.clientX - rect.left) / rect.width) * 100;
+      const oy = ((e.clientY - rect.top) / rect.height) * 100;
+      if (zoom === 1) setZoom(2, ox, oy);
+      else setZoom(1);
+    });
+
+    // Wheel to zoom (desktop)
+    lightbox.addEventListener('wheel', (e) => {
+      if (lightbox.hidden) return;
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP;
+      setZoom(zoom + delta);
+    }, { passive: false });
   }
 
   // ---- Smooth active link highlighting ----
