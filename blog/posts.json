@@ -1,6 +1,22 @@
 {
   "posts": [
     {
+      "slug": "iudex-aws-activate",
+      "title": "Iudex se suma a AWS Activate",
+      "description": "Nos incorporamos a la comunidad de desarrolladores cloud de AWS. Qué significa para los estudios: infraestructura de clase mundial, seguridad de extremo a extremo y los estándares operativos más exigentes.",
+      "featuredDescription": "Iudex en AWS Activate: la misma infraestructura, seguridad y estabilidad que sostienen a las plataformas más exigentes del mundo.",
+      "author": "Equipo Iudex",
+      "date": "26 Abr 2026",
+      "readTime": "4 min",
+      "category": "noticias",
+      "categoryLabel": "Noticias",
+      "icon": "<path d=\"M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z\"/>",
+      "thumbGradient": "#1a1c22,#2a2418",
+      "published": true,
+      "featured": true,
+      "placeholder": false
+    },
+    {
       "slug": "investigacion-jurisprudencial-corrientes",
       "title": "Demanda laboral en Corrientes: de la búsqueda al escrito final",
       "description": "Un caso práctico: cómo preparar una demanda laboral investigando jurisprudencia con IA en tres pasos concretos, sin perder horas entre buscadores y Word.",
@@ -13,7 +29,7 @@
       "icon": "<circle cx=\"11\" cy=\"11\" r=\"8\"/><line x1=\"21\" y1=\"21\" x2=\"16.65\" y2=\"16.65\"/>",
       "thumbGradient": "#1a1c22,#252a35",
       "published": true,
-      "featured": true,
+      "featured": false,
       "placeholder": false
     },
     {
