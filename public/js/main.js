@@ -604,9 +604,9 @@ function initOneNexusOrb(canvas) {
   };
   const rgba = (c, a) => `rgba(${c.r}, ${c.g}, ${c.b}, ${a})`;
 
-  const NODE_BASE  = isMini ? [30, 210]            : [0, 90, 198, 288];
-  const NODE_SPEED = isMini ? [0.4, 0.3]           : [1.0, 0.7, 1.3, 0.9];
-  const NODE_COLOR = isMini ? [C.gold, C.tealLight] : [C.indigoCyan, C.tealLight, C.indigoDeep, C.gold];
+  const NODE_BASE  = [0, 90, 198, 288];
+  const NODE_SPEED = [1.0, 0.7, 1.3, 0.9];
+  const NODE_COLOR = [C.indigoCyan, C.tealLight, C.indigoDeep, C.gold];
 
   const STATE = isMini
     ? { breatheSec: 6.0, orbitSec: 60.0, intensity: 0.5 }
@@ -673,51 +673,66 @@ function initOneNexusOrb(canvas) {
       drawNodes(cx, cy, orbitR, nodeR, orbit);
       drawOrb(cx, cy, baseR, orbR, breathe, aurora, STATE.intensity);
     } else {
-      drawNodes(cx, cy, orbitR, nodeR, orbit);
+      // Mini: just the blue ball + halo. No nodes, no orbit ring, no shimmer.
       drawOrbMini(cx, cy, baseR, orbR, breathe);
     }
 
     requestAnimationFrame(tick);
   }
 
-  // Mini orb: just outer glow + soft core gradient + subtle rim. No conic gradients,
-  // no shimmer, no globalCompositeOperation. Cheap to render at 30fps.
+  // Mini orb: solid blue ball + soft halo + light highlight. No nodes, no shimmer.
+  // Tuned to read clearly on the cream hero background.
   function drawOrbMini(cx, cy, baseR, orbR, breathe) {
-    const breatheBoost = breathe * 0.03;
+    // Slightly larger so it carries presence against the cream hero
+    const ballR = orbR * 1.25;
+    const breatheBoost = breathe * 0.06;
 
+    // Soft halo behind the ball
     ctx.save();
-    const outerR = baseR * 1.7;
-    const g1 = ctx.createRadialGradient(cx, cy, 0, cx, cy, outerR);
-    g1.addColorStop(0,   rgba(C.indigoDeep, 0.10 + breatheBoost));
-    g1.addColorStop(0.6, rgba(C.teal, 0.06));
-    g1.addColorStop(1,   rgba(C.teal, 0));
+    const haloR = ballR * 1.85;
+    const g1 = ctx.createRadialGradient(cx, cy, ballR * 0.7, cx, cy, haloR);
+    g1.addColorStop(0,   rgba(C.indigoCyan, 0.22 + breatheBoost));
+    g1.addColorStop(0.5, rgba(C.indigoCyan, 0.10));
+    g1.addColorStop(1,   rgba(C.indigoCyan, 0));
     ctx.fillStyle = g1;
     ctx.beginPath();
-    ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+    ctx.arc(cx, cy, haloR, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 
+    // Solid blue ball — opaque, with light source from top-left
     ctx.save();
-    const offX = orbR * -0.18, offY = orbR * -0.22;
-    const g2 = ctx.createRadialGradient(cx + offX, cy + offY, 0, cx, cy, orbR);
-    g2.addColorStop(0,    rgba(C.indigoDeep, 0.95));
-    g2.addColorStop(0.6,  rgba(C.indigoCyan, 0.92));
-    g2.addColorStop(1,    rgba(C.teal, 0.88));
+    const offX = ballR * -0.22, offY = ballR * -0.28;
+    const g2 = ctx.createRadialGradient(cx + offX, cy + offY, 0, cx, cy, ballR);
+    g2.addColorStop(0,    rgba(C.indigoCyan, 1));
+    g2.addColorStop(0.55, rgba(C.indigoDeep, 1));
+    g2.addColorStop(1,    'rgba(8, 14, 38, 1)');
     ctx.fillStyle = g2;
     ctx.beginPath();
-    ctx.arc(cx, cy, orbR, 0, Math.PI * 2);
+    ctx.arc(cx, cy, ballR, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 
+    // Specular highlight (top-left lift)
     ctx.save();
-    const hx = cx - orbR * 0.32, hy = cy - orbR * 0.36;
-    const hg = ctx.createRadialGradient(hx, hy, 0, hx, hy, orbR * 0.55);
-    hg.addColorStop(0, 'rgba(255,255,255,0.14)');
+    const hx = cx - ballR * 0.38, hy = cy - ballR * 0.42;
+    const hg = ctx.createRadialGradient(hx, hy, 0, hx, hy, ballR * 0.7);
+    hg.addColorStop(0, 'rgba(255,255,255,0.32)');
+    hg.addColorStop(0.6, 'rgba(255,255,255,0.05)');
     hg.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = hg;
     ctx.beginPath();
-    ctx.arc(cx, cy, orbR, 0, Math.PI * 2);
+    ctx.arc(cx, cy, ballR, 0, Math.PI * 2);
     ctx.fill();
+    ctx.restore();
+
+    // Rim light to define the silhouette
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, ballR, 0, Math.PI * 2);
+    ctx.strokeStyle = rgba(C.indigoCyan, 0.35 + breathe * 0.10);
+    ctx.lineWidth = 1;
+    ctx.stroke();
     ctx.restore();
   }
 
