@@ -63,7 +63,7 @@
     <div class="solution__intro animate-on-scroll">
       <span class="section-tag">Un mismo hilo</span>
       <h2 id="flujo-title" style="margin-top:8px">Empezás con una pregunta. <em>Terminás con un argumento.</em></h2>
-      <p class="lead" style="margin-top:16px">Tres momentos conectados en un mismo espacio: preguntar, conectar, producir. Sin copia-pega, sin planilla aparte, sin volver a empezar.</p>
+      <p class="lead" style="margin-top:16px">Tres momentos conectados en un mismo espacio: preguntar, leer, producir. Sin copia-pega, sin planilla aparte, sin volver a empezar.</p>
     </div>
   </div>
 </section>
@@ -72,7 +72,7 @@
 <section class="nexus-banner" aria-labelledby="nexus-banner-title">
   <div class="container">
     <div class="nexus-banner__inner">
-      <div class="animate-on-scroll">
+      <div class="nexus-banner__text">
         <span class="nexus-banner__eyebrow">Introducimos · Asistente Iudex</span>
         <h2 id="nexus-banner-title" class="nexus-banner__title">Conocé a <em>Nexus</em></h2>
         <p class="nexus-banner__lead">Nexus es la inteligencia detrás de la investigación en Iudex. Un asistente jurídico construido para entender el caso, conectar lo que leés y devolverte respuestas con fuentes citadas — sin perder el hilo del expediente.</p>
@@ -90,13 +90,13 @@
   </div>
 </section>
 
-<!-- NEXUS -->
-<section class="section" style="padding-top:0" aria-labelledby="nexus-title">
+<!-- STEP 1 — Preguntar -->
+<section class="section" style="padding-top:0" aria-labelledby="step1-title">
   <div class="container">
     <div class="grid-2" style="gap:64px;align-items:center">
       <div class="animate-on-scroll">
         <span class="label" style="color:var(--gold)">Paso 1 · Preguntar</span>
-        <h2 id="nexus-title" style="margin-top:12px;font-size:1.9rem">Contá el caso, no busques palabras sueltas</h2>
+        <h2 id="step1-title" style="margin-top:12px;font-size:1.9rem">Contá el caso, no busques palabras sueltas</h2>
         <p class="lead" style="margin-top:16px">Iudex no busca por coincidencia de palabras: entiende el concepto jurídico que estás planteando. Si preguntás por "responsabilidad por daños del trabajador", devuelve fallos sobre indemnización por accidente laboral, culpa <em>in eligendo</em> o riesgo del trabajo — aunque no hayas usado esos términos. La respuesta llega con los fallos argentinos citados y linkeados, abribles al instante.</p>
         <ul class="value__list" style="margin-top:24px">
           <li class="value__list-item">
@@ -117,49 +117,40 @@
           </li>
         </ul>
       </div>
-      <figure class="scale-in nexus-shot">
-        <img src="../public/assets/screenshots/7.png" alt="Pantalla de Iudex: pregunta en lenguaje natural y respuesta con fallos argentinos citados y linkeados." loading="lazy" decoding="async" />
-      </figure>
+      <button class="scale-in nexus-shot" type="button" data-lightbox-open="0" aria-label="Ampliar pantalla: pregunta en lenguaje natural a Nexus">
+        <img src="../public/assets/screenshots/7.png" alt="Pantalla de Iudex: pregunta en lenguaje natural a Nexus y respuesta con fallos argentinos citados." data-lightbox-img data-lightbox-caption="Paso 1 · Preguntá a Nexus en lenguaje natural" loading="lazy" decoding="async" />
+      </button>
     </div>
   </div>
 </section>
 
-<!-- INVESTIGACION -->
-<section class="section" style="background:var(--cream-dark)" aria-labelledby="investigacion-title">
+<!-- STEP 2 — Leer -->
+<section class="section" style="background:var(--cream-dark)" aria-labelledby="step2-title">
   <div class="container">
     <div class="grid-2" style="gap:64px;align-items:center">
-      <div class="scale-in" style="order:2">
-        <div style="background:var(--cream);border-radius:16px;padding:24px;border:1px solid rgba(15,15,14,0.08)">
-          <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-            <span class="feature-card__tag">Sesión: Demanda García c/ Frigorífico</span>
-          </div>
-          <div style="display:grid;gap:12px">
-            <div style="padding:12px 14px;background:var(--cream-dark);border-radius:8px;font-size:0.85rem"><strong>Fallo CAT-CTES 2023/174</strong> <span style="color:var(--ink-muted)">· Resumen generado</span></div>
-            <div style="padding:12px 14px;background:var(--cream-dark);border-radius:8px;font-size:0.85rem"><strong>Doctrina aplicable</strong> <span style="color:var(--ink-muted)">· 3 items extraídos</span></div>
-            <div style="padding:12px 14px;background:var(--cream-dark);border-radius:8px;font-size:0.85rem"><strong>Borrador de argumento</strong> <span style="color:var(--gold)">· listo para escrito</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="animate-on-scroll" style="order:1">
-        <span class="label" style="color:var(--gold)">Paso 2 · Conectar</span>
-        <h2 id="investigacion-title" style="margin-top:12px;font-size:1.9rem">Lo que leés, lo que escribís, lo que archivás — conectado</h2>
-        <p class="lead" style="margin-top:16px">La investigación vive en sesiones por caso. Fallos, notas y borradores quedan atados al expediente correcto, sin pasar por ninguna planilla intermedia.</p>
+      <button class="scale-in nexus-shot" type="button" data-lightbox-open="1" aria-label="Ampliar pantalla: lectura completa del fallo y sus resoluciones" style="order:1">
+        <img src="../public/assets/screenshots/8.png" alt="Pantalla de Iudex: vista completa del fallo con considerandos y resoluciones." data-lightbox-img data-lightbox-caption="Paso 2 · Leé el fallo entero" loading="lazy" decoding="async" />
+      </button>
+      <div class="animate-on-scroll" style="order:2">
+        <span class="label" style="color:var(--gold)">Paso 2 · Leer</span>
+        <h2 id="step2-title" style="margin-top:12px;font-size:1.9rem">Leé el fallo entero, no solo el extracto</h2>
+        <p class="lead" style="margin-top:16px">Cuando un resultado te interesa, lo abrís completo: texto íntegro, considerandos, votos y resoluciones. Marcás lo que importa para tu caso, anotás sobre la lectura — y todo queda atado al expediente, listo para volver cuando lo necesites.</p>
         <ul class="value__list" style="margin-top:24px">
           <li class="value__list-item">
             <div class="value__check"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
-            <div><h4>El caso guarda su propia memoria</h4><p>Cada sesión conserva los fallos que leíste, las notas que dejaste y los borradores que fuiste armando. Volvés y la lectura te espera.</p></div>
+            <div><h4>Texto íntegro y resoluciones</h4><p>El fallo completo, no un resumen recortado. Considerandos, parte dispositiva y votos disidentes a la vista.</p></div>
           </li>
           <li class="value__list-item">
             <div class="value__check"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
-            <div><h4>Fallos atados al expediente</h4><p>Los asociás al caso en el que estás trabajando. Nada suelto, nada por duplicado.</p></div>
+            <div><h4>Anotás directamente sobre la lectura</h4><p>Subrayados y notas quedan sobre el documento, asociados al caso. Volvés seis meses después y siguen ahí.</p></div>
           </li>
           <li class="value__list-item">
             <div class="value__check"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
-            <div><h4>Acciones rápidas sobre el texto</h4><p>Resumir un fallo, extraer doctrina aplicable, comparar dos criterios. Cada salida conserva la cita.</p></div>
+            <div><h4>Marcás los considerandos clave</h4><p>El fragmento que va a sostener tu argumento queda destacado y citable, con la referencia al fallo de origen.</p></div>
           </li>
           <li class="value__list-item">
             <div class="value__check"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
-            <div><h4>El argumento, armado sobre tu lectura</h4><p>Iudex arma el borrador con los fallos que ya elegiste. Vos editás, aprobás, descartás — el criterio lo ponés vos.</p></div>
+            <div><h4>El fallo se queda en el caso</h4><p>Cada lectura suma a la sesión del expediente. Nada suelto, nada por duplicado.</p></div>
           </li>
         </ul>
       </div>
@@ -167,45 +158,36 @@
   </div>
 </section>
 
-<!-- JURISPRUDENCIA -->
-<section class="section" aria-labelledby="jurisprudencia-title">
+<!-- STEP 3 — Producir -->
+<section class="section" aria-labelledby="step3-title">
   <div class="container">
     <div class="grid-2" style="gap:64px;align-items:center">
       <div class="animate-on-scroll">
         <span class="label" style="color:var(--gold)">Paso 3 · Producir</span>
-        <h2 id="jurisprudencia-title" style="margin-top:12px;font-size:1.9rem">El fallo exacto, sin rodeos</h2>
-        <p class="lead" style="margin-top:16px">Cuando la investigación ya tiene dirección, precisás ir al grano: búsqueda avanzada sobre jurisprudencia argentina con filtros que cruzan fuero, cámara, tribunal y fecha.</p>
+        <h2 id="step3-title" style="margin-top:12px;font-size:1.9rem">Tus fuentes, en un memo de trabajo</h2>
+        <p class="lead" style="margin-top:16px">Con los fallos elegidos y las anotaciones que dejaste, Iudex arma un memo de trabajo: un punto de partida sobre el cual aplicar tu criterio. Lo revisás, lo editás, descartás lo que no va — el borrador no reemplaza tu juicio profesional, lo apura.</p>
         <ul class="value__list" style="margin-top:24px">
           <li class="value__list-item">
             <div class="value__check"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
-            <div><h4>Búsqueda full-text</h4><p>Texto libre, carátula, número de expediente o descriptores. Lo que recuerdes, alcanza.</p></div>
+            <div><h4>Memo armado con tus fuentes</h4><p>Iudex toma los fallos que vos seleccionaste y las notas que dejaste, y los hilvana en un primer borrador del argumento.</p></div>
           </li>
           <li class="value__list-item">
             <div class="value__check"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
-            <div><h4>Cruzás criterios hasta el fallo justo</h4><p>Cámara, fuero, tribunal, magistrado, fecha. Filtros que se combinan como los pensás.</p></div>
+            <div><h4>Cada cita linkeada al fallo de origen</h4><p>Volvés al texto íntegro de un click. Verificás, contrastás, ajustás — sin perder el contexto.</p></div>
           </li>
           <li class="value__list-item">
             <div class="value__check"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
-            <div><h4>Corpus argentino, no traducido</h4><p>Fallos de cámaras y juzgados argentinos. No jurisprudencia genérica de otros países.</p></div>
+            <div><h4>Editás, ampliás, descartás</h4><p>Tomás lo que sirve, ajustás el lenguaje a tu estilo, agregás las consideraciones del caso concreto. El memo es punto de partida, no llegada.</p></div>
           </li>
           <li class="value__list-item">
             <div class="value__check"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
-            <div><h4>Vista completa del fallo</h4><p>Texto íntegro, metadata, fragmentos con tu búsqueda resaltada y un clic para guardarlo en la sesión activa.</p></div>
+            <div><h4>El criterio jurídico, siempre tuyo</h4><p>Iudex acelera la tarea mecánica de hilvanar fuentes. El razonamiento, la estrategia y la decisión profesional las ponés vos.</p></div>
           </li>
         </ul>
       </div>
-      <div class="scale-in" style="background:var(--ink);border-radius:16px;padding:24px;color:var(--cream);font-family:var(--font-mono);font-size:0.82rem">
-        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-          <span style="padding:4px 10px;background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;font-size:0.7rem">Fuero: Laboral</span>
-          <span style="padding:4px 10px;background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;font-size:0.7rem">Cámara: Corrientes</span>
-          <span style="padding:4px 10px;background:rgba(201,168,76,0.15);color:var(--gold);border-radius:4px;font-size:0.7rem">2022-2024</span>
-        </div>
-        <div style="border-top:1px solid rgba(247,244,238,0.1);padding-top:16px">
-          <div style="margin-bottom:12px;line-height:1.5"><strong style="color:var(--gold)">CAT-CTES 2023/174</strong><br><span style="color:rgba(247,244,238,0.7)">García, M. c/ Frigorífico S.A. s/ indemnización</span></div>
-          <div style="margin-bottom:12px;line-height:1.5"><strong style="color:var(--gold)">CAT-CTES 2022/089</strong><br><span style="color:rgba(247,244,238,0.7)">Ramírez, J. c/ Transporte NEA s/ daños</span></div>
-          <div style="color:rgba(247,244,238,0.55);font-size:0.75rem">247 resultados más</div>
-        </div>
-      </div>
+      <button class="scale-in nexus-shot" type="button" data-lightbox-open="2" aria-label="Ampliar pantalla: memo de trabajo con fuentes seleccionadas">
+        <img src="../public/assets/screenshots/9.png" alt="Pantalla de Iudex: memo de trabajo armado con los fallos seleccionados, listo para revisar y aplicar criterio." data-lightbox-img data-lightbox-caption="Paso 3 · Memo de trabajo con tus fuentes" loading="lazy" decoding="async" />
+      </button>
     </div>
   </div>
 </section>
@@ -285,6 +267,31 @@
     </div>
   </div>
 </footer>
+
+<!-- IMAGE LIGHTBOX (used by paso 1/2/3 screenshots) -->
+<div class="image-lightbox" id="image-lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de la pantalla" hidden>
+  <button class="image-lightbox__close" type="button" aria-label="Cerrar vista ampliada">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <button class="image-lightbox__nav image-lightbox__nav--prev" type="button" aria-label="Anterior">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  </button>
+  <button class="image-lightbox__nav image-lightbox__nav--next" type="button" aria-label="Siguiente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+  <div class="image-lightbox__viewport">
+    <img class="image-lightbox__img" alt="" />
+  </div>
+  <div class="image-lightbox__bar">
+    <span class="image-lightbox__caption" id="image-lightbox-caption"></span>
+    <div class="image-lightbox__zoom">
+      <button class="image-lightbox__zoom-btn" type="button" data-zoom="-1" aria-label="Reducir">−</button>
+      <span class="image-lightbox__zoom-level" id="image-lightbox-zoom-level">100%</span>
+      <button class="image-lightbox__zoom-btn" type="button" data-zoom="1" aria-label="Ampliar">+</button>
+      <button class="image-lightbox__zoom-btn image-lightbox__zoom-btn--reset" type="button" data-zoom="reset" aria-label="Restaurar zoom">1:1</button>
+    </div>
+  </div>
+</div>
 
 <script src="../public/js/env.js"></script>
 <script src="../public/js/main.js"></script>

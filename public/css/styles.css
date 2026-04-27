@@ -3234,7 +3234,75 @@ body.has-lightbox-open {
   .nexus-orb { width: 240px; height: 240px; }
 }
 
-/* Screenshot frame for Paso 1 (matches studio-scrolly aesthetic) */
+/* === NEXUS REVEAL — staged choreography === */
+/* Initial layout transitions (text + visual translate as a unit) */
+.nexus-banner__text,
+.nexus-banner__visual {
+  transition: transform 1.25s cubic-bezier(0.7, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Lead and chip transitions (delays added in revealed state) */
+.nexus-banner__lead,
+.nexus-banner__chip {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Pre-staged: hide lead and chips */
+.nexus-banner.is-staged .nexus-banner__lead,
+.nexus-banner.is-staged .nexus-banner__chip {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* Desktop only: orb starts on the LEFT, text shifted right */
+@media (min-width: 900px) {
+  .nexus-banner.is-staged .nexus-banner__visual {
+    transform: translate(calc(-100% - 56px - 60px), 0) scale(1.25);
+  }
+  .nexus-banner.is-staged .nexus-banner__text {
+    transform: translateX(40%);
+  }
+}
+
+/* Reveal: stagger lead, then chips */
+.nexus-banner.is-revealed .nexus-banner__lead {
+  transition-delay: 0.1s;
+}
+.nexus-banner.is-revealed .nexus-banner__chip:nth-child(1) { transition-delay: 0.45s; }
+.nexus-banner.is-revealed .nexus-banner__chip:nth-child(2) { transition-delay: 0.55s; }
+.nexus-banner.is-revealed .nexus-banner__chip:nth-child(3) { transition-delay: 0.65s; }
+.nexus-banner.is-revealed .nexus-banner__chip:nth-child(4) { transition-delay: 0.75s; }
+
+/* Typing caret — shown only while staged */
+.nexus-banner.is-staged .nexus-banner__title::after {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  background: var(--gold);
+  margin-left: 6px;
+  vertical-align: -0.08em;
+  animation: nexus-caret 1s step-end infinite;
+}
+
+@keyframes nexus-caret {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Reduced motion: skip the choreography entirely */
+@media (prefers-reduced-motion: reduce) {
+  .nexus-banner__text,
+  .nexus-banner__visual,
+  .nexus-banner__lead,
+  .nexus-banner__chip {
+    transition: none !important;
+  }
+}
+
+/* Screenshot frame for the investigación flow (matches studio-scrolly aesthetic).
+   Used on <button> triggers so the lightbox can open them. */
 .nexus-shot {
   margin: 0;
   display: block;
@@ -3245,6 +3313,23 @@ body.has-lightbox-open {
   background: var(--cream-dark);
   border: 1px solid rgba(15, 15, 14, 0.06);
   box-shadow: 0 30px 60px -30px rgba(15, 15, 14, 0.35);
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: zoom-in;
+  position: relative;
+  transition: box-shadow 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+}
+
+.nexus-shot:hover,
+.nexus-shot:focus-visible {
+  box-shadow: 0 40px 80px -30px rgba(15, 15, 14, 0.42);
+  transform: translateY(-2px);
+}
+
+.nexus-shot:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
 }
 
 .nexus-shot img {
@@ -3253,6 +3338,30 @@ body.has-lightbox-open {
   object-fit: cover;
   object-position: center center;
   display: block;
+}
+
+/* Hover hint: small zoom badge in the corner */
+.nexus-shot::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(15, 15, 14, 0.55);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f7f4ee' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 18px 18px;
+  opacity: 0;
+  transition: opacity 0.25s var(--ease-out);
+  pointer-events: none;
+}
+
+.nexus-shot:hover::after,
+.nexus-shot:focus-visible::after {
+  opacity: 1;
 }
 
 @media (max-width: 640px) {

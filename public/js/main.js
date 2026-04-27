@@ -424,8 +424,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---- Image lightbox (fullscreen viewer + zoom) ----
+  // Source list: studio-scrolly medias on the landing, generic
+  // [data-lightbox-img] elements on other pages (investigación, etc.).
   const lightbox = document.getElementById('image-lightbox');
-  if (lightbox && scrollyMedias.length) {
+  const lightboxMedia = scrollyMedias.length
+    ? scrollyMedias
+    : document.querySelectorAll('[data-lightbox-img]');
+  if (lightbox && lightboxMedia.length) {
     const lbImg = lightbox.querySelector('.image-lightbox__img');
     const lbCaption = document.getElementById('image-lightbox-caption');
     const lbLevel = document.getElementById('image-lightbox-zoom-level');
@@ -433,7 +438,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const lbPrev = lightbox.querySelector('.image-lightbox__nav--prev');
     const lbNext = lightbox.querySelector('.image-lightbox__nav--next');
     const lbZoomBtns = lightbox.querySelectorAll('.image-lightbox__zoom-btn');
-    const stepTitles = Array.from(document.querySelectorAll('.studio-scrolly__step-title')).map(el => el.textContent.trim());
+    const stepTitles = scrollyMedias.length
+      ? Array.from(document.querySelectorAll('.studio-scrolly__step-title')).map(el => el.textContent.trim())
+      : Array.from(lightboxMedia).map(el => el.dataset.lightboxCaption || el.alt || '');
 
     let currentIdx = 0;
     let zoom = 1;
@@ -452,10 +459,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const loadImage = (idx) => {
-      const total = scrollyMedias.length;
+      const total = lightboxMedia.length;
       currentIdx = ((idx % total) + total) % total;
-      const src = scrollyMedias[currentIdx].getAttribute('src');
-      const alt = scrollyMedias[currentIdx].getAttribute('alt') || '';
+      const src = lightboxMedia[currentIdx].getAttribute('src');
+      const alt = lightboxMedia[currentIdx].getAttribute('alt') || '';
       lbImg.src = src;
       lbImg.alt = alt;
       if (lbCaption) lbCaption.textContent = `${String(currentIdx + 1).padStart(2, '0')} · ${stepTitles[currentIdx] || ''}`;
@@ -793,4 +800,106 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initNexusOrb);
 } else {
   initNexusOrb();
+}
+
+// ---- Nexus banner reveal (typewriter title + staged orb sweep) ----
+function initNexusReveal() {
+  const banner = document.querySelector('.nexus-banner');
+  if (!banner) return;
+
+  const titleEl = banner.querySelector('.nexus-banner__title');
+  if (!titleEl) return;
+
+  const reduceMotion = window.matchMedia
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  // Pre-stage: clear title content, mark banner as staged
+  titleEl.innerHTML = '';
+  banner.classList.add('is-staged');
+
+  const titleParts = [
+    { text: 'Conocé a ', tag: null },
+    { text: 'Nexus',     tag: 'em' }
+  ];
+
+  let played = false;
+  const trigger = () => {
+    if (played) return;
+    played = true;
+    runReveal();
+  };
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          io.disconnect();
+          trigger();
+        }
+      });
+    }, { threshold: 0.35 });
+    io.observe(banner);
+  } else {
+    // Old browsers: skip the choreography
+    titleEl.innerHTML = 'Conocé a <em>Nexus</em>';
+    banner.classList.remove('is-staged');
+    return;
+  }
+
+  // Safety net: if nothing has triggered after 6s (e.g. user landed past
+  // the section), play anyway so the staged state never gets stuck.
+  setTimeout(trigger, 6000);
+
+  async function runReveal() {
+    await typewrite(titleEl, titleParts, 70);
+    await wait(350);
+    banner.classList.add('is-revealed');
+    banner.classList.remove('is-staged');
+  }
+
+  function wait(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  function typewrite(container, parts, speedMs) {
+    return new Promise((resolve) => {
+      const totalChars = parts.reduce((sum, p) => sum + p.text.length, 0);
+      let pos = 1;
+
+      function render() {
+        let remaining = pos;
+        container.innerHTML = '';
+        for (const part of parts) {
+          const take = Math.min(Math.max(remaining, 0), part.text.length);
+          if (take > 0) {
+            const slice = part.text.slice(0, take);
+            if (part.tag) {
+              const el = document.createElement(part.tag);
+              el.textContent = slice;
+              container.appendChild(el);
+            } else {
+              container.appendChild(document.createTextNode(slice));
+            }
+          }
+          remaining -= part.text.length;
+          if (remaining < 0) break;
+        }
+      }
+
+      function step() {
+        if (pos > totalChars) { resolve(); return; }
+        render();
+        pos++;
+        setTimeout(step, speedMs);
+      }
+      step();
+    });
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initNexusReveal);
+} else {
+  initNexusReveal();
 }
