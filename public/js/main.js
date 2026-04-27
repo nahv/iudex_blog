@@ -609,7 +609,7 @@ function initOneNexusOrb(canvas) {
   const NODE_COLOR = [C.indigoCyan, C.tealLight, C.indigoDeep, C.gold];
 
   const STATE = isMini
-    ? { breatheSec: 6.0, orbitSec: 60.0, intensity: 0.5 }
+    ? { breatheSec: 5.0, orbitSec: 48.0, waveSec: 14.0, auroraSec: 28.0, waveAmp: 0.05, intensity: 0.55 }
     : { breatheSec: 2.0, orbitSec: 12.0, waveSec: 4.0, auroraSec: 9.0, waveAmp: 0.07, intensity: 0.7 };
 
   let cssSize = 0;
@@ -664,76 +664,15 @@ function initOneNexusOrb(canvas) {
 
     ctx.clearRect(0, 0, cssSize, cssSize);
 
-    if (!isMini) {
-      const wave   = (t / STATE.waveSec)   % 1;
-      const aurora = (t / STATE.auroraSec) % 1;
-      const waveR  = baseR * 1.55;
-      drawWaveShell(cx, cy, waveR, wave, STATE.waveAmp);
-      drawOrbitRing(cx, cy, orbitR);
-      drawNodes(cx, cy, orbitR, nodeR, orbit);
-      drawOrb(cx, cy, baseR, orbR, breathe, aurora, STATE.intensity);
-    } else {
-      // Mini: just the blue ball + halo. No nodes, no orbit ring, no shimmer.
-      drawOrbMini(cx, cy, baseR, orbR, breathe);
-    }
+    const wave   = (t / STATE.waveSec)   % 1;
+    const aurora = (t / STATE.auroraSec) % 1;
+    const waveR  = baseR * 1.55;
+    drawWaveShell(cx, cy, waveR, wave, STATE.waveAmp);
+    drawOrbitRing(cx, cy, orbitR);
+    drawNodes(cx, cy, orbitR, nodeR, orbit);
+    drawOrb(cx, cy, baseR, orbR, breathe, aurora, STATE.intensity);
 
     requestAnimationFrame(tick);
-  }
-
-  // Mini orb: solid blue ball + soft halo + light highlight. No nodes, no shimmer.
-  // Tuned to read clearly on the cream hero background.
-  function drawOrbMini(cx, cy, baseR, orbR, breathe) {
-    // Slightly larger so it carries presence against the cream hero
-    const ballR = orbR * 1.25;
-    const breatheBoost = breathe * 0.06;
-
-    // Soft halo behind the ball
-    ctx.save();
-    const haloR = ballR * 1.85;
-    const g1 = ctx.createRadialGradient(cx, cy, ballR * 0.7, cx, cy, haloR);
-    g1.addColorStop(0,   rgba(C.indigoCyan, 0.22 + breatheBoost));
-    g1.addColorStop(0.5, rgba(C.indigoCyan, 0.10));
-    g1.addColorStop(1,   rgba(C.indigoCyan, 0));
-    ctx.fillStyle = g1;
-    ctx.beginPath();
-    ctx.arc(cx, cy, haloR, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    // Solid blue ball — opaque, with light source from top-left
-    ctx.save();
-    const offX = ballR * -0.22, offY = ballR * -0.28;
-    const g2 = ctx.createRadialGradient(cx + offX, cy + offY, 0, cx, cy, ballR);
-    g2.addColorStop(0,    rgba(C.indigoCyan, 1));
-    g2.addColorStop(0.55, rgba(C.indigoDeep, 1));
-    g2.addColorStop(1,    'rgba(8, 14, 38, 1)');
-    ctx.fillStyle = g2;
-    ctx.beginPath();
-    ctx.arc(cx, cy, ballR, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    // Specular highlight (top-left lift)
-    ctx.save();
-    const hx = cx - ballR * 0.38, hy = cy - ballR * 0.42;
-    const hg = ctx.createRadialGradient(hx, hy, 0, hx, hy, ballR * 0.7);
-    hg.addColorStop(0, 'rgba(255,255,255,0.32)');
-    hg.addColorStop(0.6, 'rgba(255,255,255,0.05)');
-    hg.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = hg;
-    ctx.beginPath();
-    ctx.arc(cx, cy, ballR, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    // Rim light to define the silhouette
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(cx, cy, ballR, 0, Math.PI * 2);
-    ctx.strokeStyle = rgba(C.indigoCyan, 0.35 + breathe * 0.10);
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.restore();
   }
 
   function drawWaveShell(cx, cy, radius, wavePhase, amplitude) {

@@ -3470,10 +3470,9 @@ body.has-lightbox-open {
 @media (max-width: 900px) {
   .nexus-stack { display: block; }
   .nexus-banner__chips { display: none; }
-  /* Sticky orb: stays visible while user scrolls through the stack */
+  /* Orb sits between text and stack — kept in normal flow so the staged
+     reveal can lift it up toward the title and drop it back into place. */
   .nexus-banner__visual {
-    position: sticky;
-    top: 80px;
     z-index: 1;
   }
 }
@@ -3517,17 +3516,18 @@ body.has-lightbox-open {
   }
 }
 
-/* Mobile (vertical layout): orb starts smaller + translated up behind the title,
-   slightly faded. Settles into its slot with a soft drop and breathe-in scale. */
+/* Mobile (vertical layout): orb begins almost at the title — translated way up
+   into the title region — then drops down into its slot as the typewriter
+   finishes. Soft scale-in and fade-in completes the choreography. */
 @media (max-width: 899px) {
   .nexus-banner__visual {
     transition:
-      transform 1.25s cubic-bezier(0.7, 0, 0.2, 1),
-      opacity 1s ease;
+      transform 1.4s cubic-bezier(0.7, 0, 0.2, 1),
+      opacity 1.2s ease;
   }
   .nexus-banner.is-staged .nexus-banner__visual {
-    transform: translateY(-60px) scale(0.7);
-    opacity: 0.45;
+    transform: translateY(-360px) scale(0.5);
+    opacity: 0.55;
   }
   /* Stack cards stay hidden until the title finishes typing */
   .nexus-stack__item--reveal {
