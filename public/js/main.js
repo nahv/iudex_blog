@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---- Intersection Observer for scroll animations ----
-  const revealEls = document.querySelectorAll('.animate-on-scroll, .text-reveal, .stagger-children, .scale-in, .lead-reveal');
+  const revealEls = document.querySelectorAll('.animate-on-scroll, .text-reveal, .stagger-children, .scale-in, .lead-reveal, .nexus-stack__item--reveal');
   if (revealEls.length) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -577,14 +577,23 @@ function showFormFeedback(form, message, success) {
   fb.style.border = `1px solid ${success ? 'rgba(201,168,76,0.2)' : 'rgba(192,57,43,0.2)'}`;
 }
 
-// ---- Nexus orb (investigacion page) ----
+// ---- Nexus orb (investigacion page + hero mini variant) ----
 // Port of the IudexNexus widget — wave shell, orbit ring, constellation nodes
 // and central orb with aurora swirl. Default state: listening.
 function initNexusOrb() {
-  const canvas = document.querySelector('[data-nexus-orb]');
-  if (!canvas) return;
+  const canvases = document.querySelectorAll('[data-nexus-orb]');
+  canvases.forEach(initOneNexusOrb);
+}
+
+function initOneNexusOrb(canvas) {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
+
+  // Variants:
+  //   default ('full')  — investigación page, all layers, normal speed
+  //   'mini'            — homepage hero badge: ambient, slower, fewer layers, lighter compositing
+  const variant = canvas.dataset.nexusOrbVariant || 'full';
+  const isMini = variant === 'mini';
 
   const C = {
     indigoDeep: { r: 26, g: 42, b: 92 },
@@ -599,7 +608,9 @@ function initNexusOrb() {
   const NODE_SPEED = [1.0, 0.7, 1.3, 0.9];
   const NODE_COLOR = [C.indigoCyan, C.tealLight, C.indigoDeep, C.gold];
 
-  const STATE = { breatheSec: 2.0, orbitSec: 12.0, waveSec: 4.0, auroraSec: 9.0, waveAmp: 0.07, intensity: 0.7 };
+  const STATE = isMini
+    ? { breatheSec: 5.0, orbitSec: 48.0, waveSec: 14.0, auroraSec: 28.0, waveAmp: 0.05, intensity: 0.55 }
+    : { breatheSec: 2.0, orbitSec: 12.0, waveSec: 4.0, auroraSec: 9.0, waveAmp: 0.07, intensity: 0.7 };
 
   let cssSize = 0;
   let dpr = window.devicePixelRatio || 1;
@@ -623,27 +634,39 @@ function initNexusOrb() {
     }, { threshold: 0 }).observe(canvas);
   }
 
+  // Throttle to ~30fps on mini variant — ambient motion doesn't need 60fps
+  // and frees the main thread for hero text + scrolling.
+  const frameInterval = isMini ? 1000 / 30 : 0;
+  let lastFrame = 0;
+
   function tick(now) {
     if (!visible || !cssSize) {
       requestAnimationFrame(tick);
       return;
     }
+    if (frameInterval && now - lastFrame < frameInterval) {
+      requestAnimationFrame(tick);
+      return;
+    }
+    lastFrame = now;
+
     const t = (now - started) / 1000;
     const cx = cssSize / 2, cy = cssSize / 2;
     const baseR = cssSize * 0.28;
     const orbitR = baseR * 1.25;
-    const waveR  = baseR * 1.55;
-    const nodeR  = baseR * 0.06;
+    const nodeR  = baseR * (isMini ? 0.05 : 0.06);
 
     const breathe = (Math.sin((t / STATE.breatheSec) * Math.PI) + 1) / 2;
-    const breatheScale = 0.92 + breathe * 0.08;
+    const breatheScale = 0.94 + breathe * 0.06;
     const orbR = baseR * 0.65 * breatheScale;
 
     const orbit  = (t / STATE.orbitSec)  % 1;
-    const wave   = (t / STATE.waveSec)   % 1;
-    const aurora = (t / STATE.auroraSec) % 1;
 
     ctx.clearRect(0, 0, cssSize, cssSize);
+
+    const wave   = (t / STATE.waveSec)   % 1;
+    const aurora = (t / STATE.auroraSec) % 1;
+    const waveR  = baseR * 1.55;
     drawWaveShell(cx, cy, waveR, wave, STATE.waveAmp);
     drawOrbitRing(cx, cy, orbitR);
     drawNodes(cx, cy, orbitR, nodeR, orbit);
