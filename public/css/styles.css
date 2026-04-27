@@ -108,6 +108,12 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   gap: 48px;
 }
 
+/* Step row variant: text first in HTML (so mobile stacks text-then-screenshot),
+   but on desktop the screenshot moves to the left column. */
+@media (min-width: 769px) {
+  .grid-2--shot-left > .nexus-shot { order: -1; }
+}
+
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -277,6 +283,78 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   pointer-events: none;
 }
 
+/* === HERO AURORA — premium animated ambient layer === */
+.hero__aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 85%);
+  opacity: 0;
+  animation: heroAuroraFadeIn 1.6s var(--ease-out) 0.2s forwards;
+}
+
+.hero__aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
+}
+
+.hero__aurora-blob--gold {
+  width: 520px;
+  height: 520px;
+  top: -10%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.22) 0%, rgba(201, 168, 76, 0) 70%);
+  animation: heroAuroraDriftA 22s ease-in-out infinite;
+}
+
+.hero__aurora-blob--indigo {
+  width: 600px;
+  height: 600px;
+  bottom: -20%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(43, 90, 138, 0.18) 0%, rgba(43, 90, 138, 0) 70%);
+  animation: heroAuroraDriftB 28s ease-in-out infinite;
+}
+
+.hero__aurora-blob--teal {
+  width: 460px;
+  height: 460px;
+  top: 35%;
+  left: 38%;
+  background: radial-gradient(circle, rgba(26, 107, 101, 0.14) 0%, rgba(26, 107, 101, 0) 70%);
+  animation: heroAuroraDriftC 32s ease-in-out infinite;
+}
+
+@keyframes heroAuroraFadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes heroAuroraDriftA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-40px, 30px) scale(1.08); }
+}
+
+@keyframes heroAuroraDriftB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(50px, -30px) scale(1.05); }
+}
+
+@keyframes heroAuroraDriftC {
+  0%, 100% { transform: translate(0, 0) scale(0.95); }
+  50%      { transform: translate(-30px, -20px) scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__aurora { opacity: 0.6; animation: none; }
+  .hero__aurora-blob,
+  .hero__aurora-blob--gold,
+  .hero__aurora-blob--indigo,
+  .hero__aurora-blob--teal { animation: none; }
+}
+
 .hero__eyebrow {
   display: inline-flex;
   align-items: center;
@@ -378,38 +456,85 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 .hero__badge {
   position: absolute;
   right: 10%;
-  top: 30%;
+  top: 28%;
   width: 240px;
   height: 240px;
-  background: var(--ink);
-  border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  animation: floatBadge 6s ease-in-out infinite;
+  text-decoration: none;
+  animation: floatBadge 14s ease-in-out infinite;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.hero__badge--orb:hover,
+.hero__badge--orb:focus-visible {
+  outline: none;
+}
+
+.hero__badge--orb:hover .hero__badge-pill,
+.hero__badge--orb:focus-visible .hero__badge-pill {
+  color: var(--ink);
+  border-color: rgba(15, 15, 14, 0.22);
+  background: rgba(247, 244, 238, 0.55);
+}
+
+.hero__badge--orb:focus-visible .hero__badge-pill {
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.4);
 }
 
 @keyframes floatBadge {
-  0%, 100% { transform: translateY(0) rotate(-3deg); }
-  50% { transform: translateY(-16px) rotate(3deg); }
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
 }
 
-.hero__badge-text {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--gold);
+.hero__badge-orb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.hero__badge-pill {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 16px;
+  background: rgba(247, 244, 238, 0.28);
+  border: 1px solid rgba(15, 15, 14, 0.08);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: rgba(15, 15, 14, 0.78);
+  transition: background 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+}
+
+.hero__badge-pill-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
   line-height: 1;
 }
 
-.hero__badge-sub {
-  font-size: 0.75rem;
-  color: var(--cream-dark);
-  text-align: center;
-  letter-spacing: 0.05em;
-  padding: 0 20px;
+.hero__badge-pill-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__badge { animation: none; }
 }
 
 .hero__scroll-hint {
@@ -3126,6 +3251,13 @@ body.has-lightbox-open {
   opacity: 0.7;
 }
 
+.footer__respaldos-logos svg {
+  display: block;
+  height: 24px;
+  width: auto;
+  color: rgba(247, 244, 238, 0.78);
+}
+
 .footer__respaldos-item--aws img { height: 24px; }
 
 /* === NEXUS BANNER (investigacion page) === */
@@ -3234,6 +3366,125 @@ body.has-lightbox-open {
   .nexus-orb { width: 240px; height: 240px; }
 }
 
+/* === NEXUS STACK — mobile vertical scrolly variant === */
+.nexus-stack {
+  display: none;
+  list-style: none;
+  margin: 48px 0 0;
+  padding: 0;
+  counter-reset: nexus-step;
+  position: relative;
+}
+
+.nexus-stack::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 12px;
+  bottom: 12px;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(201, 168, 76, 0) 0%,
+    rgba(201, 168, 76, 0.45) 20%,
+    rgba(43, 90, 138, 0.45) 80%,
+    rgba(43, 90, 138, 0) 100%
+  );
+}
+
+.nexus-stack__item {
+  position: relative;
+  display: flex;
+  gap: 18px;
+  padding: 18px 18px 18px 0;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  background: rgba(247, 244, 238, 0.04);
+  border: 1px solid rgba(247, 244, 238, 0.08);
+  text-align: left;
+}
+
+.nexus-stack__item:last-child { margin-bottom: 0; }
+
+.nexus-stack__index {
+  flex-shrink: 0;
+  width: 56px;
+  margin-left: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  text-align: center;
+  align-self: flex-start;
+  padding-top: 22px;
+  position: relative;
+  z-index: 1;
+}
+
+.nexus-stack__index::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px #131a2e, 0 0 12px rgba(201, 168, 76, 0.6);
+}
+
+.nexus-stack__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.nexus-stack__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--cream);
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.nexus-stack__lead {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(247, 244, 238, 0.72);
+  margin: 0;
+}
+
+/* Reveal on scroll: each card fades and slides up when it enters the viewport.
+   The .visible class is toggled by the shared IntersectionObserver in main.js. */
+.nexus-stack__item--reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+.nexus-stack__item--reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .nexus-stack { display: block; }
+  .nexus-banner__chips { display: none; }
+  /* Orb sits between text and stack — kept in normal flow so the staged
+     reveal can lift it up toward the title and drop it back into place. */
+  .nexus-banner__visual {
+    z-index: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nexus-stack__item--reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* === NEXUS REVEAL — staged choreography === */
 /* Initial layout transitions (text + visual translate as a unit) */
 .nexus-banner__text,
@@ -3262,6 +3513,25 @@ body.has-lightbox-open {
   }
   .nexus-banner.is-staged .nexus-banner__text {
     transform: translateX(40%);
+  }
+}
+
+/* Mobile (vertical layout): orb begins almost at the title — translated way up
+   into the title region — then drops down into its slot as the typewriter
+   finishes. Soft scale-in and fade-in completes the choreography. */
+@media (max-width: 899px) {
+  .nexus-banner__visual {
+    transition:
+      transform 1.4s cubic-bezier(0.7, 0, 0.2, 1),
+      opacity 1.2s ease;
+  }
+  .nexus-banner.is-staged .nexus-banner__visual {
+    transform: translateY(-260px) scale(0.55);
+    opacity: 0.55;
+  }
+  /* Stack cards stay hidden until the title finishes typing */
+  .nexus-stack__item--reveal {
+    transition-delay: 0.4s;
   }
 }
 
