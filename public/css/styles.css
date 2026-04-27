@@ -520,7 +520,7 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   font-size: 0.58rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.85);
+  color: var(--ink);
   line-height: 1;
 }
 
@@ -3526,7 +3526,7 @@ body.has-lightbox-open {
       opacity 1.2s ease;
   }
   .nexus-banner.is-staged .nexus-banner__visual {
-    transform: translateY(-360px) scale(0.5);
+    transform: translateY(-260px) scale(0.55);
     opacity: 0.55;
   }
   /* Stack cards stay hidden until the title finishes typing */
