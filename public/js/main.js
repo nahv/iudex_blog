@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---- Intersection Observer for scroll animations ----
-  const revealEls = document.querySelectorAll('.animate-on-scroll, .text-reveal, .stagger-children, .scale-in, .lead-reveal');
+  const revealEls = document.querySelectorAll('.animate-on-scroll, .text-reveal, .stagger-children, .scale-in, .lead-reveal, .nexus-stack__item--reveal');
   if (revealEls.length) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -577,12 +577,15 @@ function showFormFeedback(form, message, success) {
   fb.style.border = `1px solid ${success ? 'rgba(201,168,76,0.2)' : 'rgba(192,57,43,0.2)'}`;
 }
 
-// ---- Nexus orb (investigacion page) ----
+// ---- Nexus orb (investigacion page + hero mini variant) ----
 // Port of the IudexNexus widget — wave shell, orbit ring, constellation nodes
 // and central orb with aurora swirl. Default state: listening.
 function initNexusOrb() {
-  const canvas = document.querySelector('[data-nexus-orb]');
-  if (!canvas) return;
+  const canvases = document.querySelectorAll('[data-nexus-orb]');
+  canvases.forEach(initOneNexusOrb);
+}
+
+function initOneNexusOrb(canvas) {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
