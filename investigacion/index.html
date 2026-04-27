@@ -68,14 +68,36 @@
   </div>
 </section>
 
+<!-- NEXUS BANNER -->
+<section class="nexus-banner" aria-labelledby="nexus-banner-title">
+  <div class="container">
+    <div class="nexus-banner__inner">
+      <div class="animate-on-scroll">
+        <span class="nexus-banner__eyebrow">Introducimos · Asistente Iudex</span>
+        <h2 id="nexus-banner-title" class="nexus-banner__title">Conocé a <em>Nexus</em></h2>
+        <p class="nexus-banner__lead">Nexus es la inteligencia detrás de la investigación en Iudex. Un asistente jurídico construido para entender el caso, conectar lo que leés y devolverte respuestas con fuentes citadas — sin perder el hilo del expediente.</p>
+        <div class="nexus-banner__chips" aria-label="Capacidades de Nexus">
+          <span class="nexus-banner__chip">Lenguaje natural</span>
+          <span class="nexus-banner__chip">Búsqueda conceptual</span>
+          <span class="nexus-banner__chip">Cada cita rastreable</span>
+          <span class="nexus-banner__chip">Memoria por caso</span>
+        </div>
+      </div>
+      <div class="nexus-banner__visual">
+        <canvas class="nexus-orb" data-nexus-orb width="360" height="360" aria-label="Animación del orbe de Nexus" role="img"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- NEXUS -->
 <section class="section" style="padding-top:0" aria-labelledby="nexus-title">
   <div class="container">
     <div class="grid-2" style="gap:64px;align-items:center">
       <div class="animate-on-scroll">
         <span class="label" style="color:var(--gold)">Paso 1 · Preguntar</span>
-        <h2 id="nexus-title" style="margin-top:12px;font-size:1.9rem">Contá el caso, no busques palabras</h2>
-        <p class="lead" style="margin-top:16px">Describí el problema jurídico con tus propias palabras. La respuesta llega apoyada en fallos argentinos citados y linkeados, abribles al instante.</p>
+        <h2 id="nexus-title" style="margin-top:12px;font-size:1.9rem">Contá el caso, no busques palabras sueltas</h2>
+        <p class="lead" style="margin-top:16px">Iudex no busca por coincidencia de palabras: entiende el concepto jurídico que estás planteando. Si preguntás por "responsabilidad por daños del trabajador", devuelve fallos sobre indemnización por accidente laboral, culpa <em>in eligendo</em> o riesgo del trabajo — aunque no hayas usado esos términos. La respuesta llega con los fallos argentinos citados y linkeados, abribles al instante.</p>
         <ul class="value__list" style="margin-top:24px">
           <li class="value__list-item">
             <div class="value__check"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
@@ -95,12 +117,9 @@
           </li>
         </ul>
       </div>
-      <div class="scale-in" style="background:var(--ink);border-radius:16px;padding:32px;color:var(--cream);font-family:var(--font-mono);font-size:0.82rem;line-height:1.7">
-        <div style="color:rgba(247,244,238,0.55);margin-bottom:8px">&gt; consulta</div>
-        <div style="margin-bottom:20px">¿Cuál es la posición dominante sobre indemnización por uso del auto propio del trabajador en Corrientes?</div>
-        <div style="color:rgba(247,244,238,0.55);margin-bottom:8px">&gt; respuesta</div>
-        <div>La Cámara de Apelaciones del Trabajo de Corrientes sostiene en forma reiterada que... <span style="color:var(--gold)">[Fallo CAT-CTES 2023/174]</span> <span style="color:var(--gold)">[Fallo CAT-CTES 2022/089]</span></div>
-      </div>
+      <figure class="scale-in nexus-shot">
+        <img src="../public/assets/screenshots/7.png" alt="Pantalla de Iudex: pregunta en lenguaje natural y respuesta con fallos argentinos citados y linkeados." loading="lazy" decoding="async" />
+      </figure>
     </div>
   </div>
 </section>
@@ -249,6 +268,14 @@
       <div class="footer__col"><h5>El escritorio</h5><ul><li><a href="../index.html#features">Un solo espacio</a></li><li><a href="index.html">Investigación con fuentes</a></li><li><a href="../contacto/index.html">Abrir el escritorio</a></li></ul></div>
       <div class="footer__col"><h5>Cuaderno</h5><ul><li><a href="../blog/index.html">Todas las notas</a></li></ul></div>
       <div class="footer__col"><h5>Quiénes</h5><ul><li><a href="../about/index.html">Equipo</a></li><li><a href="../contacto/index.html">Contacto</a></li></ul></div>
+    </div>
+    <div class="footer__respaldos" aria-label="Forma parte de AWS Entrena Argentina">
+      <span class="footer__respaldos-label">Forma parte de</span>
+      <div class="footer__respaldos-logos">
+        <span class="footer__respaldos-item footer__respaldos-item--aws" aria-label="AWS Entrena Argentina">
+          <img src="../assets/logo-aws-entrena.png" alt="AWS Entrena Argentina" />
+        </span>
+      </div>
     </div>
     <div class="footer__bottom">
       <p class="footer__copy">&copy; 2026 Iudex. Todos los derechos reservados.</p>

@@ -569,3 +569,228 @@ function showFormFeedback(form, message, success) {
   fb.style.color = success ? 'var(--gold)' : 'var(--red-accent)';
   fb.style.border = `1px solid ${success ? 'rgba(201,168,76,0.2)' : 'rgba(192,57,43,0.2)'}`;
 }
+
+// ---- Nexus orb (investigacion page) ----
+// Port of the IudexNexus widget — wave shell, orbit ring, constellation nodes
+// and central orb with aurora swirl. Default state: listening.
+function initNexusOrb() {
+  const canvas = document.querySelector('[data-nexus-orb]');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const C = {
+    indigoDeep: { r: 26, g: 42, b: 92 },
+    indigoCyan: { r: 43, g: 90, b: 138 },
+    teal:       { r: 13, g: 61, b: 58 },
+    tealLight:  { r: 26, g: 107, b: 101 },
+    gold:       { r: 201, g: 168, b: 76 }
+  };
+  const rgba = (c, a) => `rgba(${c.r}, ${c.g}, ${c.b}, ${a})`;
+
+  const NODE_BASE  = [0, 90, 198, 288];
+  const NODE_SPEED = [1.0, 0.7, 1.3, 0.9];
+  const NODE_COLOR = [C.indigoCyan, C.tealLight, C.indigoDeep, C.gold];
+
+  const STATE = { breatheSec: 2.0, orbitSec: 12.0, waveSec: 4.0, auroraSec: 9.0, waveAmp: 0.07, intensity: 0.7 };
+
+  let cssSize = 0;
+  let dpr = window.devicePixelRatio || 1;
+
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    cssSize = canvas.clientWidth;
+    if (!cssSize) return;
+    canvas.width = Math.round(cssSize * dpr);
+    canvas.height = Math.round(cssSize * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let started = performance.now();
+  let visible = true;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach(e => { visible = e.isIntersecting; });
+    }, { threshold: 0 }).observe(canvas);
+  }
+
+  function tick(now) {
+    if (!visible || !cssSize) {
+      requestAnimationFrame(tick);
+      return;
+    }
+    const t = (now - started) / 1000;
+    const cx = cssSize / 2, cy = cssSize / 2;
+    const baseR = cssSize * 0.28;
+    const orbitR = baseR * 1.25;
+    const waveR  = baseR * 1.55;
+    const nodeR  = baseR * 0.06;
+
+    const breathe = (Math.sin((t / STATE.breatheSec) * Math.PI) + 1) / 2;
+    const breatheScale = 0.92 + breathe * 0.08;
+    const orbR = baseR * 0.65 * breatheScale;
+
+    const orbit  = (t / STATE.orbitSec)  % 1;
+    const wave   = (t / STATE.waveSec)   % 1;
+    const aurora = (t / STATE.auroraSec) % 1;
+
+    ctx.clearRect(0, 0, cssSize, cssSize);
+    drawWaveShell(cx, cy, waveR, wave, STATE.waveAmp);
+    drawOrbitRing(cx, cy, orbitR);
+    drawNodes(cx, cy, orbitR, nodeR, orbit);
+    drawOrb(cx, cy, baseR, orbR, breathe, aurora, STATE.intensity);
+
+    requestAnimationFrame(tick);
+  }
+
+  function drawWaveShell(cx, cy, radius, wavePhase, amplitude) {
+    ctx.save();
+    ctx.filter = 'blur(3px)';
+    ctx.lineWidth = 1.5;
+    for (let i = 0; i < 3; i++) {
+      const ringR = radius * (0.85 + i * 0.075);
+      const phase = wavePhase * Math.PI * 2 + i * Math.PI / 3;
+      ctx.beginPath();
+      const segments = 80;
+      for (let s = 0; s <= segments; s++) {
+        const a = (s / segments) * Math.PI * 2;
+        const r = ringR + Math.sin(a * 6 + phase) * (ringR * amplitude);
+        const x = cx + Math.cos(a) * r;
+        const y = cy + Math.sin(a) * r;
+        if (s === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = rgba(C.indigoCyan, 0.20 - i * 0.05);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawOrbitRing(cx, cy, radius) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = rgba(C.indigoCyan, 0.10);
+    ctx.lineWidth = 0.6;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawNodes(cx, cy, orbitR, nodeR, orbit) {
+    for (let i = 0; i < 4; i++) {
+      const ang = ((NODE_BASE[i] + orbit * 360 * NODE_SPEED[i]) % 360) * Math.PI / 180;
+      const nx = cx + Math.cos(ang) * orbitR;
+      const ny = cy + Math.sin(ang) * orbitR;
+      const c = NODE_COLOR[i];
+
+      ctx.save();
+      ctx.filter = 'blur(4px)';
+      ctx.beginPath();
+      ctx.arc(nx, ny, nodeR * 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(c, 0.20);
+      ctx.fill();
+      ctx.restore();
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(nx, ny, nodeR, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(c, 0.7);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  function drawOrb(cx, cy, baseR, orbR, breathe, aurora, intensity) {
+    const breatheBoost = breathe * 0.04;
+
+    // outer glow
+    ctx.save();
+    const outerR = baseR * 1.85;
+    const g1 = ctx.createRadialGradient(cx, cy, 0, cx, cy, outerR);
+    g1.addColorStop(0,   rgba(C.indigoDeep, 0.13 + breatheBoost));
+    g1.addColorStop(0.5, rgba(C.teal, 0.10));
+    g1.addColorStop(1,   rgba(C.teal, 0));
+    ctx.fillStyle = g1;
+    ctx.beginPath();
+    ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // core (offset top-left for light-source illusion)
+    ctx.save();
+    const offX = orbR * -0.2, offY = orbR * -0.25;
+    const g2 = ctx.createRadialGradient(cx + offX, cy + offY, 0, cx, cy, orbR);
+    g2.addColorStop(0,    rgba(C.indigoDeep, 1));
+    g2.addColorStop(0.55, rgba(C.indigoCyan, 1));
+    g2.addColorStop(1,    rgba(C.teal, 1));
+    ctx.fillStyle = g2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, orbR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // aurora swirl + counter-rotating shimmer (conic gradients, additive)
+    if (typeof ctx.createConicGradient === 'function') {
+      const auroraAng = aurora * Math.PI * 2;
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      const aurG = ctx.createConicGradient(auroraAng, cx, cy);
+      aurG.addColorStop(0.0,  rgba(C.indigoCyan, 0));
+      aurG.addColorStop(0.18, rgba(C.indigoCyan, 0.20 * intensity));
+      aurG.addColorStop(0.42, rgba(C.tealLight, 0.16 * intensity));
+      aurG.addColorStop(0.60, rgba(C.gold,       0.08 * intensity));
+      aurG.addColorStop(0.80, rgba(C.indigoCyan, 0.16 * intensity));
+      aurG.addColorStop(1.0,  rgba(C.indigoCyan, 0));
+      ctx.fillStyle = aurG;
+      ctx.beginPath();
+      ctx.arc(cx, cy, orbR, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      const shAng = -aurora * Math.PI * 2 + Math.PI;
+      const shG = ctx.createConicGradient(shAng, cx, cy);
+      shG.addColorStop(0.0,  'rgba(255,255,255,0)');
+      shG.addColorStop(0.07, `rgba(255,255,255,${0.10 * intensity})`);
+      shG.addColorStop(0.18, 'rgba(255,255,255,0)');
+      shG.addColorStop(1.0,  'rgba(255,255,255,0)');
+      ctx.fillStyle = shG;
+      ctx.beginPath();
+      ctx.arc(cx, cy, orbR, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // inner highlight (top-left lift)
+    ctx.save();
+    const hx = cx - orbR * 0.35, hy = cy - orbR * 0.4;
+    const hg = ctx.createRadialGradient(hx, hy, 0, hx, hy, orbR * 0.6);
+    hg.addColorStop(0, 'rgba(255,255,255,0.18)');
+    hg.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = hg;
+    ctx.beginPath();
+    ctx.arc(cx, cy, orbR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // rim light
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, orbR, 0, Math.PI * 2);
+    ctx.strokeStyle = rgba(C.indigoCyan, 0.18 + breathe * 0.10);
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  requestAnimationFrame(tick);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initNexusOrb);
+} else {
+  initNexusOrb();
+}
