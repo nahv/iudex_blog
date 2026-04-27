@@ -589,6 +589,12 @@ function initOneNexusOrb(canvas) {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
+  // Variants:
+  //   default ('full')  — investigación page, all layers, normal speed
+  //   'mini'            — homepage hero badge: ambient, slower, fewer layers, lighter compositing
+  const variant = canvas.dataset.nexusOrbVariant || 'full';
+  const isMini = variant === 'mini';
+
   const C = {
     indigoDeep: { r: 26, g: 42, b: 92 },
     indigoCyan: { r: 43, g: 90, b: 138 },
@@ -598,11 +604,13 @@ function initOneNexusOrb(canvas) {
   };
   const rgba = (c, a) => `rgba(${c.r}, ${c.g}, ${c.b}, ${a})`;
 
-  const NODE_BASE  = [0, 90, 198, 288];
-  const NODE_SPEED = [1.0, 0.7, 1.3, 0.9];
-  const NODE_COLOR = [C.indigoCyan, C.tealLight, C.indigoDeep, C.gold];
+  const NODE_BASE  = isMini ? [30, 210]            : [0, 90, 198, 288];
+  const NODE_SPEED = isMini ? [0.4, 0.3]           : [1.0, 0.7, 1.3, 0.9];
+  const NODE_COLOR = isMini ? [C.gold, C.tealLight] : [C.indigoCyan, C.tealLight, C.indigoDeep, C.gold];
 
-  const STATE = { breatheSec: 2.0, orbitSec: 12.0, waveSec: 4.0, auroraSec: 9.0, waveAmp: 0.07, intensity: 0.7 };
+  const STATE = isMini
+    ? { breatheSec: 6.0, orbitSec: 60.0, intensity: 0.5 }
+    : { breatheSec: 2.0, orbitSec: 12.0, waveSec: 4.0, auroraSec: 9.0, waveAmp: 0.07, intensity: 0.7 };
 
   let cssSize = 0;
   let dpr = window.devicePixelRatio || 1;
@@ -626,33 +634,91 @@ function initOneNexusOrb(canvas) {
     }, { threshold: 0 }).observe(canvas);
   }
 
+  // Throttle to ~30fps on mini variant — ambient motion doesn't need 60fps
+  // and frees the main thread for hero text + scrolling.
+  const frameInterval = isMini ? 1000 / 30 : 0;
+  let lastFrame = 0;
+
   function tick(now) {
     if (!visible || !cssSize) {
       requestAnimationFrame(tick);
       return;
     }
+    if (frameInterval && now - lastFrame < frameInterval) {
+      requestAnimationFrame(tick);
+      return;
+    }
+    lastFrame = now;
+
     const t = (now - started) / 1000;
     const cx = cssSize / 2, cy = cssSize / 2;
     const baseR = cssSize * 0.28;
     const orbitR = baseR * 1.25;
-    const waveR  = baseR * 1.55;
-    const nodeR  = baseR * 0.06;
+    const nodeR  = baseR * (isMini ? 0.05 : 0.06);
 
     const breathe = (Math.sin((t / STATE.breatheSec) * Math.PI) + 1) / 2;
-    const breatheScale = 0.92 + breathe * 0.08;
+    const breatheScale = 0.94 + breathe * 0.06;
     const orbR = baseR * 0.65 * breatheScale;
 
     const orbit  = (t / STATE.orbitSec)  % 1;
-    const wave   = (t / STATE.waveSec)   % 1;
-    const aurora = (t / STATE.auroraSec) % 1;
 
     ctx.clearRect(0, 0, cssSize, cssSize);
-    drawWaveShell(cx, cy, waveR, wave, STATE.waveAmp);
-    drawOrbitRing(cx, cy, orbitR);
-    drawNodes(cx, cy, orbitR, nodeR, orbit);
-    drawOrb(cx, cy, baseR, orbR, breathe, aurora, STATE.intensity);
+
+    if (!isMini) {
+      const wave   = (t / STATE.waveSec)   % 1;
+      const aurora = (t / STATE.auroraSec) % 1;
+      const waveR  = baseR * 1.55;
+      drawWaveShell(cx, cy, waveR, wave, STATE.waveAmp);
+      drawOrbitRing(cx, cy, orbitR);
+      drawNodes(cx, cy, orbitR, nodeR, orbit);
+      drawOrb(cx, cy, baseR, orbR, breathe, aurora, STATE.intensity);
+    } else {
+      drawNodes(cx, cy, orbitR, nodeR, orbit);
+      drawOrbMini(cx, cy, baseR, orbR, breathe);
+    }
 
     requestAnimationFrame(tick);
+  }
+
+  // Mini orb: just outer glow + soft core gradient + subtle rim. No conic gradients,
+  // no shimmer, no globalCompositeOperation. Cheap to render at 30fps.
+  function drawOrbMini(cx, cy, baseR, orbR, breathe) {
+    const breatheBoost = breathe * 0.03;
+
+    ctx.save();
+    const outerR = baseR * 1.7;
+    const g1 = ctx.createRadialGradient(cx, cy, 0, cx, cy, outerR);
+    g1.addColorStop(0,   rgba(C.indigoDeep, 0.10 + breatheBoost));
+    g1.addColorStop(0.6, rgba(C.teal, 0.06));
+    g1.addColorStop(1,   rgba(C.teal, 0));
+    ctx.fillStyle = g1;
+    ctx.beginPath();
+    ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    const offX = orbR * -0.18, offY = orbR * -0.22;
+    const g2 = ctx.createRadialGradient(cx + offX, cy + offY, 0, cx, cy, orbR);
+    g2.addColorStop(0,    rgba(C.indigoDeep, 0.95));
+    g2.addColorStop(0.6,  rgba(C.indigoCyan, 0.92));
+    g2.addColorStop(1,    rgba(C.teal, 0.88));
+    ctx.fillStyle = g2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, orbR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    const hx = cx - orbR * 0.32, hy = cy - orbR * 0.36;
+    const hg = ctx.createRadialGradient(hx, hy, 0, hx, hy, orbR * 0.55);
+    hg.addColorStop(0, 'rgba(255,255,255,0.14)');
+    hg.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = hg;
+    ctx.beginPath();
+    ctx.arc(cx, cy, orbR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
   }
 
   function drawWaveShell(cx, cy, radius, wavePhase, amplitude) {

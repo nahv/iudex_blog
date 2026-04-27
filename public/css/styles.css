@@ -464,8 +464,8 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  animation: floatBadge 6s ease-in-out infinite;
-  transition: transform 0.4s var(--ease-out);
+  animation: floatBadge 14s ease-in-out infinite;
+  transition: transform 0.5s var(--ease-out);
 }
 
 .hero__badge--orb:hover,
@@ -475,18 +475,18 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 
 .hero__badge--orb:hover .hero__badge-pill,
 .hero__badge--orb:focus-visible .hero__badge-pill {
-  background: var(--ink);
-  color: var(--cream);
-  border-color: var(--ink);
+  color: var(--ink);
+  border-color: rgba(15, 15, 14, 0.22);
+  background: rgba(247, 244, 238, 0.55);
 }
 
 .hero__badge--orb:focus-visible .hero__badge-pill {
-  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.45);
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.4);
 }
 
 @keyframes floatBadge {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  50%      { transform: translateY(-8px); }
 }
 
 .hero__badge-orb {
@@ -496,6 +496,7 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   height: 100%;
   display: block;
   pointer-events: none;
+  opacity: 0.85;
 }
 
 .hero__badge-pill {
@@ -503,33 +504,37 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 10px 18px;
-  background: rgba(247, 244, 238, 0.92);
-  border: 1px solid rgba(15, 15, 14, 0.12);
+  gap: 3px;
+  padding: 8px 16px;
+  background: rgba(247, 244, 238, 0.28);
+  border: 1px solid rgba(15, 15, 14, 0.08);
   border-radius: 999px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: var(--ink);
-  box-shadow: 0 6px 18px -8px rgba(15, 15, 14, 0.35);
-  transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: rgba(15, 15, 14, 0.78);
+  transition: background 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
 }
 
 .hero__badge-pill-eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: rgba(201, 168, 76, 0.85);
   line-height: 1;
 }
 
 .hero__badge-pill-name {
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
   font-style: italic;
   line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__badge { animation: none; }
 }
 
 .hero__scroll-hint {
@@ -3509,6 +3514,24 @@ body.has-lightbox-open {
   }
   .nexus-banner.is-staged .nexus-banner__text {
     transform: translateX(40%);
+  }
+}
+
+/* Mobile (vertical layout): orb starts smaller + translated up behind the title,
+   slightly faded. Settles into its slot with a soft drop and breathe-in scale. */
+@media (max-width: 899px) {
+  .nexus-banner__visual {
+    transition:
+      transform 1.25s cubic-bezier(0.7, 0, 0.2, 1),
+      opacity 1s ease;
+  }
+  .nexus-banner.is-staged .nexus-banner__visual {
+    transform: translateY(-60px) scale(0.7);
+    opacity: 0.45;
+  }
+  /* Stack cards stay hidden until the title finishes typing */
+  .nexus-stack__item--reveal {
+    transition-delay: 0.4s;
   }
 }
 
