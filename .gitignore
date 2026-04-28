@@ -18,3 +18,6 @@ Desktop.ini
 *.swp
 *.swo
 *~
+
+# Supabase CLI local state
+supabase/.temp/
