@@ -119,6 +119,33 @@ Deno.serve(async (req) => {
     created_at: row.created_at ?? new Date().toISOString(),
   };
 
+  let teamMessageId: string | undefined;
+  let teamError: string | undefined;
+  if (SES_TEMPLATE_TEAM && SES_TEAM_TO) {
+    try {
+      const teamResult = await ses.send(
+        new SendEmailCommand({
+          FromEmailAddress: SES_FROM,
+          Destination: { ToAddresses: [SES_TEAM_TO] },
+          ReplyToAddresses: [row.email],
+          ConfigurationSetName: SES_CONFIG_SET,
+          Content: {
+            Template: {
+              TemplateName: SES_TEMPLATE_TEAM,
+              TemplateData: JSON.stringify(teamTemplateData),
+            },
+          },
+        }),
+      );
+      teamMessageId = teamResult.MessageId;
+    } catch (err) {
+      teamError = err instanceof Error ? err.message : String(err);
+      console.error("team_notify_failed", { id: row.id, message: teamError });
+    }
+  }
+
+  let userMessageId: string | undefined;
+  let userError: string | undefined;
   try {
     const userResult = await ses.send(
       new SendEmailCommand({
@@ -134,36 +161,22 @@ Deno.serve(async (req) => {
         },
       }),
     );
+    userMessageId = userResult.MessageId;
+  } catch (err) {
+    userError = err instanceof Error ? err.message : String(err);
+    console.error("user_welcome_failed", {
+      id: row.id,
+      email: row.email,
+      message: userError,
+    });
+  }
 
-    let teamMessageId: string | undefined;
-    if (SES_TEMPLATE_TEAM && SES_TEAM_TO) {
-      try {
-        const teamResult = await ses.send(
-          new SendEmailCommand({
-            FromEmailAddress: SES_FROM,
-            Destination: { ToAddresses: [SES_TEAM_TO] },
-            ReplyToAddresses: [row.email],
-            ConfigurationSetName: SES_CONFIG_SET,
-            Content: {
-              Template: {
-                TemplateName: SES_TEMPLATE_TEAM,
-                TemplateData: JSON.stringify(teamTemplateData),
-              },
-            },
-          }),
-        );
-        teamMessageId = teamResult.MessageId;
-      } catch (teamErr) {
-        const m = teamErr instanceof Error ? teamErr.message : String(teamErr);
-        console.error("team_notify_failed", { id: row.id, message: m });
-      }
-    }
-
+  if (userMessageId || teamMessageId) {
     const { error: updateError } = await supabase
       .from("registrations")
       .update({
         ses_sent_at: new Date().toISOString(),
-        ses_message_id: userResult.MessageId ?? null,
+        ses_message_id: userMessageId ?? teamMessageId ?? null,
       })
       .eq("id", row.id)
       .is("ses_sent_at", null);
@@ -171,15 +184,17 @@ Deno.serve(async (req) => {
     if (updateError) {
       console.error("update_failed", { id: row.id, err: updateError.message });
     }
-
-    return json(200, {
-      sent: true,
-      userMessageId: userResult.MessageId,
-      teamMessageId,
-    });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    console.error("ses_send_failed", { id: row.id, email: row.email, message });
-    return json(502, { error: "ses_send_failed", message });
   }
+
+  if (!userMessageId && !teamMessageId) {
+    return json(502, { error: "all_sends_failed", userError, teamError });
+  }
+
+  return json(200, {
+    sent: true,
+    userMessageId,
+    teamMessageId,
+    userError,
+    teamError,
+  });
 });
