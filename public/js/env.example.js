@@ -13,10 +13,4 @@ const ENV = {
     url: 'https://YOUR_PROJECT.supabase.co',
     anonKey: 'YOUR_SUPABASE_ANON_KEY',
   },
-  emailjs: {
-    publicKey: 'YOUR_EMAILJS_PUBLIC_KEY',
-    serviceId: 'YOUR_EMAILJS_SERVICE_ID',
-    templateUserConfirm: 'YOUR_EMAILJS_TEMPLATE_USER_CONFIRM',
-    templateFounderNotify: 'YOUR_EMAILJS_TEMPLATE_FOUNDER_NOTIFY',
-  },
 };

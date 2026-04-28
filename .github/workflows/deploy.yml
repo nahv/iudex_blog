@@ -31,13 +31,9 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          EMAILJS_PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
-          EMAILJS_SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}
-          EMAILJS_TEMPLATE_USER_CONFIRM: ${{ secrets.EMAILJS_TEMPLATE_USER_CONFIRM }}
-          EMAILJS_TEMPLATE_FOUNDER_NOTIFY: ${{ secrets.EMAILJS_TEMPLATE_FOUNDER_NOTIFY }}
         run: |
-          printf 'const ENV = {\n  supabase: {\n    url: "%s",\n    anonKey: "%s",\n  },\n  emailjs: {\n    publicKey: "%s",\n    serviceId: "%s",\n    templateUserConfirm: "%s",\n    templateFounderNotify: "%s",\n  },\n};\n' \
-            "$SUPABASE_URL" "$SUPABASE_ANON_KEY" "$EMAILJS_PUBLIC_KEY" "$EMAILJS_SERVICE_ID" "$EMAILJS_TEMPLATE_USER_CONFIRM" "$EMAILJS_TEMPLATE_FOUNDER_NOTIFY" \
+          printf 'const ENV = {\n  supabase: {\n    url: "%s",\n    anonKey: "%s",\n  },\n};\n' \
+            "$SUPABASE_URL" "$SUPABASE_ANON_KEY" \
             > public/js/env.js
 
       - name: Setup Pages
