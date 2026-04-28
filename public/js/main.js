@@ -6,7 +6,6 @@
 // Credentials are loaded from public/js/env.js (gitignored).
 // See public/js/env.example.js for the template.
 // If ENV is not loaded, everything degrades gracefully.
-const EMAILJS_CONFIG = typeof ENV !== 'undefined' ? ENV.emailjs : {};
 const SUPABASE_CONFIG = typeof ENV !== 'undefined' ? ENV.supabase : {};
 
 // ---- Supabase client (lightweight REST wrapper) ----
@@ -40,11 +39,6 @@ const iudexDB = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  // ---- EmailJS init ----
-  if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.publicKey) {
-    emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
-  }
 
   // ---- Navbar scroll effect ----
   const navbar = document.querySelector('.navbar');
@@ -134,7 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.textContent = 'Enviando...';
       btn.disabled = true;
 
-      // Save to Supabase (non-blocking for CTA forms)
+      // Save to Supabase — el webhook dispara la Edge Function que envía
+      // el welcome via SES y notifica al equipo.
       iudexDB.insert('registrations', {
         nombre: '',
         apellido: '',
@@ -142,14 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
         source: 'cta-' + (window.location.pathname.includes('blog') ? 'blog' :
                           window.location.pathname.includes('about') ? 'about' : 'home'),
       }).catch(() => {});
-
-      // Send confirmation email to user
-      if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.templateUserConfirm) {
-        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateUserConfirm, {
-          email: email,
-          nombre: '',
-        }).catch(() => {});
-      }
 
       // Show success (registration is saved to Supabase regardless of email)
       btn.textContent = '¡Listo!';
@@ -220,30 +207,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Non-duplicate DB error — still try to send emails
       }
 
-      // Step 2: Send confirmation email to user
-      if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.templateUserConfirm) {
-        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateUserConfirm, {
-          nombre: formData.nombre,
-          email: formData.email,
-        }).catch(() => {});
-      }
+      // El webhook de Supabase dispara la Edge Function que envía el welcome
+      // institucional al usuario y la notificación al equipo via AWS SES.
+      // Ver supabase/functions/send-inscription-email + docs/aws-ses-setup.md.
 
-      // Step 3: Send notification email to founders
-      if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.templateFounderNotify) {
-        emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateFounderNotify, {
-          nombre: formData.nombre,
-          apellido: formData.apellido,
-          email: formData.email,
-          telefono: formData.telefono || 'No proporcionado',
-          perfil: formData.perfil || 'No seleccionado',
-          provincia: formData.provincia,
-          fuero: formData.fuero || 'No seleccionado',
-          tamano: formData.tamano || 'No seleccionado',
-          mensaje: formData.mensaje || 'Sin mensaje',
-        }).catch(() => {});
-      }
-
-      // Step 4: Show success
+      // Step 2: Show success
       btn.textContent = '¡Solicitud enviada!';
       contactForm.reset();
       showFormFeedback(contactForm, '¡Gracias por tu interés! Te enviamos un email con información sobre Iudex.', true);
