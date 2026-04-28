@@ -198,14 +198,23 @@ ETA típica: 24h.
 
 ```bash
 supabase secrets set \
-  AWS_REGION=<region> \
+  AWS_REGION=us-east-1 \
   AWS_ACCESS_KEY_ID=<key> \
   AWS_SECRET_ACCESS_KEY=<secret> \
   SES_CONFIG_SET=iudex-transactional \
   SES_TEMPLATE=inscripcion-bienvenida-es \
+  SES_TEMPLATE_TEAM=nueva-inscripcion-team-notify \
+  SES_TEAM_TO=contacto@iudex.com.ar \
   SES_FROM='Iudex <equipo@notificaciones.iudex.com.ar>' \
   SES_REPLY_TO=contacto@iudex.com.ar \
   WEBHOOK_SECRET=<random-32-bytes-hex>
+```
+
+> **Nota sandbox:** mientras SES esté en sandbox, `SES_TEAM_TO` debe apuntar
+> a una dirección verificada (ej. `iudexblog3@gmail.com`). Cambiar a
+> `contacto@iudex.com.ar` una vez aprobado el production access.
+
+```bash
 ```
 
 `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` están disponibles por defecto.
