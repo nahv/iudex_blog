@@ -1,4 +1,10 @@
-# AWS SES — Auto-reply institucional para inscripciones
+# AWS SES — Auto-reply institucional para inscripciones [ARCHIVADO]
+
+> **OBSOLETO (2026-04-29):** AWS rechazó el production access de SES. La
+> implementación se migró a Resend. Ver el código actual en
+> `supabase/functions/send-inscription-email/index.ts` y el commit
+> `feat(email): migrar envio de inscripciones de AWS SES a Resend`.
+> Este documento se conserva como referencia histórica.
 
 Runbook para montar y operar el envío de auto-replies de inscripciones del
 sitio iudex.com.ar a través de AWS SES, en paralelo a EmailJS.
