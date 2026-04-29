@@ -1,18 +1,17 @@
 // send-inscription-email
 //
 // Supabase Edge Function disparada por un Database Webhook sobre INSERT en
-// public.registrations. Envía un auto-reply institucional vía AWS SES v2
-// usando la SES Template `inscripcion-bienvenida-es` y marca la fila con
-// ses_sent_at + ses_message_id para idempotencia.
+// public.registrations. Envia dos mails via Resend:
+//   1) Welcome al usuario que recien se inscribio
+//   2) Notificacion interna al equipo
+// Marca la fila con email_sent_at + email_message_id para idempotencia.
 //
 // Auth del webhook: header `Authorization: Bearer <WEBHOOK_SECRET>`.
-// Auth contra AWS: SigV4 con un IAM user dedicado (ver docs/aws-ses-setup.md).
+// Auth contra Resend: API key (`RESEND_API_KEY`) en Supabase Secrets.
 
 import { createClient } from "npm:@supabase/supabase-js@2";
-import {
-  SESv2Client,
-  SendEmailCommand,
-} from "npm:@aws-sdk/client-sesv2@3";
+import welcomeHtml from "./welcome.ts";
+import founderNotifyHtml from "./founder-notify.ts";
 
 type RegistrationRow = {
   id: string;
@@ -28,6 +27,7 @@ type RegistrationRow = {
   source: string | null;
   created_at: string | null;
   ses_sent_at: string | null;
+  email_sent_at: string | null;
 };
 
 type WebhookPayload = {
@@ -47,26 +47,15 @@ const env = (key: string): string => {
 const SUPABASE_URL = env("SUPABASE_URL");
 const SUPABASE_SERVICE_ROLE_KEY = env("SUPABASE_SERVICE_ROLE_KEY");
 const WEBHOOK_SECRET = env("WEBHOOK_SECRET");
-const AWS_REGION = env("AWS_REGION");
-const AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID");
-const AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY");
-const SES_CONFIG_SET = env("SES_CONFIG_SET");
-const SES_TEMPLATE = env("SES_TEMPLATE");
-const SES_FROM = env("SES_FROM");
-const SES_REPLY_TO = Deno.env.get("SES_REPLY_TO") ?? "contacto@iudex.com.ar";
-const SES_TEMPLATE_TEAM = Deno.env.get("SES_TEMPLATE_TEAM") ?? "";
-const SES_TEAM_TO = Deno.env.get("SES_TEAM_TO") ?? "";
+const RESEND_API_KEY = env("RESEND_API_KEY");
+const RESEND_FROM = Deno.env.get("RESEND_FROM") ??
+  "Iudex <equipo@notificaciones.iudex.com.ar>";
+const RESEND_REPLY_TO = Deno.env.get("RESEND_REPLY_TO") ??
+  "contacto@iudex.com.ar";
+const RESEND_TEAM_TO = Deno.env.get("RESEND_TEAM_TO") ?? "";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
   auth: { persistSession: false },
-});
-
-const ses = new SESv2Client({
-  region: AWS_REGION,
-  credentials: {
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY,
-  },
 });
 
 const json = (status: number, body: unknown) =>
@@ -75,11 +64,84 @@ const json = (status: number, body: unknown) =>
     headers: { "content-type": "application/json" },
   });
 
+// Mini renderer compatible con el subset de Mustache que usan los templates:
+//   {{var}}              -> sustitucion
+//   {{#var}}...{{/var}}  -> bloque si var es truthy
+//   {{^var}}...{{/var}}  -> bloque si var es falsy
+function render(tpl: string, vars: Record<string, string>): string {
+  let out = tpl.replace(
+    /\{\{#(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g,
+    (_m, key, body) => (vars[key] ? body : ""),
+  );
+  out = out.replace(
+    /\{\{\^(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g,
+    (_m, key, body) => (vars[key] ? "" : body),
+  );
+  out = out.replace(/\{\{(\w+)\}\}/g, (_m, key) => vars[key] ?? "");
+  return out;
+}
+
+function htmlToText(html: string): string {
+  return html
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&middot;/g, "·")
+    .replace(/&[a-z]+;/gi, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+type ResendSendResult = { id?: string; error?: string };
+
+async function resendSend(opts: {
+  from: string;
+  to: string;
+  reply_to?: string;
+  subject: string;
+  html: string;
+  text: string;
+  idempotencyKey: string;
+}): Promise<ResendSendResult> {
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+      "User-Agent": "iudex-blog/send-inscription-email",
+      "Idempotency-Key": opts.idempotencyKey,
+    },
+    body: JSON.stringify({
+      from: opts.from,
+      to: opts.to,
+      subject: opts.subject,
+      html: opts.html,
+      text: opts.text,
+      reply_to: opts.reply_to,
+    }),
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    return {
+      error: typeof data?.message === "string"
+        ? data.message
+        : `resend_http_${res.status}`,
+    };
+  }
+  return { id: data?.id };
+}
+
 Deno.serve(async (req) => {
   if (req.method !== "POST") return json(405, { error: "method_not_allowed" });
 
+  // Aceptamos dos formatos: `Bearer <secret>` o `<secret>` directo. La UI de
+  // Database Webhooks de Supabase a veces guarda el header sin el prefijo
+  // `Bearer`, asi que toleramos ambas variantes.
   const auth = req.headers.get("authorization") ?? "";
-  if (auth !== `Bearer ${WEBHOOK_SECRET}`) {
+  const presented = auth.startsWith("Bearer ") ? auth.slice(7) : auth;
+  if (presented !== WEBHOOK_SECRET) {
     return json(401, { error: "unauthorized" });
   }
 
@@ -96,18 +158,23 @@ Deno.serve(async (req) => {
 
   const row = payload.record;
   if (!row?.email || !row.id) return json(400, { error: "invalid_record" });
-  if (row.ses_sent_at) return json(200, { skipped: "already_sent" });
+  if (row.email_sent_at || row.ses_sent_at) {
+    return json(200, { skipped: "already_sent" });
+  }
 
-  const userTemplateData = {
-    nombre: row.nombre?.trim() || "Hola",
-    perfil: row.perfil?.trim() || "",
-    provincia: row.provincia?.trim() || "",
+  const nombre = row.nombre?.trim() ?? "";
+  const apellido = row.apellido?.trim() ?? "";
+
+  const userVars: Record<string, string> = {
+    nombre,
+    perfil: row.perfil?.trim() ?? "",
+    provincia: row.provincia?.trim() ?? "",
   };
 
-  const teamTemplateData = {
+  const teamVars: Record<string, string> = {
     id: row.id,
-    nombre: row.nombre?.trim() || "—",
-    apellido: row.apellido?.trim() || "—",
+    nombre: nombre || "—",
+    apellido: apellido || "—",
     email: row.email,
     telefono: row.telefono?.trim() || "—",
     perfil: row.perfil?.trim() || "—",
@@ -119,51 +186,45 @@ Deno.serve(async (req) => {
     created_at: row.created_at ?? new Date().toISOString(),
   };
 
+  const userHtml = render(welcomeHtml, userVars);
+  const teamHtml = render(founderNotifyHtml, teamVars);
+
+  const userSubject = nombre
+    ? `Hola ${nombre}, recibimos tu solicitud — Iudex`
+    : "Recibimos tu solicitud — Iudex";
+  const teamSubject = `Nueva solicitud — ${teamVars.nombre} ${teamVars.apellido}`.trim();
+
   let teamMessageId: string | undefined;
   let teamError: string | undefined;
-  if (SES_TEMPLATE_TEAM && SES_TEAM_TO) {
-    try {
-      const teamResult = await ses.send(
-        new SendEmailCommand({
-          FromEmailAddress: SES_FROM,
-          Destination: { ToAddresses: [SES_TEAM_TO] },
-          ReplyToAddresses: [row.email],
-          ConfigurationSetName: SES_CONFIG_SET,
-          Content: {
-            Template: {
-              TemplateName: SES_TEMPLATE_TEAM,
-              TemplateData: JSON.stringify(teamTemplateData),
-            },
-          },
-        }),
-      );
-      teamMessageId = teamResult.MessageId;
-    } catch (err) {
-      teamError = err instanceof Error ? err.message : String(err);
+  if (RESEND_TEAM_TO) {
+    const result = await resendSend({
+      from: RESEND_FROM,
+      to: RESEND_TEAM_TO,
+      reply_to: row.email,
+      subject: teamSubject,
+      html: teamHtml,
+      text: htmlToText(teamHtml),
+      idempotencyKey: `team-${row.id}`,
+    });
+    teamMessageId = result.id;
+    teamError = result.error;
+    if (teamError) {
       console.error("team_notify_failed", { id: row.id, message: teamError });
     }
   }
 
-  let userMessageId: string | undefined;
-  let userError: string | undefined;
-  try {
-    const userResult = await ses.send(
-      new SendEmailCommand({
-        FromEmailAddress: SES_FROM,
-        Destination: { ToAddresses: [row.email] },
-        ReplyToAddresses: [SES_REPLY_TO],
-        ConfigurationSetName: SES_CONFIG_SET,
-        Content: {
-          Template: {
-            TemplateName: SES_TEMPLATE,
-            TemplateData: JSON.stringify(userTemplateData),
-          },
-        },
-      }),
-    );
-    userMessageId = userResult.MessageId;
-  } catch (err) {
-    userError = err instanceof Error ? err.message : String(err);
+  const userResult = await resendSend({
+    from: RESEND_FROM,
+    to: row.email,
+    reply_to: RESEND_REPLY_TO,
+    subject: userSubject,
+    html: userHtml,
+    text: htmlToText(userHtml),
+    idempotencyKey: `user-${row.id}`,
+  });
+  const userMessageId = userResult.id;
+  const userError = userResult.error;
+  if (userError) {
     console.error("user_welcome_failed", {
       id: row.id,
       email: row.email,
@@ -175,11 +236,11 @@ Deno.serve(async (req) => {
     const { error: updateError } = await supabase
       .from("registrations")
       .update({
-        ses_sent_at: new Date().toISOString(),
-        ses_message_id: userMessageId ?? teamMessageId ?? null,
+        email_sent_at: new Date().toISOString(),
+        email_message_id: userMessageId ?? teamMessageId ?? null,
       })
       .eq("id", row.id)
-      .is("ses_sent_at", null);
+      .is("email_sent_at", null);
 
     if (updateError) {
       console.error("update_failed", { id: row.id, err: updateError.message });
