@@ -31,10 +31,7 @@
         <li><a href="blog/index.html">Blog</a></li>
         <li><a href="about/index.html">Nosotros</a></li>
         <li><a href="contacto/index.html">Contacto</a></li>
-        <!-- DRAFT: Re-enable cuando abramos el MVP.
         <li><a href="contacto/index.html" class="navbar__cta">Pedí tu invitación</a></li>
-        -->
-        <li><a href="#avisame" class="launch-pill launch-pill--navbar" aria-label="Lanzamiento próximamente — sumate a la lista de aviso"><span class="launch-pill__dot" aria-hidden="true"></span>Lanzamiento próximamente</a></li>
       </ul>
       <button class="navbar__toggle" aria-label="Abrir menú" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -83,14 +80,8 @@
       Investigar, conectar, decidir — en un mismo hilo. Hecho en Corrientes, para abogados y juzgados correntinos.
     </p>
     <div class="hero__actions">
-      <!-- DRAFT: Re-enable cuando abramos el MVP.
       <a href="contacto/index.html" class="btn btn--primary btn--lg">
         Pedí tu invitación
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      -->
-      <a href="#avisame" class="btn btn--primary btn--lg">
-        Avisame del lanzamiento
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
       <a href="blog/index.html" class="btn btn--outline">
@@ -282,18 +273,7 @@
 
     <div style="text-align:center;margin-top:48px" class="animate-on-scroll">
       <a href="investigacion/index.html" class="btn btn--outline">
-        <svg class="btn__nexus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="16" height="16" aria-hidden="true">
-          <circle cx="12" cy="12" r="2.4" fill="currentColor" stroke="none"/>
-          <circle cx="5" cy="6" r="1.5"/>
-          <circle cx="19" cy="6" r="1.5"/>
-          <circle cx="5" cy="18" r="1.5"/>
-          <circle cx="19" cy="18" r="1.5"/>
-          <line x1="6.3" y1="7.2" x2="10.3" y2="10.6"/>
-          <line x1="17.7" y1="7.2" x2="13.7" y2="10.6"/>
-          <line x1="6.3" y1="16.8" x2="10.3" y2="13.4"/>
-          <line x1="17.7" y1="16.8" x2="13.7" y2="13.4"/>
-        </svg>
-        Introduciendo Nexus
+        Ver la investigación con fuentes citadas
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -787,44 +767,23 @@
 </section>
 
 <!-- CTA SECTION -->
-<!-- DRAFT: Re-enable cuando abramos el MVP. La versión "Pedí tu invitación" original
-     está preservada arriba; el form sigue conectado a Supabase + AWS-SES (js-email-form).
-<section class="cta-section section" aria-labelledby="cta-title-draft">
+<section class="cta-section section" aria-labelledby="cta-title">
   <div class="container">
     <span class="label" style="display:block;margin-bottom:20px;color:rgba(201,168,76,0.8)">Acceso anticipado</span>
-    <h2 id="cta-title-draft" class="text-reveal"><span class="text-reveal__inner">Pedí <em>tu invitación</em></span></h2>
+    <h2 id="cta-title" class="text-reveal"><span class="text-reveal__inner">Pedí <em>tu invitación</em></span></h2>
     <p class="lead lead-reveal">Los primeros abogados y juzgados que lo usen trabajan con nosotros en cómo crece. Acceso sin costo durante tres meses.</p>
+
     <form class="cta-section__form js-email-form" novalidate>
-      <input type="email" class="cta-section__input" placeholder="tu@email.com" aria-label="Tu correo electrónico" required />
+      <input
+        type="email"
+        class="cta-section__input"
+        placeholder="tu@email.com"
+        aria-label="Tu correo electrónico"
+        required
+      />
       <button type="submit" class="btn btn--gold">Empezar</button>
     </form>
     <p class="cta-section__disclaimer">Sin tarjeta. Sin compromiso. Solo acceso anticipado.<br><span style="font-size:0.78rem;color:var(--ink-muted)">Disponible en Corrientes.</span></p>
-  </div>
-</section>
--->
-
-<section class="cta-section section" id="avisame" aria-labelledby="avisame-title">
-  <div class="container">
-    <div class="notify-block">
-      <span class="notify-block__eyebrow">
-        <span class="launch-pill__dot" aria-hidden="true"></span>
-        Lanzamiento próximamente
-      </span>
-      <h2 id="avisame-title" class="text-reveal"><span class="text-reveal__inner">El MVP abre <em>en las próximas semanas</em></span></h2>
-      <p class="lead lead-reveal">Estamos puliendo los últimos detalles con un grupo cerrado de abogados de Corrientes. Dejanos tu correo y te avisamos en cuanto las invitaciones estén abiertas — sin spam, solo el aviso.</p>
-
-      <form class="cta-section__form js-email-form" novalidate>
-        <input
-          type="email"
-          class="cta-section__input"
-          placeholder="tu@email.com"
-          aria-label="Tu correo electrónico"
-          required
-        />
-        <button type="submit" class="btn btn--gold">Avisame</button>
-      </form>
-      <p class="notify-block__hint">Te escribimos una sola vez, el día que abramos el acceso.</p>
-    </div>
   </div>
 </section>
 
@@ -845,10 +804,10 @@
         <h5>El escritorio</h5>
         <ul>
           <li><a href="#features">Un solo espacio, cuatro oficios</a></li>
-          <li><a href="investigacion/index.html">Introduciendo Nexus</a></li>
+          <li><a href="investigacion/index.html">Investigación con fuentes</a></li>
           <li><a href="#detalles">Oficio cotidiano</a></li>
           <li><a href="#como-funciona">Del buscar al investigar</a></li>
-          <li><a href="#avisame">Avisame del lanzamiento</a></li>
+          <li><a href="contacto/index.html">Pedí tu invitación</a></li>
         </ul>
       </div>
       <div class="footer__col">
@@ -865,7 +824,8 @@
         <ul>
           <li><a href="about/index.html">Nosotros</a></li>
           <li><a href="contacto/index.html">Contacto</a></li>
-          <li><a href="privacidad/index.html">Política de privacidad</a></li>
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">Términos</a></li>
         </ul>
       </div>
     </div>
