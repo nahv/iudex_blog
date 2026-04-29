@@ -26,7 +26,10 @@
         <li><a href="../blog/index.html">Blog</a></li>
         <li><a href="index.html">Nosotros</a></li>
         <li><a href="../contacto/index.html">Contacto</a></li>
+        <!-- DRAFT: Re-enable cuando abramos el MVP.
         <li><a href="../contacto/index.html" class="navbar__cta">Pedí tu invitación</a></li>
+        -->
+        <li><a href="../contacto/index.html#avisame" class="launch-pill launch-pill--navbar" aria-label="Lanzamiento próximamente — sumate a la lista de aviso"><span class="launch-pill__dot" aria-hidden="true"></span>Lanzamiento próximamente</a></li>
       </ul>
       <button class="navbar__toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
     </div>
@@ -133,6 +136,7 @@
 </section>
 
 <!-- CTA -->
+<!-- DRAFT: Re-enable cuando abramos el MVP. Form sigue conectado a Supabase + AWS-SES (js-email-form).
 <section class="cta-section section">
   <div class="container">
     <span class="label" style="display:block;margin-bottom:20px;color:rgba(201,168,76,0.8)">Acceso anticipado</span>
@@ -143,6 +147,25 @@
       <button type="submit" class="btn btn--gold">Empezar</button>
     </form>
     <p class="cta-section__disclaimer">Sin tarjeta. Sin compromiso. Solo acceso anticipado.</p>
+  </div>
+</section>
+-->
+
+<section class="cta-section section" id="avisame">
+  <div class="container">
+    <div class="notify-block">
+      <span class="notify-block__eyebrow">
+        <span class="launch-pill__dot" aria-hidden="true"></span>
+        Lanzamiento próximamente
+      </span>
+      <h2 class="text-reveal"><span class="text-reveal__inner">El MVP abre <em>en las próximas semanas</em></span></h2>
+      <p class="lead lead-reveal">Dejanos tu correo y te avisamos el día que abramos las invitaciones — sin newsletter, solo el aviso.</p>
+      <form class="cta-section__form js-email-form" novalidate>
+        <input type="email" class="cta-section__input" placeholder="tu@email.com" aria-label="Tu correo electrónico" required />
+        <button type="submit" class="btn btn--gold">Avisame</button>
+      </form>
+      <p class="notify-block__hint">Te escribimos una sola vez, el día del lanzamiento.</p>
+    </div>
   </div>
 </section>
 
@@ -157,9 +180,9 @@
         </a>
         <p>El escritorio donde el derecho se piensa. Expediente, jurisprudencia argentina y escritura en un mismo hilo.</p>
       </div>
-      <div class="footer__col"><h5>El escritorio</h5><ul><li><a href="../index.html#features">Un solo espacio</a></li><li><a href="../contacto/index.html">Pedí tu invitación</a></li></ul></div>
+      <div class="footer__col"><h5>El escritorio</h5><ul><li><a href="../index.html#features">Un solo espacio</a></li><li><a href="../investigacion/index.html">Introduciendo Nexus</a></li><li><a href="../contacto/index.html#avisame">Avisame del lanzamiento</a></li></ul></div>
       <div class="footer__col"><h5>Cuaderno</h5><ul><li><a href="../blog/index.html">Todas las notas</a></li></ul></div>
-      <div class="footer__col"><h5>Quiénes</h5><ul><li><a href="index.html">Equipo</a></li><li><a href="../contacto/index.html">Contacto</a></li></ul></div>
+      <div class="footer__col"><h5>Empresa</h5><ul><li><a href="index.html">Equipo</a></li><li><a href="../contacto/index.html">Contacto</a></li><li><a href="../privacidad/index.html">Política de privacidad</a></li></ul></div>
     </div>
     <div class="footer__respaldos" aria-label="Forma parte de AWS Startups">
       <span class="footer__respaldos-label">Forma parte de</span>
