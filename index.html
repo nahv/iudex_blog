@@ -286,10 +286,46 @@
     <div class="studio-scrolly__header animate-on-scroll">
       <span class="section-tag">Oficio diario</span>
       <h2 id="studio-scrolly-title" class="text-reveal" style="margin-top:8px"><span class="text-reveal__inner">El escritorio <em>por dentro</em></span></h2>
-      <p class="lead lead-reveal" style="margin-top:16px">Vistas del trabajo de todos los días. Expedientes, agenda, notificaciones digitales, modelos. Lo que ya funciona, libre y gratuito, — sin depender de IA ni de internet.</p>
+      <p class="lead lead-reveal" style="margin-top:16px">Vistas del trabajo de todos los días. Expedientes, agenda, notificaciones digitales, modelos. Lo que funciona libre y gratuito, — sin depender de IA ni de internet.</p>
     </div>
 
     <div class="studio-scrolly__stage">
+      <!-- MOBILE-ONLY sticky caption overlay. The text stays pinned at the top
+           while the screenshots below scroll past. Only the active caption is
+           visible — JS toggles is-active in sync with the active step. -->
+      <div class="studio-scrolly__captions" aria-hidden="true">
+        <div class="studio-scrolly__caption is-active" data-scrolly-caption="0">
+          <span class="studio-scrolly__step-num">01</span>
+          <h3 class="studio-scrolly__step-title">Inicio</h3>
+          <p class="studio-scrolly__step-body">Los expedientes del día, la agenda próxima y los valores del JUS — al abrir la app, en una sola vista.</p>
+        </div>
+        <div class="studio-scrolly__caption" data-scrolly-caption="1">
+          <span class="studio-scrolly__step-num">02</span>
+          <h3 class="studio-scrolly__step-title">Expediente</h3>
+          <p class="studio-scrolly__step-body">Actuaciones, partes, documentos, cuentas judiciales y notas en un solo hilo por caso. Lo que pasó queda registrado; lo que se viene, también.</p>
+        </div>
+        <div class="studio-scrolly__caption" data-scrolly-caption="2">
+          <span class="studio-scrolly__step-num">03</span>
+          <h3 class="studio-scrolly__step-title">Notificaciones</h3>
+          <p class="studio-scrolly__step-body">QR y almacenamiento en la nube. Vinculá tu cuenta de Google Drive o Dropbox: con un click subís las copias para traslado y se genera la cédula electrónica.</p>
+        </div>
+        <div class="studio-scrolly__caption" data-scrolly-caption="3">
+          <span class="studio-scrolly__step-num">04</span>
+          <h3 class="studio-scrolly__step-title">Agenda</h3>
+          <p class="studio-scrolly__step-body">Vencimientos, audiencias y recordatorios sincronizados con cada expediente. Los plazos dejan de vivir en la memoria.</p>
+        </div>
+        <div class="studio-scrolly__caption" data-scrolly-caption="4">
+          <span class="studio-scrolly__step-num">05</span>
+          <h3 class="studio-scrolly__step-title">Ajustes</h3>
+          <p class="studio-scrolly__step-body">Preferencias del equipo, usuarios, permisos y plantillas — en un solo panel. Configurás una vez y queda para todo el estudio.</p>
+        </div>
+        <div class="studio-scrolly__caption" data-scrolly-caption="5">
+          <span class="studio-scrolly__step-num">06</span>
+          <h3 class="studio-scrolly__step-title">Nuevo escrito</h3>
+          <p class="studio-scrolly__step-body">Plantillas propias del estudio, con el contexto del expediente ya cargado. La demanda arranca con el caso adentro, no con una hoja en blanco.</p>
+        </div>
+      </div>
+
       <!-- Sticky image column (right on desktop) -->
       <div class="studio-scrolly__sticky">
         <div class="studio-scrolly__frame">
