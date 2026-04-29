@@ -3638,3 +3638,456 @@ body.has-lightbox-open {
   .footer__respaldos { gap: 12px; padding: 14px 0; }
   .footer__respaldos-logos { gap: 16px; }
 }
+
+/* ===========================
+   LAUNCH PILL (pre-MVP launch announcement)
+   Subtle "Lanzamiento próximamente" chip used to replace the
+   primary "Pedí tu invitación" CTA while the MVP is still closed.
+   The full invitation flow is preserved in HTML comments and can
+   be re-enabled by swapping back the markup.
+   =========================== */
+
+.launch-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: rgba(15, 15, 14, 0.04);
+  border: 1px solid rgba(15, 15, 14, 0.10);
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: background 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.launch-pill:hover {
+  background: rgba(15, 15, 14, 0.07);
+  border-color: rgba(201, 168, 76, 0.35);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.launch-pill__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.55);
+  animation: launchPulse 2s var(--ease-out) infinite;
+  flex-shrink: 0;
+}
+
+.launch-pill--dark {
+  background: rgba(247, 244, 238, 0.06);
+  border-color: rgba(247, 244, 238, 0.14);
+  color: rgba(247, 244, 238, 0.85);
+}
+
+.launch-pill--dark:hover {
+  background: rgba(247, 244, 238, 0.10);
+  border-color: rgba(201, 168, 76, 0.45);
+  color: var(--cream);
+}
+
+.launch-pill--inline {
+  margin-bottom: 18px;
+}
+
+.launch-pill--navbar {
+  padding: 8px 14px;
+  font-size: 0.72rem;
+}
+
+.launch-pill--lg {
+  padding: 12px 22px;
+  font-size: 0.82rem;
+}
+
+@keyframes launchPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.55); }
+  70%  { box-shadow: 0 0 0 10px rgba(201, 168, 76, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .launch-pill__dot { animation: none; }
+}
+
+/* "Avisame" notify section — replaces the closed CTA section.
+   Same Supabase + AWS-SES pipeline via .js-email-form, but reframed
+   for a waitlist instead of immediate access. */
+
+.notify-block {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.notify-block__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: rgba(247, 244, 238, 0.06);
+  border: 1px solid rgba(247, 244, 238, 0.14);
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(247, 244, 238, 0.78);
+  margin-bottom: 24px;
+}
+
+.notify-block__eyebrow .launch-pill__dot { width: 7px; height: 7px; }
+
+.notify-block__hint {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: rgba(247, 244, 238, 0.55);
+  margin-top: 24px;
+}
+
+/* ===========================
+   STUDIO SCROLLY — INVERTED MOBILE SCROLLYTELLING
+   On mobile the caption column stays pinned to the top of the viewport
+   while the screenshots scroll past beneath it. Only the active caption
+   is visible — neighbours cross-fade as a different step takes over.
+   Each screenshot is tap-to-fullscreen via the existing lightbox.
+   Desktop layout (vertical stack) stays untouched.
+   =========================== */
+
+/* Captions overlay is mobile-only; hidden by default for tablet/desktop. */
+.studio-scrolly__captions { display: none; }
+
+@media (max-width: 768px) {
+  .studio-scrolly {
+    padding-top: 48px;
+    padding-bottom: 0;
+  }
+
+  .studio-scrolly__header {
+    margin: 0 auto 18px;
+  }
+
+  .studio-scrolly__stage {
+    position: relative;
+  }
+
+  /* The old sticky imgs stack is unused on mobile (kept in DOM so the
+     lightbox JS can still read .studio-scrolly__media src/alt). */
+  .studio-scrolly__sticky { display: none; }
+
+  /* Sticky caption overlay: stays at the top of the viewport for the entire
+     length of the section. All 6 captions overlap at the same spot; only
+     .is-active is visible. The 100vh + -100vh trick lets it overlap the
+     scrolling screenshots below without breaking sticky semantics. */
+  .studio-scrolly__captions {
+    display: block;
+    position: sticky;
+    top: 76px;
+    height: calc(100vh - 76px);
+    margin-bottom: calc(-100vh + 76px);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .studio-scrolly__caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 22px 22px;
+    text-align: center;
+    background: linear-gradient(to bottom, var(--cream-dark) 78%, rgba(237, 234, 226, 0));
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+    pointer-events: auto;
+  }
+
+  .studio-scrolly__caption.is-active {
+    opacity: 1;
+    transform: none;
+  }
+
+  .studio-scrolly__caption .studio-scrolly__step-num {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .studio-scrolly__caption .studio-scrolly__step-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 6.4vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 6px;
+    line-height: 1.15;
+  }
+
+  .studio-scrolly__caption .studio-scrolly__step-body {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0 auto;
+    max-width: 36ch;
+  }
+
+  /* Hide the inline (per-step) caption — replaced by the sticky overlay above. */
+  .studio-scrolly__step-text { display: none; }
+
+  /* Steps: each is roughly one viewport tall and contains only its
+     screenshot, which scrolls naturally past the pinned caption. */
+  .studio-scrolly__steps {
+    position: relative;
+    z-index: 1;
+    gap: 0;
+    margin: 0;
+  }
+
+  .studio-scrolly__step {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 28vh 18px 18vh;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* Restore the inline screenshot button on mobile — tap to open lightbox. */
+  .studio-scrolly__step-frame {
+    display: block;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    aspect-ratio: 4320 / 2576;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--cream);
+    box-shadow: 0 30px 60px -30px rgba(15, 15, 14, 0.4),
+                0 8px 24px -12px rgba(15, 15, 14, 0.22);
+    border: 1px solid rgba(15, 15, 14, 0.06);
+    cursor: zoom-in;
+    transform: scale(0.96);
+    opacity: 0.7;
+    transition: transform 0.6s var(--ease-out), opacity 0.6s var(--ease-out);
+  }
+
+  .studio-scrolly__step.is-active .studio-scrolly__step-frame {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 40px 80px -28px rgba(15, 15, 14, 0.45),
+                0 10px 28px -10px rgba(15, 15, 14, 0.25);
+  }
+
+  .studio-scrolly__step-frame::after {
+    /* Tap hint glyph stays visible on mobile so users know they can zoom. */
+    opacity: 0.92;
+    transform: none;
+  }
+
+  /* Hide the desktop-only corner expand button — the inline frame is the
+     primary tap target on mobile. */
+  .studio-scrolly__expand { display: none; }
+
+  /* Progress dots row, pinned at the bottom of the viewport. */
+  .studio-scrolly__sticky .studio-scrolly__progress { display: none; }
+
+  /* Trailing breathing room after the last step before the next section. */
+  .studio-scrolly__steps::after {
+    content: "";
+    display: block;
+    height: 8vh;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-scrolly__caption,
+  .studio-scrolly__step-frame {
+    transition: none;
+  }
+}
+
+/* Nexus glyph used in "Introduciendo Nexus" buttons. Subtle gold accent. */
+.btn__nexus-icon {
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-right: 2px;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.btn:hover .btn__nexus-icon {
+  transform: rotate(8deg) scale(1.05);
+}
+
+/* ===========================
+   LEGAL DOCUMENT (privacy policy, terms)
+   Long-form article reading layout — readable line length, good rhythm.
+   =========================== */
+
+.legal-doc {
+  background: var(--cream);
+  padding: 96px 0 88px;
+}
+
+.legal-doc__hero {
+  max-width: 760px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+
+.legal-doc__hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  letter-spacing: -0.02em;
+  margin: 12px 0 16px;
+  color: var(--ink);
+}
+
+.legal-doc__hero p {
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.legal-doc__updated {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: rgba(15, 15, 14, 0.05);
+  border: 1px solid rgba(15, 15, 14, 0.08);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.legal-doc__body {
+  max-width: 760px;
+  margin: 0 auto;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.legal-doc__body h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin: 56px 0 14px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(15, 15, 14, 0.08);
+}
+
+.legal-doc__body h2:first-child {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.legal-doc__body h3 {
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  color: var(--ink);
+  margin: 28px 0 8px;
+  letter-spacing: -0.005em;
+}
+
+.legal-doc__body p {
+  margin: 0 0 16px;
+}
+
+.legal-doc__body ul,
+.legal-doc__body ol {
+  margin: 0 0 18px;
+  padding-left: 24px;
+}
+
+.legal-doc__body li {
+  margin-bottom: 8px;
+}
+
+.legal-doc__body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: rgba(201, 168, 76, 0.55);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s var(--ease-out);
+}
+
+.legal-doc__body a:hover {
+  text-decoration-color: var(--gold);
+}
+
+.legal-doc__body strong { color: var(--ink); font-weight: 500; }
+
+.legal-doc__toc {
+  max-width: 760px;
+  margin: 0 auto 48px;
+  padding: 24px 28px;
+  background: var(--cream-dark);
+  border-radius: 14px;
+  border: 1px solid rgba(15, 15, 14, 0.06);
+}
+
+.legal-doc__toc h4 {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+
+.legal-doc__toc ol {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.legal-doc__toc a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.2s var(--ease-out);
+}
+
+.legal-doc__toc a:hover { color: var(--ink); }
+
+.legal-doc__contact-card {
+  margin-top: 40px;
+  padding: 28px;
+  background: var(--cream-dark);
+  border-radius: 14px;
+  border: 1px solid rgba(15, 15, 14, 0.06);
+}
+
+.legal-doc__contact-card h3 {
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .legal-doc { padding: 64px 0 56px; }
+  .legal-doc__hero { margin-bottom: 36px; }
+  .legal-doc__body { font-size: 0.98rem; }
+  .legal-doc__body h2 { margin: 40px 0 12px; }
+  .legal-doc__toc { padding: 20px 22px; margin-bottom: 32px; }
+}
