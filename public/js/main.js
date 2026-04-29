@@ -356,7 +356,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollySteps = document.querySelectorAll('.studio-scrolly__step');
   const scrollyMedias = document.querySelectorAll('.studio-scrolly__media');
   const scrollyDots = document.querySelectorAll('.studio-scrolly__progress-dot');
-  const scrollyCaptions = document.querySelectorAll('.studio-scrolly__caption');
   let scrollyActive = 0;
 
   if (scrollySteps.length) {
@@ -370,9 +369,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       scrollyDots.forEach(d => {
         d.classList.toggle('is-active', d.dataset.scrollyDot === String(index));
-      });
-      scrollyCaptions.forEach(c => {
-        c.classList.toggle('is-active', c.dataset.scrollyCaption === String(index));
       });
     };
 
