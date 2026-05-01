@@ -305,20 +305,24 @@ document.addEventListener('DOMContentLoaded', () => {
     ],
   };
 
-  const overlay = document.getElementById('feature-overlay');
+  const overlay = document.querySelector('#feature-overlay');
   if (overlay) {
-    const openOverlay = (btn) => {
-      const group = btn.dataset.overlayGroup || 'features';
+    const openOverlay = (trigger) => {
+      const group = trigger.dataset.overlayGroup || 'features';
       // Backwards-compat: legacy .features-mobile-grid__item uses data-feature
-      const idx = parseInt(btn.dataset.overlayIndex ?? btn.dataset.feature, 10);
+      const idx = parseInt(trigger.dataset.overlayIndex ?? trigger.dataset.feature, 10);
       const data = (overlayContent[group] || [])[idx];
       if (!data) return;
-      const iconEl = document.getElementById('overlay-icon');
-      const iconSource = btn.querySelector('.feature-card__icon');
+      // Find the icon to mirror in the overlay header — first look on the trigger,
+      // then walk up to the parent card (CTA buttons live inside cards that have icons).
+      const iconSource = trigger.querySelector('.feature-card__icon, .pain__item-icon')
+        || trigger.closest('.feature-card, .pain__item, .mobile-overlay-grid__item')
+            ?.querySelector('.feature-card__icon, .pain__item-icon');
+      const iconEl = overlay.querySelector('#overlay-icon');
       iconEl.innerHTML = iconSource ? iconSource.innerHTML : '';
-      document.getElementById('overlay-title').textContent = data.title;
-      document.getElementById('overlay-tag').textContent = data.tag;
-      document.getElementById('overlay-body').textContent = data.body;
+      overlay.querySelector('#overlay-title').textContent = data.title;
+      overlay.querySelector('#overlay-tag').textContent = data.tag;
+      overlay.querySelector('#overlay-body').textContent = data.body;
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     };
@@ -328,11 +332,30 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.overflow = '';
     };
 
-    // New group-aware grids (pain, detalles, and any future)
-    document.querySelectorAll('.mobile-overlay-grid__item').forEach(btn => {
-      btn.addEventListener('click', () => openOverlay(btn));
+    // Any element marked with data-overlay-group + data-overlay-index opens the
+    // overlay. Covers mobile icon grids, desktop card CTAs, and any future grid.
+    document.querySelectorAll('[data-overlay-group][data-overlay-index]').forEach(trigger => {
+      const tag = trigger.tagName.toLowerCase();
+      const isInteractive = tag === 'button' || tag === 'a';
+      if (!isInteractive) {
+        if (!trigger.hasAttribute('role')) trigger.setAttribute('role', 'button');
+        if (!trigger.hasAttribute('tabindex')) trigger.setAttribute('tabindex', '0');
+      }
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openOverlay(trigger);
+      });
+      if (!isInteractive) {
+        trigger.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openOverlay(trigger);
+          }
+        });
+      }
     });
-    // Legacy features mobile grid
+    // Legacy features mobile grid (uses data-feature instead of data-overlay-index)
     document.querySelectorAll('.features-mobile-grid__item').forEach(btn => {
       btn.addEventListener('click', () => openOverlay(btn));
     });
@@ -344,6 +367,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const handle = overlay.querySelector('.feature-overlay__handle');
     if (handle) {
       handle.addEventListener('click', closeOverlay);
+    }
+    const closeBtn = overlay.querySelector('.feature-overlay__close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeOverlay);
     }
 
     // ESC key closes the drawer

@@ -812,7 +812,26 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 .features__header p { margin-top: 16px; }
 
 .features-mobile-grid { display: none; }
-.feature-overlay { display: none; }
+
+/* --- Feature overlay shared base (used by both mobile bottom-sheet and
+   desktop centered-modal variants below) --- */
+.feature-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: rgba(15, 15, 14, 0);
+  pointer-events: none;
+  transition: background 0.3s var(--ease-out);
+}
+
+.feature-overlay.active {
+  background: rgba(15, 15, 14, 0.55);
+  pointer-events: auto;
+}
 
 .feature-card {
   background: var(--cream);
@@ -2378,15 +2397,8 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 
   /* --- Feature overlay (mobile) --- */
   .feature-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    display: flex;
     align-items: flex-end;
-    justify-content: center;
-    background: rgba(15, 15, 14, 0);
-    pointer-events: none;
-    transition: background 0.3s var(--ease-apple);
+    padding: 0;
   }
 
   .feature-overlay.active {
@@ -2401,19 +2413,22 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
     border-radius: 20px 20px 0 0;
     padding: 32px 24px 40px;
     transform: translateY(100%);
+    opacity: 1; /* mobile uses slide-up only — opacity stays solid */
     transition: transform 0.35s var(--ease-out);
+    box-shadow: none;
   }
 
   .feature-overlay.active .feature-overlay__card {
     transform: translateY(0);
+    opacity: 1;
   }
 
   .feature-overlay__handle {
-    width: 36px;
-    height: 4px;
-    background: rgba(15, 15, 14, 0.15);
-    border-radius: 4px;
-    margin: 0 auto 20px;
+    display: block;
+  }
+
+  .feature-overlay__close {
+    display: none;
   }
 
   .feature-overlay__header {
@@ -3190,6 +3205,19 @@ body.has-lightbox-open {
   display: inline-flex;
   align-items: center;
   color: var(--ink);
+  text-decoration: none;
+  transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+a.hero__respaldos-item:hover {
+  opacity: 0.78;
+  transform: translateY(-1px);
+}
+
+a.hero__respaldos-item:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .hero__respaldos-item img {
@@ -3806,4 +3834,289 @@ body.has-lightbox-open {
   .studio-scrolly__step-frame {
     transition: none;
   }
+}
+
+/* ===========================
+   CLICKABLE CARDS + OVERLAY (desktop preview pattern)
+   Cards expose a tight summary (icon + heading + label + CTA), the rest of the
+   description lives in the shared feature-overlay drawer. Mirrors the mobile
+   icon grid UX so the page stays uncluttered at first glance.
+   =========================== */
+
+/* --- Feature card preview (used in #flujo, #features, #detalles) --- */
+.feature-card--clickable {
+  cursor: pointer;
+}
+
+.feature-card--clickable .feature-card__label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.feature-card--clickable .feature-card__body {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+  display: none; /* hidden on desktop preview; shown on mobile overlay */
+}
+
+.feature-card__cta {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid rgba(15, 15, 14, 0.14);
+  color: var(--ink);
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  opacity: 0.55;
+  transition: opacity 0.2s var(--ease-out), background 0.2s var(--ease-out), border-color 0.2s var(--ease-out), color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.feature-card__cta svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s var(--ease-out);
+}
+
+.feature-card--clickable:hover .feature-card__cta,
+.feature-card__cta:hover {
+  opacity: 1;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
+}
+
+.feature-card--clickable:hover .feature-card__cta svg,
+.feature-card__cta:hover svg {
+  transform: translateX(2px);
+}
+
+.feature-card__cta:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  opacity: 1;
+}
+
+/* Dark variant (used in #detalles section, ink background) */
+.feature-card--dark {
+  background: rgba(247, 244, 238, 0.04);
+  border-color: rgba(247, 244, 238, 0.08);
+}
+
+.feature-card--dark h3 {
+  color: var(--cream);
+}
+
+.feature-card--dark .feature-card__icon {
+  background: rgba(201, 168, 76, 0.1);
+}
+
+.feature-card--dark .feature-card__icon svg {
+  stroke: var(--gold);
+}
+
+.feature-card--dark .feature-card__body {
+  color: rgba(247, 244, 238, 0.7);
+}
+
+.feature-card--dark .feature-card__cta {
+  border-color: rgba(247, 244, 238, 0.18);
+  color: rgba(247, 244, 238, 0.9);
+}
+
+.feature-card--dark.feature-card--clickable:hover .feature-card__cta,
+.feature-card--dark .feature-card__cta:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+  opacity: 1;
+}
+
+.feature-card__code {
+  background: rgba(201, 168, 76, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+/* --- Pain card preview (#problemas) --- */
+.pain__item--clickable {
+  cursor: pointer;
+}
+
+.pain__item--clickable .pain__item-body {
+  display: none; /* hidden on desktop preview */
+}
+
+.pain__item-cta {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid rgba(247, 244, 238, 0.16);
+  color: rgba(247, 244, 238, 0.85);
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  opacity: 0.55;
+  transition: opacity 0.2s var(--ease-out), background 0.2s var(--ease-out), border-color 0.2s var(--ease-out), color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.pain__item-cta svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s var(--ease-out);
+}
+
+.pain__item--clickable:hover .pain__item-cta,
+.pain__item-cta:hover {
+  opacity: 1;
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+.pain__item--clickable:hover .pain__item-cta svg,
+.pain__item-cta:hover svg {
+  transform: translateX(2px);
+}
+
+.pain__item-cta:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  opacity: 1;
+}
+
+/* On mobile, the desktop grids are hidden — show full body again so we don't
+   confuse anyone who inspects markup; mobile uses the dedicated overlay grid. */
+@media (max-width: 768px) {
+  .feature-card--clickable .feature-card__body { display: block; }
+  .pain__item--clickable .pain__item-body { display: block; }
+  .feature-card__cta,
+  .pain__item-cta { display: none; }
+}
+
+/* ===========================
+   FEATURE OVERLAY — desktop centered modal
+   Shared base styles live near the top of this file. Mobile bottom-sheet
+   overrides live in the @media (max-width: 768px) block above. Below: desktop
+   only — centered card, scale-in animation, X close button.
+   =========================== */
+@media (min-width: 769px) {
+  .feature-overlay__card {
+    width: 100%;
+    max-width: 540px;
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 44px 40px 40px;
+    transform: scale(0.94) translateY(16px);
+    opacity: 0;
+    transition: transform 0.32s var(--ease-out), opacity 0.22s var(--ease-out);
+    box-shadow: 0 32px 96px rgba(15, 15, 14, 0.4);
+    position: relative;
+  }
+
+  .feature-overlay.active .feature-overlay__card {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+
+  .feature-overlay__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(15, 15, 14, 0.06);
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  }
+
+  .feature-overlay__close svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .feature-overlay__close:hover {
+    background: var(--ink);
+    color: var(--cream);
+    transform: rotate(90deg);
+  }
+
+  .feature-overlay__close:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  .feature-overlay__handle {
+    display: none; /* mobile-only affordance — desktop uses the X button */
+  }
+
+  .feature-overlay__header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .feature-overlay__header .feature-card__icon {
+    margin: 0;
+    flex: 0 0 auto;
+  }
+
+  .feature-overlay__title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .feature-overlay__tag {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(201, 168, 76, 0.12);
+    border-radius: 100px;
+    font-size: 0.7rem;
+    color: var(--gold);
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+    margin-top: 6px;
+  }
+
+  .feature-overlay__body {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-overlay,
+  .feature-overlay__card { transition: none; }
 }
