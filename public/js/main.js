@@ -420,6 +420,68 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     scrollySteps.forEach(step => observer.observe(step));
+
+    // Mobile-only: scroll-driven horizontal pan inside each pinned screenshot
+    // frame. Each step is taller than the viewport; while the frame is sticky
+    // we translate the (wider-than-viewport) image left so users can read the
+    // whole desktop UI at viewport height. Vertical scroll = horizontal reveal.
+    const reducedMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobileMQ = window.matchMedia('(max-width: 768px)');
+    let panTicking = false;
+
+    const updatePan = () => {
+      panTicking = false;
+      if (!mobileMQ.matches || reducedMotionMQ.matches) {
+        scrollySteps.forEach(step => {
+          const img = step.querySelector('.studio-scrolly__step-frame img');
+          const frame = step.querySelector('.studio-scrolly__step-frame');
+          if (img) img.style.transform = '';
+          if (frame) frame.style.removeProperty('--pan');
+        });
+        return;
+      }
+      const vh = window.innerHeight;
+      scrollySteps.forEach(step => {
+        const frame = step.querySelector('.studio-scrolly__step-frame');
+        const img = frame && frame.querySelector('img');
+        if (!frame || !img) return;
+        const stepH = step.offsetHeight;
+        const range = stepH - vh;
+        if (range <= 0) return;
+        const rect = step.getBoundingClientRect();
+        let progress = (-rect.top) / range;
+        progress = Math.max(0, Math.min(1, progress));
+        const overflow = img.offsetWidth - frame.offsetWidth;
+        if (overflow > 0) {
+          img.style.transform = `translate3d(${(-overflow * progress).toFixed(2)}px, 0, 0)`;
+        } else {
+          img.style.transform = '';
+        }
+        frame.style.setProperty('--pan', progress.toFixed(3));
+      });
+    };
+
+    const onScrollPan = () => {
+      if (!panTicking) {
+        panTicking = true;
+        requestAnimationFrame(updatePan);
+      }
+    };
+
+    window.addEventListener('scroll', onScrollPan, { passive: true });
+    window.addEventListener('resize', onScrollPan);
+    if (reducedMotionMQ.addEventListener) {
+      reducedMotionMQ.addEventListener('change', updatePan);
+      mobileMQ.addEventListener('change', updatePan);
+    }
+
+    // Run once images have loaded so img.offsetWidth is accurate.
+    scrollySteps.forEach(step => {
+      const img = step.querySelector('.studio-scrolly__step-frame img');
+      if (!img) return;
+      if (img.complete && img.naturalWidth > 0) updatePan();
+      else img.addEventListener('load', updatePan, { once: true });
+    });
   }
 
   // ---- Image lightbox (fullscreen viewer + zoom) ----
