@@ -1,23 +1,108 @@
-.codex
-dominio-y-correo-iudex-com-ar.md
-.claude/settings.local.json
-
-# Credentials — never commit real keys
+# ──────────────────────────────────────────────────────────────
+# Credentials & secrets — NEVER commit
+# ──────────────────────────────────────────────────────────────
 public/js/env.js
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.pfx
+*.p12
+secrets.json
+credentials.json
 
-# macOS system files
+# ──────────────────────────────────────────────────────────────
+# Local Claude / Codex / tooling state
+# ──────────────────────────────────────────────────────────────
+.codex
+.claude/settings.local.json
+dominio-y-correo-iudex-com-ar.md
+
+# ──────────────────────────────────────────────────────────────
+# Internal docs & strategy — not for public website
+# ──────────────────────────────────────────────────────────────
+.claude/cm/
+docs/
+scripts/MVP-PLAYBOOK.md
+scripts/supabase-setup.sql
+
+# ──────────────────────────────────────────────────────────────
+# OS files
+# ──────────────────────────────────────────────────────────────
 .DS_Store
-*/.DS_Store
 **/.DS_Store
-
-# Windows system files
+.AppleDouble
+.LSOverride
+Icon?
+._*
 Thumbs.db
+ehthumbs.db
 Desktop.ini
+$RECYCLE.BIN/
 
-# Editor files
+# ──────────────────────────────────────────────────────────────
+# Editor / IDE
+# ──────────────────────────────────────────────────────────────
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
 *.swp
 *.swo
 *~
+.history/
 
+# ──────────────────────────────────────────────────────────────
+# Python (scripts/build-blog.py)
+# ──────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.python-version
+*.egg-info/
+
+# ──────────────────────────────────────────────────────────────
+# Node (defensive — no build step today)
+# ──────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ──────────────────────────────────────────────────────────────
+# Logs, caches, temp
+# ──────────────────────────────────────────────────────────────
+*.log
+logs/
+.cache/
+.tmp/
+tmp/
+*.tmp
+
+# ──────────────────────────────────────────────────────────────
+# Build / dist artifacts (none today, defensive)
+# ──────────────────────────────────────────────────────────────
+dist/
+build/
+out/
+
+# ──────────────────────────────────────────────────────────────
+# Backup / scratch files
+# ──────────────────────────────────────────────────────────────
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+
+# ──────────────────────────────────────────────────────────────
 # Supabase CLI local state
+# ──────────────────────────────────────────────────────────────
 supabase/.temp/
+supabase/.branches/
