@@ -97,7 +97,7 @@ type ResendSendResult = { id?: string; error?: string };
 
 async function resendSend(opts: {
   from: string;
-  to: string;
+  to: string | string[];
   reply_to?: string;
   subject: string;
   html: string;
@@ -194,12 +194,20 @@ Deno.serve(async (req) => {
     : "Recibimos tu solicitud — Iudex";
   const teamSubject = `Nueva solicitud — ${teamVars.nombre} ${teamVars.apellido}`.trim();
 
+  // RESEND_TEAM_TO acepta una sola direccion o varias separadas por coma
+  // (ej: "maxi@gmail.com,nahuel@gmail.com"). Resend acepta arrays en el
+  // campo `to` con hasta 50 destinatarios por mensaje.
+  const teamRecipients = RESEND_TEAM_TO
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
   let teamMessageId: string | undefined;
   let teamError: string | undefined;
-  if (RESEND_TEAM_TO) {
+  if (teamRecipients.length > 0) {
     const result = await resendSend({
       from: RESEND_FROM,
-      to: RESEND_TEAM_TO,
+      to: teamRecipients,
       reply_to: row.email,
       subject: teamSubject,
       html: teamHtml,
