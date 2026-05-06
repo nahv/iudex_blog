@@ -445,9 +445,24 @@ Para que el magic link funcione:
 3. **Crear los users iniciales** manualmente: Dashboard → Authentication → Users → "Add user" → Email: `nahuel@iudex.com.ar`, `mbury@iudex.com.ar`. Esto los registra sin password — el magic link funciona porque el user existe.
 4. **Configurar Site URL** en Settings → Authentication → URL Configuration:
    - Site URL: `https://iudex.com.ar`
-   - Redirect URLs (whitelist): `https://iudex.com.ar/admin/emails/`, `https://iudex.com.ar/admin/`
-5. **Custom email template** (opcional): Authentication → Email Templates → Magic Link. Se puede personalizar el HTML del email del magic link para que matchee la estética Iudex.
+   - Redirect URLs (whitelist): `https://iudex.com.ar/admin/emails/`, `https://iudex.com.ar/admin/`, y para dev local: `http://127.0.0.1:5500/admin/emails/`, `http://127.0.0.1:5500/admin/` (o el puerto que uses con tu live server local).
+5. **Custom email template del Magic Link**: Authentication → Email Templates → Magic Link → pegar el contenido de `emails/auth-magic-link.html` (copiá entero). El template usa `{{ .ConfirmationURL }}` que es la variable de Supabase para el link de confirmación. Mantener el archivo del repo y el de Supabase en sync — si cambia uno, actualizar el otro.
 6. **Setear `ADMIN_ALLOWLIST`** en Functions → Secrets con los mismos emails.
+
+### Admin panel — Dev local
+
+`public/js/env.js` no se commitea (gitignored) — en producción lo inyecta el GitHub Action. Para correr el admin desde tu máquina:
+
+```bash
+cp public/js/env.example.js public/js/env.js
+# Editá el archivo recién copiado:
+#   url: 'https://zbysecepjvyyiufbliub.supabase.co'
+#   anonKey: <copiá de Supabase Dashboard → Project Settings → API → "anon / public">
+```
+
+Servir con cualquier static server (`python3 -m http.server 8000` o VS Code Live Server). El admin va a funcionar normal contra el Supabase de producción — sin embargo, los magic links que mandes desde local te van a hacer un `redirect_to` con tu host local; agregá esos URLs locales al whitelist de "Redirect URLs" en Supabase Auth.
+
+Si abrís el admin sin haber creado el `env.js`, las páginas detectan el config faltante y muestran un banner rojo con instrucciones — no intentan conectar a un Supabase inválido.
 
 ### Admin panel — Migración SQL
 

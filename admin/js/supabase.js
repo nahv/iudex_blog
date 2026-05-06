@@ -1,18 +1,28 @@
-// Supabase client singleton para el admin panel.
-// Usa SUPABASE_URL + SUPABASE_ANON_KEY de window.ENV (inyectado por
-// .github/workflows/deploy.yml en public/js/env.js).
+// Supabase client del admin panel.
+//
+// Espera SUPABASE_URL + SUPABASE_ANON_KEY en window.ENV (inyectado por
+// .github/workflows/deploy.yml en public/js/env.js). Para dev local hay
+// que copiar public/js/env.example.js → public/js/env.js y completar.
+//
+// Si el config falta, exportamos `configMissing = true` y un cliente null.
+// Las paginas del admin chequean este flag y muestran un banner con
+// instrucciones — no intentamos llamar a Supabase con valores invalidos.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.4';
 
 const cfg = (typeof window !== 'undefined' && window.ENV?.supabase) || {};
-if (!cfg.url || !cfg.anonKey) {
-  console.error(
-    '[admin] Supabase config missing. Asegurate de que public/js/env.js esta cargado.'
-  );
-}
+const hasValidConfig =
+  typeof cfg.url === 'string' &&
+  cfg.url.startsWith('https://') &&
+  !cfg.url.includes('YOUR_PROJECT') &&
+  typeof cfg.anonKey === 'string' &&
+  cfg.anonKey.length > 20 &&
+  !cfg.anonKey.includes('YOUR_');
 
-export const supabase = createClient(
-  cfg.url || 'https://invalid.supabase.co',
-  cfg.anonKey || 'invalid-key',
-  { auth: { persistSession: true, autoRefreshToken: true } }
-);
+export const configMissing = !hasValidConfig;
+
+export const supabase = hasValidConfig
+  ? createClient(cfg.url, cfg.anonKey, {
+      auth: { persistSession: true, autoRefreshToken: true },
+    })
+  : null;

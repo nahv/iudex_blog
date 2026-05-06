@@ -28,6 +28,12 @@
 
   <main class="admin-main">
 
+    <div id="config-banner" class="config-banner" style="display:none">
+      <strong>Configuración local faltante.</strong> Para usar el admin desde tu máquina, copiá el template de env y completalo:
+      <pre>cp public/js/env.example.js public/js/env.js</pre>
+      Después editá <code>public/js/env.js</code> y poné los valores reales de Supabase (Dashboard → Project Settings → API). Recargá la página después.
+    </div>
+
     <header style="margin-bottom:20px;display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:16px">
       <div>
         <h1 class="admin-h1">Nuevo email</h1>

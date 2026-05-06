@@ -22,6 +22,12 @@
       <h2>Acceso restringido</h2>
       <p>Iniciá sesión con tu email <code>@iudex.com.ar</code>. Te vamos a mandar un link mágico — no necesitás contraseña.</p>
 
+      <div id="config-banner" class="config-banner" style="display:none">
+        <strong>Configuración local faltante.</strong> Para usar el admin desde tu máquina, copiá el template de env y completalo:
+        <pre>cp public/js/env.example.js public/js/env.js</pre>
+        Después editá <code>public/js/env.js</code> y poné los valores reales de Supabase (Dashboard → Project Settings → API).
+      </div>
+
       <form id="login-form" autocomplete="off">
         <div class="field">
           <label class="field-label" for="email">Email</label>
@@ -30,7 +36,6 @@
             class="input"
             type="email"
             name="email"
-            placeholder="nahuel@iudex.com.ar"
             required
             autofocus>
         </div>
@@ -53,9 +58,18 @@
   <script type="module">
     import { sendMagicLink, getSession } from './js/auth.js';
     import { isAllowedEmail } from './js/config.js';
+    import { configMissing } from './js/supabase.js';
+
+    // Si falta config local, mostramos banner y deshabilitamos el form.
+    if (configMissing) {
+      document.getElementById('config-banner').style.display = 'block';
+      document.getElementById('submit-btn').disabled = true;
+      document.getElementById('email').disabled = true;
+    }
 
     // Si ya hay sesion valida, redirigir directo al composer.
     (async () => {
+      if (configMissing) return;
       const session = await getSession();
       const email = session?.user?.email?.toLowerCase();
       if (session && email && isAllowedEmail(email)) {
