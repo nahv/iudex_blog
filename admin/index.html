@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Admin · Iudex</title>
+
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <div class="login-wrap">
+    <main class="login-card">
+      <div class="login-logo">Iudex</div>
+      <div class="login-tagline">Admin</div>
+
+      <h2>Acceso restringido</h2>
+      <p>Iniciá sesión con tu email <code>@iudex.com.ar</code>. Te vamos a mandar un link mágico — no necesitás contraseña.</p>
+
+      <form id="login-form" autocomplete="off">
+        <div class="field">
+          <label class="field-label" for="email">Email</label>
+          <input
+            id="email"
+            class="input"
+            type="email"
+            name="email"
+            placeholder="nahuel@iudex.com.ar"
+            required
+            autofocus>
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn btn--primary" style="width:100%">
+          Enviar magic link
+        </button>
+
+        <p id="status" style="margin-top:16px;font-size:13px;display:none"></p>
+      </form>
+
+      <p style="margin-top:24px;font-size:12px;color:#888;text-align:center">
+        Solo emails autorizados pueden acceder. Si no tenés acceso pero deberías,
+        contactá a un admin.
+      </p>
+    </main>
+  </div>
+
+  <script src="../public/js/env.js"></script>
+  <script type="module">
+    import { sendMagicLink, getSession } from './js/auth.js';
+    import { isAllowedEmail } from './js/config.js';
+
+    // Si ya hay sesion valida, redirigir directo al composer.
+    (async () => {
+      const session = await getSession();
+      const email = session?.user?.email?.toLowerCase();
+      if (session && email && isAllowedEmail(email)) {
+        window.location.href = '/admin/emails/';
+      }
+    })();
+
+    const form = document.getElementById('login-form');
+    const status = document.getElementById('status');
+    const btn = document.getElementById('submit-btn');
+
+    function showStatus(msg, kind) {
+      status.style.display = 'block';
+      status.textContent = msg;
+      status.style.color = kind === 'error' ? '#c0392b' : '#1e7a3a';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      if (!email) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      showStatus('', '');
+
+      const result = await sendMagicLink(email);
+      if (result.error) {
+        showStatus(result.error, 'error');
+        btn.disabled = false;
+        btn.textContent = 'Enviar magic link';
+        return;
+      }
+      showStatus(`Listo. Revisá tu inbox (${email}). El link te trae de vuelta acá ya autenticado.`, 'success');
+      btn.textContent = 'Mail enviado ✓';
+      // Boton queda disabled como confirmacion visual.
+    });
+  </script>
+</body>
+</html>

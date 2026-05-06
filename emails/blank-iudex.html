@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>{{heading}}</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+</head>
+<body style="margin:0;padding:0;background-color:#f7f4ee;font-family:'Helvetica Neue',Arial,sans-serif;color:#0f0f0e;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f7f4ee;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;width:100%;">
+
+          <!-- Header con logo -->
+          <tr>
+            <td align="center" style="padding:0 0 32px 0;">
+              <img src="https://iudex.com.ar/assets/icon.png" alt="Iudex" width="56" height="56" style="display:block;border:0;border-radius:14px;" />
+            </td>
+          </tr>
+
+          <!-- Card principal -->
+          <tr>
+            <td>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#ffffff;border-radius:16px;border:1px solid rgba(15,15,14,0.06);">
+
+                <!-- Linea gold superior -->
+                <tr>
+                  <td style="height:4px;background:linear-gradient(90deg,#c9a84c,#e8c97a);border-radius:16px 16px 0 0;font-size:0;line-height:0;">&nbsp;</td>
+                </tr>
+
+                <tr>
+                  <td style="padding:44px 36px 28px 36px;">
+
+                    {{#heading}}
+                    <h1 style="margin:0 0 24px 0;font-family:Georgia,'Playfair Display',serif;font-size:26px;font-weight:600;color:#0f0f0e;line-height:1.3;">
+                      {{heading}}
+                    </h1>
+                    {{/heading}}
+
+                    <!-- Body slot — el composer rellena con HTML libre o texto formateado -->
+                    <div style="font-size:15px;line-height:1.75;color:#2a2a28;">
+                      {{body_html}}
+                    </div>
+
+                    {{#cta_url}}
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:32px 0 8px 0;">
+                      <tr>
+                        <td align="center" style="background-color:#0f0f0e;border-radius:10px;">
+                          <a href="{{cta_url}}" target="_blank" style="display:inline-block;padding:14px 32px;font-size:14px;font-weight:600;color:#c9a84c;text-decoration:none;font-family:'Helvetica Neue',Arial,sans-serif;">
+                            {{cta_label}}
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                    {{/cta_url}}
+
+                  </td>
+                </tr>
+
+                <tr><td style="height:36px;"></td></tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:32px 0;text-align:center;">
+              <p style="margin:0 0 8px 0;font-size:13px;color:#5a5a56;">
+                Equipo Iudex
+              </p>
+              <p style="margin:0 0 16px 0;">
+                <a href="mailto:contacto@iudex.com.ar" style="font-size:13px;color:#c9a84c;text-decoration:none;">contacto@iudex.com.ar</a>
+              </p>
+              <p style="margin:0;font-size:11px;color:#999999;line-height:1.6;">
+                <a href="https://iudex.com.ar" style="color:#c9a84c;text-decoration:none;">iudex.com.ar</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
