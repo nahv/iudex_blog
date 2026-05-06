@@ -1,6 +1,6 @@
 # Sistema de email — Iudex
 
-Spec completa del workflow de email del proyecto. Cubre los 4 servicios involucrados (Resend, Supabase, Cloudflare, Notion), las 3 Edge Functions, los scripts manuales, y todos los env vars / webhooks / DNS requeridos.
+Spec completa del workflow de email del proyecto. Cubre los 4 servicios involucrados (Resend, Supabase, Cloudflare, Notion), las 5 Edge Functions, el admin panel web, los scripts manuales, y todos los env vars / webhooks / DNS requeridos.
 
 > Si cambia algo del sistema (nueva función, nuevo flag, secret renombrado, ruta DNS modificada), **actualizar este doc en el mismo commit**. Es la fuente de verdad para que Claude Code y futuros devs entiendan la arquitectura.
 
@@ -15,6 +15,7 @@ Spec completa del workflow de email del proyecto. Cubre los 4 servicios involucr
 | Recepción | **Cloudflare Email Routing** | Forward de `*@iudex.com.ar` a inboxes de Gmail/iCloud. |
 | CRM-lite | **Notion** | Database con pages auto-creadas por cada lead. Para gestión humana del pipeline. |
 | Eventos | **Resend Webhooks (Svix)** | Lifecycle events (bounced, complained, etc.) → alertas al equipo. |
+| Admin | **Página `/admin/`** (estática + Edge Functions) | UI web para que Maxi+Nahuel manden emails ad-hoc o con templates, con preview live, drafts e history. |
 
 ---
 
@@ -51,7 +52,7 @@ Spec completa del workflow de email del proyecto. Cubre los 4 servicios involucr
         [UPDATE registrations SET email_sent_at, email_message_id]
 ```
 
-### Outbound — invitación manual a beta tester
+### Outbound — invitación manual a beta tester (CLI)
 
 ```
 [Operador (Nahuel/Maxi) en CLI local]
@@ -69,6 +70,36 @@ Spec completa del workflow de email del proyecto. Cubre los 4 servicios involucr
 ```
 
 No pasa por DB ni por Edge Functions. Es 100% local + Resend.
+
+### Outbound — admin panel (UI web)
+
+```
+[Maxi/Nahuel en https://iudex.com.ar/admin/]
+                    │
+                    │  Login con magic link a {nahuel,mbury}@iudex.com.ar
+                    │  → Cloudflare → Gmail/iCloud → click → JWT en localStorage
+                    ▼
+[Composer page: pick template, fill vars, preview live]
+                    │
+                    │  POST /functions/v1/send-custom-email
+                    │  con Authorization: Bearer <JWT>
+                    ▼
+[Gateway Supabase] valida firma JWT (verify_jwt = true)
+                    │
+                    ▼
+[send-custom-email Edge Function]
+                    │
+                    ├──► Decode JWT, extrae email
+                    ├──► Verifica email ∈ ADMIN_ALLOWLIST (server-side)
+                    ├──► Render: el HTML ya viene resuelto del frontend
+                    ├──► Resend.send (transactional, 1-N to o iterando audience)
+                    └──► INSERT en public.sent_emails (audit log)
+```
+
+El admin panel consume tres surfaces de Supabase:
+- **Edge Function `send-custom-email`** — envía vía Resend con allowlist server-side.
+- **Edge Function `list-audiences`** — popula el dropdown sin exponer RESEND_API_KEY al browser.
+- **Tablas `sent_emails` + `email_drafts`** — RLS garantiza que solo authenticated users ven el historial, y cada user solo sus propios drafts.
 
 ### Lifecycle events de Resend → alertas al equipo
 
@@ -157,6 +188,23 @@ Las tres viven en `supabase/functions/<name>/index.ts`. Todas tienen `verify_jwt
   2. Si `event.type ∈ EMAIL_EVENTS_ALERT_TYPES`: manda email de alerta (HTML branded con barra de severidad coloreada por tipo) a `EMAIL_EVENTS_NOTIFY_TO`.
   - Default alert types: `email.bounced`, `email.complained`, `email.delivery_delayed`. Override via env var.
 
+#### `send-custom-email`
+
+- **Trigger**: HTTP POST desde el admin panel (`/admin/emails/`).
+- **Auth**: Triple proteccion — gateway valida JWT (verify_jwt = true), código decodifica el JWT y extrae `email`, allowlist `ADMIN_ALLOWLIST` (env var) chequea el email server-side. Si falla cualquiera → 401/403 sin tocar Resend.
+- **Acción**:
+  1. Recibe payload con HTML ya renderizado (el frontend hizo la sustitución de `{{vars}}`).
+  2. Si `test_mode`: override recipients = [user_email] + prefix `[TEST]` en subject.
+  3. Si `audience_id`: lista contactos de la audience (Resend API), filtra unsubscribed, manda 1 email transactional por contacto (cada uno solo ve su email en To).
+  4. Si `recipients` directo: 1 envío con `to: [...recipients]`.
+  5. INSERT en `public.sent_emails` con `sent_by = email del JWT`, `template`, `subject`, `recipients`, `body_html`, `status`, etc.
+
+#### `list-audiences`
+
+- **Trigger**: HTTP GET desde el admin panel.
+- **Auth**: misma que `send-custom-email` (JWT + allowlist).
+- **Acción**: lista las audiencias del workspace de Resend con conteo de contactos no-unsubscribed por cada una. Existe para no exponer `RESEND_API_KEY` al browser cuando el admin necesita poblar el dropdown de audiences.
+
 ### Templates HTML
 
 | Path | Quién lo manda | Destinatario | Disparo |
@@ -184,6 +232,37 @@ Flags: `--to`, `--name`, `--link` (requeridos); `--from`, `--reply`, `--subject`
 
 Para envíos a múltiples beta testers (>10 con copy idéntico): migrar a Resend Broadcasts con la audience `Beta testers`. La diferencia clave: Broadcasts adjunta un footer de unsubscribe automático (regulatorio para marketing). El script no — es transaccional.
 
+### Admin panel — frontend
+
+Ubicación en el repo: `admin/` (subroute servido por GitHub Pages junto al resto del sitio).
+
+```
+admin/
+├── index.html              → Login con magic link
+├── emails/
+│   ├── index.html          → Composer (template/ad-hoc, preview live, send)
+│   └── history.html        → Listado de últimos 50 envíos con detalle
+├── css/
+│   └── admin.css           → Estilos del panel (extiende paleta Iudex)
+└── js/
+    ├── config.js           → ADMIN_ALLOWLIST hardcodeada (UX hint, no security)
+    ├── supabase.js         → Cliente Supabase desde CDN (esm.sh)
+    ├── auth.js             → sendMagicLink, getSession, requireAuth, signOut
+    ├── api.js              → Wrapper con Bearer JWT auto-inyectado para calls a las Edge Functions + CRUD de drafts/history
+    ├── templates.js        → Registry de templates + render Mustache-mini
+    ├── composer.js         → Lógica de la página composer
+    └── history.js          → Lógica de la página history
+```
+
+**Templates disponibles** en el composer (registrados en `admin/js/templates.js`):
+- `beta-invite` — fetch `/emails/beta-invite.html`, vars: `nombre`, `drive_link`.
+- `blank-iudex` — fetch `/emails/blank-iudex.html`, vars: `heading`, `body_html`, `cta_label`, `cta_url`.
+- `ad-hoc` — sin template fuente; el body lo escribe el user en una textarea (HTML libre, sin wrapper).
+
+**Auth flow**: magic link con Supabase Auth a `nahuel@iudex.com.ar` o `mbury@iudex.com.ar`. El link viaja Cloudflare Email Routing → Gmail/iCloud → click → sesión persistente en `localStorage`. Allowlist enforced en frontend (UX) **y** en Edge Function (security).
+
+**Keyboard shortcuts** en composer: `⌘↩` enviar, `⌘T` test (manda solo al user auth con prefijo `[TEST]`), `⌘S` guardar draft.
+
 ### Tablas (Supabase)
 
 #### `public.registrations`
@@ -210,6 +289,47 @@ ses_message_id      text          -- legacy AWS SES
 
 - **RLS activo**. INSERT permitido para `anon` con `WITH CHECK` (probablemente filtrado por `source`). SELECT solo para `authenticated`.
 - Lookups sobre `email_sent_at IS NULL` para identificar pendientes.
+
+#### `public.sent_emails`
+
+Audit log del admin panel. Ver migration `20260506130000_admin_panel_tables.sql`.
+
+```sql
+sent_by           text not null              -- email del JWT (ej: nahuel@iudex.com.ar)
+sent_at           timestamptz default now()
+template          text                        -- 'beta-invite' | 'blank-iudex' | 'ad-hoc' | etc
+subject           text not null
+recipients        text[] default '{}'         -- destinos directos
+audience_id       text                        -- si fue por audience de Resend
+audience_name     text                        -- cacheado para history
+resend_message_id text                        -- id del primer envío
+variables         jsonb                       -- vars usadas (audit / repetir)
+body_html         text                        -- HTML final enviado
+status            text default 'sent'         -- 'sent' | 'failed'
+error_message     text
+test_mode         boolean default false
+```
+
+- **RLS activo**. SELECT permitido a `authenticated`. INSERT solo via service_role (Edge Function).
+
+#### `public.email_drafts`
+
+Borradores del composer. Ver mismo archivo de migration.
+
+```sql
+owner        text not null               -- email del autor (auth.jwt() ->> 'email')
+created_at   timestamptz default now()
+updated_at   timestamptz default now()
+title        text default 'Sin titulo'
+template     text
+subject      text
+recipients   text[] default '{}'
+audience_id  text
+variables    jsonb
+body_html    text                        -- para template = 'ad-hoc'
+```
+
+- **RLS activo**. CRUD restringido a `auth.jwt() ->> 'email' = owner`. Cada user solo ve y edita sus propios drafts.
 
 ### Domain config
 
@@ -254,6 +374,7 @@ Cargar en https://supabase.com/dashboard/project/zbysecepjvyyiufbliub/functions/
 | `RESEND_WEBHOOK_SECRET` | notify-email-events | Empieza con `whsec_`. De Resend Dashboard → Webhooks |
 | `EMAIL_EVENTS_NOTIFY_TO` | notify-email-events | Comma-separated. Quién recibe alertas de eventos críticos |
 | `EMAIL_EVENTS_ALERT_TYPES` | (opcional) | Default: `email.bounced,email.complained,email.delivery_delayed` |
+| `ADMIN_ALLOWLIST` | send-custom-email, list-audiences | Comma-separated. Emails autorizados a usar el admin panel. Ej: `nahuel@iudex.com.ar,mbury@iudex.com.ar` |
 | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | (auto) | Auto-provistos por Supabase |
 
 ### Database Webhooks en Supabase
@@ -315,6 +436,45 @@ https://notion.so/<workspace>/3570ddcd8dbc80f3ac27f88e47235a3f?v=...
                               esto es lo que va en NOTION_DATABASE_ID
 ```
 
+### Admin panel — Supabase Auth
+
+Para que el magic link funcione:
+
+1. **Habilitar Email auth** en Supabase Dashboard → Authentication → Providers → Email → ON.
+2. **Disable signups** (recomendado): Dashboard → Authentication → Settings → "Allow new users to sign up" = OFF. Combinado con la allowlist server-side, esto previene cualquier intento de signup no autorizado.
+3. **Crear los users iniciales** manualmente: Dashboard → Authentication → Users → "Add user" → Email: `nahuel@iudex.com.ar`, `mbury@iudex.com.ar`. Esto los registra sin password — el magic link funciona porque el user existe.
+4. **Configurar Site URL** en Settings → Authentication → URL Configuration:
+   - Site URL: `https://iudex.com.ar`
+   - Redirect URLs (whitelist): `https://iudex.com.ar/admin/emails/`, `https://iudex.com.ar/admin/`, y para dev local: `http://127.0.0.1:5500/admin/emails/`, `http://127.0.0.1:5500/admin/` (o el puerto que uses con tu live server local).
+5. **Custom email template del Magic Link**: Authentication → Email Templates → Magic Link → pegar el contenido de `emails/auth-magic-link.html` (copiá entero). El template usa `{{ .ConfirmationURL }}` que es la variable de Supabase para el link de confirmación. Mantener el archivo del repo y el de Supabase en sync — si cambia uno, actualizar el otro.
+6. **Setear `ADMIN_ALLOWLIST`** en Functions → Secrets con los mismos emails.
+
+### Admin panel — Dev local
+
+`public/js/env.js` no se commitea (gitignored) — en producción lo inyecta el GitHub Action. Para correr el admin desde tu máquina:
+
+```bash
+cp public/js/env.example.js public/js/env.js
+# Editá el archivo recién copiado:
+#   url: 'https://zbysecepjvyyiufbliub.supabase.co'
+#   anonKey: <copiá de Supabase Dashboard → Project Settings → API → "anon / public">
+```
+
+Servir con cualquier static server (`python3 -m http.server 8000` o VS Code Live Server). El admin va a funcionar normal contra el Supabase de producción — sin embargo, los magic links que mandes desde local te van a hacer un `redirect_to` con tu host local; agregá esos URLs locales al whitelist de "Redirect URLs" en Supabase Auth.
+
+Si abrís el admin sin haber creado el `env.js`, las páginas detectan el config faltante y muestran un banner rojo con instrucciones — no intentan conectar a un Supabase inválido.
+
+### Admin panel — Migración SQL
+
+Aplicar `supabase/migrations/20260506130000_admin_panel_tables.sql` antes del primer uso. Opciones:
+
+```bash
+# Via CLI (recomendado)
+supabase db push
+
+# O pegar el SQL en Dashboard → SQL Editor → Run
+```
+
 ### `.env` local (para scripts)
 
 `.env` en la raíz del repo (gitignored). Ver `.env.example` para referencia:
@@ -363,6 +523,11 @@ git checkout development && git pull   # tener el código actualizado
 supabase functions deploy send-inscription-email
 supabase functions deploy sync-to-notion
 supabase functions deploy notify-email-events
+supabase functions deploy send-custom-email
+supabase functions deploy list-audiences
+
+# Migrations (admin panel)
+supabase db push
 ```
 
 `supabase/config.toml` tiene `verify_jwt = false` para las tres funciones — sin eso, los webhooks devuelven 401 a nivel del gateway. Si algún deploy queda con `verify_jwt = true` por error, el síntoma es 401 con `execution_id: null` en los logs (ver "Diagnóstico").
