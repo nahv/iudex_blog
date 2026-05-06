@@ -101,6 +101,12 @@
   </dialog>
 
   <script src="../../public/js/env.js"></script>
+  <script>
+    // Bridge para env.js viejos con `const ENV = ...` (no en window).
+    if (typeof window.ENV === 'undefined' && typeof ENV !== 'undefined') {
+      window.ENV = ENV;
+    }
+  </script>
   <script type="module" src="../js/history.js"></script>
 </body>
 </html>

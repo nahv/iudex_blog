@@ -55,6 +55,14 @@
   </div>
 
   <script src="../public/js/env.js"></script>
+  <script>
+    // Bridge: si env.js usa el formato viejo `const ENV = ...`, copiarlo
+    // a window.ENV para que los modulos lo vean. Defensa en profundidad
+    // para versiones viejas de env.js que pre-existen al fix de scope.
+    if (typeof window.ENV === 'undefined' && typeof ENV !== 'undefined') {
+      window.ENV = ENV;
+    }
+  </script>
   <script type="module">
     import { sendMagicLink, getSession } from './js/auth.js';
     import { isAllowedEmail } from './js/config.js';
