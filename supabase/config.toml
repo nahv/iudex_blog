@@ -1,15 +1,19 @@
 # Configuracion del proyecto Supabase para la CLI.
 #
-# Este archivo evita que `supabase functions deploy` aplique JWT verification
-# por default — un cambio que rompe los Database Webhooks y Resend webhooks
-# (ninguno de los dos manda JWTs validos en el header `Authorization`).
+# verify_jwt: define si el gateway de Supabase valida el JWT del header
+# Authorization antes de invocar la funcion.
 #
-# Sin este config, las funciones empiezan a devolver 401 en el gateway
-# (antes de invocar el codigo) cuando el CLI las redeploya con defaults.
-# Con verify_jwt = false, la auth queda en manos de cada funcion:
-#   - send-inscription-email + sync-to-notion: bearer WEBHOOK_SECRET
-#   - notify-email-events: firma Svix de Resend
+#   verify_jwt = false  -> la funcion maneja su propia auth (Bearer custom,
+#                          Svix signature, etc). Necesario para webhooks
+#                          (Database Webhooks usan WEBHOOK_SECRET; Resend
+#                          usa firma Svix; ninguno manda JWT real).
+#
+#   verify_jwt = true   -> el gateway valida la firma del JWT y rechaza
+#                          requests sin uno valido. Necesario para funciones
+#                          llamadas desde el frontend con auth de usuario
+#                          (admin panel, etc).
 
+# --- Webhook-driven (usan auth custom dentro del codigo) ---
 [functions.send-inscription-email]
 verify_jwt = false
 
@@ -18,3 +22,10 @@ verify_jwt = false
 
 [functions.notify-email-events]
 verify_jwt = false
+
+# --- User-driven (auth via JWT de Supabase Auth) ---
+[functions.send-custom-email]
+verify_jwt = true
+
+[functions.list-audiences]
+verify_jwt = true

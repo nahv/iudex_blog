@@ -15,10 +15,12 @@ contacto/index.html     -> Formulario de contacto
 public/css/styles.css   -> Hoja de estilos global (CSS variables, BEM)
 public/js/main.js       -> JavaScript global (navbar, forms, animaciones, filtros)
 ui/navbar.html          -> Componente navbar de referencia
-emails/                 -> Templates HTML para envios manuales via Resend (beta-invite, etc)
+emails/                 -> Templates HTML para envios manuales via Resend (beta-invite, blank-iudex, etc)
 scripts/                -> CLIs de operacion (send-beta-invite.mjs, build-blog.py)
 supabase/               -> Edge Functions, migrations y config del backend de email
-supabase/README.md      -> Spec completa del sistema de email (LEER antes de tocar email/registros)
+supabase/README.md      -> Spec completa del sistema de email + admin panel (LEER antes de tocar email/registros/admin)
+admin/                  -> Panel web autenticado para mandar emails (composer + history). Ver supabase/README.md
+robots.txt              -> Bloquea /admin/ del crawl publico
 ```
 
 ## Comandos
@@ -40,7 +42,7 @@ git push origin main
 - **Blog**: Cada articulo es un .html independiente en `blog/`. Al crear uno nuevo, agregar tambien la card en `blog/index.html`.
 - **Links**: Paths relativos. Paginas raiz: `blog/index.html`. Sub-paginas: `../index.html`.
 - **Imagenes**: Alt obligatorio. Formato SVG para iconos, WebP/PNG para fotos.
-- **Email / Edge Functions**: Antes de modificar templates, Edge Functions, webhooks, scripts de email o cualquier cosa relacionada con `registrations`, leer `supabase/README.md`. Los cambios al stack de email (Resend, Notion sync, Cloudflare routing) requieren actualizar ese doc en el mismo commit.
+- **Email / Edge Functions / Admin panel**: Antes de modificar templates, Edge Functions, webhooks, scripts de email, el panel `/admin/` o cualquier cosa relacionada con `registrations`/`sent_emails`/`email_drafts`, leer `supabase/README.md`. Los cambios al stack de email (Resend, Notion sync, Cloudflare routing, admin) requieren actualizar ese doc en el mismo commit.
 
 ## Ownership
 

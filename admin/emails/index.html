@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Composer · Admin Iudex</title>
+
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+  <header class="admin-topbar">
+    <div class="admin-topbar__brand">Iudex<span>admin</span></div>
+    <nav class="admin-topbar__nav">
+      <a href="./" class="active">Composer</a>
+      <a href="./history.html">History</a>
+    </nav>
+    <div class="admin-topbar__user">
+      <span class="admin-topbar__user-email" id="current-email">…</span>
+      <button class="admin-topbar__logout" id="btn-logout">Salir</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+
+    <header style="margin-bottom:20px;display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:16px">
+      <div>
+        <h1 class="admin-h1">Nuevo email</h1>
+        <p class="admin-subtitle">Templated o ad-hoc, 1-a-1 o por audience. Todo con la estética Iudex.</p>
+      </div>
+      <button class="btn btn--ghost" id="btn-new" title="Empezar un nuevo email en blanco">+ Nuevo</button>
+    </header>
+
+    <section class="composer-grid">
+
+      <!-- ======== FORM PANEL ======== -->
+      <article class="admin-card admin-card--gold-line composer-form">
+
+        <div class="field">
+          <label class="field-label" for="template-select">Template</label>
+          <select id="template-select" class="select"></select>
+          <span class="field-hint">El template define la estructura HTML. Las variables se autodetectan.</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="subject-input">Asunto</label>
+          <input id="subject-input" class="input" type="text" placeholder="ej: Rita, ya podés descargar Iudex">
+        </div>
+
+        <div class="field">
+          <label class="field-label">Destinatarios</label>
+          <div class="radio-group" style="margin-bottom:8px">
+            <label class="radio-pill">
+              <input type="radio" name="recipient-mode" value="direct" id="recipient-mode-direct" checked>
+              1-a-1 / lista directa
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="recipient-mode" value="audience" id="recipient-mode-audience">
+              Audience de Resend
+            </label>
+          </div>
+
+          <div id="recipients-direct-wrap">
+            <textarea
+              id="recipients-textarea"
+              class="textarea"
+              rows="3"
+              style="font-family:inherit;font-size:14px;min-height:auto"
+              placeholder="rita@example.com, otro@example.com&#10;(separados por coma o enter)"></textarea>
+            <span class="field-hint">Hasta 50 emails. Para más, usá una audience.</span>
+          </div>
+
+          <div id="recipients-audience-wrap" style="display:none">
+            <select id="audience-select" class="select"></select>
+            <span class="field-hint">Cada contacto recibe un envio personal (transactional). Audiences se gestionan en Resend Dashboard.</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Variables del template</label>
+          <div id="vars-panel" class="vars-block"></div>
+        </div>
+
+        <div class="field" id="body-html-wrap" style="display:none">
+          <label class="field-label" for="body-html-textarea">Body HTML (ad-hoc)</label>
+          <textarea
+            id="body-html-textarea"
+            class="textarea"
+            rows="14"
+            placeholder="&lt;p&gt;Escribi tu HTML aca&lt;/p&gt;"></textarea>
+          <span class="field-hint">Para ad-hoc no se aplica ningún wrapper — vos controlas todo el HTML.</span>
+        </div>
+
+        <div class="composer-actions">
+          <button id="btn-send" class="btn btn--primary">📩 Enviar</button>
+          <button id="btn-test" class="btn btn--secondary" title="Manda solo a vos con prefijo [TEST]">🧪 Test (sólo a mí)</button>
+          <button id="btn-save-draft" class="btn btn--ghost">💾 Guardar draft</button>
+          <span class="composer-actions__shortcut">⌘↩ Enviar · ⌘T Test · ⌘S Draft</span>
+        </div>
+
+      </article>
+
+      <!-- ======== PREVIEW PANEL ======== -->
+      <aside class="preview-pane">
+        <div class="preview-pane__label">
+          <span>Preview live</span>
+          <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#888">renderizado a tiempo real</span>
+        </div>
+        <iframe id="preview-iframe" class="preview-iframe" sandbox="allow-same-origin"></iframe>
+      </aside>
+
+    </section>
+
+    <!-- ======== DRAFTS ======== -->
+    <section class="drafts-section">
+      <h3>Drafts</h3>
+      <div class="admin-card" style="padding:0">
+        <div id="drafts-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toasts" class="toast-container"></div>
+
+  <script src="../../public/js/env.js"></script>
+  <script type="module" src="../js/composer.js"></script>
+</body>
+</html>

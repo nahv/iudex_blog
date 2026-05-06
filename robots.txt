@@ -1,0 +1,8 @@
+# Iudex - robots.txt
+# Bloqueamos crawl/indexacion del admin panel.
+# El resto del sitio se permite indexar normalmente.
+
+User-agent: *
+Disallow: /admin/
+
+Sitemap: https://iudex.com.ar/sitemap.xml
