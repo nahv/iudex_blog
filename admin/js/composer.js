@@ -13,6 +13,7 @@
 //   - Cualquier cambio en form -> debounced render (200ms)
 
 import { requireAuth, signOut } from './auth.js';
+import { configMissing } from './supabase.js';
 import {
   sendCustomEmail,
   listAudiences,
@@ -400,6 +401,15 @@ function toggleAdHocMode() {
 // Init
 // ============================================================================
 async function init() {
+  if (configMissing) {
+    document.getElementById('config-banner').style.display = 'block';
+    document.querySelectorAll('input,select,textarea,button').forEach((el) => {
+      if (el.id !== 'btn-logout') el.disabled = true;
+    });
+    document.getElementById('current-email').textContent = '(config faltante)';
+    return;
+  }
+
   let auth;
   try {
     auth = await requireAuth();

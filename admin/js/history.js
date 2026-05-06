@@ -1,6 +1,7 @@
 // History — listado de los ultimos N envios manuales del admin panel.
 
 import { requireAuth, signOut } from './auth.js';
+import { configMissing } from './supabase.js';
 import { listSentEmails, getSentEmail } from './api.js';
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -63,6 +64,13 @@ async function showRowDetail(id) {
 }
 
 async function init() {
+  if (configMissing) {
+    document.getElementById('config-banner').style.display = 'block';
+    $('#current-email').textContent = '(config faltante)';
+    $('#history-body').innerHTML = '';
+    return;
+  }
+
   let auth;
   try { auth = await requireAuth(); } catch { return; }
   $('#current-email').textContent = auth.email;

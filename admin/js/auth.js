@@ -1,7 +1,15 @@
 // Auth helpers para el admin panel.
 
-import { supabase } from './supabase.js';
+import { supabase, configMissing } from './supabase.js';
 import { isAllowedEmail } from './config.js';
+
+function ensureSupabase() {
+  if (configMissing || !supabase) {
+    throw new Error(
+      'config_missing: copiá public/js/env.example.js a public/js/env.js y completá los valores.'
+    );
+  }
+}
 
 /**
  * Manda un magic link al email dado. Se rechaza client-side si el email no
@@ -12,6 +20,11 @@ export async function sendMagicLink(email, redirectPath) {
   const normalized = (email || '').trim().toLowerCase();
   if (!isAllowedEmail(normalized)) {
     return { error: 'Este email no esta autorizado para acceder al admin panel.' };
+  }
+  try {
+    ensureSupabase();
+  } catch (e) {
+    return { error: e.message };
   }
   const redirectTo =
     window.location.origin + (redirectPath || '/admin/emails/');
@@ -31,6 +44,7 @@ export async function sendMagicLink(email, redirectPath) {
  * Devuelve la sesion actual o null.
  */
 export async function getSession() {
+  if (configMissing || !supabase) return null;
   const { data, error } = await supabase.auth.getSession();
   if (error) return null;
   return data?.session ?? null;
@@ -48,7 +62,7 @@ export async function getCurrentEmail() {
  * Cierra sesion y redirecciona al login.
  */
 export async function signOut(redirectPath) {
-  await supabase.auth.signOut();
+  if (supabase) await supabase.auth.signOut();
   window.location.href = redirectPath || '/admin/';
 }
 
@@ -57,6 +71,10 @@ export async function signOut(redirectPath) {
  * login. Llamar al inicio de cada pagina autenticada.
  */
 export async function requireAuth() {
+  if (configMissing) {
+    // No redirigimos — la pagina muestra el banner de config-missing.
+    throw new Error('config_missing');
+  }
   const session = await getSession();
   const email = session?.user?.email?.toLowerCase();
   if (!session || !email) {
