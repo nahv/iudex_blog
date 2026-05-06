@@ -33,10 +33,29 @@ export async function sendMagicLink(email, redirectPath) {
     email: normalized,
     options: {
       emailRedirectTo: redirectTo,
-      shouldCreateUser: true,
+      // Importante: false porque tenemos signups deshabilitados a nivel
+      // de proyecto (Auth → Settings → "Allow new users to sign up" = OFF).
+      // Los users del admin se crean manualmente en Dashboard. Si esto
+      // fuese true, signInWithOtp intenta signup primero y devuelve 422
+      // "Signups not allowed for this instance".
+      shouldCreateUser: false,
     },
   });
-  if (error) return { error: error.message };
+  if (error) {
+    // Mensaje mas amigable para el caso comun (user no existe).
+    if (
+      error.message?.includes('Signups not allowed') ||
+      error.message?.toLowerCase().includes('user not found') ||
+      error.status === 422 ||
+      error.status === 400
+    ) {
+      return {
+        error:
+          'No encontramos una cuenta con ese email. Pediles a un admin que te agregue manualmente en Supabase Auth.',
+      };
+    }
+    return { error: error.message };
+  }
   return { ok: true };
 }
 
