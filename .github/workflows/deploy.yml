@@ -32,7 +32,12 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          printf 'const ENV = {\n  supabase: {\n    url: "%s",\n    anonKey: "%s",\n  },\n};\n' \
+          # Usamos `window.ENV = ...` (no `const ENV = ...`) para que el
+          # objeto sea accesible desde ES modules, no solo desde scripts
+          # clasicos. main.js (clasico) lo sigue leyendo via `typeof ENV`
+          # — el scope chain global resuelve window.ENV. supabase.js
+          # (modulo) lo lee como window.ENV explicitamente.
+          printf 'window.ENV = {\n  supabase: {\n    url: "%s",\n    anonKey: "%s",\n  },\n};\n' \
             "$SUPABASE_URL" "$SUPABASE_ANON_KEY" \
             > public/js/env.js
 
