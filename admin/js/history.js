@@ -3,6 +3,7 @@
 import { requireAuth, signOut } from './auth.js';
 import { configMissing } from './supabase.js';
 import { listSentEmails, getSentEmail } from './api.js';
+import { wireBurger } from './nav.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 
@@ -64,6 +65,8 @@ async function showRowDetail(id) {
 }
 
 async function init() {
+  wireBurger();
+
   if (configMissing) {
     document.getElementById('config-banner').style.display = 'block';
     $('#current-email').textContent = '(config faltante)';
