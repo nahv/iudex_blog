@@ -51,7 +51,11 @@
 
   <header class="admin-topbar">
     <div class="admin-topbar__brand">Iudex<span>admin</span></div>
-    <nav class="admin-topbar__nav">
+    <button class="admin-topbar__burger" id="btn-burger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="admin-topbar__nav" id="admin-nav">
+      <a href="../dashboard/">Dashboard</a>
       <a href="./">Composer</a>
       <a href="./history.html" class="active">History</a>
     </nav>

@@ -84,7 +84,7 @@
       const session = await getSession();
       const email = session?.user?.email?.toLowerCase();
       if (session && email && isAllowedEmail(email)) {
-        window.location.href = '/admin/emails/';
+        window.location.href = '/admin/dashboard/';
       }
     })();
 

@@ -51,7 +51,7 @@
       Aplicación de escritorio offline-first. Tus datos quedan en tu máquina; la sincronización con la nube es opcional y siempre la decidís vos.
     </p>
     <p class="label" style="margin-top:28px;color:var(--gold)">
-      Versión&nbsp;1.0 · Próximamente
+      Versión&nbsp;0.1.0-beta · "Primer Toque" · <a href="../releases/index.html" style="color:var(--gold);text-decoration:underline;text-underline-offset:3px">Notas de la versión</a>
     </p>
   </div>
 </section>
@@ -59,44 +59,50 @@
 <!-- DOWNLOADS -->
 <article class="post-content">
 
-  <p style="font-size:1.05rem;line-height:1.85"><strong>Estado:</strong> Iudex está en proceso de certificación para los canales de distribución oficiales. Mientras tanto, sumate a la lista de acceso anticipado y te avisamos cuando los instaladores estén disponibles.</p>
+  <p style="font-size:1.05rem;line-height:1.85"><strong>Estado:</strong> Iudex&nbsp;0.1.0-beta ya está disponible para Windows&nbsp;10/11 vía Microsoft&nbsp;Store. Las versiones para macOS y Linux están en camino — <a href="../contacto/index.html">sumate al acceso anticipado</a> y te avisamos apenas estén firmados.</p>
 
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin:48px 0">
 
     <!-- WINDOWS -->
-    <div style="border:1px solid rgba(201,168,76,0.25);border-radius:16px;padding:32px;background:rgba(255,255,255,0.02)">
+    <div style="border:1px solid rgba(201,168,76,0.45);border-radius:16px;padding:32px;background:rgba(201,168,76,0.04);position:relative">
+      <span style="position:absolute;top:16px;right:16px;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);background:rgba(201,168,76,0.12);padding:4px 10px;border-radius:999px;font-weight:600">Disponible</span>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
         <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="color:var(--gold)"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
         <h3 style="margin:0">Windows&nbsp;10 / 11</h3>
       </div>
-      <p style="font-size:0.95rem;color:var(--cream-muted,#a8a292);margin-bottom:24px">Instalador firmado a través de Microsoft&nbsp;Store o descarga directa (.msix). 64-bit.</p>
-      <a href="../contacto/index.html" class="btn btn--primary" style="width:100%;justify-content:center" aria-disabled="true">
-        Avisame cuando esté
+      <p style="font-size:0.95rem;color:var(--cream-muted,#a8a292);margin-bottom:24px">Instalador firmado, distribuido por Microsoft&nbsp;Store. Actualizaciones automáticas.</p>
+      <a href="https://apps.microsoft.com/detail/9nw0w5hbvxrl?hl=es&gl=AR&ocid=pdpshare" class="btn btn--primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+        Obtener en Microsoft&nbsp;Store
       </a>
-      <p style="font-size:0.8rem;color:var(--cream-muted,#a8a292);margin-top:12px;text-align:center">SHA256: <code>—</code></p>
+      <p style="font-size:0.78rem;color:var(--cream-muted,#a8a292);margin-top:12px;text-align:center;word-break:break-all;line-height:1.5">
+        SHA256:<br><code style="font-size:0.7rem">f92f6dd4a00a73a7ce270967f16b3438f3f0d527a30301ebfd615758f7c2a0e4</code>
+      </p>
     </div>
 
     <!-- MACOS -->
-    <div style="border:1px solid rgba(201,168,76,0.25);border-radius:16px;padding:32px;background:rgba(255,255,255,0.02)">
+    <div style="border:1px solid rgba(201,168,76,0.25);border-radius:16px;padding:32px;background:rgba(255,255,255,0.02);position:relative">
+      <span style="position:absolute;top:16px;right:16px;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--cream-muted,#a8a292);background:rgba(255,255,255,0.04);padding:4px 10px;border-radius:999px;font-weight:600;border:1px solid rgba(168,162,146,0.2)">Próximamente</span>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
         <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="color:var(--gold)"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
         <h3 style="margin:0">macOS&nbsp;12+</h3>
       </div>
       <p style="font-size:0.95rem;color:var(--cream-muted,#a8a292);margin-bottom:24px">DMG firmado y notarizado por Apple. Compatible con Apple&nbsp;Silicon e Intel.</p>
-      <a href="../contacto/index.html" class="btn btn--primary" style="width:100%;justify-content:center" aria-disabled="true">
+      <a href="../contacto/index.html" class="btn btn--secondary" style="width:100%;justify-content:center">
         Avisame cuando esté
       </a>
       <p style="font-size:0.8rem;color:var(--cream-muted,#a8a292);margin-top:12px;text-align:center">SHA256: <code>—</code></p>
     </div>
 
     <!-- LINUX -->
-    <div style="border:1px solid rgba(201,168,76,0.25);border-radius:16px;padding:32px;background:rgba(255,255,255,0.02)">
+    <div style="border:1px solid rgba(201,168,76,0.25);border-radius:16px;padding:32px;background:rgba(255,255,255,0.02);position:relative">
+      <span style="position:absolute;top:16px;right:16px;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--cream-muted,#a8a292);background:rgba(255,255,255,0.04);padding:4px 10px;border-radius:999px;font-weight:600;border:1px solid rgba(168,162,146,0.2)">Próximamente</span>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
         <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="color:var(--gold)"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.998.998 0 0 0-.118.083c-.611.444-.857 1.106-1.198 1.563-.32.418-.766.762-1.474.929-.412.097-.6.282-.572.532.027.249.243.484.6.59.357.107.832.2 1.367.265.535.066 1.122.106 1.674.183.5.07.93.17 1.395.351.32.124.578.337.812.554.234.218.443.443.726.554.252.099.498.135.756.184.258.05.529.108.83.21.605.205 1.155.585 1.71.74.598.166 1.05.13 1.5.097.45-.034.852-.064 1.36-.092.508-.027 1.064-.058 1.692-.165.629-.106 1.342-.288 2.196-.488.854-.199 1.696-.435 2.292-.687.595-.252.957-.508 1.11-.78a.996.996 0 0 0 .063-.745c-.054-.176-.176-.328-.337-.48a3.59 3.59 0 0 1-.39-.495c-.302-.426-.434-.87-.622-1.43-.094-.281-.205-.566-.37-.83-.165-.265-.387-.514-.69-.706a.996.996 0 0 0-.099-.057c.064-.483.106-1.07.097-1.769-.011-.91-.107-2.078-.5-3.367-.33-1.084-.79-2.143-1.275-3.072-.485-.93-.985-1.733-1.413-2.408-.428-.674-.785-1.219-1.014-1.652-.115-.215-.198-.4-.252-.563-.054-.163-.077-.301-.07-.426.013-.247.062-.5.118-.815.057-.314.116-.69.103-1.122-.012-.43-.108-.918-.378-1.39-.27-.473-.711-.927-1.39-1.29A4.85 4.85 0 0 0 12.504 0z"/></svg>
         <h3 style="margin:0">Linux</h3>
       </div>
       <p style="font-size:0.95rem;color:var(--cream-muted,#a8a292);margin-bottom:24px">AppImage portable, 64-bit. Probado en Ubuntu&nbsp;22.04+ y Fedora&nbsp;38+.</p>
-      <a href="../contacto/index.html" class="btn btn--primary" style="width:100%;justify-content:center" aria-disabled="true">
+      <a href="../contacto/index.html" class="btn btn--secondary" style="width:100%;justify-content:center">
         Avisame cuando esté
       </a>
       <p style="font-size:0.8rem;color:var(--cream-muted,#a8a292);margin-top:12px;text-align:center">SHA256: <code>—</code></p>

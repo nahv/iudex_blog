@@ -14,6 +14,7 @@
 
 import { requireAuth, signOut } from './auth.js';
 import { configMissing } from './supabase.js';
+import { wireBurger } from './nav.js';
 import {
   sendCustomEmail,
   listAudiences,
@@ -401,10 +402,12 @@ function toggleAdHocMode() {
 // Init
 // ============================================================================
 async function init() {
+  wireBurger();
+
   if (configMissing) {
     document.getElementById('config-banner').style.display = 'block';
     document.querySelectorAll('input,select,textarea,button').forEach((el) => {
-      if (el.id !== 'btn-logout') el.disabled = true;
+      if (el.id !== 'btn-logout' && el.id !== 'btn-burger') el.disabled = true;
     });
     document.getElementById('current-email').textContent = '(config faltante)';
     return;
