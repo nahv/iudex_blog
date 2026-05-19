@@ -222,6 +222,158 @@
 <!-- TIMELINE -->
 <section class="releases-list">
 
+  <!-- ====== 0.1.2-beta ====== -->
+  <article class="release" id="v0-1-2-beta">
+    <div class="release__head">
+      <span class="release__version">0.1.2-beta</span>
+      <!-- TODO release 0.1.2: definir nombre interno antes del merge a main -->
+    </div>
+    <div class="release__meta">
+      <!-- TODO release 0.1.2: fijar el día exacto antes del merge a main -->
+      <span>Mayo de 2026</span>
+      <span class="release__badge release__badge--beta">Beta pública</span>
+      <span>Windows 10/11</span>
+    </div>
+
+    <p style="color:#4a4a46;font-size:0.96rem;line-height:1.75;margin:0 0 8px">
+      Estrenamos el <strong>Digesto Jurídico</strong>, una biblioteca de normas que se lee artículo por artículo —se acabó abrir el PDF y apretar Ctrl+F—. Sumamos las <strong>tasas del Banco de Corrientes</strong> con histórico desde 1991. Y el escritorio de Abogados y Juzgados quedó rediseñado, más ordenado y más cálido.
+    </p>
+
+    <div class="release__group">
+      <h4>📚 Digesto Jurídico</h4>
+      <ul>
+        <li>Biblioteca de normas que vienen con la app, agrupadas por materia. Incluye <strong>Constitución Nacional</strong>, <strong>Código Civil y Comercial completo</strong>, y las principales normas de Corrientes: Constitución provincial, CPCC, CPP, Código Fiscal, leyes de Mediación, Amparo, Honorarios, Violencia familiar, entre otras.</li>
+        <li>Lector cómodo con índice navegable, marcadores, notas personales y "reanudar lectura" donde lo dejaste.</li>
+        <li><strong>"Ir al Art. Nº"</strong>: escribís el número y te lleva al artículo, esté donde esté.</li>
+        <li><strong>Búsqueda</strong> con <code>Ctrl+Shift+F</code>: encuentra cualquier artículo por número o concepto, con filtros por norma.</li>
+        <li>Copiar artículo o copiar cita listo para pegar en un escrito.</li>
+      </ul>
+    </div>
+
+    <div class="release__group">
+      <h4>📊 Tasas Banco de Corrientes</h4>
+      <ul>
+        <li>Las <strong>13 tasas judiciales</strong> que aplican los jueces correntinos (Activa, Pasiva, Comunicado&nbsp;14.290, Plazo Fijo), con <strong>histórico mensual desde 1991</strong>.</li>
+        <li>Vienen de la fuente oficial del Poder Judicial de Corrientes — no hace falta copiar a mano desde calculadoras pagas.</li>
+        <li>Disponibles en <strong>"Tasas y JUS"</strong> y en la <strong>Calculadora de Intereses</strong>, junto a BNA, Muni y DGR.</li>
+      </ul>
+    </div>
+
+    <div class="release__group">
+      <h4>🎨 Escritorio rediseñado</h4>
+      <ul>
+        <li>El dashboard de Abogados y la home de Juzgados se reordenaron: lo reciente toma protagonismo, y a la derecha quedan a la vista las métricas y la agenda.</li>
+        <li>Nuevo saludo con un subtítulo que te cuenta lo del día: vencimientos atrasados, lo que vence esta semana, o la última actividad.</li>
+        <li>Sidebar más cálida y un indicador claro del lugar donde estás parado.</li>
+        <li><strong>Agenda</strong>: los próximos eventos van arriba; el calendario pasa a ser un soporte.</li>
+        <li><strong>JUS</strong> y <strong>Tasas</strong>: tarjetas más limpias, con el número grande adelante.</li>
+      </ul>
+    </div>
+
+    <div class="release__group">
+      <h4>🐞 Correcciones</h4>
+      <ul>
+        <li>El buscador del Digesto ahora reacciona apenas tipeás.</li>
+        <li>"Ir al Art." scrollea siempre al artículo, esté o no a la vista.</li>
+        <li>Tocar una Parte o Título en el índice ya no muestra una página en blanco.</li>
+        <li>Arreglado un error al guardar tasas que en algunos casos no se persistían.</li>
+      </ul>
+    </div>
+
+    <div class="release__group">
+      <h4>📣 Seguimos en beta</h4>
+      <ul>
+        <li>Mandanos feedback a <a href="mailto:contacto@iudex.com.ar" style="color:var(--gold);text-decoration:underline">contacto@iudex.com.ar</a>. Las actualizaciones automáticas de normativa y tasas llegan en próximos releases.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ====== 0.1.1-beta — Pulso ====== -->
+  <article class="release" id="v0-1-1-beta">
+    <div class="release__head">
+      <span class="release__version">0.1.1-beta</span>
+      <h2 class="release__name">"Pulso"</h2>
+    </div>
+    <div class="release__meta">
+      <!-- TODO release 0.1.1: fijar el día exacto antes del merge a main -->
+      <span>Mayo de 2026</span>
+      <span class="release__badge release__badge--beta">Beta pública</span>
+      <span>Windows 10/11</span>
+    </div>
+
+    <p style="color:#4a4a46;font-size:0.96rem;line-height:1.75;margin:0 0 8px">
+      La primera actualización después de abrir la beta. Juntamos el feedback de los testers de las primeras semanas y lo volcamos acá: una calculadora de intereses que ya liquida con la curva oficial del BNA, expedientes que se ordenan por prioridad y etapa procesal, Nexus rediseñado de punta a punta y un buen puñado de arreglos —varios específicos de Windows— que hacían ruido en el uso diario.
+    </p>
+
+    <div class="release__group">
+      <h4>📊 Calculadora de intereses</h4>
+      <ul>
+        <li>Nuevo preset <strong>BNA Tasa Activa</strong> (descuento de documentos comerciales a 30 días) con el histórico oficial completo: <strong>13/01/1992 → 12/05/2026</strong>, 1.757 vigencias. Un clic y tenés la curva entera para liquidar honorarios o mora bancaria. Verificado bit a bit contra la calculadora pública del CMCBA.</li>
+        <li>Convive con los presets <strong>Muni</strong> y <strong>DGR</strong>; si cargás un valor manual, prevalece sobre el histórico para ese día.</li>
+        <li>Imputación de pagos más clara: elegís explícitamente <strong>Capital</strong> o <strong>Intereses</strong> (por defecto Intereses, art.&nbsp;900 CCyC). Se quitó la opción ambigua "Mixto" — las planillas viejas siguen calculando igual.</li>
+        <li>Liquidaciones largas: los tramos se agrupan en chips plegables entre eventos (Inicio&nbsp;→&nbsp;Pago&nbsp;→&nbsp;Corte), con resumen de días e intereses, en vez de cientos de filas.</li>
+        <li>Nueva pantalla <strong>"Tasas y JUS"</strong> con el histórico a la vista, incluido el JUS oficial del STJ de Corrientes (2008–2025).</li>
+      </ul>
+    </div>
+
+    <div class="release__group">
+      <h4>✨ Lo nuevo</h4>
+      <ul>
+        <li><strong>Clasificación de expedientes</strong>: prioridad (baja / normal / alta / urgente), materia y etapa procesal (inicio, traba de litis, prueba, alegatos, sentencia, recursos, ejecución, archivo). Columnas ordenables y filtros en la tabla.</li>
+        <li><strong>Tareas por expediente</strong>: pestaña propia dentro de la causa, con responsable y seguimiento. También aparecen en la agenda general.</li>
+        <li><strong>Papelera con recuperación a 30 días</strong>: expedientes, escritos y plantillas borrados quedan recuperables; te avisa cuántos días faltan antes del borrado definitivo.</li>
+      </ul>
+    </div>
+
+    <div class="release__group">
+      <h4>🔍 Nexus, rediseñado</h4>
+      <ul>
+        <li>Workspace tipo dossier: el panel del fallo queda siempre visible, con lector a pantalla, barra de progreso y <strong>"Copiar cita"</strong> lista para pegar.</li>
+        <li>Barra lateral con búsqueda y filtros (todas / vinculadas / sin vincular / archivadas); pasa de 10 a <strong>200 sesiones</strong> a la vista.</li>
+        <li>Columna de fuentes para ordenar, <strong>comparar 2 o más fallos</strong> y armar un memorial desde ahí.</li>
+        <li>Las citas en el texto (<code>[2, 6]</code>, <code>[14]</code>) ahora son chips clickeables; si tu sesión expira, un botón te reconecta y reintenta la consulta solo.</li>
+      </ul>
+    </div>
+
+    <div class="release__group">
+      <h4>🎨 Más prolijo</h4>
+      <ul>
+        <li><strong>Configuración rediseñada</strong>: un hub con secciones (perfil, escritos, cuenta, estudio, privacidad, almacenamiento, soporte) y vista previa A4 en vivo del estilo de tus escritos.</li>
+        <li>Bienvenida cinematográfica unificada, sin pantallas grises ni expedientes de demo al reabrir el tutorial.</li>
+        <li>El indicador de conexión ahora informa (Sin vincular / Online / Pro / Sin conexión) y ya no se pone rojo por un sync que se reintenta solo.</li>
+        <li>Errores en castellano, con explicación y botón <strong>"Reintentar"</strong>, en vez del texto técnico crudo. Si la app falla al arrancar, una pantalla clara con los detalles a mano.</li>
+      </ul>
+    </div>
+
+    <div class="release__group">
+      <h4>🐞 Correcciones</h4>
+      <ul>
+        <li><strong>Windows</strong>: el editor de escritos no abría al hacer doble clic o "Editar escrito" en un borrador. Arreglado.</li>
+        <li><strong>Windows</strong>: <code>Esc</code> ahora cierra la paleta de comandos (<code>Ctrl+K</code>) y el atajo "Esc&nbsp;·&nbsp;Cerrar" es realmente clickeable.</li>
+        <li><strong>Windows</strong>: el tutorial ya no te deja atrapado tras una pantalla gris al apretar <code>Ctrl+K</code>.</li>
+        <li>Pegar texto desde Word o Google&nbsp;Docs ya no mete metadata basura (rutas tipo <code>Source:file:///…</code>); pega texto limpio.</li>
+      </ul>
+    </div>
+
+    <div class="release__group">
+      <h4>🛡 Privacidad y seguridad</h4>
+      <ul>
+        <li><strong>Borrado seguro</strong> en todos los registros legales: nada se elimina físicamente al toque; queda recuperable 30 días y recién después se purga.</li>
+        <li>Telemetría opcional y <strong>apagada por defecto</strong>. Si la activás, no viajan carátulas, nombres, números ni rutas.</li>
+        <li>Consentimiento de primer uso versionado (Ley&nbsp;25.326), revocable desde Configuración.</li>
+        <li>CBU enmascarado en pantalla, carpetas con permisos restringidos, código ofuscado en los builds y reportes de error sin datos sensibles.</li>
+      </ul>
+    </div>
+
+    <div class="release__group">
+      <h4>📣 Seguimos en beta</h4>
+      <ul>
+        <li>0.1.1-beta sigue siendo un build de prueba. Tu feedback va a <a href="mailto:contacto@iudex.com.ar" style="color:var(--gold);text-decoration:underline">contacto@iudex.com.ar</a>.</li>
+        <li>Recomendamos respaldo manual de los expedientes críticos hasta que liberemos la <code>1.0</code>.</li>
+      </ul>
+    </div>
+  </article>
+
   <!-- ====== 0.1.0-beta — Primer Toque ====== -->
   <article class="release" id="v0-1-0-beta">
     <div class="release__head">
