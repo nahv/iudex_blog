@@ -1567,7 +1567,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   background: var(--cream-2);
 }
 .c-step__inner {
-  max-width: 1120px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 32px;
   display: grid;
@@ -1576,12 +1576,15 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   align-items: center;
 }
 @media (min-width: 960px) {
+  /* Shot column gets ~58 % of the row so the screenshots breathe at
+     real readable scale. Copy column stays plenty wide for value-list
+     items to not feel cramped. */
   .c-step__inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-    gap: 80px;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.55fr);
+    gap: 72px;
   }
   .c-step--shot-left .c-step__inner {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 0.85fr);
   }
   .c-step--shot-left .c-step__copy { order: 2; }
   .c-step--shot-left .c-step__shot { order: 1; }
