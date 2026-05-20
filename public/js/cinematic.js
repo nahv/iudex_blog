@@ -45,30 +45,49 @@
     });
   }
 
-  /* ----------- Chapter pinned progress ----------- */
-  const chapters = document.querySelectorAll('.c-chapter');
+  /* ----------- Chapter pinned progress -----------
+     We only touch chapters whose sticky window is on-screen — outside
+     that range there's nothing to update and the cost of an unconditional
+     scroll listener is wasted. IntersectionObserver gives us cheap
+     enter/leave; rAF batches the per-frame work to one layout pass. */
+  const chapters = Array.from(document.querySelectorAll('.c-chapter'));
   if (chapters.length && 'IntersectionObserver' in window) {
+    const active = new Set();
+
     const update = (chapter) => {
       const rect = chapter.getBoundingClientRect();
       const vh = window.innerHeight || 800;
-      const total = chapter.offsetHeight - vh; // sticky window height
+      const total = chapter.offsetHeight - vh;
       if (total <= 0) return;
-      // raw 0..1 across the chapter
       const raw = Math.min(1, Math.max(0, -rect.top / total));
       chapter.style.setProperty('--progress', `${(raw * 100).toFixed(2)}%`);
 
-      // Activate the right shot/beat based on segmented progress
       const shots = chapter.querySelectorAll('.c-shot');
       const beats = chapter.querySelectorAll('.c-chapter__beat');
       const segments = Math.max(shots.length, beats.length, 1);
-      const idx = Math.min(segments - 1, Math.floor(raw * segments));
+      const idxF = Math.min(segments - 0.0001, raw * segments);
+      const idx = Math.floor(idxF);
+      // Per-segment fractional progress (0..1) — drives the in-shot
+      // motion so scrolling feels continuous, not stepped.
+      const segP = idxF - idx;
+      chapter.style.setProperty('--seg-progress', segP.toFixed(3));
 
-      const setActive = (el, on) => {
-        if (on) el.setAttribute('data-active', 'true');
-        else el.removeAttribute('data-active');
-      };
-      shots.forEach((s, i) => setActive(s, i === idx));
-      beats.forEach((b, i) => setActive(b, i === idx));
+      for (let i = 0; i < shots.length; i++) {
+        const on = i === idx;
+        const cur = shots[i].getAttribute('data-active') === 'true';
+        if (on !== cur) {
+          if (on) shots[i].setAttribute('data-active', 'true');
+          else shots[i].removeAttribute('data-active');
+        }
+      }
+      for (let i = 0; i < beats.length; i++) {
+        const on = i === idx;
+        const cur = beats[i].getAttribute('data-active') === 'true';
+        if (on !== cur) {
+          if (on) beats[i].setAttribute('data-active', 'true');
+          else beats[i].removeAttribute('data-active');
+        }
+      }
 
       const rail = chapter.querySelector('.c-chapter__rail-fill');
       if (rail) rail.style.setProperty('--progress', `${(raw * 100).toFixed(2)}%`);
@@ -77,24 +96,36 @@
     let ticking = false;
     const tick = () => {
       ticking = false;
-      chapters.forEach(update);
+      active.forEach(update);
     };
     const onScroll = () => {
-      if (!ticking) {
+      if (!ticking && active.size) {
         ticking = true;
         requestAnimationFrame(tick);
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    // Initial activation
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    // Toggle which chapters drive updates based on visibility (with a
+    // generous margin so we always catch the lead-in/out frames).
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) active.add(e.target);
+        else active.delete(e.target);
+      }
+      // Run once so the freshly-entered chapter snaps to the right state.
+      onScroll();
+    }, { rootMargin: '50% 0px' });
+
     chapters.forEach((c) => {
+      io.observe(c);
       const firstShot = c.querySelector('.c-shot');
       const firstBeat = c.querySelector('.c-chapter__beat');
       if (firstShot) firstShot.setAttribute('data-active', 'true');
       if (firstBeat) firstBeat.setAttribute('data-active', 'true');
+      update(c);
     });
-    tick();
   }
 
   /* ----------- Image fallback: show "capture pending" overlay ----------- */
@@ -119,29 +150,9 @@
     }
   });
 
-  /* ----------- Lenis smooth scroll (optional, lazy) -----------
-     We load Lenis from CDN only if the user hasn't requested reduced motion.
-     Falls back silently if the CDN is blocked.
-  */
-  if (!reduceMotion) {
-    const s = document.createElement('script');
-    s.src = 'https://unpkg.com/lenis@1.1.13/dist/lenis.min.js';
-    s.async = true;
-    s.onload = () => {
-      if (!window.Lenis) return;
-      const lenis = new window.Lenis({
-        duration: 1.05,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        smoothTouch: false,
-      });
-      const raf = (time) => {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      };
-      requestAnimationFrame(raf);
-    };
-    s.onerror = () => { /* silently fall back to native scroll */ };
-    document.head.appendChild(s);
-  }
+  /* ----------- Native scroll only -----------
+     Lenis was loaded here before but added inertia on top of macOS
+     trackpad's native momentum, making the scroll feel "swimming".
+     Native scroll is already smooth on every platform that ships with
+     the kind of input device legal professionals use. */
 })();

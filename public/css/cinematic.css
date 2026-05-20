@@ -261,9 +261,12 @@ body.cinematic .navbar.scrolled {
    =========================================================== */
 .c-chapter {
   position: relative;
-  /* Each chapter scrolls through ~2.2 viewports */
-  min-height: 240vh;
+  /* Each chapter scrolls through ~1.7 viewports. Shorter than the
+     classic pinned-storytelling 2.4×: gives faster scroll feedback
+     (one beat per ~25vh) without losing the cinematic pacing. */
+  min-height: 170vh;
   padding: 64px 0;
+  --seg-progress: 0;
 }
 
 .c-chapter__sticky {
@@ -321,8 +324,8 @@ body.cinematic .navbar.scrolled {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 600ms var(--ease-cinema), transform 600ms var(--ease-cinema);
+  transform: translateY(10px);
+  transition: opacity 320ms var(--ease-cinema), transform 360ms var(--ease-cinema);
   pointer-events: none;
 }
 .c-chapter__beat[data-active="true"] {
@@ -366,15 +369,22 @@ body.cinematic .navbar.scrolled {
   box-shadow: var(--shadow-window);
   overflow: hidden;
   opacity: 0;
-  transform: scale(0.98) translateY(12px);
-  transition: opacity 700ms var(--ease-cinema),
-              transform 900ms var(--ease-cinema),
-              filter 900ms var(--ease-cinema);
+  transform: scale(0.985) translateY(12px);
+  /* Only opacity transitions — the transform is driven by scroll (see
+     [data-active] below) and must respond instantly to the wheel, not
+     lag 900ms behind it. */
+  transition: opacity 380ms var(--ease-cinema);
   filter: saturate(0.98);
+  will-change: transform, opacity;
 }
 .c-shot[data-active="true"] {
   opacity: 1;
-  transform: scale(1) translateY(0);
+  /* Continuous motion bound to per-segment scroll progress. Tiny scale
+     + 8px upward drift inside each beat keeps the eye fed during the
+     pinned stretch. No transition here, so it tracks the wheel 1:1. */
+  transform:
+    scale(calc(0.985 + 0.015 * (1 - var(--seg-progress))))
+    translateY(calc(var(--seg-progress) * -8px));
 }
 .c-shot > img {
   display: block;
