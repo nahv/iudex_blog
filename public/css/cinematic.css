@@ -653,6 +653,7 @@ body.cinematic .navbar.scrolled {
   font-size: 1rem;
   color: var(--ink);
   outline: none;
+  text-align: center;
 }
 .c-cta__form input[type="email"]::placeholder { color: var(--ink-muted); }
 .c-cta__form button {
@@ -2253,6 +2254,14 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .c-chapter__beat[data-beat="1"] { order: 6; }
   .c-chapter__beat[data-beat="2"] { order: 8; }
   .c-chapter__beat[data-beat="3"] { order: 10; }
+
+  /* CTA at the bottom of the chapter copy column. Without explicit
+     order it defaults to 0 and floats above the eyebrow when
+     display:contents flattens .c-chapter__copy into the flex flow. */
+  .c-chapter__cta {
+    order: 11;
+    margin: 32px 24px 0;
+  }
 
   /* Interstitial padding shrinks on mobile so headlines breathe but the
      sequence still feels paced, not slow. */
