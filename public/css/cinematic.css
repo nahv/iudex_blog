@@ -152,8 +152,11 @@ body.cinematic .navbar.scrolled {
   display: block;
   width: 100%;
   height: 100%;
+  /* Hero windows are stacked at depth — show the upper-center area
+     (the part with a recognisable wordmark/header) instead of clipping
+     the right edge. */
   object-fit: cover;
-  object-position: top left;
+  object-position: center top;
 }
 .c-window::after {
   content: '';
@@ -351,10 +354,10 @@ body.cinematic .navbar.scrolled {
   position: absolute;
   inset: 0;
   margin: auto;
-  width: min(100%, 920px);
-  height: min(100%, 580px);
+  width: min(100%, 1040px);
+  height: min(100%, 640px);
   border-radius: 16px;
-  background: var(--cream-2);
+  background: var(--white);
   box-shadow: var(--shadow-window);
   overflow: hidden;
   opacity: 0;
@@ -372,8 +375,11 @@ body.cinematic .navbar.scrolled {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top left;
+  /* contain shows the full screenshot — no edge clipping. Slight cream
+     letterbox feels intentional against the cinematic frame. */
+  object-fit: contain;
+  object-position: center;
+  background: var(--white);
 }
 .c-shot::after {
   content: '';
@@ -504,32 +510,93 @@ body.cinematic .navbar.scrolled {
 .c-cta__form button:hover { background: var(--ink-2); }
 
 /* ===========================================================
-   Mobile — recompose as paced vertical sequence
+   Mobile — paced vertical sequence (shot + beat pairs)
+   Each chapter becomes: eyebrow + title (header), then alternating
+   shot/beat pairs in source order. Pin-scroll is dropped (it doesn't
+   read well on a phone); instead, each beat lives in its own vertical
+   moment with generous spacing and large editorial type.
    =========================================================== */
 @media (max-width: 979px) {
   .c-hero { padding: 110px 0 64px; }
   .c-hero__container { grid-template-columns: 1fr; gap: 56px; }
   .c-hero__stage { aspect-ratio: 4 / 3; max-width: 92vw; margin: 0 auto; }
-  .c-window--back { transform: translate3d(-10%, -6%, -100px) rotateY(6deg) scale(0.86); }
-  .c-window--mid  { transform: translate3d(8%, 6%, -50px) rotateY(-4deg) scale(0.92); }
+  .c-window--back { transform: translate3d(-18%, -10%, -120px) rotateY(8deg) scale(0.84); }
+  .c-window--mid  { transform: translate3d(18%, 14%, -60px) rotateY(-6deg) scale(0.90); }
 
-  .c-chapter { min-height: auto; padding: 96px 0; }
+  .c-chapter { min-height: auto; padding: 80px 0 64px; }
+  /* Flatten the sticky/grid layout into a single flex column we can
+     reorder. `display: contents` on the sub-containers makes their
+     children direct grandchildren of .c-chapter__sticky so flex+order
+     can interleave shots and beats. */
   .c-chapter__sticky {
     position: relative;
     top: auto;
     height: auto;
-    grid-template-columns: 1fr;
-    gap: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
   }
-  .c-chapter__stage { height: 56vh; padding: 0 24px; }
-  .c-chapter__copy { padding: 0 24px; }
+  .c-chapter__copy { display: contents; padding: 0; max-width: none; }
+  .c-chapter__beats { display: contents; }
+  .c-chapter__stage { display: contents; height: auto; padding: 0; }
   .c-chapter__rail { display: none; }
-  .c-chapter__beats { min-height: auto; }
-  .c-chapter__beat { position: static; opacity: 1; transform: none; margin-top: 16px; }
-  .c-chapter__beat:not(:first-child) { display: none; } /* keep one beat on mobile */
-  /* keep only the first shot visible on mobile — focused, single moment */
-  .c-shot { opacity: 1; transform: none; }
-  .c-shot:not(:first-child) { display: none; }
+
+  /* Chapter header — eyebrow and title at the top of the chapter. */
+  .c-chapter .c-eyebrow {
+    order: 1;
+    margin: 0 24px 16px;
+  }
+  .c-chapter .c-display {
+    order: 2;
+    margin: 0 24px 32px;
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  /* Interleave shots and beats: shot0 → beat0 → shot1 → beat1 …
+     A high base order on stragglers keeps unmatched ones at the end. */
+  .c-shot {
+    position: relative;
+    inset: auto;
+    margin: 0 24px 16px;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 11;
+    opacity: 1;
+    transform: none;
+    display: block;
+  }
+  .c-shot:not(:first-child) { display: block; }
+  .c-shot[data-shot="0"] { order: 3; }
+  .c-shot[data-shot="1"] { order: 5; }
+  .c-shot[data-shot="2"] { order: 7; }
+  .c-shot[data-shot="3"] { order: 9; }
+
+  .c-chapter__beat {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    margin: 0 24px 48px;
+  }
+  .c-chapter__beat[data-beat="0"] { order: 4; }
+  .c-chapter__beat[data-beat="1"] { order: 6; }
+  .c-chapter__beat[data-beat="2"] { order: 8; }
+  .c-chapter__beat[data-beat="3"] { order: 10; }
+
+  /* Interstitial padding shrinks on mobile so headlines breathe but the
+     sequence still feels paced, not slow. */
+  .c-interstitial { padding: 120px 24px; }
+  .c-cta { padding: 96px 24px 120px; }
+  .c-cta__form {
+    flex-direction: column;
+    border-radius: 18px;
+    padding: 12px;
+    gap: 10px;
+  }
+  .c-cta__form button { width: 100%; border-radius: 999px; }
 }
 
 /* ===========================================================
