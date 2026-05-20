@@ -709,6 +709,236 @@ body.cinematic .navbar.scrolled {
 }
 
 /* ===========================================================
+   SECTION — generic editorial section wrapper (used by about, etc.)
+   =========================================================== */
+.c-section {
+  padding: 120px 0;
+  position: relative;
+}
+.c-section--alt {
+  background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+}
+.c-section__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.c-section__header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 72px;
+}
+.c-section__header .c-display {
+  margin: 20px 0 0;
+}
+.c-section__header .c-eyebrow {
+  display: inline-block;
+}
+.c-section__lead {
+  margin: 28px auto 0;
+  max-width: 560px;
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.c-display--md {
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+  line-height: 1.06;
+}
+
+/* Hero variant — text-only, centered (about / descargar / etc.) */
+.c-hero--text {
+  min-height: auto;
+  padding: 160px 0 80px;
+}
+.c-hero__container--centered {
+  display: block;
+  grid-template-columns: none;
+}
+
+/* ===========================================================
+   PROFILE CARDS — used in about/index.html
+   Editorial photo + name + role + bio + actions. Two-up on
+   desktop, single column on mobile.
+   =========================================================== */
+.c-profiles {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 880px) {
+  .c-profiles {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+.c-profile {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: var(--shadow-window-soft);
+  border: 1px solid var(--hair);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  transition: transform 320ms var(--ease-cinema),
+              box-shadow 320ms var(--ease-cinema);
+}
+.c-profile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-window);
+}
+.c-profile__avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--cream-2);
+  box-shadow: 0 6px 20px -8px rgba(15, 15, 14, 0.25);
+}
+.c-profile__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.c-profile__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.c-profile__role {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+.c-profile__name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0;
+}
+.c-profile__bio {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.c-profile__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+}
+.c-profile__skills li {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--cream-2);
+  border: 1px solid var(--hair);
+}
+.c-profile__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.c-profile__icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: var(--cream-2);
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: background 240ms var(--ease-cinema),
+              color 240ms var(--ease-cinema);
+}
+.c-profile__icon-link:hover {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.c-btn--sm {
+  padding: 10px 16px;
+  font-size: 0.85rem;
+}
+
+/* ===========================================================
+   LINK CARDS — used in about (story links) + other landings
+   =========================================================== */
+.c-link-cards {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) {
+  .c-link-cards { grid-template-columns: 1fr 1fr; }
+}
+.c-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 32px;
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 320ms var(--ease-cinema),
+              border-color 320ms var(--ease-cinema),
+              box-shadow 320ms var(--ease-cinema);
+}
+.c-link-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold-deep);
+  box-shadow: var(--shadow-window-soft);
+}
+.c-link-card__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 4px 0 0;
+}
+.c-link-card__copy {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.c-link-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--gold-deep);
+  font-weight: 500;
+}
+.c-link-card__cta svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 240ms var(--ease-cinema);
+}
+.c-link-card:hover .c-link-card__cta svg {
+  transform: translateX(3px);
+}
+
+/* ===========================================================
    Accessibility — screen-reader-only & focus states
    =========================================================== */
 .c-sr-only {
