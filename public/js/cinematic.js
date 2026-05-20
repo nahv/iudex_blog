@@ -8,6 +8,30 @@
 (() => {
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ----------- Navbar scrolled state -----------
+     Adds the hairline border after a short scroll, mirroring the
+     apple.com chrome behaviour. Throttled to rAF; runs once on load to
+     catch deep-link reloads landing mid-page. */
+  const navbar = document.querySelector('.navbar');
+  if (navbar) {
+    let lastScrolled = false;
+    const syncNav = () => {
+      const scrolled = (window.scrollY || document.scrollingElement.scrollTop) > 24;
+      if (scrolled !== lastScrolled) {
+        navbar.classList.toggle('scrolled', scrolled);
+        lastScrolled = scrolled;
+      }
+    };
+    let navTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!navTicking) {
+        navTicking = true;
+        requestAnimationFrame(() => { navTicking = false; syncNav(); });
+      }
+    }, { passive: true });
+    syncNav();
+  }
+
   /* ----------- Hero entrance ----------- */
   const hero = document.querySelector('.c-hero');
   if (hero) {
