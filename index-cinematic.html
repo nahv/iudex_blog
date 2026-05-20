@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iudex — El nuevo espacio de trabajo jurídico</title>
+  <meta name="description" content="Iudex es un escritorio para abogados y juzgados argentinos. Investigar, escribir y decidir, en un mismo hilo. Hecho en Corrientes." />
+  <meta name="keywords" content="software jurídico, gestión de expedientes, escritura legal, jurisprudencia argentina, Digesto Jurídico, abogados Corrientes, legaltech Argentina" />
+  <meta property="og:title" content="Iudex — El nuevo espacio de trabajo jurídico" />
+  <meta property="og:description" content="Investigar, escribir y decidir — en un mismo hilo. Hecho en Corrientes, para el derecho argentino." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://iudex.com.ar/" />
+  <link rel="stylesheet" href="public/css/styles.css" />
+  <link rel="stylesheet" href="public/css/cinematic.css" />
+  <link rel="icon" type="image/png" href="assets/icon.png" />
+</head>
+<body class="cinematic">
+
+<!-- NAVBAR -->
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+  <div class="container">
+    <div class="navbar__inner">
+      <a href="index-cinematic.html" class="navbar__logo" aria-label="Iudex - Inicio">
+        <div class="navbar__logo-mark"><img src="assets/icon.png" alt="Iudex" /></div>
+        <span class="navbar__logo-text">Iudex</span>
+      </a>
+      <ul class="navbar__links">
+        <li><a href="investigacion/index.html">Nexus</a></li>
+        <li><a href="blog/index.html">Cuaderno</a></li>
+        <li><a href="about/index.html">Nosotros</a></li>
+        <li><a href="contacto/index.html">Contacto</a></li>
+        <li><a href="descargar/index.html" class="navbar__cta">Descargar</a></li>
+      </ul>
+      <button class="navbar__toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===========================================================
+     HERO — floating workspace composition
+     =========================================================== -->
+<section class="c-hero" aria-labelledby="c-hero-title">
+  <div class="c-hero__backdrop" aria-hidden="true"></div>
+  <div class="c-hero__container">
+    <div class="c-hero__copy">
+      <span class="c-eyebrow">Iudex</span>
+      <h1 id="c-hero-title" class="c-display">
+        El nuevo espacio<br/>de trabajo <em>jurídico</em>.
+      </h1>
+      <p class="c-hero__sub">
+        Investigar, escribir y decidir — en un mismo hilo, con la calma que pide el oficio.
+      </p>
+    </div>
+
+    <div class="c-hero__stage" aria-hidden="false">
+      <div class="c-window c-window--back" aria-label="Digesto Jurídico — lector de artículo">
+        <img src="public/assets/screenshots-v2/09-digesto-lector.png" alt="Digesto Jurídico — lector" loading="eager" />
+      </div>
+      <div class="c-window c-window--mid" aria-label="Editor de escritos">
+        <img src="public/assets/screenshots-v2/02-editor.png" alt="Editor de escritos" loading="eager" />
+      </div>
+      <div class="c-window c-window--front" aria-label="Dashboard de Abogados">
+        <img src="public/assets/screenshots-v2/01-dashboard.png" alt="Dashboard de Abogados" loading="eager" />
+      </div>
+    </div>
+  </div>
+
+  <div class="c-hero__hint" aria-hidden="true">
+    <div class="c-hero__hint-line"></div>
+    <span>Seguir</span>
+  </div>
+</section>
+
+<!-- ===========================================================
+     CHAPTER I — El día, ordenado
+     Dashboard → Agenda → Recientes
+     =========================================================== -->
+<section class="c-chapter" data-chapter="1" aria-labelledby="c-ch1-title">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
+      <span class="c-eyebrow">Capítulo I · El día</span>
+      <h2 id="c-ch1-title" class="c-display">Todo en su lugar.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat" data-beat="0">
+          <p>Tu estudio, tus causas, tus plazos. Una sola superficie que respira y te muestra lo importante primero.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="1">
+          <p>La agenda muestra los próximos vencimientos. Los plazos dejan de vivir en tu cabeza.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="2">
+          <p>Lo reciente queda a un clic. Volver a una causa toma el mismo tiempo que abrir una pestaña.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="c-shot" data-shot="0">
+        <img src="public/assets/screenshots-v2/01-dashboard.png" alt="Dashboard de Abogados" loading="lazy" />
+      </div>
+      <div class="c-shot" data-shot="1">
+        <img src="public/assets/screenshots-v2/11-agenda.png" alt="Agenda — vista semana" loading="lazy" />
+      </div>
+      <div class="c-shot" data-shot="2">
+        <img src="public/assets/screenshots-v2/18-juzgados-home.png" alt="Juzgados — home" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERSTITIAL — calm pause -->
+<section class="c-interstitial">
+  <h3 class="c-display">Menos fricción.<br/><em>Más claridad.</em></h3>
+  <p>Un escritorio que no compite con el derecho. Cada elemento, en silencio, está donde lo necesitás.</p>
+</section>
+
+<!-- ===========================================================
+     CHAPTER II — El expediente
+     Workspace 3-pane → timeline
+     =========================================================== -->
+<section class="c-chapter" data-chapter="2" aria-labelledby="c-ch2-title">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
+      <span class="c-eyebrow">Capítulo II · El expediente</span>
+      <h2 id="c-ch2-title" class="c-display">Donde vive<br/>cada causa.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat" data-beat="0">
+          <p>Actuaciones, documentos y tareas en un mismo hilo. Sin pestañas perdidas, sin pegado entre apps.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="1">
+          <p>El timeline agrupa por etapa procesal. Sabés qué falta y qué viene, sin abrir una hoja de cálculo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="c-shot" data-shot="0">
+        <img src="public/assets/screenshots-v2/05-expediente.png" alt="Expediente — vista de tres paneles" loading="lazy" />
+      </div>
+      <div class="c-shot" data-shot="1">
+        <img src="public/assets/screenshots-v2/06-expediente-timeline.png" alt="Expediente — timeline de actuaciones" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     CHAPTER III — El escrito
+     Editor full → close-up → autotext
+     =========================================================== -->
+<section class="c-chapter" data-chapter="3" aria-labelledby="c-ch3-title">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
+      <span class="c-eyebrow">Capítulo III · El escrito</span>
+      <h2 id="c-ch3-title" class="c-display">Volvé a concentrarte<br/>en <em>el derecho</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat" data-beat="0">
+          <p>Un editor que se hace a un lado. Tipografía pensada para que el escrito tenga la dignidad del papel.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="1">
+          <p>Foco total. Sin barras de herramientas que te griten lo que ya sabés.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="2">
+          <p>Variables que pensás una vez y se completan solas. Autotext que aprende cómo escribís.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="c-shot" data-shot="0">
+        <img src="public/assets/screenshots-v2/02-editor.png" alt="Editor de escritos" loading="lazy" />
+      </div>
+      <div class="c-shot" data-shot="1">
+        <img src="public/assets/screenshots-v2/03-editor-closeup.png" alt="Editor — close-up tipográfico" loading="lazy" />
+      </div>
+      <div class="c-shot" data-shot="2">
+        <img src="public/assets/screenshots-v2/04-editor-autotext.png" alt="Editor — autotext y variables" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     CHAPTER IV — Investigar
+     Nexus → Digesto biblioteca → lector → ⌘⇧F
+     =========================================================== -->
+<section class="c-chapter" data-chapter="4" aria-labelledby="c-ch4-title">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
+      <span class="c-eyebrow">Capítulo IV · Investigar</span>
+      <h2 id="c-ch4-title" class="c-display">Cada cita,<br/><em>rastreable</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat" data-beat="0">
+          <p>Nexus responde con jurisprudencia argentina y te muestra el fallo, no un resumen. La fuente, siempre a la vista.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="1">
+          <p>El Digesto Jurídico vive offline en tu escritorio. Constitución Nacional, CCyC y los códigos provinciales, leídos artículo por artículo.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="2">
+          <p>"Ir al Art." te lleva directo. No abras un PDF y aprietes Ctrl+F nunca más.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="3">
+          <p>Búsqueda full-text en todo el corpus. Un atajo, un concepto, un resultado.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="c-shot" data-shot="0">
+        <img src="public/assets/screenshots-v2/07-nexus.png" alt="Nexus — investigación con fuentes" loading="lazy" />
+      </div>
+      <div class="c-shot" data-shot="1">
+        <img src="public/assets/screenshots-v2/08-digesto-biblioteca.png" alt="Digesto — biblioteca de normas" loading="lazy" />
+      </div>
+      <div class="c-shot" data-shot="2">
+        <img src="public/assets/screenshots-v2/09-digesto-lector.png" alt="Digesto — lector de artículo" loading="lazy" />
+      </div>
+      <div class="c-shot" data-shot="3">
+        <img src="public/assets/screenshots-v2/10-digesto-search.png" alt="Digesto — búsqueda full-text" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERSTITIAL -->
+<section class="c-interstitial">
+  <h3 class="c-display">Lo cotidiano,<br/><em>resuelto</em>.</h3>
+  <p>Calculadora de intereses con la curva oficial del BNA, tasas judiciales del Banco de Corrientes, JUS al día. Los números que necesitás, donde los necesitás.</p>
+</section>
+
+<!-- ===========================================================
+     CHAPTER V — Hecho con disciplina
+     Sidebar + Command palette + Sync
+     =========================================================== -->
+<section class="c-chapter" data-chapter="5" aria-labelledby="c-ch5-title">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
+      <span class="c-eyebrow">Capítulo V · Disciplina</span>
+      <h2 id="c-ch5-title" class="c-display">Tu trabajo,<br/><em>tuyo</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat" data-beat="0">
+          <p>Offline-first. Tus expedientes viven en tu computadora, no en la nube de otro.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="1">
+          <p>Atajo universal. Ctrl+K abre todo: causas, modelos, configuración. Sin desviar el foco.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="2">
+          <p>Sincronización opcional. Vos decidís qué se comparte con tu estudio y cuándo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="c-shot" data-shot="0">
+        <img src="public/assets/screenshots-v2/15-sidebar.png" alt="Sidebar — el cuarto del estudio" loading="lazy" />
+      </div>
+      <div class="c-shot" data-shot="1">
+        <img src="public/assets/screenshots-v2/14-command-palette.png" alt="Command palette — Ctrl+K" loading="lazy" />
+      </div>
+      <div class="c-shot" data-shot="2">
+        <img src="public/assets/screenshots-v2/17-settings-hub.png" alt="Settings hub — privacidad y sincronización" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERSTITIAL -->
+<section class="c-interstitial">
+  <h3 class="c-display">Hecho en Corrientes.<br/>Para el <em>derecho argentino</em>.</h3>
+  <p>Lo construimos dos abogados-desarrolladores para usarlo todos los días. Si encontrás una arista, te respondemos nosotros.</p>
+</section>
+
+<!-- ===========================================================
+     CTA — minimal closer
+     =========================================================== -->
+<section class="c-cta">
+  <div class="c-cta__inner">
+    <span class="c-eyebrow">Beta pública</span>
+    <h2 class="c-display" style="margin-top:24px">Pedí tu invitación.</h2>
+    <p class="c-lead" style="margin-left:auto;margin-right:auto">
+      Sumate al grupo de testers. Te mandamos el instalador, te acompañamos en la primera causa.
+    </p>
+    <form class="c-cta__form js-email-form" novalidate>
+      <input type="email" name="email" placeholder="tu@correo.com" required autocomplete="email" />
+      <button type="submit">Pedir invitación</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index-cinematic.html" class="navbar__logo" style="display:inline-flex">
+          <div class="navbar__logo-mark"><img src="assets/icon.png" alt="Iudex" /></div>
+          <span class="navbar__logo-text" style="color:var(--cream)">Iudex</span>
+        </a>
+        <p>El escritorio donde el derecho se piensa. Expediente, jurisprudencia argentina y escritura en un mismo hilo, para abogados y juzgados.</p>
+      </div>
+      <div class="footer__col">
+        <h5>El escritorio</h5>
+        <ul>
+          <li><a href="investigacion/index.html">Nexus</a></li>
+          <li><a href="descargar/index.html">Descargar</a></li>
+          <li><a href="releases/index.html">Notas de versión</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Cuaderno</h5>
+        <ul>
+          <li><a href="blog/index.html">Todas las notas</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="about/index.html">Nosotros</a></li>
+          <li><a href="contacto/index.html">Contacto</a></li>
+          <li><a href="politica-privacidad/index.html">Privacidad</a></li>
+          <li><a href="terminos/index.html">Términos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 Iudex. Todos los derechos reservados.</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/iudex.ai" aria-label="Instagram" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="public/js/env.js"></script>
+<script src="public/js/main.js"></script>
+<script src="public/js/cinematic.js"></script>
+</body>
+</html>
