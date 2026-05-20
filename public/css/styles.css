@@ -4899,6 +4899,13 @@ body.cinematic .navbar.scrolled {
 .c-chapter-strip__list a:focus-visible {
   color: var(--ink);
 }
+/* Mobile: items wrap onto multiple rows. The inline `·` separators
+   floated awkwardly at line starts/ends; drop them and use real gap. */
+@media (max-width: 760px) {
+  .c-chapter-strip { padding: 18px 20px; }
+  .c-chapter-strip__list { gap: 10px 22px; row-gap: 10px; }
+  .c-chapter-strip__list li + li::before { content: none; }
+}
 
 /* ===========================================================
    SECTION — generic editorial section wrapper (used by about, etc.)
