@@ -220,12 +220,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---- Blog filter buttons ----
-  document.querySelectorAll('.filter-btn').forEach(btn => {
+  // Supports both the legacy classes (.filter-btn / .blog-card) and the
+  // new cinematic ones (.c-filter-btn / .c-blog-card). The active class
+  // also maps: 'active' (legacy) / 'is-active' (cinematic).
+  const FILTER_SELECTOR = '.filter-btn, .c-filter-btn';
+  const CARD_SELECTOR = '.blog-card[data-category], .c-blog-card[data-category]';
+  document.querySelectorAll(FILTER_SELECTOR).forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll(FILTER_SELECTOR).forEach(b => {
+        b.classList.remove('active');
+        b.classList.remove('is-active');
+      });
       btn.classList.add('active');
+      btn.classList.add('is-active');
       const category = btn.dataset.filter;
-      document.querySelectorAll('.blog-card[data-category]').forEach(card => {
+      document.querySelectorAll(CARD_SELECTOR).forEach(card => {
         if (category === 'all' || card.dataset.category === category) {
           card.style.display = '';
           setTimeout(() => card.style.opacity = '1', 10);
