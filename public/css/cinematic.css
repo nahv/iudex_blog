@@ -126,6 +126,11 @@ body.cinematic .navbar.scrolled {
   display: inline-block;
   margin-bottom: 28px;
 }
+/* Hero-specific h1 sizing — pushes more aggressively below 980px so
+   the mobile hero hits real editorial scale (~44 px+ at 375 viewport). */
+.c-hero h1.c-display {
+  font-size: clamp(2.6rem, 8vw, 5.2rem);
+}
 .c-hero__sub {
   margin: 28px 0 0;
   font-size: clamp(1.05rem, 1.5vw, 1.25rem);
@@ -262,12 +267,28 @@ body.cinematic .navbar.scrolled {
   opacity: 0;
 }
 
-/* Subtle parallax follow — driven by JS via CSS variables */
+/* Pointer parallax — applied per-layer via `translate` (which composes
+   independently from `transform`, so the 3D base transforms stay
+   intact). Different multipliers create depth: back drifts most, front
+   barely. Range comes from JS (~±25). */
 .c-hero__stage {
   --px: 0;
   --py: 0;
-  transform: translate3d(calc(var(--px) * -1px), calc(var(--py) * -1px), 0);
   transition: transform 800ms var(--ease-cinema);
+}
+.c-window--back {
+  translate: calc(var(--px) * -2.4px) calc(var(--py) * -2.4px);
+}
+.c-window--mid {
+  translate: calc(var(--px) * -1.3px) calc(var(--py) * -1.3px);
+}
+.c-window--front {
+  translate: calc(var(--px) * -0.6px) calc(var(--py) * -0.6px);
+}
+.c-window {
+  transition: translate 480ms var(--ease-cinema),
+              transform 1200ms var(--ease-cinema),
+              opacity 1200ms var(--ease-cinema);
 }
 
 /* Hero ambient backdrop (very restrained) */
@@ -288,17 +309,18 @@ body.cinematic .navbar.scrolled {
 .c-hero__hint {
   position: absolute;
   left: 50%;
-  bottom: 32px;
+  bottom: 44px;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  color: var(--ink-muted, #5a5a56);
+  gap: 12px;
+  color: var(--ink-soft, #4a4a46);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
   z-index: 2;
   pointer-events: none;
 }

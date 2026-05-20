@@ -52,9 +52,11 @@
       const r = stage.getBoundingClientRect();
       const cx = r.left + r.width / 2;
       const cy = r.top + r.height / 2;
-      // Range -10..10 px
-      tx = ((e.clientX - cx) / (r.width / 2)) * 10;
-      ty = ((e.clientY - cy) / (r.height / 2)) * 10;
+      // ±25 px range. Layers multiply this in CSS (back 2.4×, mid 1.3×,
+      // front 0.6×) so the parallax has real depth without feeling
+      // gimmicky — closer to apple.com macOS than to a tilt demo.
+      tx = ((e.clientX - cx) / (r.width / 2)) * 25;
+      ty = ((e.clientY - cy) / (r.height / 2)) * 25;
       if (!raf) raf = requestAnimationFrame(apply);
     };
     const apply = () => {
