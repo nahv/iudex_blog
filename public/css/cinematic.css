@@ -165,20 +165,24 @@ body.cinematic .navbar.scrolled {
   pointer-events: none;
 }
 
-/* Back: Digesto lector — pushed back-left */
+/* Back: Digesto lector — pushed back-left, peeks visibly behind the front */
 .c-window--back {
-  transform: translate3d(-14%, -8%, -180px) rotateY(8deg) rotateX(2deg) scale(0.86);
+  transform: translate3d(-32%, -18%, -200px) rotateY(10deg) rotateX(2deg) scale(0.82);
   box-shadow: var(--shadow-window-soft);
-  filter: saturate(0.95);
+  filter: saturate(0.94) brightness(0.98);
+  z-index: 1;
 }
-/* Mid: Editor — slightly back-right */
+/* Mid: Editor — bottom-right peek */
 .c-window--mid {
-  transform: translate3d(12%, 6%, -90px) rotateY(-6deg) rotateX(2deg) scale(0.92);
+  transform: translate3d(28%, 22%, -110px) rotateY(-8deg) rotateX(2deg) scale(0.88);
   box-shadow: var(--shadow-window-soft);
+  filter: saturate(0.97);
+  z-index: 2;
 }
 /* Front: Dashboard — anchor */
 .c-window--front {
   transform: translate3d(0, 0, 0) rotateY(-2deg) rotateX(1deg) scale(1);
+  z-index: 3;
 }
 
 /* Hero motion: subtle entrance on first load */
