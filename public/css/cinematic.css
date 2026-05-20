@@ -421,6 +421,24 @@ body.cinematic .navbar.scrolled {
   color: var(--ink-soft, #2a2a28);
   max-width: 38ch;
 }
+/* Optional CTA below a chapter's beats. Used in Cap. IV to link to
+   the Nexus deep-dive page. */
+.c-chapter__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--gold-deep);
+  text-decoration: none;
+  transition: gap 240ms var(--ease-cinema);
+  align-self: flex-start;
+}
+.c-chapter__cta:hover { gap: 14px; }
+.c-chapter__cta svg { width: 14px; height: 14px; }
+
 .c-chapter__beat code,
 .c-hero__sub code {
   font-family: var(--font-mono);
@@ -1168,8 +1186,46 @@ body.cinematic .navbar.scrolled {
 .c-blog-card[hidden] { display: none; }
 
 /* ===========================================================
-   NEXUS HERO — orb + editorial copy (investigacion/index.html)
+   NEXUS — product reveal page (investigacion/index.html)
    =========================================================== */
+
+/* Nexus accent — distinct from gold, reads as "Nexus-blue" inspired
+   by the orb. Used as a brand cue across the page. */
+:root {
+  --nexus-blue: #1d4f7a;
+  --nexus-blue-soft: rgba(29, 79, 122, 0.08);
+}
+
+/* Hero wordmark — 'Introducing Nexus' product-reveal treatment */
+.c-nexus-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-bottom: 32px;
+}
+.c-nexus-mark__intro {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+.c-nexus-mark__name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, var(--nexus-blue) 0%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--nexus-blue);
+}
+
 .c-nexus-hero .c-hero__container {
   align-items: center;
 }
@@ -1185,6 +1241,46 @@ body.cinematic .navbar.scrolled {
   height: auto;
   aspect-ratio: 1;
   filter: drop-shadow(0 30px 60px rgba(15, 15, 14, 0.15));
+}
+
+/* Brand statement section — 'Conocé a Nexus' below the hero.
+   Editorial moment with sub-tagline to anchor Nexus' identity. */
+.c-nexus-intro {
+  padding: 120px 32px 80px;
+  text-align: center;
+  background:
+    radial-gradient(80% 60% at 50% 20%,
+      var(--nexus-blue-soft) 0%,
+      transparent 60%),
+    var(--cream);
+}
+.c-nexus-intro__inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.c-nexus-intro__title {
+  margin: 24px 0 0;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+}
+.c-nexus-intro__title em {
+  color: var(--nexus-blue);
+  font-style: italic;
+}
+.c-nexus-intro__lead {
+  margin: 32px auto 0;
+  max-width: 580px;
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.c-nexus-intro__tagline {
+  margin: 36px 0 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  color: var(--nexus-blue);
+  letter-spacing: -0.005em;
 }
 
 /* Capability chips — quiet horizontal strip below hero */
