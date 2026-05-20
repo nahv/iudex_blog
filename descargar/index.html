@@ -9,29 +9,29 @@
   <meta property="og:title" content="Descargar Iudex" />
   <meta property="og:description" content="El escritorio donde el derecho se piensa, ahora en tu computadora. Windows, macOS y Linux." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://iudex.com.ar/descargar/" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://iudex.com.ar/descargar/" />
   <link rel="stylesheet" href="../public/css/styles.css" />
+  <link rel="stylesheet" href="../public/css/cinematic.css" />
   <link rel="icon" type="image/png" href="../assets/icon.png" />
 </head>
-<body>
-<div class="reading-progress" aria-hidden="true"></div>
+<body class="cinematic">
 
 <!-- NAVBAR -->
 <nav class="navbar" role="navigation" aria-label="Navegación principal">
   <div class="container">
     <div class="navbar__inner">
-      <a href="../index.html" class="navbar__logo" aria-label="Iudex - Inicio">
+      <a href="../index-cinematic.html" class="navbar__logo" aria-label="Iudex - Inicio">
         <div class="navbar__logo-mark"><img src="../assets/icon.png" alt="Iudex" /></div>
         <span class="navbar__logo-text">Iudex</span>
       </a>
       <ul class="navbar__links">
-        <li><a href="../index.html">Inicio</a></li>
         <li><a href="../investigacion/index.html">Nexus</a></li>
-        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../blog/index.html">Cuaderno</a></li>
         <li><a href="../about/index.html">Nosotros</a></li>
         <li><a href="../contacto/index.html">Contacto</a></li>
-        <li><a href="index.html" class="navbar__cta">Descargar</a></li>
+        <li><a href="index.html" class="navbar__cta" aria-current="page">Descargar</a></li>
       </ul>
       <button class="navbar__toggle" aria-label="Abrir menú" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -40,122 +40,207 @@
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="contact-hero">
-  <div class="container">
-    <span class="section-tag">Descargar</span>
-    <h1 class="text-reveal" style="margin-top:16px;max-width:760px;margin-left:auto;margin-right:auto">
-      <span class="text-reveal__inner">Iudex en tu <em style="font-style:italic;color:var(--gold)">escritorio</em></span>
-    </h1>
-    <p class="lead lead-reveal" style="margin-top:20px;max-width:620px;margin-left:auto;margin-right:auto">
-      Aplicación de escritorio offline-first. Tus datos quedan en tu máquina; la sincronización con la nube es opcional y siempre la decidís vos.
-    </p>
-    <p class="label" style="margin-top:28px;color:var(--gold)">
-      Versión&nbsp;0.1.0-beta · "Primer Toque" · <a href="../releases/index.html" style="color:var(--gold);text-decoration:underline;text-underline-offset:3px">Notas de la versión</a>
+<!-- ===========================================================
+     HERO — text only
+     =========================================================== -->
+<section class="c-hero c-hero--text" aria-labelledby="c-download-title">
+  <div class="c-hero__backdrop" aria-hidden="true"></div>
+  <div class="c-hero__container c-hero__container--centered">
+    <div class="c-hero__copy" style="text-align:center;max-width:760px;margin:0 auto">
+      <span class="c-eyebrow">Descargar</span>
+      <h1 id="c-download-title" class="c-display" style="margin-top:24px">
+        Iudex en tu <em>escritorio</em>.
+      </h1>
+      <p class="c-hero__sub" style="max-width:560px;margin-left:auto;margin-right:auto">
+        Aplicación de escritorio offline-first. Tus datos viven en tu máquina; la sincronización con la nube es opcional.
+        <span class="c-hero__sub-line">Versión&nbsp;0.1.2-beta · <a href="../releases/index.html" style="color:var(--gold-deep);text-decoration:underline;text-underline-offset:3px">Notas de la versión</a></span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     PLATFORM CARDS
+     =========================================================== -->
+<section class="c-section" aria-labelledby="c-platforms-title">
+  <div class="c-section__inner" style="max-width:1080px">
+    <h2 id="c-platforms-title" class="c-sr-only">Plataformas</h2>
+
+    <div class="c-platforms">
+      <!-- WINDOWS -->
+      <article class="c-platform c-platform--available">
+        <span class="c-platform__chip">Disponible</span>
+        <div class="c-platform__icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+        </div>
+        <h3 class="c-platform__name">Windows&nbsp;10 / 11</h3>
+        <p class="c-platform__copy">Instalador firmado, distribuido por Microsoft&nbsp;Store. Actualizaciones automáticas.</p>
+        <a href="https://apps.microsoft.com/detail/9nw0w5hbvxrl?hl=es&gl=AR&ocid=pdpshare" class="c-btn c-btn--primary c-platform__cta" target="_blank" rel="noopener">
+          Obtener en Microsoft&nbsp;Store
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <p class="c-platform__hash">
+          <span>SHA-256</span>
+          <code>f92f6dd4a00a73a7…f7c2a0e4</code>
+        </p>
+      </article>
+
+      <!-- MACOS -->
+      <article class="c-platform">
+        <span class="c-platform__chip c-platform__chip--soon">Próximamente</span>
+        <div class="c-platform__icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        </div>
+        <h3 class="c-platform__name">macOS&nbsp;12+</h3>
+        <p class="c-platform__copy">DMG firmado y notarizado por Apple. Compatible con Apple&nbsp;Silicon e Intel.</p>
+        <a href="../contacto/index.html" class="c-btn c-btn--ghost c-platform__cta">
+          Avisame cuando esté
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <p class="c-platform__hash">
+          <span>SHA-256</span>
+          <code>—</code>
+        </p>
+      </article>
+
+      <!-- LINUX -->
+      <article class="c-platform">
+        <span class="c-platform__chip c-platform__chip--soon">Próximamente</span>
+        <div class="c-platform__icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489.064-.483.106-1.07.097-1.769-.011-.91-.107-2.078-.5-3.367-.33-1.084-.79-2.143-1.275-3.072-.485-.93-.985-1.733-1.413-2.408-.428-.674-.785-1.219-1.014-1.652-.115-.215-.198-.4-.252-.563-.054-.163-.077-.301-.07-.426.013-.247.062-.5.118-.815.057-.314.116-.69.103-1.122-.012-.43-.108-.918-.378-1.39-.27-.473-.711-.927-1.39-1.29A4.85 4.85 0 0 0 12.504 0z"/></svg>
+        </div>
+        <h3 class="c-platform__name">Linux</h3>
+        <p class="c-platform__copy">AppImage portable, 64-bit. Probado en Ubuntu&nbsp;22.04+ y Fedora&nbsp;38+.</p>
+        <a href="../contacto/index.html" class="c-btn c-btn--ghost c-platform__cta">
+          Avisame cuando esté
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <p class="c-platform__hash">
+          <span>SHA-256</span>
+          <code>—</code>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     SYSTEM REQUIREMENTS + INTEGRITY
+     =========================================================== -->
+<section class="c-section c-section--alt" aria-labelledby="c-specs-title">
+  <div class="c-section__inner c-section__inner--narrow">
+    <div class="c-section__header" style="text-align:left;margin-bottom:48px">
+      <span class="c-eyebrow">Requisitos</span>
+      <h2 id="c-specs-title" class="c-display c-display--md" style="text-align:left">Qué necesitás para correrlo.</h2>
+    </div>
+
+    <dl class="c-spec-list">
+      <div class="c-spec-row">
+        <dt>Windows</dt>
+        <dd>Windows&nbsp;10 versión&nbsp;1809 (build&nbsp;17763) o superior · 4&nbsp;GB RAM · 500&nbsp;MB libres.</dd>
+      </div>
+      <div class="c-spec-row">
+        <dt>macOS</dt>
+        <dd>macOS&nbsp;12 Monterey o superior · Apple&nbsp;Silicon o Intel · 4&nbsp;GB RAM · 500&nbsp;MB libres.</dd>
+      </div>
+      <div class="c-spec-row">
+        <dt>Linux</dt>
+        <dd>64-bit con <code>glibc&nbsp;2.31</code>+ · soporte para AppImage · 4&nbsp;GB RAM · 500&nbsp;MB libres.</dd>
+      </div>
+    </dl>
+
+    <p class="c-section__lead" style="text-align:left;margin:32px 0 0;max-width:640px">
+      Iudex funciona sin conexión. Para sincronizar entre dispositivos o usar las integraciones con Google&nbsp;Drive y Dropbox necesitás conexión sólo en el momento de la sincronización.
     </p>
   </div>
 </section>
 
-<!-- DOWNLOADS -->
-<article class="post-content">
+<!-- ===========================================================
+     INTEGRITY + PRIVACY — short editorial blocks
+     =========================================================== -->
+<section class="c-section" aria-labelledby="c-integrity-title">
+  <div class="c-section__inner c-section__inner--narrow">
+    <div class="c-info-blocks">
+      <article class="c-info-block">
+        <span class="c-eyebrow">Integridad</span>
+        <h3 class="c-info-block__title">Verificá el archivo antes de instalar.</h3>
+        <p>Publicamos el hash <strong>SHA-256</strong> de cada instalador. Si lo bajaste, podés confirmar que es el original así:</p>
+        <ul class="c-info-block__list">
+          <li><strong>Windows (PowerShell):</strong> <code>Get-FileHash iudex-setup.msix -Algorithm SHA256</code></li>
+          <li><strong>macOS:</strong> <code>shasum -a 256 iudex.dmg</code></li>
+          <li><strong>Linux:</strong> <code>sha256sum Iudex.AppImage</code></li>
+        </ul>
+      </article>
 
-  <p style="font-size:1.05rem;line-height:1.85"><strong>Estado:</strong> Iudex&nbsp;0.1.0-beta ya está disponible para Windows&nbsp;10/11 vía Microsoft&nbsp;Store. Las versiones para macOS y Linux están en camino — <a href="../contacto/index.html">sumate al acceso anticipado</a> y te avisamos apenas estén firmados.</p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin:48px 0">
-
-    <!-- WINDOWS -->
-    <div style="border:1px solid rgba(201,168,76,0.45);border-radius:16px;padding:32px;background:rgba(201,168,76,0.04);position:relative">
-      <span style="position:absolute;top:16px;right:16px;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);background:rgba(201,168,76,0.12);padding:4px 10px;border-radius:999px;font-weight:600">Disponible</span>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="color:var(--gold)"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
-        <h3 style="margin:0">Windows&nbsp;10 / 11</h3>
-      </div>
-      <p style="font-size:0.95rem;color:var(--cream-muted,#a8a292);margin-bottom:24px">Instalador firmado, distribuido por Microsoft&nbsp;Store. Actualizaciones automáticas.</p>
-      <a href="https://apps.microsoft.com/detail/9nw0w5hbvxrl?hl=es&gl=AR&ocid=pdpshare" class="btn btn--primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
-        Obtener en Microsoft&nbsp;Store
-      </a>
-      <p style="font-size:0.78rem;color:var(--cream-muted,#a8a292);margin-top:12px;text-align:center;word-break:break-all;line-height:1.5">
-        SHA256:<br><code style="font-size:0.7rem">f92f6dd4a00a73a7ce270967f16b3438f3f0d527a30301ebfd615758f7c2a0e4</code>
-      </p>
+      <article class="c-info-block">
+        <span class="c-eyebrow">Privacidad</span>
+        <h3 class="c-info-block__title">Tus expedientes viven en tu computadora.</h3>
+        <p>La base de datos es local. La sincronización con Google&nbsp;Drive o Dropbox se activa sólo si vos lo decidís, y las credenciales se guardan en el almacén seguro de tu sistema operativo — nunca en nuestros servidores.</p>
+        <p>Más detalles en la <a href="../politica-privacidad/index.html" style="color:var(--gold-deep)">Política de privacidad</a> y los <a href="../terminos/index.html" style="color:var(--gold-deep)">Términos y condiciones</a>.</p>
+      </article>
     </div>
-
-    <!-- MACOS -->
-    <div style="border:1px solid rgba(201,168,76,0.25);border-radius:16px;padding:32px;background:rgba(255,255,255,0.02);position:relative">
-      <span style="position:absolute;top:16px;right:16px;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--cream-muted,#a8a292);background:rgba(255,255,255,0.04);padding:4px 10px;border-radius:999px;font-weight:600;border:1px solid rgba(168,162,146,0.2)">Próximamente</span>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="color:var(--gold)"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-        <h3 style="margin:0">macOS&nbsp;12+</h3>
-      </div>
-      <p style="font-size:0.95rem;color:var(--cream-muted,#a8a292);margin-bottom:24px">DMG firmado y notarizado por Apple. Compatible con Apple&nbsp;Silicon e Intel.</p>
-      <a href="../contacto/index.html" class="btn btn--secondary" style="width:100%;justify-content:center">
-        Avisame cuando esté
-      </a>
-      <p style="font-size:0.8rem;color:var(--cream-muted,#a8a292);margin-top:12px;text-align:center">SHA256: <code>—</code></p>
-    </div>
-
-    <!-- LINUX -->
-    <div style="border:1px solid rgba(201,168,76,0.25);border-radius:16px;padding:32px;background:rgba(255,255,255,0.02);position:relative">
-      <span style="position:absolute;top:16px;right:16px;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--cream-muted,#a8a292);background:rgba(255,255,255,0.04);padding:4px 10px;border-radius:999px;font-weight:600;border:1px solid rgba(168,162,146,0.2)">Próximamente</span>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="color:var(--gold)"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.998.998 0 0 0-.118.083c-.611.444-.857 1.106-1.198 1.563-.32.418-.766.762-1.474.929-.412.097-.6.282-.572.532.027.249.243.484.6.59.357.107.832.2 1.367.265.535.066 1.122.106 1.674.183.5.07.93.17 1.395.351.32.124.578.337.812.554.234.218.443.443.726.554.252.099.498.135.756.184.258.05.529.108.83.21.605.205 1.155.585 1.71.74.598.166 1.05.13 1.5.097.45-.034.852-.064 1.36-.092.508-.027 1.064-.058 1.692-.165.629-.106 1.342-.288 2.196-.488.854-.199 1.696-.435 2.292-.687.595-.252.957-.508 1.11-.78a.996.996 0 0 0 .063-.745c-.054-.176-.176-.328-.337-.48a3.59 3.59 0 0 1-.39-.495c-.302-.426-.434-.87-.622-1.43-.094-.281-.205-.566-.37-.83-.165-.265-.387-.514-.69-.706a.996.996 0 0 0-.099-.057c.064-.483.106-1.07.097-1.769-.011-.91-.107-2.078-.5-3.367-.33-1.084-.79-2.143-1.275-3.072-.485-.93-.985-1.733-1.413-2.408-.428-.674-.785-1.219-1.014-1.652-.115-.215-.198-.4-.252-.563-.054-.163-.077-.301-.07-.426.013-.247.062-.5.118-.815.057-.314.116-.69.103-1.122-.012-.43-.108-.918-.378-1.39-.27-.473-.711-.927-1.39-1.29A4.85 4.85 0 0 0 12.504 0z"/></svg>
-        <h3 style="margin:0">Linux</h3>
-      </div>
-      <p style="font-size:0.95rem;color:var(--cream-muted,#a8a292);margin-bottom:24px">AppImage portable, 64-bit. Probado en Ubuntu&nbsp;22.04+ y Fedora&nbsp;38+.</p>
-      <a href="../contacto/index.html" class="btn btn--secondary" style="width:100%;justify-content:center">
-        Avisame cuando esté
-      </a>
-      <p style="font-size:0.8rem;color:var(--cream-muted,#a8a292);margin-top:12px;text-align:center">SHA256: <code>—</code></p>
-    </div>
-
   </div>
+</section>
 
-  <h2>Requisitos del sistema</h2>
-  <ul>
-    <li><strong>Windows:</strong> Windows&nbsp;10 versión&nbsp;1809 (build&nbsp;17763) o superior · 4&nbsp;GB RAM · 500&nbsp;MB de espacio libre.</li>
-    <li><strong>macOS:</strong> macOS&nbsp;12 Monterey o superior · Apple&nbsp;Silicon o Intel · 4&nbsp;GB RAM · 500&nbsp;MB de espacio libre.</li>
-    <li><strong>Linux:</strong> distribución de 64-bit con <code>glibc&nbsp;2.31</code> o superior · soporte para AppImage · 4&nbsp;GB RAM · 500&nbsp;MB de espacio libre.</li>
-  </ul>
-  <p>Iudex funciona sin conexión. Para sincronizar entre dispositivos o usar las integraciones con Google&nbsp;Drive y Dropbox necesitás conexión a internet en el momento de la sincronización.</p>
-
-  <h2>Verificación de integridad</h2>
-  <p>Cuando los instaladores estén disponibles, vamos a publicar el hash <strong>SHA256</strong> de cada archivo en esta página. Te recomendamos verificarlo antes de instalar:</p>
-  <ul>
-    <li><strong>Windows (PowerShell):</strong> <code>Get-FileHash iudex-setup.msix -Algorithm SHA256</code></li>
-    <li><strong>macOS / Linux:</strong> <code>shasum -a 256 iudex.dmg</code> · <code>sha256sum Iudex.AppImage</code></li>
-  </ul>
-
-  <h2>Privacidad y seguridad</h2>
-  <p>Iudex es <strong>offline-first</strong>: la base de datos vive en tu computadora, no en nuestros servidores. La sincronización entre dispositivos y las integraciones con la nube son opcionales y se activan sólo si vos lo decidís. Las credenciales de Google&nbsp;Drive y Dropbox se guardan en el almacén seguro de tu sistema operativo —nunca en nuestros servidores.</p>
-  <p>Más detalles en la <a href="../politica-privacidad/index.html">Política de privacidad</a> y los <a href="../terminos/index.html">Términos y condiciones</a>.</p>
-
-  <h2>¿Necesitás ayuda?</h2>
-  <p>Si tenés problemas con la instalación o querés reportar un bug, escribinos a <a href="mailto:contacto@iudex.com.ar">contacto@iudex.com.ar</a>. Atendemos en castellano.</p>
-
-  <div style="text-align:center;margin:64px 0 24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-    <a href="../contacto/index.html" class="btn btn--primary btn--lg">
-      Pedí tu invitación
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-    <a href="../index.html" class="btn btn--outline">Volver al inicio</a>
+<!-- ===========================================================
+     CTA
+     =========================================================== -->
+<section class="c-cta">
+  <div class="c-cta__inner">
+    <span class="c-eyebrow">¿No tenés Windows o tu equipo necesita aprobación?</span>
+    <h2 class="c-display" style="margin-top:24px">Pedí tu invitación.</h2>
+    <p class="c-lead" style="margin-left:auto;margin-right:auto">
+      Mac, Linux, multi-usuario o evaluación en estudio: <a href="mailto:contacto@iudex.com.ar" style="color:var(--gold-deep)">contacto@iudex.com.ar</a>. Te atiende una persona, en castellano.
+    </p>
+    <form class="c-cta__form" method="get" action="../contacto/index.html">
+      <label class="c-sr-only" for="cta-email">Tu correo electrónico</label>
+      <input id="cta-email" type="email" name="email" placeholder="tu@correo.com" required autocomplete="email" />
+      <button type="submit">Pedir invitación</button>
+    </form>
+    <p class="c-cta__trust">
+      <span aria-hidden="true">✓</span> Respondemos en 24 hs &nbsp; · &nbsp;
+      <span aria-hidden="true">✓</span> Sin spam &nbsp; · &nbsp;
+      <span aria-hidden="true">✓</span> Cancelás cuando quieras
+    </p>
   </div>
-
-</article>
+</section>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer__top">
       <div class="footer__brand">
-        <a href="../index.html" class="navbar__logo" style="display:inline-flex">
+        <a href="../index-cinematic.html" class="navbar__logo" style="display:inline-flex">
           <div class="navbar__logo-mark"><img src="../assets/icon.png" alt="Iudex" /></div>
           <span class="navbar__logo-text" style="color:var(--cream)">Iudex</span>
         </a>
-        <p>El escritorio donde el derecho se piensa. Expediente, jurisprudencia argentina y escritura en un mismo hilo.</p>
+        <p>El escritorio donde el derecho se piensa. Expediente, jurisprudencia argentina y escritura en un mismo hilo, para abogados y juzgados.</p>
       </div>
-      <div class="footer__col"><h5>El escritorio</h5><ul><li><a href="../index.html#features">Un solo espacio</a></li><li><a href="../investigacion/index.html">Investigación con fuentes</a></li><li><a href="index.html">Descargar</a></li></ul></div>
-      <div class="footer__col"><h5>Cuaderno</h5><ul><li><a href="../blog/index.html">Todas las notas</a></li></ul></div>
-      <div class="footer__col"><h5>Empresa</h5><ul><li><a href="../about/index.html">Nosotros</a></li><li><a href="../contacto/index.html">Contacto</a></li><li><a href="../politica-privacidad/index.html">Privacidad</a></li><li><a href="../terminos/index.html">Términos</a></li></ul></div>
+      <div class="footer__col">
+        <h5>El escritorio</h5>
+        <ul>
+          <li><a href="../investigacion/index.html">Nexus</a></li>
+          <li><a href="index.html">Descargar</a></li>
+          <li><a href="../releases/index.html">Notas de versión</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Cuaderno</h5>
+        <ul>
+          <li><a href="../blog/index.html">Todas las notas</a></li>
+          <li><a href="../blog/historia-nahuel-vallejos.html">Historia de Nahuel</a></li>
+          <li><a href="../blog/historia-maxi-bury.html">Historia de Maxi</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="../about/index.html">Nosotros</a></li>
+          <li><a href="../contacto/index.html">Contacto</a></li>
+          <li><a href="../politica-privacidad/index.html">Privacidad</a></li>
+          <li><a href="../terminos/index.html">Términos</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer__bottom">
       <p class="footer__copy">&copy; 2026 Iudex. Todos los derechos reservados.</p>
@@ -170,5 +255,6 @@
 
 <script src="../public/js/env.js"></script>
 <script src="../public/js/main.js"></script>
+<script src="../public/js/cinematic.js"></script>
 </body>
 </html>

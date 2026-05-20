@@ -723,6 +723,9 @@ body.cinematic .navbar.scrolled {
   margin: 0 auto;
   padding: 0 32px;
 }
+.c-section__inner--narrow {
+  max-width: 760px;
+}
 .c-section__header {
   text-align: center;
   max-width: 720px;
@@ -874,6 +877,433 @@ body.cinematic .navbar.scrolled {
 .c-btn--sm {
   padding: 10px 16px;
   font-size: 0.85rem;
+}
+
+/* ===========================================================
+   PLATFORM CARDS — used in descargar/index.html
+   Three platforms (Win / Mac / Linux), one available, two coming.
+   =========================================================== */
+.c-platforms {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) { .c-platforms { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1040px) { .c-platforms { grid-template-columns: repeat(3, 1fr); } }
+
+.c-platform {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: 18px;
+  padding: 36px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 320ms var(--ease-cinema),
+              box-shadow 320ms var(--ease-cinema),
+              border-color 320ms var(--ease-cinema);
+}
+.c-platform:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-window-soft);
+}
+.c-platform--available {
+  border-color: rgba(138, 107, 28, 0.28);
+  background: linear-gradient(180deg, var(--white) 0%, #fffaf0 100%);
+}
+.c-platform__chip {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  background: rgba(138, 107, 28, 0.12);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.c-platform__chip--soon {
+  color: var(--ink-muted);
+  background: var(--cream-2);
+}
+.c-platform__icon {
+  width: 36px;
+  height: 36px;
+  color: var(--gold-deep);
+}
+.c-platform__icon svg { width: 100%; height: 100%; }
+.c-platform__name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.4rem;
+  margin: 2px 0 0;
+  letter-spacing: -0.015em;
+}
+.c-platform__copy {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.c-platform__cta {
+  width: 100%;
+  justify-content: center;
+  margin-top: auto;
+}
+.c-platform__hash {
+  margin: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+}
+.c-platform__hash span {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.c-platform__hash code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+}
+
+/* ===========================================================
+   SPEC LIST — descargar requisitos del sistema
+   =========================================================== */
+.c-spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+.c-spec-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(0, 3fr);
+  gap: 24px;
+  padding: 20px 0;
+  border-top: 1px solid var(--hair);
+  align-items: baseline;
+}
+.c-spec-row:last-child { border-bottom: 1px solid var(--hair); }
+.c-spec-row dt {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 600;
+}
+.c-spec-row dd {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.c-spec-row code {
+  font-family: var(--font-mono);
+  background: var(--cream-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* ===========================================================
+   INFO BLOCKS — two-up editorial blocks (integrity + privacy)
+   =========================================================== */
+.c-info-blocks {
+  display: grid;
+  gap: 48px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 880px) { .c-info-blocks { grid-template-columns: 1fr 1fr; gap: 64px; } }
+.c-info-block .c-eyebrow {
+  display: inline-block;
+  margin-bottom: 14px;
+}
+.c-info-block__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin: 0 0 14px;
+  color: var(--ink);
+}
+.c-info-block p {
+  margin: 0 0 14px;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.c-info-block__list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+.c-info-block__list code {
+  font-family: var(--font-mono);
+  background: var(--cream-2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: var(--ink);
+}
+
+/* ===========================================================
+   CONTACT FORM + ASIDE — used in contacto/index.html
+   =========================================================== */
+.c-contact-grid {
+  display: grid;
+  gap: 48px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 960px) {
+  .c-contact-grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 64px;
+    align-items: start;
+  }
+}
+
+.c-form-card {
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: 20px;
+  padding: 40px 36px;
+  box-shadow: var(--shadow-window-soft);
+}
+.c-form-card__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.c-form-card__lead {
+  margin: 8px 0 32px;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+}
+
+.c-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.c-form__row {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 560px) {
+  .c-form__row { grid-template-columns: 1fr 1fr; }
+}
+.c-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.c-form__field label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+.c-form__optional {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-muted);
+  font-weight: 400;
+  margin-left: 4px;
+}
+.c-form__field input,
+.c-form__field select,
+.c-form__field textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--hair);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 240ms var(--ease-cinema),
+              background 240ms var(--ease-cinema);
+}
+.c-form__field input::placeholder,
+.c-form__field textarea::placeholder {
+  color: var(--ink-muted);
+}
+.c-form__field input:focus,
+.c-form__field select:focus,
+.c-form__field textarea:focus {
+  border-color: var(--gold-deep);
+  background: var(--white);
+}
+.c-form__field textarea { resize: vertical; min-height: 100px; }
+.c-form__submit {
+  width: 100%;
+  justify-content: center;
+  padding: 16px 22px;
+  margin-top: 8px;
+}
+.c-form__disclaimer {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+}
+.c-form__disclaimer a { color: var(--gold-deep); }
+
+/* Right aside: contact info + steps */
+.c-contact-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.c-contact-aside__block .c-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.c-contact-aside__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 1.25;
+  margin: 0 0 12px;
+  letter-spacing: -0.015em;
+}
+.c-contact-aside__block p {
+  margin: 0 0 16px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.c-contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.c-contact-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 0;
+  border-top: 1px solid var(--hair);
+}
+.c-contact-list li:last-child { border-bottom: 1px solid var(--hair); }
+.c-contact-list__label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+.c-contact-list a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.96rem;
+  transition: color 240ms var(--ease-cinema);
+}
+.c-contact-list a:hover { color: var(--gold-deep); }
+
+/* Steps — 1/2/3 */
+.c-steps__list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.c-steps__list li {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.c-steps__num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.c-steps__list li strong {
+  display: block;
+  font-weight: 600;
+  font-size: 0.94rem;
+  margin-bottom: 2px;
+}
+.c-steps__list li p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* ===========================================================
+   FAQ — used in contacto + descargar
+   =========================================================== */
+.c-faq {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) { .c-faq { grid-template-columns: 1fr 1fr; gap: 20px; } }
+.c-faq__item {
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  padding: 26px;
+  transition: border-color 240ms var(--ease-cinema),
+              transform 240ms var(--ease-cinema);
+}
+.c-faq__item:hover {
+  border-color: var(--hair-strong);
+  transform: translateY(-1px);
+}
+.c-faq__item h4 {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.c-faq__item p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
 }
 
 /* ===========================================================
