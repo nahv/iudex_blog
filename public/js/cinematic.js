@@ -89,6 +89,16 @@
         }
       }
 
+      // Mirror the active shot's aspect onto the stage so the frame
+      // morphs to match each screenshot's natural ratio. CSS transitions
+      // aspect-ratio over ~520ms for a smooth shape change.
+      const stage = chapter.querySelector('.c-chapter__stage');
+      const activeShot = shots[idx];
+      if (stage && activeShot) {
+        const aspect = activeShot.style.getPropertyValue('--shot-aspect');
+        if (aspect) stage.style.setProperty('--stage-aspect', aspect);
+      }
+
       const rail = chapter.querySelector('.c-chapter__rail-fill');
       if (rail) rail.style.setProperty('--progress', `${(raw * 100).toFixed(2)}%`);
     };
@@ -128,7 +138,24 @@
     });
   }
 
-  /* ----------- Image fallback: show "capture pending" overlay ----------- */
+  /* ----------- Image fallback + per-shot aspect-ratio ----------- */
+  // Each shot needs to know its image's natural aspect so the stage
+  // can morph to match it on activation (see chapter update tick).
+  const recordAspect = (img) => {
+    if (!img.naturalWidth || !img.naturalHeight) return;
+    const host = img.closest('.c-shot');
+    if (!host) return;
+    const aspect = `${img.naturalWidth} / ${img.naturalHeight}`;
+    host.style.setProperty('--shot-aspect', aspect);
+    // If this shot is the currently active one, propagate its aspect to
+    // the chapter stage straight away — otherwise the stage would stay
+    // on the default 16/9 until the next scroll tick.
+    if (host.getAttribute('data-active') === 'true') {
+      const stage = host.closest('.c-chapter__stage');
+      if (stage) stage.style.setProperty('--stage-aspect', aspect);
+    }
+  };
+
   document.querySelectorAll('.c-shot img, .c-window img').forEach((img) => {
     const showPending = () => {
       const host = img.closest('.c-shot, .c-window');
@@ -140,13 +167,15 @@
       host.appendChild(ph);
       img.style.opacity = '0';
     };
-    if (!img.complete) {
+    if (img.complete) {
+      if (img.naturalWidth === 0) showPending();
+      else recordAspect(img);
+    } else {
       img.addEventListener('error', showPending, { once: true });
       img.addEventListener('load', () => {
         if (img.naturalWidth === 0) showPending();
+        else recordAspect(img);
       }, { once: true });
-    } else if (img.naturalWidth === 0) {
-      showPending();
     }
   });
 

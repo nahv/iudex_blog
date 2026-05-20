@@ -341,28 +341,38 @@ body.cinematic .navbar.scrolled {
   max-width: 38ch;
 }
 
-/* Chapter stage — holds layered shots that crossfade */
+/* Chapter stage — adapts to the active shot's natural aspect ratio so
+   every screenshot is shown in full (no crop, no letterbox). The
+   `--stage-aspect` custom property is written by JS on every shot
+   activation; CSS transitions the aspect-ratio so the frame morphs
+   smoothly between beats. */
 .c-chapter__stage {
+  --stage-aspect: 16 / 9;
   position: relative;
   width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+  /* Hold a comfortable canvas size and let the active shot inset a
+     smaller frame inside it. The frame itself uses the stage aspect,
+     not the stage element — see .c-shot below. */
   height: 78vh;
-  padding: 0 32px;
+  display: grid;
+  place-items: center;
 }
 @media (min-width: 980px) {
-  .c-chapter__stage {
-    padding-right: 64px;
-  }
+  .c-chapter__stage { padding-right: 56px; padding-left: 24px; }
 }
 
 .c-shot {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  /* Match the screenshots' natural aspect (~16/9). With this, cover
-     fills the box edge-to-edge — no cream letterbox bars. */
-  width: min(100%, 1120px);
-  aspect-ratio: 16 / 9;
+  /* The shot IS the frame. Its aspect-ratio follows the active image
+     and transitions smoothly. Stacked via grid-area so all shots share
+     the same cell — opacity crossfades between them. */
+  grid-area: 1 / 1;
+  width: 100%;
   height: auto;
+  aspect-ratio: var(--stage-aspect);
   max-height: 100%;
   border-radius: 16px;
   background: var(--white);
@@ -370,18 +380,14 @@ body.cinematic .navbar.scrolled {
   overflow: hidden;
   opacity: 0;
   transform: scale(0.985) translateY(12px);
-  /* Only opacity transitions — the transform is driven by scroll (see
-     [data-active] below) and must respond instantly to the wheel, not
-     lag 900ms behind it. */
-  transition: opacity 380ms var(--ease-cinema);
+  transition:
+    opacity 380ms var(--ease-cinema),
+    aspect-ratio 520ms var(--ease-cinema);
   filter: saturate(0.98);
-  will-change: transform, opacity;
+  will-change: transform, opacity, aspect-ratio;
 }
 .c-shot[data-active="true"] {
   opacity: 1;
-  /* Continuous motion bound to per-segment scroll progress. Tiny scale
-     + 8px upward drift inside each beat keeps the eye fed during the
-     pinned stretch. No transition here, so it tracks the wheel 1:1. */
   transform:
     scale(calc(0.985 + 0.015 * (1 - var(--seg-progress))))
     translateY(calc(var(--seg-progress) * -8px));
@@ -390,8 +396,7 @@ body.cinematic .navbar.scrolled {
   display: block;
   width: 100%;
   height: 100%;
-  /* Box and image share the same aspect ratio, so cover fills the
-     frame without cropping anything meaningful. */
+  /* Frame aspect = image aspect, so cover fills with zero crop. */
   object-fit: cover;
   object-position: center;
 }
@@ -576,7 +581,9 @@ body.cinematic .navbar.scrolled {
     width: auto;
     height: auto;
     min-height: 0;
-    aspect-ratio: 16 / 9;
+    /* On mobile each shot uses its own natural aspect — no stacking,
+       no morphing stage, just a full-width card per beat. */
+    aspect-ratio: var(--shot-aspect, 16 / 9);
     opacity: 1;
     transform: none;
     display: block;
