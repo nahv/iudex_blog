@@ -898,6 +898,245 @@ body.cinematic .navbar.scrolled {
 }
 
 /* ===========================================================
+   POST HERO + PROSE — cinematic re-skin of legacy blog/legal pages
+   Activated when the body has class="cinematic" — keeps existing
+   markup (.post-hero / .post-content) but applies the editorial
+   typography + spacing of the rest of the cinematic surface.
+   =========================================================== */
+body.cinematic .post-hero {
+  padding: 140px 24px 56px;
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+body.cinematic .post-hero::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: var(--gold-deep);
+  opacity: 0.6;
+  margin: 40px auto 0;
+}
+body.cinematic .post-hero__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 28px;
+}
+body.cinematic .post-hero__meta .post-category-badge {
+  color: var(--gold-deep);
+  font-weight: 600;
+  background: transparent;
+  padding: 0;
+  border: 0;
+}
+body.cinematic .post-hero__meta .blog-card__dot {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--ink-muted); opacity: 0.5; display: inline-block;
+}
+body.cinematic .post-hero__meta .blog-card__date,
+body.cinematic .post-hero__meta .blog-card__read { color: var(--ink-muted); }
+
+body.cinematic .post-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 5.6vw, 4.4rem);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0;
+}
+body.cinematic .post-hero h1 em {
+  font-style: italic;
+  color: var(--gold-deep) !important;
+}
+body.cinematic .post-hero .lead {
+  margin: 28px auto 0;
+  max-width: 640px;
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* Body — editorial prose. Matches what .post-content already has but
+   leans more editorial: larger paragraph rhythm, refined h2/h3,
+   blockquote with rule, lists with subtle markers. */
+body.cinematic .post-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+  color: var(--ink);
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+body.cinematic .post-content > p,
+body.cinematic .post-content > ul,
+body.cinematic .post-content > ol,
+body.cinematic .post-content > blockquote,
+body.cinematic .post-content > figure,
+body.cinematic .post-content > div {
+  margin: 0 0 28px;
+}
+body.cinematic .post-content > p {
+  color: var(--ink-soft);
+}
+body.cinematic .post-content > p > strong { color: var(--ink); font-weight: 600; }
+body.cinematic .post-content > p > em { font-style: italic; }
+body.cinematic .post-content a {
+  color: var(--gold-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(138, 107, 28, 0.4);
+  transition: text-decoration-color 240ms var(--ease-cinema);
+}
+body.cinematic .post-content a:hover {
+  text-decoration-color: var(--gold-deep);
+}
+body.cinematic .post-content h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 56px 0 20px;
+}
+body.cinematic .post-content h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 40px 0 16px;
+}
+body.cinematic .post-content ul,
+body.cinematic .post-content ol {
+  padding-left: 0;
+  list-style: none;
+}
+body.cinematic .post-content ul li,
+body.cinematic .post-content ol li {
+  position: relative;
+  padding: 6px 0 6px 28px;
+  color: var(--ink-soft);
+}
+body.cinematic .post-content ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18px;
+  width: 14px;
+  height: 1px;
+  background: var(--gold-deep);
+  opacity: 0.6;
+}
+body.cinematic .post-content ol {
+  counter-reset: post-counter;
+}
+body.cinematic .post-content ol li {
+  counter-increment: post-counter;
+}
+body.cinematic .post-content ol li::before {
+  content: counter(post-counter);
+  position: absolute;
+  left: 0;
+  top: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--gold-deep);
+  font-weight: 600;
+}
+body.cinematic .post-content blockquote {
+  border-left: 2px solid var(--gold-deep);
+  padding: 4px 0 4px 24px;
+  margin: 32px 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+body.cinematic .post-content code {
+  font-family: var(--font-mono);
+  background: var(--cream-2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.88em;
+  color: var(--ink);
+}
+body.cinematic .post-content figure img {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: var(--shadow-window-soft);
+}
+body.cinematic .post-content figcaption {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+/* Reading-progress bar (top of viewport) — cinematic skin */
+body.cinematic .reading-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 100%;
+  background: transparent;
+  z-index: 100;
+  pointer-events: none;
+}
+body.cinematic .reading-progress::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: var(--progress, 0%);
+  background: var(--gold-deep);
+  transition: width 120ms linear;
+}
+
+/* Legacy CTA pills inside posts — give them the cinematic c-btn feel */
+body.cinematic .post-content .btn--primary,
+body.cinematic .post-content .btn--lg {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 14px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 0;
+}
+body.cinematic .post-content .btn--outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--ink);
+  padding: 14px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  box-shadow: inset 0 0 0 1px var(--hair-strong);
+}
+body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
+
+/* ===========================================================
    BLOG — featured + grid + filter (blog/index.html)
    =========================================================== */
 .c-blog-header {
