@@ -139,13 +139,47 @@
           </dl>
         </article>
 
+        <article class="status-card" id="status-card-staging-api">
+          <div class="status-card__head">
+            <div>
+              <h3>staging.api.iudex.com.ar</h3>
+              <p class="status-card__desc">Backend pre-prod en VPS · release candidate antes de promover a prod</p>
+            </div>
+            <span class="status-pill status-pill--loading" id="status-pill-staging-api">
+              <span class="status-dot"></span> Checando…
+            </span>
+          </div>
+          <dl class="status-card__meta">
+            <div><dt>Latencia</dt><dd id="status-latency-staging-api">—</dd></div>
+            <div><dt>Detalle</dt><dd id="status-detail-staging-api">—</dd></div>
+            <div><dt>Health endpoint</dt><dd><a href="https://staging.api.iudex.com.ar/health" target="_blank" rel="noopener" class="status-card__link">/health ↗</a></dd></div>
+          </dl>
+        </article>
+
+        <article class="status-card" id="status-card-staging-nexus">
+          <div class="status-card__head">
+            <div>
+              <h3>staging.nexus.iudex.com.ar</h3>
+              <p class="status-card__desc">Agente IA pre-prod en VPS · paralelo a producción para QA</p>
+            </div>
+            <span class="status-pill status-pill--loading" id="status-pill-staging-nexus">
+              <span class="status-dot"></span> Checando…
+            </span>
+          </div>
+          <dl class="status-card__meta">
+            <div><dt>Latencia</dt><dd id="status-latency-staging-nexus">—</dd></div>
+            <div><dt>Detalle</dt><dd id="status-detail-staging-nexus">—</dd></div>
+            <div><dt>Health endpoint</dt><dd><a href="https://staging.nexus.iudex.com.ar/health" target="_blank" rel="noopener" class="status-card__link">/health ↗</a></dd></div>
+          </dl>
+        </article>
+
       </div>
 
       <p class="status-footnote">
-        Polling cada 30 s. Ambos servicios tienen CORS sin configurar para <code>iudex.com.ar</code> — solo se detecta reachability, no se parsea el body.
-        Para activar el detalle completo (db/redis/version, agent_loaded):
-        en <code>iudex-cloud/src/api/main.py</code> agregar <code>"https://iudex.com.ar"</code> a <code>allow_origins</code> de <code>CORSMiddleware</code>;
-        en <code>iudex-cloud/legali-agent/main.py</code> cambiar <code>allow_credentials=True</code> por <code>False</code> (la combinación con <code>allow_origins=["*"]</code> es inválida en el spec de CORS y Starlette omite el header).
+        Polling cada 30 s. Para ver el body parseado (db/redis/version, agent_loaded) hace falta que cada deploy permita CORS desde <code>https://iudex.com.ar</code>.
+        En <code>api</code> y <code>staging.api</code> se setea via env var <code>CORS_ORIGINS=https://iudex.com.ar</code> (el código en <code>iudex-cloud/src/api/main.py</code> ya la lee).
+        En <code>nexus</code> y <code>staging.nexus</code> el origen ya viene hardcodeado en <code>iudex-cloud/legali-agent/main.py</code> con <code>CORS_ORIGINS</code> como override para staging/dev.
+        Si una card muestra <em>"Reachable (CORS limita el body)"</em> es que el deploy todavía no tiene el origen configurado — el polling sigue funcionando, solo falta el detalle.
       </p>
     </section>
 

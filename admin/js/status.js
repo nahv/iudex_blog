@@ -1,17 +1,10 @@
 // status.js — health-check polling para el dashboard.
 //
-// Dos servicios:
-//   - api.iudex.com.ar (FastAPI / iudex-cloud).   CORS bloqueado en prod
-//     (`allow_origins=[]`).
-//   - nexus.iudex.com.ar (legali-agent).          CORS roto: combina
-//     `allow_origins=["*"]` con `allow_credentials=True`, combinación que
-//     el spec rechaza — Starlette omite el Access-Control-Allow-Origin y
-//     el browser rechaza el fetch.
-//
-// Estrategia: cada check intenta primero con CORS (para parsear el body
-// si está bien configurado) y si falla, hace fallback a `mode: 'no-cors'`
-// para detectar reachability. Cuando el backend arregle CORS, los detalles
-// completos van a aparecer automáticamente sin cambiar nada acá.
+// Cuatro servicios: prod (api, nexus) + staging (staging.api, staging.nexus).
+// Cada check intenta primero con CORS (para parsear el body si está bien
+// configurado) y si falla, hace fallback a `mode: 'no-cors'` para detectar
+// reachability. Cuando un deploy arregle CORS, los detalles completos
+// aparecen automáticamente sin cambiar nada acá.
 //
 // Polling cada 30 s. Botón "Refrescar" hace check inmediato.
 
@@ -27,6 +20,18 @@ const ENDPOINTS = {
     pillEl: '#status-pill-nexus',
     latencyEl: '#status-latency-nexus',
     detailEl: '#status-detail-nexus',
+  },
+  stagingApi: {
+    url: 'https://staging.api.iudex.com.ar/health',
+    pillEl: '#status-pill-staging-api',
+    latencyEl: '#status-latency-staging-api',
+    detailEl: '#status-detail-staging-api',
+  },
+  stagingNexus: {
+    url: 'https://staging.nexus.iudex.com.ar/health',
+    pillEl: '#status-pill-staging-nexus',
+    latencyEl: '#status-latency-staging-nexus',
+    detailEl: '#status-detail-staging-nexus',
   },
 };
 
@@ -154,13 +159,11 @@ async function checkWithFallback(url) {
 }
 
 async function runChecks() {
-  // Pings en paralelo.
-  const [apiResult, nexusResult] = await Promise.all([
-    checkWithFallback(ENDPOINTS.api.url),
-    checkWithFallback(ENDPOINTS.nexus.url),
-  ]);
-  renderResult('api', apiResult);
-  renderResult('nexus', nexusResult);
+  const keys = Object.keys(ENDPOINTS);
+  const results = await Promise.all(
+    keys.map((k) => checkWithFallback(ENDPOINTS[k].url))
+  );
+  keys.forEach((k, i) => renderResult(k, results[i]));
   setUpdated();
 }
 
