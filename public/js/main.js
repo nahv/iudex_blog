@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealEls.forEach(el => observer.observe(el));
   }
 
-  // ---- Parallax hero (subtle, Apple-style) ----
+  // ---- Parallax hero (subtle scroll-driven fade + translate) ----
   const heroTitle = document.querySelector('.hero__title');
   const heroSub = document.querySelector('.hero__subtitle');
   const heroActions = document.querySelector('.hero__actions');
@@ -1015,7 +1015,7 @@ if (document.readyState === 'loading') {
 
   /* ----------- Navbar scrolled state -----------
      Adds the hairline border after a short scroll, mirroring the
-     apple.com chrome behaviour. Throttled to rAF; runs once on load to
+     common product-page chrome behaviour. Throttled to rAF; runs once on load to
      catch deep-link reloads landing mid-page. */
   const navbar = document.querySelector('.navbar');
   if (navbar) {
@@ -1059,7 +1059,7 @@ if (document.readyState === 'loading') {
       const cy = r.top + r.height / 2;
       // ±25 px range. Layers multiply this in CSS (back 2.4×, mid 1.3×,
       // front 0.6×) so the parallax has real depth without feeling
-      // gimmicky — closer to apple.com macOS than to a tilt demo.
+      // gimmicky — closer to a refined product page than to a tilt demo.
       tx = ((e.clientX - cx) / (r.width / 2)) * 25;
       ty = ((e.clientY - cy) / (r.height / 2)) * 25;
       if (!raf) raf = requestAnimationFrame(apply);
