@@ -36,117 +36,138 @@
       <strong>Configuración local faltante.</strong> Copiá <code>public/js/env.example.js</code> a <code>public/js/env.js</code> y completá los valores reales de Supabase. Recargá la página después.
     </div>
 
-    <header class="dashboard-greeting">
-      <h1 class="admin-h1" id="greeting">Hola</h1>
-      <p class="admin-subtitle" id="greeting-meta">…</p>
+    <header class="dashboard-header">
+      <h1 class="dashboard-header__greeting" id="greeting">Hola</h1>
+      <span class="dashboard-header__meta" id="greeting-meta">…</span>
     </header>
 
-    <!-- ======== QUICK ACTIONS ======== -->
-    <section class="dashboard-section">
-      <h2 class="dashboard-section__title">Acciones rápidas</h2>
-      <div class="quick-grid">
-
-        <a href="../emails/" class="quick-card">
-          <div class="quick-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16v12H4z"/><path d="m4 6 8 7 8-7"/></svg>
-          </div>
-          <div class="quick-card__body">
-            <h3>Nuevo email</h3>
-            <p>Composer con templates, preview live y drafts.</p>
-          </div>
-          <div class="quick-card__arrow" aria-hidden="true">→</div>
-        </a>
-
-        <a href="../emails/history.html" class="quick-card">
-          <div class="quick-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>
-          </div>
-          <div class="quick-card__body">
-            <h3>Historial</h3>
-            <p>Últimos 50 envíos. Ver detalle, repetir o auditar.</p>
-          </div>
-          <div class="quick-card__arrow" aria-hidden="true">→</div>
-        </a>
-
-        <a href="https://supabase.com/dashboard/project/zbysecepjvyyiufbliub/editor" target="_blank" rel="noopener" class="quick-card">
-          <div class="quick-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
-          </div>
-          <div class="quick-card__body">
-            <h3>Registros</h3>
-            <p>Tabla de leads en Supabase. Abre en pestaña nueva.</p>
-          </div>
-          <div class="quick-card__arrow" aria-hidden="true">↗</div>
-        </a>
-
-        <a href="https://resend.com/emails" target="_blank" rel="noopener" class="quick-card">
-          <div class="quick-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg>
-          </div>
-          <div class="quick-card__body">
-            <h3>Resend Dashboard</h3>
-            <p>Eventos lifecycle (delivered, bounced, opened).</p>
-          </div>
-          <div class="quick-card__arrow" aria-hidden="true">↗</div>
-        </a>
-
+    <!-- ======== PULSE STRIP ======== -->
+    <section class="pulse-strip pulse-strip--loading" id="pulse-strip" aria-live="polite">
+      <div class="pulse-strip__main">
+        <span class="pulse-strip__dot" aria-hidden="true"></span>
+        <span class="pulse-strip__label" id="pulse-label">Checando servicios…</span>
+        <span class="pulse-strip__detail" id="pulse-detail"></span>
+      </div>
+      <div class="pulse-strip__actions">
+        <span class="pulse-strip__updated" id="status-updated">—</span>
+        <button id="btn-refresh-status" class="btn btn--ghost btn--sm" type="button" aria-label="Refrescar estado">↻ Refrescar</button>
       </div>
     </section>
 
     <!-- ======== SYSTEM STATUS ======== -->
     <section class="dashboard-section">
-      <div class="dashboard-section__head">
-        <h2 class="dashboard-section__title">Estado de servicios</h2>
-        <div class="status-controls">
-          <span class="status-controls__updated" id="status-updated">—</span>
-          <button id="btn-refresh-status" class="btn btn--ghost btn--sm">Refrescar</button>
+      <h2 class="dashboard-section__title">Estado de servicios</h2>
+
+      <div class="status-group">
+        <p class="status-group__title">Producción</p>
+        <div class="status-grid">
+
+          <article class="status-card" id="status-card-api">
+            <div class="status-card__top">
+              <span class="status-pill status-pill--loading" id="status-pill-api">
+                <span class="status-dot"></span> Checando…
+              </span>
+              <a href="https://api.iudex.com.ar/health" target="_blank" rel="noopener" class="status-card__probe" title="Abrir /health en una pestaña nueva" aria-label="Abrir health endpoint">↗</a>
+            </div>
+            <h3 class="status-card__host">api.iudex.com.ar</h3>
+            <p class="status-card__detail" id="status-detail-api">—</p>
+            <p class="status-card__latency" id="status-latency-api">—</p>
+          </article>
+
+          <article class="status-card" id="status-card-nexus">
+            <div class="status-card__top">
+              <span class="status-pill status-pill--loading" id="status-pill-nexus">
+                <span class="status-dot"></span> Checando…
+              </span>
+              <a href="https://nexus.iudex.com.ar/health" target="_blank" rel="noopener" class="status-card__probe" title="Abrir /health en una pestaña nueva" aria-label="Abrir health endpoint">↗</a>
+            </div>
+            <h3 class="status-card__host">nexus.iudex.com.ar</h3>
+            <p class="status-card__detail" id="status-detail-nexus">—</p>
+            <p class="status-card__latency" id="status-latency-nexus">—</p>
+          </article>
+
         </div>
       </div>
 
-      <div class="status-grid">
+      <div class="status-group">
+        <p class="status-group__title">Staging</p>
+        <div class="status-grid">
 
-        <article class="status-card" id="status-card-api">
-          <div class="status-card__head">
-            <div>
-              <h3>api.iudex.com.ar</h3>
-              <p class="status-card__desc">Backend FastAPI · Postgres + Redis · auth, billing, sync, búsqueda</p>
+          <article class="status-card" id="status-card-staging-api">
+            <div class="status-card__top">
+              <span class="status-pill status-pill--loading" id="status-pill-staging-api">
+                <span class="status-dot"></span> Checando…
+              </span>
+              <a href="https://staging.api.iudex.com.ar/health" target="_blank" rel="noopener" class="status-card__probe" title="Abrir /health en una pestaña nueva" aria-label="Abrir health endpoint">↗</a>
             </div>
-            <span class="status-pill status-pill--loading" id="status-pill-api">
-              <span class="status-dot"></span> Checando…
-            </span>
-          </div>
-          <dl class="status-card__meta">
-            <div><dt>Latencia</dt><dd id="status-latency-api">—</dd></div>
-            <div><dt>Detalle</dt><dd id="status-detail-api">—</dd></div>
-            <div><dt>Health endpoint</dt><dd><a href="https://api.iudex.com.ar/health" target="_blank" rel="noopener" class="status-card__link">/health ↗</a></dd></div>
-          </dl>
-        </article>
+            <h3 class="status-card__host">staging.api.iudex.com.ar</h3>
+            <p class="status-card__detail" id="status-detail-staging-api">—</p>
+            <p class="status-card__latency" id="status-latency-staging-api">—</p>
+          </article>
 
-        <article class="status-card" id="status-card-nexus">
-          <div class="status-card__head">
-            <div>
-              <h3>nexus.iudex.com.ar</h3>
-              <p class="status-card__desc">Agente IA (legali-agent) · investigación jurisprudencial · proxy desde api/nexus</p>
+          <article class="status-card" id="status-card-staging-nexus">
+            <div class="status-card__top">
+              <span class="status-pill status-pill--loading" id="status-pill-staging-nexus">
+                <span class="status-dot"></span> Checando…
+              </span>
+              <a href="https://staging.nexus.iudex.com.ar/health" target="_blank" rel="noopener" class="status-card__probe" title="Abrir /health en una pestaña nueva" aria-label="Abrir health endpoint">↗</a>
             </div>
-            <span class="status-pill status-pill--loading" id="status-pill-nexus">
-              <span class="status-dot"></span> Checando…
-            </span>
-          </div>
-          <dl class="status-card__meta">
-            <div><dt>Latencia</dt><dd id="status-latency-nexus">—</dd></div>
-            <div><dt>Detalle</dt><dd id="status-detail-nexus">—</dd></div>
-            <div><dt>Health endpoint</dt><dd><a href="https://nexus.iudex.com.ar/health" target="_blank" rel="noopener" class="status-card__link">/health ↗</a></dd></div>
-          </dl>
-        </article>
+            <h3 class="status-card__host">staging.nexus.iudex.com.ar</h3>
+            <p class="status-card__detail" id="status-detail-staging-nexus">—</p>
+            <p class="status-card__latency" id="status-latency-staging-nexus">—</p>
+          </article>
 
+        </div>
       </div>
 
-      <p class="status-footnote">
-        Polling cada 30 s. Ambos servicios tienen CORS sin configurar para <code>iudex.com.ar</code> — solo se detecta reachability, no se parsea el body.
-        Para activar el detalle completo (db/redis/version, agent_loaded):
-        en <code>iudex-cloud/src/api/main.py</code> agregar <code>"https://iudex.com.ar"</code> a <code>allow_origins</code> de <code>CORSMiddleware</code>;
-        en <code>iudex-cloud/legali-agent/main.py</code> cambiar <code>allow_credentials=True</code> por <code>False</code> (la combinación con <code>allow_origins=["*"]</code> es inválida en el spec de CORS y Starlette omite el header).
-      </p>
+      <details class="status-details">
+        <summary>¿Por qué algunas cards no muestran detalle?</summary>
+        <div class="status-details__body">
+          <p>Polling cada 30 s. Para ver el body parseado (<code>db</code>/<code>redis</code>/<code>version</code>, <code>agent_loaded</code>) hace falta que cada deploy permita CORS desde <code>https://iudex.com.ar</code>.</p>
+          <p>En <code>api</code> y <code>staging.api</code> se setea via env var <code>CORS_ORIGINS=https://iudex.com.ar</code>. En <code>nexus</code> y <code>staging.nexus</code> el origen ya viene en <code>iudex-cloud/legali-agent/main.py</code>.</p>
+          <p>Si una card muestra <em>"Reachable (CORS limita el body)"</em> es que el deploy todavía no tiene el origen configurado — el polling sigue funcionando, solo falta el detalle.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ======== QUICK ACTIONS ======== -->
+    <section class="dashboard-section">
+      <h2 class="dashboard-section__title">Acciones rápidas</h2>
+      <div class="quick-actions">
+
+        <a href="../emails/" class="quick-btn">
+          <span class="quick-btn__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16v12H4z"/><path d="m4 6 8 7 8-7"/></svg>
+          </span>
+          <span class="quick-btn__label">Nuevo email</span>
+          <span class="quick-btn__arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a href="../emails/history.html" class="quick-btn">
+          <span class="quick-btn__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>
+          </span>
+          <span class="quick-btn__label">Historial</span>
+          <span class="quick-btn__arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a href="https://supabase.com/dashboard/project/zbysecepjvyyiufbliub/editor" target="_blank" rel="noopener" class="quick-btn quick-btn--external">
+          <span class="quick-btn__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+          </span>
+          <span class="quick-btn__label">Registros</span>
+          <span class="quick-btn__arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a href="https://resend.com/emails" target="_blank" rel="noopener" class="quick-btn quick-btn--external">
+          <span class="quick-btn__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg>
+          </span>
+          <span class="quick-btn__label">Resend</span>
+          <span class="quick-btn__arrow" aria-hidden="true">↗</span>
+        </a>
+
+      </div>
     </section>
 
   </main>
