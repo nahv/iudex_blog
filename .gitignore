@@ -17,6 +17,8 @@ credentials.json
 # ──────────────────────────────────────────────────────────────
 .codex
 .claude/settings.local.json
+.claude/knowledge/
+.claude/worktrees/
 dominio-y-correo-iudex-com-ar.md
 
 # ──────────────────────────────────────────────────────────────
