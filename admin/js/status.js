@@ -1,32 +1,41 @@
 // status.js — health-check polling para el dashboard.
 //
-// Dos servicios:
-//   - api.iudex.com.ar (FastAPI / iudex-cloud).   CORS bloqueado en prod
-//     (`allow_origins=[]`).
-//   - nexus.iudex.com.ar (legali-agent).          CORS roto: combina
-//     `allow_origins=["*"]` con `allow_credentials=True`, combinación que
-//     el spec rechaza — Starlette omite el Access-Control-Allow-Origin y
-//     el browser rechaza el fetch.
+// 4 servicios: prod (api, nexus) + staging (staging.api, staging.nexus).
+// Cada check intenta primero con CORS (para parsear el body si esta bien
+// configurado) y si falla, hace fallback a `mode: 'no-cors'` para detectar
+// reachability. Cuando un deploy arregle CORS, el detalle aparece solo.
 //
-// Estrategia: cada check intenta primero con CORS (para parsear el body
-// si está bien configurado) y si falla, hace fallback a `mode: 'no-cors'`
-// para detectar reachability. Cuando el backend arregle CORS, los detalles
-// completos van a aparecer automáticamente sin cambiar nada acá.
-//
-// Polling cada 30 s. Botón "Refrescar" hace check inmediato.
+// Despues de cada round, updatePulse() agrega los resultados y actualiza
+// la "pulse strip" del top: contador de operativos / degradados / caidos.
 
 const ENDPOINTS = {
   api: {
     url: 'https://api.iudex.com.ar/health',
+    label: 'api',
     pillEl: '#status-pill-api',
     latencyEl: '#status-latency-api',
     detailEl: '#status-detail-api',
   },
   nexus: {
     url: 'https://nexus.iudex.com.ar/health',
+    label: 'nexus',
     pillEl: '#status-pill-nexus',
     latencyEl: '#status-latency-nexus',
     detailEl: '#status-detail-nexus',
+  },
+  stagingApi: {
+    url: 'https://staging.api.iudex.com.ar/health',
+    label: 'staging.api',
+    pillEl: '#status-pill-staging-api',
+    latencyEl: '#status-latency-staging-api',
+    detailEl: '#status-detail-staging-api',
+  },
+  stagingNexus: {
+    url: 'https://staging.nexus.iudex.com.ar/health',
+    label: 'staging.nexus',
+    pillEl: '#status-pill-staging-nexus',
+    latencyEl: '#status-latency-staging-nexus',
+    detailEl: '#status-detail-staging-nexus',
   },
 };
 
@@ -34,6 +43,9 @@ const POLL_INTERVAL_MS = 30_000;
 const TIMEOUT_MS = 8_000;
 
 let pollTimer = null;
+const lastState = Object.fromEntries(
+  Object.keys(ENDPOINTS).map((k) => [k, 'loading'])
+);
 
 function $(sel) { return document.querySelector(sel); }
 
@@ -54,7 +66,6 @@ function fmtTime(date) {
 }
 
 async function checkCorsAware(url) {
-  // Para nexus (CORS=*): fetch normal, parsea JSON.
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   const t0 = performance.now();
@@ -75,8 +86,6 @@ async function checkCorsAware(url) {
 }
 
 async function checkNoCors(url) {
-  // Para api (CORS bloqueado): mode: 'no-cors' resuelve con opaque
-  // response si el server respondió cualquier cosa, rechaza si network falla.
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   const t0 = performance.now();
@@ -105,10 +114,10 @@ function renderResult(key, result) {
     if (detailEl) detailEl.textContent = result.error === 'timeout'
       ? 'No respondió en 8 s.'
       : 'No se pudo conectar.';
+    lastState[key] = 'down';
     return;
   }
 
-  // Reachable. Si tenemos body, mostramos detalle.
   if (result.body) {
     const b = result.body;
     // nexus: { status, timestamp, agent_loaded }
@@ -118,6 +127,7 @@ function renderResult(key, result) {
       if (detailEl) detailEl.textContent = b.agent_loaded
         ? `Agent cargado · ${b.status}`
         : `Agent NO cargado · ${b.status}`;
+      lastState[key] = allOk ? 'up' : 'degraded';
       return;
     }
     // api: { status, db, redis, version }
@@ -125,42 +135,81 @@ function renderResult(key, result) {
       const allOk = b.status === 'ok' && b.db === 'ok' && b.redis === 'ok';
       setPill(pill, allOk ? 'up' : 'degraded', allOk ? 'Operativo' : 'Degradado');
       if (detailEl) detailEl.textContent = `db: ${b.db} · redis: ${b.redis} · v${b.version || '?'}`;
+      lastState[key] = allOk ? 'up' : 'degraded';
       return;
     }
   }
 
   // No body parseable (opaque response del no-cors). Asumimos up sin detalle.
   setPill(pill, 'up', 'Operativo');
-  if (detailEl) detailEl.textContent = 'Reachable (CORS limita el body — ver footnote).';
+  if (detailEl) detailEl.textContent = 'Reachable (CORS limita el body)';
+  lastState[key] = 'up';
+}
+
+function updatePulse() {
+  const strip = $('#pulse-strip');
+  const label = $('#pulse-label');
+  const detail = $('#pulse-detail');
+  if (!strip || !label || !detail) return;
+
+  const entries = Object.entries(lastState);
+  const total = entries.length;
+  const down = entries.filter(([, s]) => s === 'down');
+  const degraded = entries.filter(([, s]) => s === 'degraded');
+  const up = entries.filter(([, s]) => s === 'up');
+  const loading = entries.filter(([, s]) => s === 'loading');
+
+  let kind = 'loading';
+  let mainText = 'Checando servicios…';
+  let detailText = '';
+
+  if (loading.length === total) {
+    kind = 'loading';
+    mainText = 'Checando servicios…';
+  } else if (down.length > 0) {
+    kind = 'down';
+    mainText = down.length === 1 ? '1 servicio caído' : `${down.length} servicios caídos`;
+    detailText = down.map(([k]) => ENDPOINTS[k].label).join(' · ');
+  } else if (degraded.length > 0) {
+    kind = 'degraded';
+    mainText = degraded.length === 1 ? '1 servicio degradado' : `${degraded.length} servicios degradados`;
+    detailText = degraded.map(([k]) => ENDPOINTS[k].label).join(' · ');
+  } else if (up.length === total) {
+    kind = 'up';
+    mainText = `${total} servicios operativos`;
+  } else {
+    // Mix: some loading, some up. Treat as up so far.
+    kind = 'up';
+    mainText = `${up.length}/${total} operativos · ${loading.length} checando`;
+  }
+
+  strip.className = `pulse-strip pulse-strip--${kind}`;
+  label.textContent = mainText;
+  detail.textContent = detailText;
 }
 
 function setUpdated() {
   const el = $('#status-updated');
-  if (el) el.textContent = `Actualizado ${fmtTime(new Date())}`;
+  if (el) el.textContent = `actualizado ${fmtTime(new Date())}`;
 }
 
 async function checkWithFallback(url) {
-  // Try CORS-aware first to get the body. If it fails (CORS misconfigured
-  // or genuinely unreachable), fall back to no-cors to disambiguate.
   const corsResult = await checkCorsAware(url);
   if (corsResult.ok) return corsResult;
-  // Could be CORS-blocked OR network. no-cors will succeed if reachable.
   const noCorsResult = await checkNoCors(url);
   if (noCorsResult.ok) {
     return { ok: true, latency: noCorsResult.latency, body: null };
   }
-  // Both failed — server is genuinely unreachable.
   return corsResult;
 }
 
 async function runChecks() {
-  // Pings en paralelo.
-  const [apiResult, nexusResult] = await Promise.all([
-    checkWithFallback(ENDPOINTS.api.url),
-    checkWithFallback(ENDPOINTS.nexus.url),
-  ]);
-  renderResult('api', apiResult);
-  renderResult('nexus', nexusResult);
+  const keys = Object.keys(ENDPOINTS);
+  const results = await Promise.all(
+    keys.map((k) => checkWithFallback(ENDPOINTS[k].url))
+  );
+  keys.forEach((k, i) => renderResult(k, results[i]));
+  updatePulse();
   setUpdated();
 }
 
@@ -171,12 +220,13 @@ export function startStatusPolling() {
 }
 
 export function refreshStatusNow() {
-  // Reset pills a loading antes del check para feedback visual inmediato.
   Object.keys(ENDPOINTS).forEach((k) => {
     setPill($(ENDPOINTS[k].pillEl), 'loading', 'Checando…');
     const lat = $(ENDPOINTS[k].latencyEl);
     if (lat) lat.textContent = '—';
+    lastState[k] = 'loading';
   });
+  updatePulse();
   runChecks();
 }
 
