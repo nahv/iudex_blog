@@ -10,110 +10,378 @@
   <link rel="stylesheet" href="../public/css/styles.css" />
   <link rel="icon" type="image/png" href="../assets/icon.png" />
   <style>
-    .reset-wrap { max-width: 420px; margin: 8vh auto; padding: 0 1.25rem; }
-    .reset-card {
-      background: #fff; border: 1px solid #e6e6e6; border-radius: 14px;
-      padding: 2rem 1.75rem; box-shadow: 0 6px 24px rgba(0,0,0,.06);
+    /* Pagina utilitaria standalone (destino del email de reset, fuera del nav).
+       Estilos on-brand: variables de :root, reusa .form-group y .btn del sitio. */
+    .reset {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6vh 1.25rem;
     }
-    .reset-card h1 { font-size: 1.4rem; margin: 0 0 .25rem; }
-    .reset-card p.sub { color: #666; margin: 0 0 1.5rem; font-size: .95rem; }
-    .reset-field { margin-bottom: 1rem; }
-    .reset-field label { display: block; font-size: .85rem; margin-bottom: .35rem; color: #333; }
-    .reset-field input {
-      width: 100%; box-sizing: border-box; padding: .7rem .8rem; font-size: 1rem;
-      border: 1px solid #ccc; border-radius: 8px;
+    .reset__card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--white);
+      border: 1px solid rgba(15, 15, 14, 0.08);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 24px 60px -28px rgba(15, 15, 14, 0.28);
     }
-    .reset-btn {
-      width: 100%; padding: .8rem; font-size: 1rem; font-weight: 600; cursor: pointer;
-      background: #1a4587; color: #fff; border: 0; border-radius: 8px; margin-top: .5rem;
+    .reset__brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 1.75rem;
+      text-decoration: none;
+      color: var(--ink);
     }
-    .reset-btn:disabled { opacity: .55; cursor: default; }
-    .reset-msg { margin-top: 1rem; font-size: .92rem; border-radius: 8px; padding: .75rem .85rem; display: none; }
-    .reset-msg.ok { background: #e7f6ec; color: #14663a; display: block; }
-    .reset-msg.err { background: #fdecea; color: #9b1c14; display: block; }
-    .reset-logo { display: flex; align-items: center; gap: .5rem; margin-bottom: 1.5rem; }
-    .reset-logo img { width: 32px; height: 32px; }
-    .reset-logo span { font-weight: 700; font-size: 1.1rem; }
+    .reset__brand img { width: 30px; height: 30px; }
+    .reset__brand span {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.01em;
+    }
+    .reset__title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      line-height: 1.15;
+      margin: 0 0 0.4rem;
+      color: var(--ink);
+    }
+    .reset__sub {
+      color: var(--ink-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0 0 1.75rem;
+    }
+
+    /* Campo con boton de mostrar/ocultar */
+    .reset__field-wrap { position: relative; }
+    .reset__field-wrap input { padding-right: 3rem; }
+    .reset__toggle {
+      position: absolute;
+      top: 50%;
+      right: 6px;
+      transform: translateY(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--ink-muted);
+      cursor: pointer;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .reset__toggle:hover { color: var(--ink); background: var(--cream-dark); }
+    .reset__toggle svg { width: 20px; height: 20px; display: block; }
+    .reset__toggle .icon-off { display: none; }
+    .reset__toggle[aria-pressed="true"] .icon-on { display: none; }
+    .reset__toggle[aria-pressed="true"] .icon-off { display: block; }
+
+    /* Hints de validacion en vivo */
+    .reset__hint {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      margin: 0.5rem 0 0;
+      transition: color 0.2s;
+    }
+    .reset__hint[hidden] { display: none; }
+    .reset__hint .dot {
+      flex: none;
+      width: 15px;
+      height: 15px;
+    }
+    .reset__hint .dot circle { stroke: currentColor; }
+    .reset__hint .dot path { stroke: currentColor; opacity: 0; transition: opacity 0.2s; }
+    .reset__hint.is-ok { color: #1f7a4d; }
+    .reset__hint.is-ok .dot path { opacity: 1; }
+    .reset__hint.is-err { color: var(--red-accent); }
+    .reset__caps {
+      font-size: 0.82rem;
+      color: var(--red-accent);
+      margin: 0.5rem 0 0;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .reset__caps[hidden] { display: none; }
+
+    .reset__submit {
+      width: 100%;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+    .reset__submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .reset__submit .label--loading { display: none; }
+    .reset__submit.is-loading .label--idle { display: none; }
+    .reset__submit.is-loading .label--loading {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .reset__spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(247, 244, 238, 0.4);
+      border-top-color: var(--cream);
+      border-radius: 50%;
+      animation: reset-spin 0.7s linear infinite;
+    }
+    @keyframes reset-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) {
+      .reset__spinner { animation: none; }
+    }
+
+    /* Mensaje global (exito / error de servidor) */
+    .reset__msg {
+      margin-top: 1.5rem;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      border: 1px solid transparent;
+    }
+    .reset__msg[hidden] { display: none; }
+    .reset__msg.ok {
+      background: #eaf6ef;
+      color: #14663a;
+      border-color: rgba(20, 102, 58, 0.18);
+    }
+    .reset__msg.err {
+      background: #fbecea;
+      color: #9b1c14;
+      border-color: rgba(155, 28, 20, 0.18);
+    }
+
+    /* Estado de exito (reemplaza el form) */
+    .reset__done { text-align: center; padding: 0.5rem 0; }
+    .reset__done[hidden] { display: none; }
+    .reset__done-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 1.25rem;
+      border-radius: 50%;
+      background: #eaf6ef;
+      color: #14663a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .reset__done-icon svg { width: 28px; height: 28px; }
+    .reset__done h2 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      margin: 0 0 0.5rem;
+      color: var(--ink);
+    }
+    .reset__done p { color: var(--ink-muted); font-size: 0.95rem; line-height: 1.55; margin: 0; }
   </style>
 </head>
 <body>
-  <div class="reset-wrap">
-    <div class="reset-card">
-      <div class="reset-logo">
-        <img src="../assets/icon.png" alt="Iudex" />
+  <main class="reset">
+    <div class="reset__card">
+      <a class="reset__brand" href="../index.html" aria-label="Iudex — Inicio">
+        <img src="../assets/icon.png" alt="" />
         <span>Iudex</span>
+      </a>
+
+      <!-- Estado por defecto: formulario -->
+      <div id="form-state">
+        <h1 class="reset__title">Restablecer contraseña</h1>
+        <p class="reset__sub">Ingresá tu nueva contraseña. El enlace vence a los 30 minutos y se usa una sola vez.</p>
+
+        <form id="reset-form" novalidate>
+          <div class="form-group">
+            <label for="pw">Nueva contraseña</label>
+            <div class="reset__field-wrap">
+              <input type="password" id="pw" autocomplete="new-password" minlength="8"
+                     required aria-describedby="pw-hint" />
+              <button type="button" class="reset__toggle" data-target="pw"
+                      aria-label="Mostrar contraseña" aria-pressed="false">
+                <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c6.5 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68M6.61 6.61A13.526 13.526 0 0 0 2 12s3.5 7 10 7a9.74 9.74 0 0 0 5.39-1.61M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="m2 2 20 20"/></svg>
+              </button>
+            </div>
+            <p class="reset__hint" id="pw-hint" data-rule="len">
+              <svg class="dot" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke-width="2"/><path d="m8 12 2.5 2.5L16 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Al menos 8 caracteres
+            </p>
+            <p class="reset__caps" id="pw-caps" hidden>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 11h5v6h6v-6h5z"/></svg>
+              Bloq Mayús está activado.
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label for="pw2">Repetir contraseña</label>
+            <div class="reset__field-wrap">
+              <input type="password" id="pw2" autocomplete="new-password" minlength="8"
+                     required aria-describedby="pw2-hint" />
+              <button type="button" class="reset__toggle" data-target="pw2"
+                      aria-label="Mostrar contraseña" aria-pressed="false">
+                <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c6.5 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68M6.61 6.61A13.526 13.526 0 0 0 2 12s3.5 7 10 7a9.74 9.74 0 0 0 5.39-1.61M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="m2 2 20 20"/></svg>
+              </button>
+            </div>
+            <p class="reset__hint" id="pw2-hint" data-rule="match" hidden>
+              <svg class="dot" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke-width="2"/><path d="m8 12 2.5 2.5L16 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="reset__hint-text">Las contraseñas coinciden</span>
+            </p>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--lg reset__submit" id="submit-btn" disabled>
+            <span class="label--idle">Restablecer contraseña</span>
+            <span class="label--loading"><span class="reset__spinner"></span>Procesando…</span>
+          </button>
+        </form>
+
+        <div class="reset__msg err" id="msg" role="alert" aria-live="assertive" hidden></div>
       </div>
-      <h1>Restablecer contraseña</h1>
-      <p class="sub">Ingresá tu nueva contraseña. El enlace vence a los 30 minutos y se usa una sola vez.</p>
 
-      <form id="reset-form">
-        <div class="reset-field">
-          <label for="pw">Nueva contraseña</label>
-          <input type="password" id="pw" autocomplete="new-password" minlength="8" required />
+      <!-- Estado de exito -->
+      <div id="done-state" class="reset__done" hidden>
+        <div class="reset__done-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg>
         </div>
-        <div class="reset-field">
-          <label for="pw2">Repetir contraseña</label>
-          <input type="password" id="pw2" autocomplete="new-password" minlength="8" required />
-        </div>
-        <button type="submit" class="reset-btn" id="submit-btn">Restablecer contraseña</button>
-      </form>
-
-      <div class="reset-msg" id="msg" role="status" aria-live="polite"></div>
+        <h2>Contraseña restablecida</h2>
+        <p>Ya podés iniciar sesión en la app de Iudex con tu nueva contraseña. Esta ventana ya se puede cerrar.</p>
+      </div>
     </div>
-  </div>
+  </main>
 
   <script>
     // API de iudex-cloud (prod). El backend arma el link como
     // https://iudex.com.ar/reset?token=XXX (ver password_reset_url_base).
     var API_BASE = "https://api.iudex.com.ar";
+    var MIN_LEN = 8;
 
     var params = new URLSearchParams(window.location.search);
     var token = params.get("token");
+
+    var formState = document.getElementById("form-state");
+    var doneState = document.getElementById("done-state");
     var form = document.getElementById("reset-form");
+    var pw = document.getElementById("pw");
+    var pw2 = document.getElementById("pw2");
+    var lenHint = document.getElementById("pw-hint");
+    var matchHint = document.getElementById("pw2-hint");
+    var matchText = matchHint.querySelector(".reset__hint-text");
+    var capsHint = document.getElementById("pw-caps");
     var msg = document.getElementById("msg");
     var btn = document.getElementById("submit-btn");
 
-    function show(kind, text) {
-      msg.className = "reset-msg " + kind;
+    function showMsg(kind, text) {
+      msg.className = "reset__msg " + kind;
       msg.textContent = text;
+      msg.hidden = false;
     }
+    function clearMsg() { msg.hidden = true; }
 
+    // Sin token no hay nada que hacer: ocultamos el form y avisamos.
     if (!token) {
       form.style.display = "none";
-      show("err", "Falta el token del enlace. Volvé a pedir el restablecimiento desde la app.");
+      showMsg("err", "Este enlace no es válido. Volvé a pedir el restablecimiento desde la app de Iudex.");
     }
+
+    // Mostrar / ocultar contraseña
+    document.querySelectorAll(".reset__toggle").forEach(function (toggle) {
+      toggle.addEventListener("click", function () {
+        var input = document.getElementById(toggle.dataset.target);
+        var show = input.type === "password";
+        input.type = show ? "text" : "password";
+        toggle.setAttribute("aria-pressed", String(show));
+        toggle.setAttribute("aria-label", show ? "Ocultar contraseña" : "Mostrar contraseña");
+        input.focus();
+      });
+    });
+
+    // Validacion en vivo
+    function validate() {
+      var lenOk = pw.value.length >= MIN_LEN;
+      lenHint.classList.toggle("is-ok", lenOk);
+
+      var matchOk = false;
+      if (pw2.value.length === 0) {
+        matchHint.hidden = true;
+      } else {
+        matchOk = pw.value === pw2.value;
+        matchHint.hidden = false;
+        matchHint.classList.toggle("is-ok", matchOk);
+        matchHint.classList.toggle("is-err", !matchOk);
+        matchText.textContent = matchOk ? "Las contraseñas coinciden" : "Las contraseñas no coinciden";
+      }
+
+      btn.disabled = !(lenOk && matchOk);
+      return lenOk && matchOk;
+    }
+
+    function checkCaps(e) {
+      if (e.getModifierState) capsHint.hidden = !e.getModifierState("CapsLock");
+    }
+
+    [pw, pw2].forEach(function (input) {
+      input.addEventListener("input", function () { clearMsg(); validate(); });
+      input.addEventListener("keyup", checkCaps);
+      input.addEventListener("keydown", checkCaps);
+    });
+    pw.addEventListener("blur", function () { capsHint.hidden = true; });
+
+    // Foco inicial en el primer campo (si hay token)
+    if (token) pw.focus();
 
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
-      var pw = document.getElementById("pw").value;
-      var pw2 = document.getElementById("pw2").value;
-      if (pw.length < 8) { show("err", "La contraseña debe tener al menos 8 caracteres."); return; }
-      if (pw !== pw2) { show("err", "Las contraseñas no coinciden."); return; }
+      if (!validate()) return;
 
       btn.disabled = true;
-      show("ok", "Procesando…");
+      btn.classList.add("is-loading");
+      btn.setAttribute("aria-busy", "true");
+      clearMsg();
+
       try {
         var resp = await fetch(API_BASE + "/auth/reset-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token: token, new_password: pw }),
+          body: JSON.stringify({ token: token, new_password: pw.value }),
         });
+
         if (resp.ok) {
-          form.style.display = "none";
-          show("ok", "¡Listo! Tu contraseña fue restablecida. Ya podés iniciar sesión en la app de Iudex con la nueva contraseña.");
-        } else if (resp.status === 400) {
-          show("err", "El enlace es inválido o expiró. Pedí un nuevo restablecimiento desde la app.");
-          btn.disabled = false;
+          formState.hidden = true;
+          doneState.hidden = false;
+          return;
+        }
+
+        // En error: re-habilitamos para reintentar
+        btn.classList.remove("is-loading");
+        btn.removeAttribute("aria-busy");
+        btn.disabled = false;
+
+        if (resp.status === 400) {
+          showMsg("err", "El enlace es inválido o expiró. Pedí un nuevo restablecimiento desde la app.");
         } else if (resp.status === 422) {
-          show("err", "La contraseña no cumple los requisitos (mínimo 8 caracteres).");
-          btn.disabled = false;
+          showMsg("err", "La contraseña no cumple los requisitos (mínimo " + MIN_LEN + " caracteres).");
         } else {
-          show("err", "No pudimos restablecer la contraseña ahora. Probá de nuevo en unos minutos.");
-          btn.disabled = false;
+          showMsg("err", "No pudimos restablecer la contraseña ahora. Probá de nuevo en unos minutos.");
         }
       } catch (err) {
-        show("err", "Error de conexión. Verificá tu internet e intentá de nuevo.");
+        btn.classList.remove("is-loading");
+        btn.removeAttribute("aria-busy");
         btn.disabled = false;
+        showMsg("err", "Error de conexión. Verificá tu internet e intentá de nuevo.");
       }
     });
   </script>
