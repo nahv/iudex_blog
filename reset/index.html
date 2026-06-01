@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restablecer contraseña — Iudex</title>
+  <meta name="description" content="Restablecé la contraseña de tu cuenta Iudex." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href="https://iudex.com.ar/reset/" />
+  <link rel="stylesheet" href="../public/css/styles.css" />
+  <link rel="icon" type="image/png" href="../assets/icon.png" />
+  <style>
+    .reset-wrap { max-width: 420px; margin: 8vh auto; padding: 0 1.25rem; }
+    .reset-card {
+      background: #fff; border: 1px solid #e6e6e6; border-radius: 14px;
+      padding: 2rem 1.75rem; box-shadow: 0 6px 24px rgba(0,0,0,.06);
+    }
+    .reset-card h1 { font-size: 1.4rem; margin: 0 0 .25rem; }
+    .reset-card p.sub { color: #666; margin: 0 0 1.5rem; font-size: .95rem; }
+    .reset-field { margin-bottom: 1rem; }
+    .reset-field label { display: block; font-size: .85rem; margin-bottom: .35rem; color: #333; }
+    .reset-field input {
+      width: 100%; box-sizing: border-box; padding: .7rem .8rem; font-size: 1rem;
+      border: 1px solid #ccc; border-radius: 8px;
+    }
+    .reset-btn {
+      width: 100%; padding: .8rem; font-size: 1rem; font-weight: 600; cursor: pointer;
+      background: #1a4587; color: #fff; border: 0; border-radius: 8px; margin-top: .5rem;
+    }
+    .reset-btn:disabled { opacity: .55; cursor: default; }
+    .reset-msg { margin-top: 1rem; font-size: .92rem; border-radius: 8px; padding: .75rem .85rem; display: none; }
+    .reset-msg.ok { background: #e7f6ec; color: #14663a; display: block; }
+    .reset-msg.err { background: #fdecea; color: #9b1c14; display: block; }
+    .reset-logo { display: flex; align-items: center; gap: .5rem; margin-bottom: 1.5rem; }
+    .reset-logo img { width: 32px; height: 32px; }
+    .reset-logo span { font-weight: 700; font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+  <div class="reset-wrap">
+    <div class="reset-card">
+      <div class="reset-logo">
+        <img src="../assets/icon.png" alt="Iudex" />
+        <span>Iudex</span>
+      </div>
+      <h1>Restablecer contraseña</h1>
+      <p class="sub">Ingresá tu nueva contraseña. El enlace vence a los 30 minutos y se usa una sola vez.</p>
+
+      <form id="reset-form">
+        <div class="reset-field">
+          <label for="pw">Nueva contraseña</label>
+          <input type="password" id="pw" autocomplete="new-password" minlength="8" required />
+        </div>
+        <div class="reset-field">
+          <label for="pw2">Repetir contraseña</label>
+          <input type="password" id="pw2" autocomplete="new-password" minlength="8" required />
+        </div>
+        <button type="submit" class="reset-btn" id="submit-btn">Restablecer contraseña</button>
+      </form>
+
+      <div class="reset-msg" id="msg" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script>
+    // API de iudex-cloud (prod). El backend arma el link como
+    // https://iudex.com.ar/reset?token=XXX (ver password_reset_url_base).
+    var API_BASE = "https://api.iudex.com.ar";
+
+    var params = new URLSearchParams(window.location.search);
+    var token = params.get("token");
+    var form = document.getElementById("reset-form");
+    var msg = document.getElementById("msg");
+    var btn = document.getElementById("submit-btn");
+
+    function show(kind, text) {
+      msg.className = "reset-msg " + kind;
+      msg.textContent = text;
+    }
+
+    if (!token) {
+      form.style.display = "none";
+      show("err", "Falta el token del enlace. Volvé a pedir el restablecimiento desde la app.");
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var pw = document.getElementById("pw").value;
+      var pw2 = document.getElementById("pw2").value;
+      if (pw.length < 8) { show("err", "La contraseña debe tener al menos 8 caracteres."); return; }
+      if (pw !== pw2) { show("err", "Las contraseñas no coinciden."); return; }
+
+      btn.disabled = true;
+      show("ok", "Procesando…");
+      try {
+        var resp = await fetch(API_BASE + "/auth/reset-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: token, new_password: pw }),
+        });
+        if (resp.ok) {
+          form.style.display = "none";
+          show("ok", "¡Listo! Tu contraseña fue restablecida. Ya podés iniciar sesión en la app de Iudex con la nueva contraseña.");
+        } else if (resp.status === 400) {
+          show("err", "El enlace es inválido o expiró. Pedí un nuevo restablecimiento desde la app.");
+          btn.disabled = false;
+        } else if (resp.status === 422) {
+          show("err", "La contraseña no cumple los requisitos (mínimo 8 caracteres).");
+          btn.disabled = false;
+        } else {
+          show("err", "No pudimos restablecer la contraseña ahora. Probá de nuevo en unos minutos.");
+          btn.disabled = false;
+        }
+      } catch (err) {
+        show("err", "Error de conexión. Verificá tu internet e intentá de nuevo.");
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
