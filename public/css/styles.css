@@ -5075,12 +5075,14 @@ body.cinematic .navbar.scrolled {
 .nx-searching { display: none; position: absolute; inset: 0; flex-direction: column; align-items: center; justify-content: center; gap: 13px; text-align: center; font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.5; letter-spacing: 0.02em; color: var(--ink-muted); }
 /* Nexus orb — a soft, living gold sphere with a breathing halo. */
 .nx-orb { width: 16px; height: 16px; border-radius: 50%; flex: none; position: relative;
-  background: radial-gradient(circle at 34% 30%, #bcd6ff, #4d82e8 46%, #2a5bc9 92%);
-  box-shadow: 0 0 0 3px rgba(77,130,232,0.16), 0 0 12px rgba(77,130,232,0.5);
+  background: radial-gradient(circle at 38% 32%, #5a8fc0, #1a2a5c 52%, #0d3d3a 96%);
+  box-shadow: 0 0 0 3px rgba(43,90,138,0.16), 0 0 12px rgba(43,90,138,0.5);
   animation: nx-orb-pulse 2.4s ease-in-out infinite; }
-.nx-orb::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid rgba(77,130,232,0.32); animation: nx-orb-ring 2.4s ease-in-out infinite; }
-.nx-orb--lg { width: 34px; height: 34px; box-shadow: 0 0 0 6px rgba(77,130,232,0.1), 0 0 26px rgba(77,130,232,0.6); }
+.nx-orb::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid rgba(43,90,138,0.34); animation: nx-orb-ring 2.4s ease-in-out infinite; }
+.nx-orb--lg { width: 34px; height: 34px; box-shadow: 0 0 0 6px rgba(43,90,138,0.1), 0 0 26px rgba(43,90,138,0.6); }
 .nx-orb--sm { width: 13px; height: 13px; }
+/* The real Nexus orb (canvas widget) — used for the prominent "razonando" state. */
+.nx-orb-canvas { width: 82px; height: 82px; display: block; }
 @keyframes nx-orb-pulse { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.12); filter: brightness(1.13); } }
 @keyframes nx-orb-ring { 0%, 100% { transform: scale(1); opacity: 0.55; } 50% { transform: scale(1.4); opacity: 0; } }
 /* Fallo citado — citation preview that pops over the answer. */

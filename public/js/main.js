@@ -700,7 +700,10 @@ function initOneNexusOrb(canvas) {
   let visible = true;
   if ('IntersectionObserver' in window) {
     new IntersectionObserver((entries) => {
-      entries.forEach(e => { visible = e.isIntersecting; });
+      // Re-measure on reveal: the orb can live inside a panel that is
+      // display:none until its beat (e.g. the Nexus "razonando" state),
+      // so it has no size on load. Measuring on intersect fixes that.
+      entries.forEach(e => { visible = e.isIntersecting; if (e.isIntersecting) resize(); });
     }, { threshold: 0 }).observe(canvas);
   }
 
