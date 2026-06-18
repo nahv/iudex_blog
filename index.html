@@ -74,14 +74,29 @@
     </div>
 
     <div class="c-hero__stage" aria-hidden="false">
-      <div class="c-window c-window--back" aria-label="Digesto Jurídico — lector de artículo">
-        <img src="public/assets/screenshots-v2/09-digesto-lector.png" alt="Digesto Jurídico — lector" loading="eager" />
+      <div class="c-window c-window--back" aria-hidden="true">
+        <img src="public/assets/screenshots-v3/01-dashboard.png" alt="" loading="eager" />
       </div>
-      <div class="c-window c-window--mid" aria-label="Editor de escritos">
-        <img src="public/assets/screenshots-v2/02-editor.png" alt="Editor de escritos" loading="eager" />
+      <div class="c-window c-window--mid" aria-hidden="true">
+        <img src="public/assets/screenshots-v3/02-editor.png" alt="" loading="eager" />
       </div>
-      <div class="c-window c-window--front" aria-label="Dashboard de Abogados">
-        <img src="public/assets/screenshots-v2/01-dashboard.png" alt="Dashboard de Abogados" loading="eager" />
+      <div class="c-window c-window--front" role="img" aria-label="Iudex Nexus, el asistente del expediente, respondiendo en lenguaje natural sobre los embargos trabados en la causa, con la cita del proveído.">
+        <div class="hwin hwin--nx">
+          <div class="hwin__bar"><i></i><i></i><i></i><span>Iudex — Fisco c/ Pecom Forestal S.A.</span></div>
+          <div class="hnx">
+            <div class="hnx__expte">269050/24 · Fisco de Corrientes c/ Pecom Forestal S.A. s/ Apremio</div>
+            <div class="hnx__head"><span class="nx-orb nx-orb--sm"></span>Asistente del expediente</div>
+            <div class="hnx__chat">
+              <div class="hnx-q">hay embargos trabados?</div>
+              <div class="hnx-a">
+                <p class="hnx-ln" style="--i:0">Sí. El <b>14/02/2025</b> el Juzgado ordenó <b>trabar embargo preventivo</b> sobre los fondos de PECOM FORESTAL S.A.,</p>
+                <p class="hnx-ln" style="--i:1">instrumentado por el Sistema de Oficios Judiciales (SOJ), hasta cubrir la suma reclamada.</p>
+                <span class="hnx-cite" style="--i:2">⎘ Proveído 14/02/2025 · fs. 32</span>
+              </div>
+            </div>
+            <div class="hnx__input"><span class="nx-orb nx-orb--sm"></span><span class="hnx-typed">¿qué embargos puedo pedir como representante del fisco?</span><span class="hnx-caret"></span></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -109,7 +124,7 @@
      CHAPTER I — El día, ordenado
      Dashboard → Agenda → Calculadora
      =========================================================== -->
-<section class="c-chapter" id="capitulo-1" data-chapter="1" aria-labelledby="c-ch1-title">
+<section class="c-chapter" id="capitulo-1" data-chapter="1" data-live aria-labelledby="c-ch1-title">
   <div class="c-chapter__sticky">
     <div class="c-chapter__copy">
       <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
@@ -128,14 +143,45 @@
       </div>
     </div>
     <div class="c-chapter__stage">
-      <div class="c-shot" data-shot="0">
-        <img src="public/assets/screenshots-v2/01-dashboard.png" alt="Dashboard de Abogados" loading="lazy" />
-      </div>
-      <div class="c-shot" data-shot="1">
-        <img src="public/assets/screenshots-v2/11-agenda.png" alt="Agenda — vista mes" loading="lazy" />
-      </div>
-      <div class="c-shot" data-shot="2">
-        <img src="public/assets/screenshots-v2/12-calculadora.png" alt="Calculadora de intereses — BNA y tasas judiciales" loading="lazy" />
+      <div class="iudex-frame iudex-frame--dash" role="img"
+           aria-label="El escritorio de Iudex al empezar el día: el saludo, las causas recientes, los próximos vencimientos y la liquidación lista.">
+        <div class="iudex-bar">
+          <span class="iudex-bar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Buscar por número de causa…</span>
+          <span class="iudex-bar__spacer"></span>
+          <span class="iudex-bar__account"><span class="iudex-bar__avatar">A</span>Dra. Ana M. Vallejos</span>
+        </div>
+        <div class="iudex-frame__body" data-shell="inicio">
+          <div class="iudex-frame__view dash">
+            <div class="dash__main">
+              <p class="sc-label">Martes 19 de mayo</p>
+              <h4 class="dash__greet">Buenos días, Ana</h4>
+              <p class="dash__sub">3 vencimientos esta semana.</p>
+              <p class="sc-label">Recientes</p>
+              <div class="dash__list">
+                <div class="dash-row" style="--i:0"><span class="dash-row__name">Bianchi, Sofía c/ Aseguradora del Sur ART s/ Accidente Ley 24.557</span><span class="dash-row__meta">Juzgado del Trabajo N°1 — Corrientes</span><span class="iudex-chip iudex-chip--ok">Activo</span></div>
+                <div class="dash-row" style="--i:1"><span class="dash-row__name">González, Juan Carlos c/ Logística del Litoral S.A. s/ Despido</span><span class="dash-row__meta">Juzgado del Trabajo N°2 — Corrientes</span><span class="iudex-chip iudex-chip--ok">Activo</span></div>
+                <div class="dash-row" style="--i:2"><span class="dash-row__name">Cabral, Florencia c/ Mansilla, Esteban s/ Alimentos</span><span class="dash-row__meta">Juzgado de Familia N°1 — Corrientes</span><span class="iudex-chip iudex-chip--ok">Activo</span></div>
+                <div class="dash-row" style="--i:3"><span class="dash-row__name">Romero, Carlos c/ Municipalidad de Corrientes s/ Daños y Perjuicios</span><span class="dash-row__meta">Cámara en lo Cont. Administrativo</span><span class="iudex-chip iudex-chip--ok">Activo</span></div>
+              </div>
+            </div>
+            <aside class="dash__side">
+              <div class="dash__tiles">
+                <div class="dash-tile"><b>15</b><span>Activos</span></div>
+                <div class="dash-tile"><b>0</b><span>Paralizados</span></div>
+                <div class="dash-tile"><b>0</b><span>Sentencia</span></div>
+                <div class="dash-tile"><b>15</b><span>Total</span></div>
+              </div>
+              <div class="dash-prox">
+                <p class="sc-label">Próximos</p>
+                <div class="dash-prox__alert">⚠ 1 vencimiento atrasado</div>
+                <div class="prox-row"><b>Audiencia testimonial</b><span>Bianchi c/ ART · Mañana 09:00</span></div>
+                <div class="prox-row"><b>Contesta traslado</b><span>Vence 22/05 · 19:00</span></div>
+                <div class="prox-row"><b>Presentar alegato</b><span>24/05 · 12:00</span></div>
+              </div>
+            </aside>
+            <div class="dash__calc">Liquidación lista <b>$525.666,67</b></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -151,7 +197,7 @@
      CHAPTER II — El expediente
      Workspace 3-pane → timeline
      =========================================================== -->
-<section class="c-chapter" id="capitulo-2" data-chapter="2" aria-labelledby="c-ch2-title">
+<section class="c-chapter" id="capitulo-2" data-chapter="2" data-live aria-labelledby="c-ch2-title">
   <div class="c-chapter__sticky">
     <div class="c-chapter__copy">
       <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
@@ -170,14 +216,60 @@
       </div>
     </div>
     <div class="c-chapter__stage">
-      <div class="c-shot" data-shot="0">
-        <img src="public/assets/screenshots-v2/05-expediente.png" alt="Expediente — vista de tres paneles" loading="lazy" />
-      </div>
-      <div class="c-shot" data-shot="1">
-        <img src="public/assets/screenshots-v2/06-expediente-timeline.png" alt="Expediente — timeline de actuaciones" loading="lazy" />
-      </div>
-      <div class="c-shot" data-shot="2">
-        <img src="public/assets/screenshots-v2/20-integrity-overlay.png" alt="Integridad del documento — QR + hash + vinculación cloud" loading="lazy" />
+      <div class="iudex-frame iudex-frame--exp" role="img"
+           aria-label="El expediente en Iudex: actuaciones, documento y datos en un solo hilo; y el panel de integridad con hash y vinculación a la nube.">
+        <div class="iudex-bar">
+          <span class="iudex-bar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Bianchi, Sofía c/ Aseguradora del Sur ART — 2026-00045</span>
+          <span class="iudex-bar__spacer"></span>
+          <span class="iudex-chip iudex-chip--gold">Pericial médica</span>
+          <span class="iudex-bar__account"><span class="iudex-bar__avatar">A</span>Dra. Ana M. Vallejos</span>
+        </div>
+        <div class="iudex-frame__body" data-shell="expedientes">
+          <div class="iudex-frame__view exp">
+            <div class="exp__acts">
+              <p class="sc-label">Actuaciones</p>
+              <div class="act-row" style="--i:0"><b>Alegato parte actora</b><span>Escrito · 6 págs</span></div>
+              <div class="act-row is-on" style="--i:1"><b>Pericial médica</b><span>Prueba · 4 págs</span></div>
+              <div class="act-row" style="--i:2"><b>Contesta ART</b><span>Escrito · 9 págs</span></div>
+              <div class="act-row" style="--i:3"><b>Ofrece prueba</b><span>Escrito · 3 págs</span></div>
+              <div class="act-row" style="--i:4"><b>Historia clínica</b><span>Documento · 12 págs</span></div>
+              <div class="act-row" style="--i:5"><b>Demanda</b><span>Escrito · 8 págs</span></div>
+            </div>
+            <div class="exp__doc">
+              <h5>Pericial médica</h5>
+              <p class="doc-cap">Bianchi, Sofía c/ Aseguradora del Sur ART — Secretaría Única</p>
+              <p>Pericia médica suscripta por el perito oficial Dr. Rodríguez, dando cuenta de una incapacidad permanente del 47% vinculada causalmente al accidente in itinere denunciado en autos.</p>
+              <p>El dictamen detalla las constancias médicas, los estudios complementarios y la valoración del nexo causal conforme al baremo aplicable.</p>
+            </div>
+            <div class="ii-scrim"></div>
+            <div class="ii-card">
+              <div class="ii-card__head">
+                <span class="ii-card__icon">✓</span>
+                <span><b>Integridad del documento</b><span>Pericia médica</span></span>
+              </div>
+              <div class="ii-upload" aria-hidden="true">
+                <div class="ii-up-row"><i class="ii-up-ic">▲</i>Subiendo a Google Drive…</div>
+                <div class="ii-up-bar"><span></span></div>
+                <div class="ii-up-cap">Calculando huella SHA-256</div>
+              </div>
+              <div class="ii-gen">
+                <div class="ii-row"><span class="iudex-chip iudex-chip--live">4.0 KB</span><span class="iudex-chip iudex-chip--ok">✓ Vinculado a Drive</span></div>
+                <p class="sc-label" style="margin:2px 0 5px">Huella SHA-256</p>
+                <div class="ii-hash">635425651e857ea45923baa83d13ac1a110f3d21895398073ef7f71f74831879</div>
+                <div class="ii-qrwrap">
+                  <svg class="ii-qr" viewBox="0 0 23 23" fill="#0f0f0e" fill-rule="evenodd" aria-hidden="true">
+                    <path d="M0 0h7v7H0zM1 1h5v5H1zM2 2h3v3H2z"/>
+                    <path d="M16 0h7v7h-7zM17 1h5v5h-5zM18 2h3v3h-3z"/>
+                    <path d="M0 16h7v7H0zM1 17h5v5H1zM2 18h3v3H2z"/>
+                    <path d="M9 0h1v1H9zM11 0h1v1h-1zM13 0h1v1h-1zM9 2h1v1H9zM12 3h1v1h-1zM10 4h1v1h-1zM14 4h1v1h-1zM8 5h1v1H8zM11 5h1v1h-1zM13 6h1v1h-1zM0 9h1v1H0zM2 9h1v1H2zM4 9h1v1H4zM6 9h1v1H6zM8 9h1v1H8zM10 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM16 9h1v1h-1zM18 9h1v1h-1zM20 9h1v1h-1zM22 9h1v1h-1zM9 11h1v1H9zM11 11h1v1h-1zM13 11h1v1h-1zM15 11h1v1h-1zM17 11h1v1h-1zM19 11h1v1h-1zM21 11h1v1h-1zM9 13h1v1H9zM10 14h1v1h-1zM12 13h1v1h-1zM14 14h1v1h-1zM16 13h1v1h-1zM18 14h1v1h-1zM20 13h1v1h-1zM22 14h1v1h-1zM9 16h1v1H9zM11 17h1v1h-1zM13 16h1v1h-1zM15 17h1v1h-1zM9 19h1v1H9zM12 20h1v1h-1zM14 19h1v1h-1zM16 20h1v1h-1zM10 22h1v1h-1zM13 22h1v1h-1zM15 21h1v1h-1z"/>
+                  </svg>
+                  <span class="ii-qrcap">drive.google.com · pericial-medica-bianchi.pdf<br><em>Verificable desde el papel</em></span>
+                </div>
+                <div class="ii-card__cta">✦ Insertar en proyecto</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -187,7 +279,7 @@
      CHAPTER III — El escrito
      Editor full → close-up → autotext
      =========================================================== -->
-<section class="c-chapter" id="capitulo-3" data-chapter="3" aria-labelledby="c-ch3-title">
+<section class="c-chapter" id="capitulo-3" data-chapter="3" data-live aria-labelledby="c-ch3-title">
   <div class="c-chapter__sticky">
     <div class="c-chapter__copy">
       <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
@@ -206,14 +298,39 @@
       </div>
     </div>
     <div class="c-chapter__stage">
-      <div class="c-shot" data-shot="0">
-        <img src="public/assets/screenshots-v2/03-editor-closeup.png" alt="Editor — close-up tipográfico" loading="lazy" />
-      </div>
-      <div class="c-shot" data-shot="1">
-        <img src="public/assets/screenshots-v2/02-editor.png" alt="Editor de escritos — vista completa" loading="lazy" />
-      </div>
-      <div class="c-shot" data-shot="2">
-        <img src="public/assets/screenshots-v2/04-editor-autotext.png" alt="Editor — autotext y variables" loading="lazy" />
+      <div class="iudex-frame iudex-frame--editor" role="img"
+           aria-label="El editor de escritos de Iudex: el escrito con la dignidad del papel, y las variables que se completan solas con los datos del expediente.">
+        <div class="ed">
+          <div class="ed__bar"><span class="ed__doc">Alega sobre la Prueba</span><span class="ed__expte">Expte. 2026-00045</span></div>
+          <div class="ed__tools">
+            <span class="ed__tg">↶</span><span class="ed__tg">↷</span>
+            <span class="ed__sep"></span>
+            <span class="ed__fld">Liberation Serif ▾</span><span class="ed__fld">12 ▾</span>
+            <span class="ed__sep"></span>
+            <span class="ed__tg"><b>B</b></span><span class="ed__tg"><em>I</em></span><span class="ed__tg"><u>U</u></span><span class="ed__tg">S</span>
+            <span class="ed__sep"></span>
+            <span class="ed__tg">≡</span><span class="ed__tg">☰</span><span class="ed__tg">⫶</span>
+            <span class="ed__export">Exportar PDF</span>
+          </div>
+          <div class="ed__scroll">
+            <div class="ed__paper">
+              <p class="doc-meta"><b>Expte. N. 2026-00045</b><br/>"Bianchi, Sofía c/ Aseguradora del Sur ART s/ Accidente Ley 24.557"</p>
+              <p class="doc-cap">Juzgado del Trabajo N°1 de Corrientes — Secretaría Única</p>
+              <p class="ed__title">ALEGA SOBRE LA PRUEBA</p>
+              <p class="ed-line" style="--i:0">Sr. Juez.</p>
+              <p class="ed-line" style="--i:1">Dra. Ana María Vallejos, Mat. T°152 F°88, en autos <span class="ed-var">"Bianchi, Sofía c/ Aseguradora del Sur ART"</span>, <span class="ed-var">Expte. N. 2026-00045</span>, ante el <span class="ed-var">Juzgado del Trabajo N°1</span>, me presento respetuosamente ante V.S. y digo:<span class="ed-caret"></span></p>
+            </div>
+          </div>
+          <div class="ed__vars">
+            <p class="ed__vars-head">Variables disponibles</p>
+            <div class="var-row is-on"><b>NUMERO_EXPEDIENTE</b><span>N° de Expediente</span><em>Expediente</em></div>
+            <div class="var-row"><b>CARATULA</b><span>Carátula</span><em>Expediente</em></div>
+            <div class="var-row"><b>JUZGADO</b><span>Juzgado</span><em>Expediente</em></div>
+            <div class="var-row"><b>SECRETARIA</b><span>Secretaría</span><em>Expediente</em></div>
+            <div class="var-row"><b>FUERO</b><span>Fuero</span><em>Expediente</em></div>
+          </div>
+          <div class="ed__toast"><span>✓ PDF exportado</span><b>· en 3 minutos</b></div>
+        </div>
       </div>
     </div>
   </div>
@@ -223,7 +340,7 @@
      CHAPTER IV — Investigar
      Nexus → Digesto biblioteca → lector → ⌘⇧F
      =========================================================== -->
-<section class="c-chapter" id="capitulo-4" data-chapter="4" aria-labelledby="c-ch4-title">
+<section class="c-chapter" id="capitulo-4" data-chapter="4" data-live aria-labelledby="c-ch4-title">
   <div class="c-chapter__sticky">
     <div class="c-chapter__copy">
       <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
@@ -231,13 +348,16 @@
       <h2 id="c-ch4-title" class="c-display">Cada cita,<br/><em>rastreable</em>.</h2>
       <div class="c-chapter__beats">
         <div class="c-chapter__beat" data-beat="0">
-          <p>Nexus responde con jurisprudencia argentina y te muestra el fallo, no un resumen. La fuente, siempre a la vista.</p>
+          <p>Preguntale en lenguaje natural, como le hablarías a un colega. Nexus entiende el derecho argentino.</p>
         </div>
         <div class="c-chapter__beat" data-beat="1">
-          <p>El Digesto Jurídico — Constitución Nacional, CCyC y códigos provinciales — leídos artículo por artículo, no en PDF. Las que ya tenés, y las que sumás cuando las pedís.</p>
+          <p>Busca en la jurisprudencia provincial y razona sobre los hechos del caso. No inventa: cita.</p>
         </div>
         <div class="c-chapter__beat" data-beat="2">
-          <p>Búsqueda full-text en todo el corpus. <code>Ctrl+Shift+F</code>: un concepto, un resultado. No abras un PDF y aprietes Ctrl+F nunca más.</p>
+          <p>Te responde con el fundamento y los fallos que lo sostienen — a la vista, listos para tu memorial.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="3">
+          <p>Tocás una fuente y leés el fallo entero: la cámara, la fecha, el resuelve. La cita, lista para copiar.</p>
         </div>
       </div>
       <a href="investigacion/index.html" class="c-chapter__cta">
@@ -246,14 +366,73 @@
       </a>
     </div>
     <div class="c-chapter__stage">
-      <div class="c-shot" data-shot="0">
-        <img src="public/assets/screenshots-v2/07-nexus.png" alt="Nexus — investigación con fuentes" loading="lazy" />
-      </div>
-      <div class="c-shot" data-shot="1">
-        <img src="public/assets/screenshots-v2/08-digesto-biblioteca.png" alt="Digesto — biblioteca de normas" loading="lazy" />
-      </div>
-      <div class="c-shot" data-shot="2">
-        <img src="public/assets/screenshots-v2/10-digesto-search.png" alt="Digesto — búsqueda full-text" loading="lazy" />
+      <div class="iudex-frame iudex-frame--nexus" role="img"
+           aria-label="Iudex Nexus responde una consulta de jurisprudencia y muestra los fallos citados como fuentes verificables.">
+        <div class="iudex-bar">
+          <span class="iudex-bar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Investigación — Bianchi c/ Aseguradora del Sur ART</span>
+          <span class="iudex-bar__spacer"></span>
+          <span class="iudex-chip iudex-chip--live"><span class="dot"></span>Offline · datos locales</span>
+          <span class="iudex-bar__account"><span class="iudex-bar__avatar">A</span>Dra. Ana M. Vallejos</span>
+        </div>
+        <div class="iudex-frame__body">
+          <div class="iudex-frame__view nx">
+            <div class="nx__main">
+              <div class="nx__thread">
+                <h4 class="nx__q">«¿Cómo prueba un trabajador en negro su fecha de ingreso?»</h4>
+                <div class="nx-searching" aria-hidden="true"><span class="nx-orb nx-orb--lg"></span><span class="nx-searching__t">Razonando sobre el caso<br/>y buscando en la jurisprudencia…</span></div>
+                <div class="nx-answer">
+                  <p>La jurisprudencia de Corrientes sostiene que el trabajador puede
+                     acreditar la fecha de ingreso por <strong>cualquier medio de prueba</strong>,
+                     siendo decisiva la <em>prueba testimonial</em> cuando es concordante.</p>
+                  <ul class="nx-points">
+                    <li><span>Carga de la prueba</span> — recae sobre quien invoca el hecho extintivo.</li>
+                    <li><span>Valoración probatoria</span> — la testimonial concordante basta para tener por cierta la fecha.</li>
+                    <li><span>Realidad de la prestación</span> — prevalece sobre las formas registrales.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="nx-prompt">
+                <span class="nx-prompt__text">¿Cómo prueba un trabajador en negro su fecha de ingreso?</span><span class="nx-caret" aria-hidden="true"></span>
+                <span class="nx-prompt__hint">Preguntá, refiná o pedí otra cosa…</span>
+                <span class="nx-prompt__go">Investigar</span>
+              </div>
+            </div>
+            <aside class="nx__sources">
+              <div class="nx__sources-head">Fuentes <span>· 3 citas</span></div>
+              <div class="nx-source is-cited" style="--i:0">
+                <span class="nx-source__check">✓</span>
+                <span class="nx-source__name">González Ramón c/ Chávez, Ramona Mabel</span>
+                <span class="nx-source__court">Cámara de Apelaciones Civil y Comercial</span>
+                <span class="iudex-chip iudex-chip--gold">Fallo citado</span>
+              </div>
+              <div class="nx-source" style="--i:1">
+                <span class="nx-source__check">✓</span>
+                <span class="nx-source__name">Fernández, Antonio c/ Munic. de Bella Vista</span>
+                <span class="nx-source__court">Cámara Cont. Administrativa</span>
+                <span class="iudex-chip iudex-chip--gold">Fallo citado</span>
+              </div>
+              <div class="nx-source" style="--i:2">
+                <span class="nx-source__check">✓</span>
+                <span class="nx-source__name">Romero, Luis Daniel c/ Provincia de Corrientes</span>
+                <span class="nx-source__court">Cámara Cont. Administrativa</span>
+                <span class="iudex-chip iudex-chip--gold">Fallo citado</span>
+              </div>
+              <button class="nx__memorial">Crear memorial</button>
+            </aside>
+            <div class="nx-fallo-scrim"></div>
+            <div class="nx-fallo">
+              <div class="nx-fallo__head"><span class="nx-orb nx-orb--sm"></span>Fallo citado · 1<span class="iudex-chip iudex-chip--ok">Relevancia alta</span></div>
+              <h5 class="nx-fallo__title">«González Ramón c/ Chávez, Ramona Mabel y otro s/ Ordinario por audiencias»</h5>
+              <div class="nx-fallo__meta">
+                <span>Cámara de Apelaciones en lo Civil y Comercial de Corrientes</span>
+                <span>07/04/2026</span><span>Civil Comercial</span><span>Corrientes</span>
+              </div>
+              <p class="sc-label" style="margin:10px 0 5px">Resuelve</p>
+              <p class="nx-fallo__res">Por todo ello, en los términos expuestos, se recepta el agravio. El agravio sobre el Daño Moral debe prosperar, en razón de las lesiones y la incapacidad acreditadas…</p>
+              <div class="nx-fallo__actions"><span class="nx-fallo__more">Ver resolución completa</span><span class="nx-fallo__copy">⧉ Copiar cita</span></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -273,7 +452,7 @@
      CHAPTER V — Hecho con disciplina
      Sidebar + Command palette + Sync
      =========================================================== -->
-<section class="c-chapter" id="capitulo-5" data-chapter="5" aria-labelledby="c-ch5-title">
+<section class="c-chapter" id="capitulo-5" data-chapter="5" data-live aria-labelledby="c-ch5-title">
   <div class="c-chapter__sticky">
     <div class="c-chapter__copy">
       <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
@@ -292,14 +471,43 @@
       </div>
     </div>
     <div class="c-chapter__stage">
-      <div class="c-shot" data-shot="0">
-        <img src="public/assets/screenshots-v2/19-expedientes-list.png" alt="Lista de expedientes — tu trabajo, tuyo" loading="lazy" />
-      </div>
-      <div class="c-shot" data-shot="1">
-        <img src="public/assets/screenshots-v2/14-command-palette.png" alt="Command palette — Ctrl+K abierto" loading="lazy" />
-      </div>
-      <div class="c-shot" data-shot="2">
-        <img src="public/assets/screenshots-v2/17-settings-hub.png" alt="Centro de control profesional — Estilo de escritos" loading="lazy" />
+      <div class="iudex-frame iudex-frame--espacio" role="img"
+           aria-label="Tu espacio en Iudex: la lista de expedientes guardada localmente, el atajo Ctrl+K que abre todo, y el control de privacidad y datos.">
+        <div class="iudex-bar">
+          <span class="iudex-bar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Buscar por carátula, número, juzgado…</span>
+          <span class="iudex-bar__spacer"></span>
+          <span class="iudex-chip iudex-chip--live"><span class="dot"></span>Offline · datos locales</span>
+          <span class="iudex-bar__account"><span class="iudex-bar__avatar">A</span>Dra. Ana M. Vallejos</span>
+        </div>
+        <div class="iudex-frame__body" data-shell="expedientes">
+          <div class="iudex-frame__view esp">
+            <div class="esp__head"><h5>Expedientes</h5></div>
+            <div class="esp-table">
+              <div class="esp-row"><span>Expediente</span><span>Juzgado</span><span>Estado</span><span>Fuero</span></div>
+              <div class="esp-row" style="--i:0"><b>González c/ Logística del Litoral</b><span>Trabajo N°2</span><span class="iudex-chip iudex-chip--ok">Activo</span><span>Laboral</span></div>
+              <div class="esp-row" style="--i:1"><b>Pereyra c/ Banco Patagonia</b><span>Civil N°4</span><span class="iudex-chip iudex-chip--ok">Activo</span><span>Civil</span></div>
+              <div class="esp-row" style="--i:2"><b>Bianchi c/ Aseguradora del Sur ART</b><span>Trabajo N°1</span><span class="iudex-chip iudex-chip--ok">Activo</span><span>Laboral</span></div>
+              <div class="esp-row" style="--i:3"><b>Cabral c/ Mansilla</b><span>Familia N°1</span><span class="iudex-chip iudex-chip--gold">Urgente</span><span>Familia</span></div>
+              <div class="esp-row" style="--i:4"><b>Romero c/ Municipalidad de Corrientes</b><span>Cont. Adm.</span><span class="iudex-chip iudex-chip--ok">Activo</span><span>C. Adm.</span></div>
+              <div class="esp-row" style="--i:5"><b>Suárez c/ Suárez</b><span>Familia N°3</span><span class="iudex-chip iudex-chip--ok">Activo</span><span>Familia</span></div>
+            </div>
+            <div class="cmdk-scrim"></div>
+            <div class="cmdk">
+              <div class="cmdk__field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;opacity:0.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Buscar expediente, modelo o acción…<span class="cmdk__kbd">Ctrl K</span></div>
+              <div class="cmdk__list">
+                <div class="cmdk__item is-on"><i>→</i>Ir al inicio</div>
+                <div class="cmdk__item"><i>▤</i>Ver expedientes</div>
+                <div class="cmdk__item"><i>◫</i>Ver modelos</div>
+                <div class="cmdk__item"><i>▦</i>Ver agenda</div>
+              </div>
+            </div>
+            <div class="esp__privacy">
+              <b>Privacidad y datos</b>
+              <p>Almacenamiento local por defecto. Vos decidís qué se comparte con tu estudio.</p>
+              <div class="esp-toggle">Guardar solo en este equipo <span class="sw"></span></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

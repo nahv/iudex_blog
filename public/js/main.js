@@ -1037,6 +1037,34 @@ if (document.readyState === 'loading') {
     syncNav();
   }
 
+  /* ----------- Live mockup: app rail (single-sourced) -----------
+     The slim icon rail is identical across every scene that shows the
+     app shell, so we author it once here and inject it into each
+     `[data-shell]` body — keeping index.html lean and the rail DRY.
+     `data-shell="<key>"` marks which nav item is active. */
+  const RAIL_ITEMS = [
+    ['inicio',        'Inicio',        'M3 11l9-8 9 8M5 9v11h5v-6h4v6h5V9'],
+    ['expedientes',   'Expedientes',   'M4 4h10l2 3h4v13H4zM4 9h16'],
+    ['modelos',       'Modelos',       'M6 3h9l3 3v15H6zM14 3v4h4M9 12h6M9 16h6'],
+    ['agenda',        'Agenda',        'M4 5h16v15H4zM4 9h16M8 3v4M16 3v4'],
+    ['investigacion', 'Investigación', 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14M20 20l-4-4'],
+    ['calculadora',   'Calculadora',   'M6 3h12v18H6zM9 7h6M8 11h2M11 11h2M14 11h2M8 15h2M11 15h2M14 15h2'],
+    ['tasas',         'Tasas y JUS',   'M4 20h16M7 16V9M12 16V5M17 16v-4'],
+    ['digesto',       'Digesto',       'M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 0-2 2zM5 4v14a2 2 0 0 1 2-2h11'],
+    ['config',        'Configuración', 'M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6M19 12a7 7 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7 7 0 0 0-1.7-1l-.4-2.5h-4l-.4 2.5a7 7 0 0 0-1.7 1l-2.4-1-2 3.4L5.1 11a7 7 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.7 1l.4 2.5h4l.4-2.5a7 7 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6a7 7 0 0 0 .1-1z'],
+  ];
+  const railHTML = (activeKey) => `
+    <nav class="iudex-rail" aria-hidden="true">
+      <span class="iudex-rail__mark">IX</span>
+      ${RAIL_ITEMS.map(([key, label, d]) => `
+        <span class="iudex-rail__item${key === activeKey ? ' is-active' : ''}" title="${label}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>
+        </span>`).join('')}
+    </nav>`;
+  document.querySelectorAll('[data-shell]').forEach((el) => {
+    el.insertAdjacentHTML('afterbegin', railHTML(el.dataset.shell));
+  });
+
   /* ----------- Hero entrance ----------- */
   const hero = document.querySelector('.c-hero');
   if (hero) {
@@ -1102,6 +1130,12 @@ if (document.readyState === 'loading') {
       // motion so scrolling feels continuous, not stepped.
       const segP = idxF - idx;
       chapter.style.setProperty('--seg-progress', segP.toFixed(3));
+      // Live scenes read the current beat index off the chapter, and an
+      // eased copy of the segment progress (easeInOutQuad) so typing /
+      // slide-in motion decelerates naturally without an animation lib.
+      chapter.dataset.beat = idx;
+      const easedP = segP < 0.5 ? 2 * segP * segP : 1 - Math.pow(-2 * segP + 2, 2) / 2;
+      chapter.style.setProperty('--beat-progress', easedP.toFixed(3));
 
       for (let i = 0; i < shots.length; i++) {
         const on = i === idx;
