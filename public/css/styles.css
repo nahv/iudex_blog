@@ -6871,10 +6871,12 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
      conversation window rises and plays near centre, then expand it back to
      reveal the headline (the window settles down as the copy grows). */
   /* Keep the copy in flow (so there's no layout jump) but hidden; lift the
-     conversation window up to play centred, then glide it smoothly back to
-     its place (transform transition) while the headline fades in. */
+     conversation window up to play centred, then glide it gently back to its
+     place while the headline fades in softly behind it. */
   .c-hero[data-intro="play"] .c-hero__copy { opacity: 0; }
   .c-hero[data-intro="play"] .c-hero__stage { transform: translateY(-54vh) scale(1.02); }
+  .c-hero__stage { transition: transform 1.6s var(--ease-cinema); }
+  .c-hero__copy { transition: opacity 1.3s ease 0.35s; }
 
   .c-chapter { min-height: auto; padding: 80px 0 64px; }
   /* Flatten the sticky/grid layout into a single flex column we can
