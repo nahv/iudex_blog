@@ -6863,6 +6863,15 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
      Hide it on mobile — desktop keeps it. */
   .c-hero__hint { display: none; }
 
+  /* Mobile cinematic intro — the desktop translateX/scale shoves the window
+     off-screen in a single column. Instead collapse the headline so the
+     conversation window rises and plays near centre, then expand it back to
+     reveal the headline (the window settles down as the copy grows). */
+  .c-hero[data-intro] .c-hero__copy { overflow: hidden; max-height: 1000px; transition: opacity 0.6s var(--ease-cinema), max-height 0.85s var(--ease-cinema); }
+  .c-hero[data-intro="play"] .c-hero__container { gap: 0; }
+  .c-hero[data-intro="play"] .c-hero__copy { max-height: 0; opacity: 0; margin: 0; transform: none; }
+  .c-hero[data-intro="play"] .c-hero__stage { transform: scale(1.03); }
+
   .c-chapter { min-height: auto; padding: 80px 0 64px; }
   /* Flatten the sticky/grid layout into a single flex column we can
      reorder. `display: contents` on the sub-containers makes their
@@ -6918,7 +6927,8 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   /* Live chapters on mobile: keep the PINNED, ANIMATED experience —
      single column, copy on top, the mockup fills the rest. Side panels
      fold away so the primary surface stays legible on a phone. */
-  .c-chapter[data-live] { min-height: 240vh; padding: 0; }
+  .c-chapter[data-live] { min-height: 165vh; padding: 0; }
+  #capitulo-4 { min-height: 200vh; }   /* Nexus has 4 beats — a touch longer */
   .c-chapter[data-live] .c-chapter__sticky {
     position: sticky; top: 0; height: 100vh;
     display: flex; flex-direction: column; justify-content: center;
