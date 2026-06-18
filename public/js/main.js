@@ -700,7 +700,10 @@ function initOneNexusOrb(canvas) {
   let visible = true;
   if ('IntersectionObserver' in window) {
     new IntersectionObserver((entries) => {
-      entries.forEach(e => { visible = e.isIntersecting; });
+      // Re-measure on reveal: the orb can live inside a panel that is
+      // display:none until its beat (e.g. the Nexus "razonando" state),
+      // so it has no size on load. Measuring on intersect fixes that.
+      entries.forEach(e => { visible = e.isIntersecting; if (e.isIntersecting) resize(); });
     }, { threshold: 0 }).observe(canvas);
   }
 
@@ -1037,15 +1040,86 @@ if (document.readyState === 'loading') {
     syncNav();
   }
 
-  /* ----------- Hero entrance ----------- */
+  /* ----------- Live mockup: app rail (single-sourced) -----------
+     The slim icon rail is identical across every scene that shows the
+     app shell, so we author it once here and inject it into each
+     `[data-shell]` body — keeping index.html lean and the rail DRY.
+     `data-shell="<key>"` marks which nav item is active. */
+  const RAIL_ITEMS = [
+    ['inicio',        'Inicio',        'M3 11l9-8 9 8M5 9v11h5v-6h4v6h5V9'],
+    ['expedientes',   'Expedientes',   'M4 4h10l2 3h4v13H4zM4 9h16'],
+    ['modelos',       'Modelos',       'M6 3h9l3 3v15H6zM14 3v4h4M9 12h6M9 16h6'],
+    ['agenda',        'Agenda',        'M4 5h16v15H4zM4 9h16M8 3v4M16 3v4'],
+    ['investigacion', 'Investigación', 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14M20 20l-4-4'],
+    ['calculadora',   'Calculadora',   'M6 3h12v18H6zM9 7h6M8 11h2M11 11h2M14 11h2M8 15h2M11 15h2M14 15h2'],
+    ['tasas',         'Tasas y JUS',   'M4 20h16M7 16V9M12 16V5M17 16v-4'],
+    ['digesto',       'Digesto',       'M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 0-2 2zM5 4v14a2 2 0 0 1 2-2h11'],
+    ['config',        'Configuración', 'M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6M19 12a7 7 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7 7 0 0 0-1.7-1l-.4-2.5h-4l-.4 2.5a7 7 0 0 0-1.7 1l-2.4-1-2 3.4L5.1 11a7 7 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.7 1l.4 2.5h4l.4-2.5a7 7 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6a7 7 0 0 0 .1-1z'],
+  ];
+  const railHTML = (activeKey) => `
+    <nav class="iudex-rail" aria-hidden="true">
+      <span class="iudex-rail__mark">IX</span>
+      ${RAIL_ITEMS.map(([key, label, d]) => `
+        <span class="iudex-rail__item${key === activeKey ? ' is-active' : ''}" title="${label}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>
+        </span>`).join('')}
+    </nav>`;
+  document.querySelectorAll('[data-shell]').forEach((el) => {
+    el.insertAdjacentHTML('afterbegin', railHTML(el.dataset.shell));
+  });
+
+  /* ----------- Hero entrance + cinematic intro -----------
+     On load the Nexus window plays a conversation alone, front & centre
+     (headline hidden): it types the question, answers it with a cited
+     proveído, then types a follow-up — and only then settles into the hero
+     composition, revealing the headline. Reduced-motion skips straight to
+     the settled state. */
   const hero = document.querySelector('.c-hero');
   if (hero) {
     hero.dataset.state = 'enter';
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        hero.dataset.state = 'in';
-      });
+    requestAnimationFrame(() => requestAnimationFrame(() => { hero.dataset.state = 'in'; }));
+
+    const typed  = hero.querySelector('.hnx-typed');
+    const bubble = hero.querySelector('.hnx-q');
+    const lines  = Array.from(hero.querySelectorAll('.hnx-ln, .hnx-cite'));
+    const Q1 = 'hay embargos trabados?';
+    const Q2 = typed ? typed.textContent.trim() : '';
+    const reveal = (el) => el && el.setAttribute('data-shown', '');
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const typeInto = (el, text, dur) => new Promise((res) => {
+      if (!el) return res();
+      el.textContent = '';
+      const n = text.length, t0 = performance.now();
+      const step = (now) => {
+        const k = Math.min(n, Math.round(((now - t0) / dur) * n));
+        if (el.textContent.length !== k) el.textContent = text.slice(0, k);
+        if (k < n) requestAnimationFrame(step); else res();
+      };
+      requestAnimationFrame(step);
     });
+
+    if (reduceMotion || !typed) {
+      reveal(bubble); lines.forEach(reveal);
+      hero.dataset.intro = 'done';
+    } else {
+      hero.dataset.intro = 'play';
+      bubble && bubble.removeAttribute('data-shown');
+      lines.forEach((l) => l.removeAttribute('data-shown'));
+      typed.textContent = '';
+      (async () => {
+        await sleep(700);
+        await typeInto(typed, Q1, 1200);       // type the question
+        await sleep(450);
+        typed.textContent = '';                // "send"
+        reveal(bubble);                        // question becomes a bubble
+        await sleep(900);                      // Nexus reads (orb pulses)
+        for (const l of lines) { reveal(l); await sleep(360); }  // answer + cite
+        await sleep(550);
+        await typeInto(typed, Q2, 1500);       // type the follow-up
+        await sleep(750);
+        hero.dataset.intro = 'done';           // settle into the hero, reveal headline
+      })();
+    }
   }
 
   /* ----------- Hero pointer parallax ----------- */
@@ -1083,6 +1157,10 @@ if (document.readyState === 'loading') {
      enter/leave; rAF batches the per-frame work to one layout pass. */
   const chapters = Array.from(document.querySelectorAll('.c-chapter'));
   if (chapters.length && 'IntersectionObserver' in window) {
+    // Scroll-driven beats: the animation scrubs with the user's scroll
+    // through each pinned chapter. data-beat = which beat; --beat-progress
+    // = eased 0..1 within it. Only chapters on-screen are updated; rAF
+    // batches the work to one layout pass.
     const active = new Set();
 
     const update = (chapter) => {
@@ -1093,24 +1171,16 @@ if (document.readyState === 'loading') {
       const raw = Math.min(1, Math.max(0, -rect.top / total));
       chapter.style.setProperty('--progress', `${(raw * 100).toFixed(2)}%`);
 
-      const shots = chapter.querySelectorAll('.c-shot');
       const beats = chapter.querySelectorAll('.c-chapter__beat');
-      const segments = Math.max(shots.length, beats.length, 1);
+      const segments = Math.max(beats.length, 1);
       const idxF = Math.min(segments - 0.0001, raw * segments);
       const idx = Math.floor(idxF);
-      // Per-segment fractional progress (0..1) — drives the in-shot
-      // motion so scrolling feels continuous, not stepped.
       const segP = idxF - idx;
       chapter.style.setProperty('--seg-progress', segP.toFixed(3));
+      chapter.dataset.beat = idx;
+      const easedP = segP < 0.5 ? 2 * segP * segP : 1 - Math.pow(-2 * segP + 2, 2) / 2;
+      chapter.style.setProperty('--beat-progress', easedP.toFixed(3));
 
-      for (let i = 0; i < shots.length; i++) {
-        const on = i === idx;
-        const cur = shots[i].getAttribute('data-active') === 'true';
-        if (on !== cur) {
-          if (on) shots[i].setAttribute('data-active', 'true');
-          else shots[i].removeAttribute('data-active');
-        }
-      }
       for (let i = 0; i < beats.length; i++) {
         const on = i === idx;
         const cur = beats[i].getAttribute('data-active') === 'true';
@@ -1120,50 +1190,27 @@ if (document.readyState === 'loading') {
         }
       }
 
-      // Mirror the active shot's aspect onto the stage so the frame
-      // morphs to match each screenshot's natural ratio. CSS transitions
-      // aspect-ratio over ~520ms for a smooth shape change.
-      const stage = chapter.querySelector('.c-chapter__stage');
-      const activeShot = shots[idx];
-      if (stage && activeShot) {
-        const aspect = activeShot.style.getPropertyValue('--shot-aspect');
-        if (aspect) stage.style.setProperty('--stage-aspect', aspect);
-      }
-
       const rail = chapter.querySelector('.c-chapter__rail-fill');
       if (rail) rail.style.setProperty('--progress', `${(raw * 100).toFixed(2)}%`);
     };
 
     let ticking = false;
-    const tick = () => {
-      ticking = false;
-      active.forEach(update);
-    };
-    const onScroll = () => {
-      if (!ticking && active.size) {
-        ticking = true;
-        requestAnimationFrame(tick);
-      }
-    };
+    const tick = () => { ticking = false; active.forEach(update); };
+    const onScroll = () => { if (!ticking && active.size) { ticking = true; requestAnimationFrame(tick); } };
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
 
-    // Toggle which chapters drive updates based on visibility (with a
-    // generous margin so we always catch the lead-in/out frames).
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
         if (e.isIntersecting) active.add(e.target);
         else active.delete(e.target);
       }
-      // Run once so the freshly-entered chapter snaps to the right state.
       onScroll();
     }, { rootMargin: '50% 0px' });
 
     chapters.forEach((c) => {
       io.observe(c);
-      const firstShot = c.querySelector('.c-shot');
       const firstBeat = c.querySelector('.c-chapter__beat');
-      if (firstShot) firstShot.setAttribute('data-active', 'true');
       if (firstBeat) firstBeat.setAttribute('data-active', 'true');
       update(c);
     });
