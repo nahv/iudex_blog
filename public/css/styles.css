@@ -4483,9 +4483,10 @@ body.cinematic .navbar.scrolled {
 .hnx-a b { color: var(--ink); font-weight: 600; }
 .hnx-cite { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 0.54rem; color: var(--gold-deep); background: rgba(201,168,76,0.12); border-radius: 100px; padding: 3px 9px; margin-top: 3px; }
 .hnx-ln, .hnx-cite { opacity: 0; transform: translateY(6px); animation: hnx-in 0.5s var(--ease-cinema) forwards; animation-delay: calc(2.6s + var(--i) * 0.55s); }
-.hnx__input { flex: none; display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 10px; border: 1px solid var(--hair-strong); border-radius: 10px; background: var(--white); margin-top: 10px; overflow: hidden; }
+.hnx__input { flex: none; display: flex; align-items: center; gap: 4px; height: 32px; padding: 0 8px 0 12px; border: 1px solid var(--hair-strong); border-radius: 10px; background: var(--white); margin-top: 10px; overflow: hidden; }
 .hnx-typed { font-size: 0.64rem; color: var(--ink); white-space: nowrap; overflow: hidden; display: inline-block; max-width: 0; animation: hnx-type 9s ease-in-out 2s infinite; }
-.hnx-caret { width: 1.5px; height: 13px; background: var(--gold); flex: none; animation: nx-blink 1s steps(1) infinite; }
+.hnx-caret { width: 1.5px; height: 13px; background: #1d4f7a; flex: none; animation: nx-blink 1s steps(1) infinite; }
+.hnx-send { width: 15px; height: 15px; flex: none; margin-left: auto; color: #1d4f7a; }
 @keyframes hnx-in { to { opacity: 1; transform: none; } }
 @keyframes hnx-type { 0% { max-width: 0; } 26% { max-width: 35ch; } 74% { max-width: 35ch; } 84% { max-width: 0; } 100% { max-width: 0; } }
 
@@ -4546,6 +4547,15 @@ body.cinematic .navbar.scrolled {
   min-height: 170vh;
   padding: 64px 0;
   --seg-progress: 0;
+}
+
+/* Gentle scroll-snap: each chapter locks to the viewport when you scroll
+   into it, then the beat animation plays as you keep going. `proximity`
+   (not `mandatory`) so scrolling mid-animation stays free — it only nudges
+   near a chapter boundary. Off for reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-snap-type: y proximity; }
+  .c-chapter { scroll-snap-align: start; scroll-snap-stop: normal; }
 }
 
 .c-chapter__sticky {
