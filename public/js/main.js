@@ -1068,15 +1068,58 @@ if (document.readyState === 'loading') {
     el.insertAdjacentHTML('afterbegin', railHTML(el.dataset.shell));
   });
 
-  /* ----------- Hero entrance ----------- */
+  /* ----------- Hero entrance + cinematic intro -----------
+     On load the Nexus window plays a conversation alone, front & centre
+     (headline hidden): it types the question, answers it with a cited
+     proveído, then types a follow-up — and only then settles into the hero
+     composition, revealing the headline. Reduced-motion skips straight to
+     the settled state. */
   const hero = document.querySelector('.c-hero');
   if (hero) {
     hero.dataset.state = 'enter';
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        hero.dataset.state = 'in';
-      });
+    requestAnimationFrame(() => requestAnimationFrame(() => { hero.dataset.state = 'in'; }));
+
+    const typed  = hero.querySelector('.hnx-typed');
+    const bubble = hero.querySelector('.hnx-q');
+    const lines  = Array.from(hero.querySelectorAll('.hnx-ln, .hnx-cite'));
+    const Q1 = 'hay embargos trabados?';
+    const Q2 = typed ? typed.textContent.trim() : '';
+    const reveal = (el) => el && el.setAttribute('data-shown', '');
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const typeInto = (el, text, dur) => new Promise((res) => {
+      if (!el) return res();
+      el.textContent = '';
+      const n = text.length, t0 = performance.now();
+      const step = (now) => {
+        const k = Math.min(n, Math.round(((now - t0) / dur) * n));
+        if (el.textContent.length !== k) el.textContent = text.slice(0, k);
+        if (k < n) requestAnimationFrame(step); else res();
+      };
+      requestAnimationFrame(step);
     });
+
+    if (reduceMotion || !typed) {
+      reveal(bubble); lines.forEach(reveal);
+      hero.dataset.intro = 'done';
+    } else {
+      hero.dataset.intro = 'play';
+      bubble && bubble.removeAttribute('data-shown');
+      lines.forEach((l) => l.removeAttribute('data-shown'));
+      typed.textContent = '';
+      (async () => {
+        await sleep(700);
+        await typeInto(typed, Q1, 1200);       // type the question
+        await sleep(450);
+        typed.textContent = '';                // "send"
+        reveal(bubble);                        // question becomes a bubble
+        await sleep(900);                      // Nexus reads (orb pulses)
+        for (const l of lines) { reveal(l); await sleep(360); }  // answer + cite
+        await sleep(550);
+        await typeInto(typed, Q2, 1500);       // type the follow-up
+        await sleep(750);
+        hero.dataset.intro = 'done';           // settle into the hero, reveal headline
+      })();
+    }
   }
 
   /* ----------- Hero pointer parallax ----------- */
@@ -1114,77 +1157,62 @@ if (document.readyState === 'loading') {
      enter/leave; rAF batches the per-frame work to one layout pass. */
   const chapters = Array.from(document.querySelectorAll('.c-chapter'));
   if (chapters.length && 'IntersectionObserver' in window) {
-    // Auto-play timeline: when a chapter locks into view, its beats play
-    // themselves at a comfortable pace — the user scrolls BETWEEN sections,
-    // never scrubs through the animation. Each beat sweeps --beat-progress
-    // 0->1 over BEAT_MOTION, rests for BEAT_HOLD, then advances; the final
-    // beat holds. Leaving the chapter resets it so it replays on return.
-    const BEAT_MOTION = 1900;
-    const BEAT_HOLD   = 800;
-    const FIRST_DELAY = 350;
-    const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    // Scroll-driven beats: the animation scrubs with the user's scroll
+    // through each pinned chapter. data-beat = which beat; --beat-progress
+    // = eased 0..1 within it. Only chapters on-screen are updated; rAF
+    // batches the work to one layout pass.
+    const active = new Set();
 
-    chapters.forEach((chapter) => {
-      const copyBeats = Array.from(chapter.querySelectorAll('.c-chapter__beat'));
-      const nBeats = Math.max(copyBeats.length, 1);
-      let token = 0, raf = 0, playing = false;
+    const update = (chapter) => {
+      const rect = chapter.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      const total = chapter.offsetHeight - vh;
+      if (total <= 0) return;
+      const raw = Math.min(1, Math.max(0, -rect.top / total));
+      chapter.style.setProperty('--progress', `${(raw * 100).toFixed(2)}%`);
 
-      const setBeat = (i, p) => {
-        chapter.dataset.beat = i;
-        chapter.style.setProperty('--beat-progress', p.toFixed(3));
-        chapter.style.setProperty('--seg-progress', p.toFixed(3));
-        for (let k = 0; k < copyBeats.length; k++) {
-          const on = k === i;
-          if ((copyBeats[k].getAttribute('data-active') === 'true') !== on) {
-            if (on) copyBeats[k].setAttribute('data-active', 'true');
-            else copyBeats[k].removeAttribute('data-active');
-          }
+      const beats = chapter.querySelectorAll('.c-chapter__beat');
+      const segments = Math.max(beats.length, 1);
+      const idxF = Math.min(segments - 0.0001, raw * segments);
+      const idx = Math.floor(idxF);
+      const segP = idxF - idx;
+      chapter.style.setProperty('--seg-progress', segP.toFixed(3));
+      chapter.dataset.beat = idx;
+      const easedP = segP < 0.5 ? 2 * segP * segP : 1 - Math.pow(-2 * segP + 2, 2) / 2;
+      chapter.style.setProperty('--beat-progress', easedP.toFixed(3));
+
+      for (let i = 0; i < beats.length; i++) {
+        const on = i === idx;
+        const cur = beats[i].getAttribute('data-active') === 'true';
+        if (on !== cur) {
+          if (on) beats[i].setAttribute('data-active', 'true');
+          else beats[i].removeAttribute('data-active');
         }
-        const rail = chapter.querySelector('.c-chapter__rail-fill');
-        if (rail) rail.style.setProperty('--progress', `${(((i + p) / nBeats) * 100).toFixed(1)}%`);
-      };
+      }
 
-      const stop = () => {
-        token++; playing = false;
-        if (raf) { cancelAnimationFrame(raf); raf = 0; }
-      };
+      const rail = chapter.querySelector('.c-chapter__rail-fill');
+      if (rail) rail.style.setProperty('--progress', `${(raw * 100).toFixed(2)}%`);
+    };
 
-      const play = () => {
-        const my = ++token;
-        let beat = 0;
-        const runBeat = () => {
-          if (my !== token) return;
-          const start = performance.now();
-          const step = (now) => {
-            if (my !== token) return;
-            const t = Math.min(1, (now - start) / BEAT_MOTION);
-            setBeat(beat, easeInOut(t));
-            if (t < 1) { raf = requestAnimationFrame(step); return; }
-            if (beat < nBeats - 1) {
-              setTimeout(() => { if (my === token) { beat++; runBeat(); } }, BEAT_HOLD);
-            }
-          };
-          raf = requestAnimationFrame(step);
-        };
-        setTimeout(() => { if (my === token) runBeat(); }, FIRST_DELAY);
-      };
+    let ticking = false;
+    const tick = () => { ticking = false; active.forEach(update); };
+    const onScroll = () => { if (!ticking && active.size) { ticking = true; requestAnimationFrame(tick); } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
 
-      // Reduced motion: jump straight to the settled final state, no show.
-      if (reduceMotion) { setBeat(nBeats - 1, 1); return; }
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) active.add(e.target);
+        else active.delete(e.target);
+      }
+      onScroll();
+    }, { rootMargin: '50% 0px' });
 
-      setBeat(0, 0);
-
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting && e.intersectionRatio >= 0.55) {
-            if (!playing) { playing = true; play(); }
-          } else if (e.intersectionRatio < 0.3) {
-            stop();
-            setBeat(0, 0);
-          }
-        });
-      }, { threshold: [0, 0.3, 0.55, 0.85] });
-      io.observe(chapter.querySelector('.c-chapter__sticky') || chapter);
+    chapters.forEach((c) => {
+      io.observe(c);
+      const firstBeat = c.querySelector('.c-chapter__beat');
+      if (firstBeat) firstBeat.setAttribute('data-active', 'true');
+      update(c);
     });
   }
 

@@ -4446,9 +4446,10 @@ body.cinematic .navbar.scrolled {
 @keyframes hfloat-front { 0%, 100% { translate: 0 0; } 50% { translate: 0 -9px; } }
 @keyframes hfloat-mid   { 0%, 100% { translate: 0 0; } 50% { translate: 0 -15px; } }
 @keyframes hfloat-back  { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
-.c-hero[data-state="in"] .c-window--front { animation: hfloat-front 6.5s ease-in-out 1.2s infinite; }
-.c-hero[data-state="in"] .c-window--mid   { animation: hfloat-mid 8.5s ease-in-out 1.4s infinite; }
-.c-hero[data-state="in"] .c-window--back  { animation: hfloat-back 7.5s ease-in-out 1s infinite; }
+/* Idle float starts only once the intro has settled the windows in place. */
+.c-hero[data-intro="done"] .c-window--front { animation: hfloat-front 6.5s ease-in-out 0.4s infinite; }
+.c-hero[data-intro="done"] .c-window--mid   { animation: hfloat-mid 8.5s ease-in-out 0.6s infinite; }
+.c-hero[data-intro="done"] .c-window--back  { animation: hfloat-back 7.5s ease-in-out 0.2s infinite; }
 
 /* Front window = crisp DOM dashboard mockup (the legible hero). */
 .hwin { position: absolute; inset: 0; display: flex; flex-direction: column; background: var(--white); }
@@ -4478,17 +4479,33 @@ body.cinematic .navbar.scrolled {
 .hnx__expte { font-family: var(--font-mono); font-size: 0.52rem; color: var(--ink-muted); background: rgba(15,15,14,0.04); border-radius: 6px; padding: 6px 8px; margin-bottom: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hnx__head { display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 0.54rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 10px; }
 .hnx__chat { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-.hnx-q { align-self: flex-end; width: fit-content; max-width: 80%; background: rgba(201,168,76,0.16); color: var(--ink); font-size: 0.66rem; padding: 7px 11px; border-radius: 11px 11px 3px 11px; margin-bottom: 12px; opacity: 0; animation: hnx-in 0.45s var(--ease-cinema) 1.4s forwards; }
+.hnx-q { align-self: flex-end; width: fit-content; max-width: 80%; background: rgba(15,15,14,0.05); color: var(--ink); font-size: 0.66rem; padding: 7px 11px; border-radius: 11px 11px 3px 11px; margin-bottom: 12px; transition: opacity 0.4s var(--ease-cinema), transform 0.4s var(--ease-cinema); }
 .hnx-a p { font-size: 0.68rem; line-height: 1.55; color: var(--ink-soft); margin: 0 0 6px; }
 .hnx-a b { color: var(--ink); font-weight: 600; }
 .hnx-cite { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 0.54rem; color: var(--gold-deep); background: rgba(201,168,76,0.12); border-radius: 100px; padding: 3px 9px; margin-top: 3px; }
-.hnx-ln, .hnx-cite { opacity: 0; transform: translateY(6px); animation: hnx-in 0.5s var(--ease-cinema) forwards; animation-delay: calc(2.6s + var(--i) * 0.55s); }
+.hnx-ln, .hnx-cite { transition: opacity 0.5s var(--ease-cinema), transform 0.5s var(--ease-cinema); }
 .hnx__input { flex: none; display: flex; align-items: center; gap: 4px; height: 32px; padding: 0 8px 0 12px; border: 1px solid var(--hair-strong); border-radius: 10px; background: var(--white); margin-top: 10px; overflow: hidden; }
-.hnx-typed { font-size: 0.64rem; color: var(--ink); white-space: nowrap; overflow: hidden; display: inline-block; max-width: 0; animation: hnx-type 9s ease-in-out 2s infinite; }
+.hnx-typed { font-size: 0.64rem; color: var(--ink); white-space: nowrap; overflow: hidden; display: inline-block; }
 .hnx-caret { width: 1.5px; height: 13px; background: #1d4f7a; flex: none; animation: nx-blink 1s steps(1) infinite; }
 .hnx-send { width: 15px; height: 15px; flex: none; margin-left: auto; color: #1d4f7a; }
-@keyframes hnx-in { to { opacity: 1; transform: none; } }
-@keyframes hnx-type { 0% { max-width: 0; } 26% { max-width: 35ch; } 74% { max-width: 35ch; } 84% { max-width: 0; } 100% { max-width: 0; } }
+
+/* ---- Cinematic intro: the conversation plays alone, front & centre, then
+   the window settles into the hero composition and the headline appears. JS
+   drives it (data-intro on .c-hero, data-shown per line). Without JS or under
+   reduced motion, everything is simply visible. ---- */
+.c-hero__copy { transition: opacity 0.9s var(--ease-cinema), transform 0.9s var(--ease-cinema); }
+.c-hero__stage { transition: transform 1.1s var(--ease-cinema); }
+.c-window--back, .c-window--mid { transition: opacity 0.9s var(--ease-cinema); }
+.c-hero[data-intro="play"] .c-hero__copy { opacity: 0; transform: translateY(14px); }
+.c-hero[data-intro="play"] .c-hero__stage { transform: translateX(-26%) scale(1.16); }
+.c-hero[data-intro="play"] .c-window--back,
+.c-hero[data-intro="play"] .c-window--mid { opacity: 0; }
+.c-hero[data-intro] .hnx-q,
+.c-hero[data-intro] .hnx-ln,
+.c-hero[data-intro] .hnx-cite { opacity: 0; transform: translateY(6px); }
+.c-hero[data-intro] .hnx-q[data-shown],
+.c-hero[data-intro] .hnx-ln[data-shown],
+.c-hero[data-intro] .hnx-cite[data-shown] { opacity: 1; transform: none; }
 
 /* Hero ambient backdrop (very restrained) */
 .c-hero__backdrop {
@@ -4541,19 +4558,11 @@ body.cinematic .navbar.scrolled {
    =========================================================== */
 .c-chapter {
   position: relative;
-  /* One screen per chapter. The beats no longer scrub with scroll — the
-     section locks into view and auto-plays — so it needs no extra length. */
-  min-height: 100vh;
+  /* Each chapter scrolls through ~1.7 viewports while pinned, so the beats
+     scrub with the user's scroll — one beat per ~25vh. */
+  min-height: 170vh;
+  padding: 64px 0;
   --seg-progress: 0;
-}
-
-/* Gentle scroll-snap: each chapter locks to the viewport when you scroll
-   into it, then the beat animation plays as you keep going. `proximity`
-   (not `mandatory`) so scrolling mid-animation stays free — it only nudges
-   near a chapter boundary. Off for reduced-motion. */
-@media (prefers-reduced-motion: no-preference) {
-  html { scroll-snap-type: y proximity; }
-  .c-chapter { scroll-snap-align: start; scroll-snap-stop: normal; }
 }
 
 .c-chapter__sticky {
@@ -4973,6 +4982,8 @@ body.cinematic .navbar.scrolled {
 .iudex-frame--editor  { aspect-ratio: 1.42; }
 .iudex-frame--nexus   { aspect-ratio: 1.36; }
 .iudex-frame--espacio { aspect-ratio: 1.50; }
+/* Nexus runs 4 beats — give it extra scroll length so they breathe. */
+#capitulo-4 { min-height: 230vh; }
 
 .sc-label { font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin: 0; }
 
@@ -6907,7 +6918,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   /* Live chapters on mobile: keep the PINNED, ANIMATED experience —
      single column, copy on top, the mockup fills the rest. Side panels
      fold away so the primary surface stays legible on a phone. */
-  .c-chapter[data-live] { min-height: 100vh; padding: 0; }
+  .c-chapter[data-live] { min-height: 240vh; padding: 0; }
   .c-chapter[data-live] .c-chapter__sticky {
     position: sticky; top: 0; height: 100vh;
     display: flex; flex-direction: column; justify-content: center;
