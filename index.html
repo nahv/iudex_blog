@@ -106,6 +106,10 @@
     <span>Seguir</span>
   </div>
 </section>
+<!-- Enter the cinematic intro state before first paint, so the resting hero
+     (headline) never flashes in then fades out. Runs only with JS; no-JS
+     users get the plain hero. main.js then plays the sequence. -->
+<script>(function(){var h=document.currentScript.previousElementSibling;if(h&&h.classList&&h.classList.contains('c-hero'))h.setAttribute('data-intro','play');})();</script>
 
 <!-- ===========================================================
      CHAPTER BREADCRUMB — above-fold roadmap

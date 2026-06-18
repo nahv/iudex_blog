@@ -6876,7 +6876,8 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .c-hero[data-intro="play"] .c-hero__copy { opacity: 0; }
   .c-hero[data-intro="play"] .c-hero__stage { transform: translateY(-54vh) scale(1.02); }
   .c-hero__stage { transition: transform 1.6s var(--ease-cinema); }
-  .c-hero__copy { transition: opacity 1.3s ease 0.35s; }
+  /* Headline fades in only once the window has glided down (delay ~= settle). */
+  .c-hero__copy { transition: opacity 0.9s ease 1.2s; }
 
   .c-chapter { min-height: auto; padding: 80px 0 64px; }
   /* Flatten the sticky/grid layout into a single flex column we can
