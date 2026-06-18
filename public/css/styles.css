@@ -4541,11 +4541,9 @@ body.cinematic .navbar.scrolled {
    =========================================================== */
 .c-chapter {
   position: relative;
-  /* Each chapter scrolls through ~1.7 viewports. Shorter than the
-     classic pinned-storytelling 2.4×: gives faster scroll feedback
-     (one beat per ~25vh) without losing the cinematic pacing. */
-  min-height: 170vh;
-  padding: 64px 0;
+  /* One screen per chapter. The beats no longer scrub with scroll — the
+     section locks into view and auto-plays — so it needs no extra length. */
+  min-height: 100vh;
   --seg-progress: 0;
 }
 
@@ -4975,8 +4973,6 @@ body.cinematic .navbar.scrolled {
 .iudex-frame--editor  { aspect-ratio: 1.42; }
 .iudex-frame--nexus   { aspect-ratio: 1.36; }
 .iudex-frame--espacio { aspect-ratio: 1.50; }
-/* Nexus runs 4 beats — give it extra scroll length so they breathe. */
-#capitulo-4 { min-height: 230vh; }
 
 .sc-label { font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin: 0; }
 
@@ -6911,7 +6907,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   /* Live chapters on mobile: keep the PINNED, ANIMATED experience —
      single column, copy on top, the mockup fills the rest. Side panels
      fold away so the primary surface stays legible on a phone. */
-  .c-chapter[data-live] { min-height: 240vh; padding: 0; }
+  .c-chapter[data-live] { min-height: 100vh; padding: 0; }
   .c-chapter[data-live] .c-chapter__sticky {
     position: sticky; top: 0; height: 100vh;
     display: flex; flex-direction: column; justify-content: center;
