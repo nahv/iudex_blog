@@ -4500,6 +4500,9 @@ body.cinematic .navbar.scrolled {
 .c-hero[data-intro="play"] .c-hero__stage { transform: translateX(-26%) scale(1.16); }
 .c-hero[data-intro="play"] .c-window--back,
 .c-hero[data-intro="play"] .c-window--mid { opacity: 0; }
+/* Window faces straight (no z-axis tilt) during the intro, then settles into
+   its 3D depth as the hero composition assembles. */
+.c-hero[data-intro="play"] .c-window--front { transform: rotateY(0deg) rotateX(0deg) scale(1); }
 .c-hero[data-intro] .hnx-q,
 .c-hero[data-intro] .hnx-ln,
 .c-hero[data-intro] .hnx-cite { opacity: 0; transform: translateY(6px); }
@@ -6867,10 +6870,11 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
      off-screen in a single column. Instead collapse the headline so the
      conversation window rises and plays near centre, then expand it back to
      reveal the headline (the window settles down as the copy grows). */
-  .c-hero[data-intro] .c-hero__copy { overflow: hidden; max-height: 1000px; transition: opacity 0.6s var(--ease-cinema), max-height 0.85s var(--ease-cinema); }
-  .c-hero[data-intro="play"] .c-hero__container { gap: 0; }
-  .c-hero[data-intro="play"] .c-hero__copy { max-height: 0; opacity: 0; margin: 0; transform: none; }
-  .c-hero[data-intro="play"] .c-hero__stage { transform: scale(1.03); }
+  /* Keep the copy in flow (so there's no layout jump) but hidden; lift the
+     conversation window up to play centred, then glide it smoothly back to
+     its place (transform transition) while the headline fades in. */
+  .c-hero[data-intro="play"] .c-hero__copy { opacity: 0; }
+  .c-hero[data-intro="play"] .c-hero__stage { transform: translateY(-54vh) scale(1.02); }
 
   .c-chapter { min-height: auto; padding: 80px 0 64px; }
   /* Flatten the sticky/grid layout into a single flex column we can
