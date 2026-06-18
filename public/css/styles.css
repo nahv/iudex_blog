@@ -5284,6 +5284,59 @@ body.cinematic .navbar.scrolled {
   color: var(--ink-soft);
 }
 
+/* Digesto stat block — big Playfair gold numerals, quiet mono labels,
+   hairline-separated. Editorial, not "startup metrics". */
+.c-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  max-width: 880px;
+  margin: 44px auto 0;
+}
+.c-stat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 28px;
+}
+.c-stat + .c-stat::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8%;
+  bottom: 22%;
+  width: 1px;
+  background: var(--hair-strong);
+}
+.c-stat__num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(2.6rem, 5vw, 4.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--gold-deep);
+  font-variant-numeric: tabular-nums;
+}
+.c-stat__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  text-align: center;
+}
+@media (max-width: 640px) {
+  .c-stat-grid { grid-template-columns: 1fr; max-width: 320px; gap: 0; }
+  .c-stat { flex-direction: row; justify-content: center; gap: 14px; padding: 18px 0; }
+  .c-stat + .c-stat::before { left: 10%; right: 10%; top: 0; bottom: auto; width: auto; height: 1px; }
+  .c-stat__num { font-size: clamp(2rem, 11vw, 2.8rem); min-width: 3.4ch; text-align: right; }
+  .c-stat__label { text-align: left; }
+}
+
 /* ===========================================================
    CTA — minimal closer
    =========================================================== */
