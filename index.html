@@ -58,17 +58,17 @@
         El nuevo espacio<br/>de trabajo <em>jurídico</em>.
       </h1>
       <p class="c-hero__sub">
-        Investigar, escribir y decidir en un mismo hilo — expedientes, escritos e investigación con IA.
-        <span class="c-hero__sub-line">Hecho en Corrientes, para abogados y juzgados argentinos. Beta cerrada por invitación.</span>
+        Investigá, escribí y resolvé sin cambiar de pantalla — el expediente, los escritos y la búsqueda con IA, en un mismo lugar.
+        <span class="c-hero__sub-line">Hecho en Corrientes, para el derecho argentino. Descargá el escritorio gratis; la beta con IA y sincronización es por invitación.</span>
       </p>
       <div class="c-hero__actions" role="group" aria-label="Acciones principales">
         <a href="#contacto-pre" class="c-btn c-btn--primary">
           Solicitar acceso
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#capitulo-1" class="c-btn c-btn--ghost">
-          Ver en acción
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l7 7 7-7"/></svg>
+        <a href="descargar/index.html" class="c-btn c-btn--ghost">
+          Descargar gratis
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
         </a>
       </div>
     </div>
@@ -109,7 +109,7 @@
 <!-- Enter the cinematic intro state before first paint, so the resting hero
      (headline) never flashes in then fades out. Runs only with JS; no-JS
      users get the plain hero. main.js then plays the sequence. -->
-<script>(function(){var h=document.currentScript.previousElementSibling;if(h&&h.classList&&h.classList.contains('c-hero'))h.setAttribute('data-intro','play');})();</script>
+<script>(function(){var h=document.currentScript.previousElementSibling;if(h&&h.classList&&h.classList.contains('c-hero')){h.setAttribute('data-intro','play');document.documentElement.setAttribute('data-hero-intro','play');}})();</script>
 
 <!-- ===========================================================
      CHAPTER BREADCRUMB — above-fold roadmap
@@ -317,11 +317,17 @@
           </div>
           <div class="ed__scroll">
             <div class="ed__paper">
-              <p class="doc-meta"><b>Expte. N. 2026-00045</b><br/>"Bianchi, Sofía c/ Aseguradora del Sur ART s/ Accidente Ley 24.557"</p>
-              <p class="doc-cap">Juzgado del Trabajo N°1 de Corrientes — Secretaría Única</p>
+              <p class="ed__meta">Juzgado del Trabajo N°1 — Corrientes<br/>Secretaría Única<br/>Expte. N° 2026-00045<br/>"Bianchi, Sofía c/ Aseguradora del Sur ART s/ Accidente Ley 24.557"</p>
               <p class="ed__title">ALEGA SOBRE LA PRUEBA</p>
-              <p class="ed-line" style="--i:0">Sr. Juez.</p>
-              <p class="ed-line" style="--i:1">Dra. Ana María Vallejos, Mat. T°152 F°88, en autos <span class="ed-var">"Bianchi, Sofía c/ Aseguradora del Sur ART"</span>, <span class="ed-var">Expte. N. 2026-00045</span>, ante el <span class="ed-var">Juzgado del Trabajo N°1</span>, me presento respetuosamente ante V.S. y digo:<span class="ed-caret"></span></p>
+              <p class="ed-line ed-line--flush" style="--i:0">Sr. Juez:</p>
+              <p class="ed-line" style="--i:1">La Dra. <span class="ed-var">Ana María Vallejos</span>, Mat. T°152 F°88, en autos <span class="ed-var">"Bianchi, Sofía c/ Aseguradora del Sur ART"</span>, <span class="ed-var">Expte. N° 2026-00045</span>, ante el <span class="ed-var">Juzgado del Trabajo N°1</span>, me presento respetuosamente ante V.S. y digo:</p>
+              <p class="ed-line" style="--i:2"><b>I. OBJETO.</b> Que vengo en legal tiempo y forma a alegar sobre el mérito de la prueba producida en autos, conforme lo previsto por el art. 94 de la Ley 18.345, solicitando se haga lugar a la demanda en todas sus partes, con costas.</p>
+              <p class="ed-line" style="--i:3"><b>II. PRUEBA PERICIAL.</b> La pericia médica de fs. 142/151 determinó que la actora padece una incapacidad parcial y permanente del 18,4% de la total obrera, en relación causal directa con el accidente de trabajo denunciado en el escrito de inicio.</p>
+              <p class="ed-line" style="--i:4"><b>III. PRUEBA TESTIMONIAL.</b> La prueba testimonial rendida a fs. 120/124 resultó conteste y dio suficiente razón de sus dichos sobre la mecánica del siniestro y las tareas habituales de la trabajadora, corroborando la versión de esta parte.</p>
+              <p class="ed-line" style="--i:5"><b>IV. CONCLUSIÓN.</b> Valorada la totalidad de la prueba conforme las reglas de la sana crítica (art. 386 del CPCCN), queda acreditado el accidente, el nexo de causalidad y la incapacidad resultante. <em>Pido se dicte sentencia conforme a derecho.</em></p>
+              <p class="ed-line" style="--i:6">Por todo lo expuesto, a V.S. solicito: 1) Se tenga por presentado el alegato; 2) Oportunamente, se dicte sentencia haciendo lugar a la demanda, con expresa imposición de costas.<span class="ed-caret"></span></p>
+              <p class="ed-line ed__justicia" style="--i:7">SERÁ JUSTICIA.</p>
+              <p class="ed-line ed__sign" style="--i:8">(Fdo.) ELECTRÓNICAMENTE:<br/><b>DRA. ANA MARÍA VALLEJOS</b><br/>Abogada — M.P. T°152 F°88</p>
             </div>
           </div>
           <div class="ed__vars">
@@ -384,13 +390,14 @@
                 <h4 class="nx__q">«¿Cómo prueba un trabajador en negro su fecha de ingreso?»</h4>
                 <div class="nx-searching" aria-hidden="true"><canvas class="nx-orb-canvas" data-nexus-orb data-nexus-orb-variant="mini" width="180" height="180"></canvas><span class="nx-searching__t">Razonando sobre el caso<br/>y buscando en la jurisprudencia…</span></div>
                 <div class="nx-answer">
-                  <p>La jurisprudencia de Corrientes sostiene que el trabajador puede
-                     acreditar la fecha de ingreso por <strong>cualquier medio de prueba</strong>,
-                     siendo decisiva la <em>prueba testimonial</em> cuando es concordante.</p>
+                  <p>La carga recae sobre el trabajador, pero rige la <strong>amplitud probatoria</strong>
+                     y la <em>primacía de la realidad</em>: la fecha de ingreso se acredita por cualquier
+                     medio, y la testimonial concordante suele ser decisiva.</p>
                   <ul class="nx-points">
-                    <li><span>Carga de la prueba</span> — recae sobre quien invoca el hecho extintivo.</li>
-                    <li><span>Valoración probatoria</span> — la testimonial concordante basta para tener por cierta la fecha.</li>
-                    <li><span>Realidad de la prestación</span> — prevalece sobre las formas registrales.</li>
+                    <li><span>Testimonial</span> — testigos que sitúan al trabajador cumpliendo tareas desde la fecha invocada.</li>
+                    <li><span>Documental</span> — recibos informales, mensajes de WhatsApp y constancias de ingreso al establecimiento.</li>
+                    <li><span>Informativa</span> — oficios a bancos, clientes o proveedores que registren la prestación.</li>
+                    <li><span>Presunción (art. 52 LCT)</span> — incumplidos los deberes registrales, se presume cierta la fecha alegada.</li>
                   </ul>
                 </div>
               </div>
@@ -530,7 +537,7 @@
     <span class="c-eyebrow">Beta cerrada · por invitación</span>
     <h2 class="c-display" style="margin-top:24px">Pedí tu invitación.</h2>
     <p class="c-lead" style="margin-left:auto;margin-right:auto">
-      Sumamos abogados y juzgados con cupos limitados. Te mandamos el instalador y te acompañamos en la primera causa.
+      El escritorio ya podés <a href="descargar/index.html" style="color:var(--gold-deep)">descargarlo gratis</a>. La beta suma IA y sincronización en la nube: sumamos abogados y juzgados con cupos limitados y te acompañamos en la primera causa.
     </p>
     <form class="c-cta__form" method="get" action="contacto/index.html">
       <label class="c-sr-only" for="cta-email">Tu correo electrónico</label>

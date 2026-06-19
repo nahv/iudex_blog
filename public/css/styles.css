@@ -142,6 +142,13 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   box-shadow: 0 4px 32px rgba(15, 15, 14, 0.06);
 }
 
+/* Homepage cinematic intro: the navbar slides up out of view while the window
+   animates and slides back down once the hero settles, keeping focus on the
+   animation. Applies on mobile and desktop. State lives on <html> (set
+   pre-paint by an inline script and updated by main.js) because the navbar is
+   not a descendant of .c-hero. */
+html[data-hero-intro="play"] .navbar { opacity: 0; transform: translateY(-100%); pointer-events: none; }
+
 .navbar__inner {
   display: flex;
   align-items: center;
@@ -4210,7 +4217,11 @@ body.cinematic .navbar {
   backdrop-filter: saturate(180%) blur(14px);
   -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid transparent;
-  transition: border-color 320ms var(--ease-cinema),
+  /* Cinematic intro reveal: the navbar slides/fades in over a longer beat,
+     trailing the headline. Scroll-driven border/background stay snappy. */
+  transition: opacity 1.2s var(--ease-cinema) 0.35s,
+              transform 1.2s var(--ease-cinema) 0.35s,
+              border-color 320ms var(--ease-cinema),
               background 320ms var(--ease-cinema);
 }
 body.cinematic .navbar.scrolled {
@@ -4497,7 +4508,25 @@ body.cinematic .navbar.scrolled {
 .c-hero__stage { transition: transform 1.1s var(--ease-cinema); }
 .c-window--back, .c-window--mid { transition: opacity 0.9s var(--ease-cinema); }
 .c-hero[data-intro="play"] .c-hero__copy { opacity: 0; transform: translateY(14px); }
-.c-hero[data-intro="play"] .c-hero__stage { transform: translateX(-26%) scale(1.16); }
+/* During the intro the window plays ALONE and flat (back/mid hidden, front at
+   identity), so the stage's 3D context buys nothing here — but `perspective` +
+   `preserve-3d` force the subtree into an intermediate render surface that the
+   browser rasterizes at 1× and then resamples, softening the DOM mockup's text
+   on non-retina displays (the blur was the 3D flattening, not the zoom amount).
+   Flatten the context during play so the stage's plain 2D scale paints crisply
+   and re-rasters at the displayed size — which lets it be enlarged for impact
+   without going soft. The 3D depth returns the instant it settles. */
+.c-hero[data-intro="play"] .c-hero__stage {
+  perspective: none;
+  transform-style: flat;
+  transform: translateX(-26%) scale(1.40);
+}
+/* Desktop only: nudge the settled window group slightly right so the back
+   dashboard's dark nav rail sits clear of the headline column. Mobile keeps
+   the composition as-is. */
+@media (min-width: 980px) {
+  .c-hero[data-intro="done"] .c-hero__stage { transform: translateX(5%); }
+}
 .c-hero[data-intro="play"] .c-window--back,
 .c-hero[data-intro="play"] .c-window--mid { opacity: 0; }
 /* Window faces straight (no z-axis tilt) during the intro, then settles into
@@ -4542,7 +4571,12 @@ body.cinematic .navbar.scrolled {
   letter-spacing: 0.24em;
   z-index: 2;
   pointer-events: none;
+  /* Appears after the headline when the intro settles (delay > copy reveal). */
+  transition: opacity 0.8s var(--ease-cinema) 0.8s;
 }
+/* During the cinematic intro the scroll cue is hidden; it fades in after the
+   headline once the hero settles. (Desktop only — hidden on mobile anyway.) */
+.c-hero[data-intro="play"] .c-hero__hint { opacity: 0; transition-delay: 0s; }
 .c-hero__hint-line {
   width: 1px;
   height: 36px;
@@ -5062,12 +5096,18 @@ body.cinematic .navbar.scrolled {
 .ed__sep { width: 1px; height: 15px; background: var(--hair); margin: 0 4px; }
 .ed__export { margin-left: auto; height: 22px; display: inline-flex; align-items: center; padding: 0 10px; border-radius: 6px; background: var(--ink); color: var(--cream); font-size: 0.6rem; font-weight: 500; }
 .ed__scroll { flex: 1; overflow: hidden; display: grid; place-items: start center; padding: 18px 0; }
-.ed__paper { width: 78%; background: var(--white); box-shadow: var(--shadow-window-soft); border-radius: 3px; padding: 26px 34px; }
-.ed__paper .doc-meta { font-size: 0.6rem; color: var(--ink-soft); line-height: 1.5; }
-.ed__paper .doc-meta b { color: var(--ink); }
-.ed__paper .doc-cap { font-family: var(--font-mono); font-size: 0.5rem; color: var(--ink-muted); margin-bottom: 16px; }
-.ed__title { text-align: center; font-weight: 700; font-size: 0.74rem; letter-spacing: 0.04em; color: var(--ink); margin: 14px 0; }
-.ed-line { font-size: 0.64rem; line-height: 1.85; color: var(--ink-soft); }
+/* The sheet is shaped like an A4 page (portrait) with generous margins; the
+   body follows escrito convention: justified, first-line indent, bold inline
+   section labels, underlined salutation, centred "SERÁ JUSTICIA" + signature. */
+.ed__paper { width: 74%; aspect-ratio: 210 / 297; background: var(--white); box-shadow: var(--shadow-window-soft); border-radius: 3px; padding: 7% 8.5% 9%; }
+.ed__meta { font-style: italic; font-size: 0.56rem; line-height: 1.5; color: var(--ink-soft); margin-bottom: 20px; }
+.ed__title { text-align: center; font-weight: 700; font-size: 0.74rem; letter-spacing: 0.06em; color: var(--ink); margin: 14px 0 18px; }
+.ed-line { font-size: 0.62rem; line-height: 1.8; color: var(--ink-soft); text-align: justify; text-align-last: left; text-indent: 2.4em; margin-bottom: 0.65em; }
+.ed-line b { color: var(--ink); }
+.ed-line--flush { text-indent: 0; text-align: left; width: fit-content; text-decoration: underline; text-underline-offset: 2px; }
+.ed__justicia { text-indent: 0; text-align: center; text-align-last: center; font-weight: 700; letter-spacing: 0.08em; color: var(--ink); margin: 1.5em 0; }
+.ed__sign { text-indent: 0; text-align: center; text-align-last: center; font-style: italic; line-height: 1.5; margin-top: 1.6em; }
+.ed__sign b { font-style: normal; }
 .ed-var { background: rgba(201,168,76,0.18); color: var(--gold-deep); border-radius: 3px; padding: 0 3px; font-family: var(--font-mono); font-size: 0.92em; }
 .ed-caret { display: inline-block; width: 1.5px; height: 0.8em; background: var(--gold); vertical-align: text-bottom; }
 .ed__vars { position: absolute; left: 4%; top: 33%; width: 232px; background: var(--white); border: 1px solid var(--hair); border-radius: 10px; box-shadow: var(--shadow-window); padding: 9px; z-index: 6; }
@@ -6963,6 +7003,10 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .c-chapter[data-live] .nx-fallo,
   .c-chapter[data-live] .ii-card,
   .c-chapter[data-live] .cmdk { width: 86%; }
+  /* Editor sheet on mobile: keep it left-aligned (justify creates rivers on a
+     narrow column) and content-height (no forced A4), so it reads as before. */
+  .c-chapter[data-live] .ed__paper { width: 88%; aspect-ratio: auto; padding: 22px 24px; }
+  .c-chapter[data-live] .ed-line { text-align: left; text-align-last: left; text-indent: 1.4em; }
 
   .c-chapter__beat {
     position: relative;
