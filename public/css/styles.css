@@ -5074,12 +5074,18 @@ body.cinematic .navbar.scrolled {
 .ed__sep { width: 1px; height: 15px; background: var(--hair); margin: 0 4px; }
 .ed__export { margin-left: auto; height: 22px; display: inline-flex; align-items: center; padding: 0 10px; border-radius: 6px; background: var(--ink); color: var(--cream); font-size: 0.6rem; font-weight: 500; }
 .ed__scroll { flex: 1; overflow: hidden; display: grid; place-items: start center; padding: 18px 0; }
-.ed__paper { width: 78%; background: var(--white); box-shadow: var(--shadow-window-soft); border-radius: 3px; padding: 26px 34px; }
-.ed__paper .doc-meta { font-size: 0.6rem; color: var(--ink-soft); line-height: 1.5; }
-.ed__paper .doc-meta b { color: var(--ink); }
-.ed__paper .doc-cap { font-family: var(--font-mono); font-size: 0.5rem; color: var(--ink-muted); margin-bottom: 16px; }
-.ed__title { text-align: center; font-weight: 700; font-size: 0.74rem; letter-spacing: 0.04em; color: var(--ink); margin: 14px 0; }
-.ed-line { font-size: 0.64rem; line-height: 1.85; color: var(--ink-soft); }
+/* The sheet is shaped like an A4 page (portrait) with generous margins; the
+   body follows escrito convention: justified, first-line indent, bold inline
+   section labels, underlined salutation, centred "SERÁ JUSTICIA" + signature. */
+.ed__paper { width: 74%; aspect-ratio: 210 / 297; background: var(--white); box-shadow: var(--shadow-window-soft); border-radius: 3px; padding: 7% 8.5% 9%; }
+.ed__meta { font-style: italic; font-size: 0.56rem; line-height: 1.5; color: var(--ink-soft); margin-bottom: 20px; }
+.ed__title { text-align: center; font-weight: 700; font-size: 0.74rem; letter-spacing: 0.06em; color: var(--ink); margin: 14px 0 18px; }
+.ed-line { font-size: 0.62rem; line-height: 1.8; color: var(--ink-soft); text-align: justify; text-align-last: left; text-indent: 2.4em; margin-bottom: 0.65em; }
+.ed-line b { color: var(--ink); }
+.ed-line--flush { text-indent: 0; text-align: left; width: fit-content; text-decoration: underline; text-underline-offset: 2px; }
+.ed__justicia { text-indent: 0; text-align: center; text-align-last: center; font-weight: 700; letter-spacing: 0.08em; color: var(--ink); margin: 1.5em 0; }
+.ed__sign { text-indent: 0; text-align: center; text-align-last: center; font-style: italic; line-height: 1.5; margin-top: 1.6em; }
+.ed__sign b { font-style: normal; }
 .ed-var { background: rgba(201,168,76,0.18); color: var(--gold-deep); border-radius: 3px; padding: 0 3px; font-family: var(--font-mono); font-size: 0.92em; }
 .ed-caret { display: inline-block; width: 1.5px; height: 0.8em; background: var(--gold); vertical-align: text-bottom; }
 .ed__vars { position: absolute; left: 4%; top: 33%; width: 232px; background: var(--white); border: 1px solid var(--hair); border-radius: 10px; box-shadow: var(--shadow-window); padding: 9px; z-index: 6; }
@@ -6975,6 +6981,10 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .c-chapter[data-live] .nx-fallo,
   .c-chapter[data-live] .ii-card,
   .c-chapter[data-live] .cmdk { width: 86%; }
+  /* Editor sheet on mobile: keep it left-aligned (justify creates rivers on a
+     narrow column) and content-height (no forced A4), so it reads as before. */
+  .c-chapter[data-live] .ed__paper { width: 88%; aspect-ratio: auto; padding: 22px 24px; }
+  .c-chapter[data-live] .ed-line { text-align: left; text-align-last: left; text-indent: 1.4em; }
 
   .c-chapter__beat {
     position: relative;
