@@ -4497,7 +4497,19 @@ body.cinematic .navbar.scrolled {
 .c-hero__stage { transition: transform 1.1s var(--ease-cinema); }
 .c-window--back, .c-window--mid { transition: opacity 0.9s var(--ease-cinema); }
 .c-hero[data-intro="play"] .c-hero__copy { opacity: 0; transform: translateY(14px); }
-.c-hero[data-intro="play"] .c-hero__stage { transform: translateX(-26%) scale(1.16); }
+/* During the intro the window plays ALONE and flat (back/mid hidden, front at
+   identity), so the stage's 3D context buys nothing here — but `perspective` +
+   `preserve-3d` force the subtree into an intermediate render surface that the
+   browser rasterizes at 1× and then resamples, softening the DOM mockup's text
+   on non-retina displays (the blur was the 3D flattening, not the zoom amount).
+   Flatten the context during play so the stage's plain 2D scale paints crisply
+   and re-rasters at the displayed size — which lets it be enlarged for impact
+   without going soft. The 3D depth returns the instant it settles. */
+.c-hero[data-intro="play"] .c-hero__stage {
+  perspective: none;
+  transform-style: flat;
+  transform: translateX(-26%) scale(1.24);
+}
 .c-hero[data-intro="play"] .c-window--back,
 .c-hero[data-intro="play"] .c-window--mid { opacity: 0; }
 /* Window faces straight (no z-axis tilt) during the intro, then settles into
