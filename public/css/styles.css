@@ -4510,6 +4510,12 @@ body.cinematic .navbar.scrolled {
   transform-style: flat;
   transform: translateX(-26%) scale(1.40);
 }
+/* Desktop only: nudge the settled window group slightly right so the back
+   dashboard's dark nav rail sits clear of the headline column. Mobile keeps
+   the composition as-is. */
+@media (min-width: 980px) {
+  .c-hero[data-intro="done"] .c-hero__stage { transform: translateX(5%); }
+}
 .c-hero[data-intro="play"] .c-window--back,
 .c-hero[data-intro="play"] .c-window--mid { opacity: 0; }
 /* Window faces straight (no z-axis tilt) during the intro, then settles into
