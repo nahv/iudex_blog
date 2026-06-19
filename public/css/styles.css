@@ -134,9 +134,7 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(15, 15, 14, 0.08);
-  transition: opacity 0.9s var(--ease-cinema), transform 0.9s var(--ease-cinema),
-              background 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out),
-              backdrop-filter 0.3s var(--ease-out);
+  transition: all 0.3s var(--ease-out);
 }
 
 .navbar.scrolled {
@@ -144,14 +142,12 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   box-shadow: 0 4px 32px rgba(15, 15, 14, 0.06);
 }
 
-/* Homepage cinematic intro (desktop only): the navbar slides up out of view
-   while the window animates and slides back down with the headline when the
-   hero settles, keeping focus on the animation. State lives on <html> (set
+/* Homepage cinematic intro: the navbar slides up out of view while the window
+   animates and slides back down once the hero settles, keeping focus on the
+   animation. Applies on mobile and desktop. State lives on <html> (set
    pre-paint by an inline script and updated by main.js) because the navbar is
-   not a descendant of .c-hero. On mobile the navbar stays visible throughout. */
-@media (min-width: 980px) {
-  html[data-hero-intro="play"] .navbar { opacity: 0; transform: translateY(-100%); pointer-events: none; }
-}
+   not a descendant of .c-hero. */
+html[data-hero-intro="play"] .navbar { opacity: 0; transform: translateY(-100%); pointer-events: none; }
 
 .navbar__inner {
   display: flex;
@@ -4221,7 +4217,11 @@ body.cinematic .navbar {
   backdrop-filter: saturate(180%) blur(14px);
   -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid transparent;
-  transition: border-color 320ms var(--ease-cinema),
+  /* Cinematic intro reveal: the navbar slides/fades in over a longer beat,
+     trailing the headline. Scroll-driven border/background stay snappy. */
+  transition: opacity 1.2s var(--ease-cinema) 0.35s,
+              transform 1.2s var(--ease-cinema) 0.35s,
+              border-color 320ms var(--ease-cinema),
               background 320ms var(--ease-cinema);
 }
 body.cinematic .navbar.scrolled {
