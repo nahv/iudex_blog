@@ -134,13 +134,21 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(15, 15, 14, 0.08);
-  transition: all 0.3s var(--ease-out);
+  transition: opacity 0.9s var(--ease-cinema), transform 0.9s var(--ease-cinema),
+              background 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out),
+              backdrop-filter 0.3s var(--ease-out);
 }
 
 .navbar.scrolled {
   background: rgba(247, 244, 238, 0.98);
   box-shadow: 0 4px 32px rgba(15, 15, 14, 0.06);
 }
+
+/* Homepage cinematic intro: the navbar hides while the window animates and
+   appears together with the headline when the hero settles, keeping focus on
+   the animation. The state lives on <html> (set pre-paint by an inline script
+   and updated by main.js) because the navbar is not a descendant of .c-hero. */
+html[data-hero-intro="play"] .navbar { opacity: 0; transform: translateY(-12px); pointer-events: none; }
 
 .navbar__inner {
   display: flex;

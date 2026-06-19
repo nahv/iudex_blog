@@ -1100,6 +1100,9 @@ if (document.readyState === 'loading') {
     const Q2 = typed ? typed.textContent.trim() : '';
     const reveal = (el) => el && el.setAttribute('data-shown', '');
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    // Mirror the intro state onto <html> too, so the navbar (not a descendant
+    // of .c-hero) can hide during the intro and reappear when it settles.
+    const setIntro = (s) => { hero.dataset.intro = s; document.documentElement.dataset.heroIntro = s; };
     const typeInto = (el, text, dur) => new Promise((res) => {
       if (!el) return res();
       el.textContent = '';
@@ -1114,9 +1117,9 @@ if (document.readyState === 'loading') {
 
     if (reduceMotion || !typed) {
       reveal(bubble); lines.forEach(reveal);
-      hero.dataset.intro = 'done';
+      setIntro('done');
     } else {
-      hero.dataset.intro = 'play';
+      setIntro('play');
       bubble && bubble.removeAttribute('data-shown');
       lines.forEach((l) => l.removeAttribute('data-shown'));
       typed.textContent = '';
@@ -1131,7 +1134,7 @@ if (document.readyState === 'loading') {
         await sleep(550);
         await typeInto(typed, Q2, 1500);       // type the follow-up
         await sleep(750);
-        hero.dataset.intro = 'done';           // settle into the hero, reveal headline
+        setIntro('done');                      // settle into the hero, reveal headline + navbar
       })();
     }
   }
