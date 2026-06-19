@@ -149,6 +149,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- Contact form (full pre-access registration) ----
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
+    // Pre-fill the email when arriving from a "Pedí tu invitación" CTA: those
+    // forms GET-navigate here with ?email=…, so we carry it over instead of
+    // making the visitor retype it, and focus the first empty field to
+    // continue the flow without hijacking the scroll position.
+    try {
+      const presetEmail = (new URLSearchParams(window.location.search).get('email') || '').trim();
+      const emailInput = contactForm.querySelector('#email');
+      if (presetEmail && emailInput) {
+        emailInput.value = presetEmail;
+        const firstField = contactForm.querySelector('#nombre');
+        if (firstField && !firstField.value) firstField.focus({ preventScroll: true });
+      }
+    } catch (_) { /* malformed query string — leave the form empty */ }
+
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
