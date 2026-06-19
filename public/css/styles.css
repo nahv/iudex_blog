@@ -144,11 +144,14 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   box-shadow: 0 4px 32px rgba(15, 15, 14, 0.06);
 }
 
-/* Homepage cinematic intro: the navbar hides while the window animates and
-   appears together with the headline when the hero settles, keeping focus on
-   the animation. The state lives on <html> (set pre-paint by an inline script
-   and updated by main.js) because the navbar is not a descendant of .c-hero. */
-html[data-hero-intro="play"] .navbar { opacity: 0; transform: translateY(-12px); pointer-events: none; }
+/* Homepage cinematic intro (desktop only): the navbar slides up out of view
+   while the window animates and slides back down with the headline when the
+   hero settles, keeping focus on the animation. State lives on <html> (set
+   pre-paint by an inline script and updated by main.js) because the navbar is
+   not a descendant of .c-hero. On mobile the navbar stays visible throughout. */
+@media (min-width: 980px) {
+  html[data-hero-intro="play"] .navbar { opacity: 0; transform: translateY(-100%); pointer-events: none; }
+}
 
 .navbar__inner {
   display: flex;
@@ -4568,7 +4571,12 @@ body.cinematic .navbar.scrolled {
   letter-spacing: 0.24em;
   z-index: 2;
   pointer-events: none;
+  /* Appears after the headline when the intro settles (delay > copy reveal). */
+  transition: opacity 0.8s var(--ease-cinema) 0.8s;
 }
+/* During the cinematic intro the scroll cue is hidden; it fades in after the
+   headline once the hero settles. (Desktop only — hidden on mobile anyway.) */
+.c-hero[data-intro="play"] .c-hero__hint { opacity: 0; transition-delay: 0s; }
 .c-hero__hint-line {
   width: 1px;
   height: 36px;
