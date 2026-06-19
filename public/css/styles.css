@@ -4508,7 +4508,7 @@ body.cinematic .navbar.scrolled {
 .c-hero[data-intro="play"] .c-hero__stage {
   perspective: none;
   transform-style: flat;
-  transform: translateX(-26%) scale(1.24);
+  transform: translateX(-26%) scale(1.40);
 }
 .c-hero[data-intro="play"] .c-window--back,
 .c-hero[data-intro="play"] .c-window--mid { opacity: 0; }
