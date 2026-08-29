@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iudex para juzgados — La mesa de entradas, en orden</title>
+  <meta name="description" content="La mesa de proveídos, los escritos que entran, los trámites y las tasas — en el navegador, para todo el juzgado. Sin instalar nada. Hecho en Corrientes." />
+  <meta name="keywords" content="gestión judicial, mesa de entradas, proveídos, juzgados Corrientes, tasas de justicia, reparto de escritos, Iudex" />
+  <meta property="og:title" content="Iudex para juzgados — La mesa de entradas, en orden" />
+  <meta property="og:description" content="Proveídos, escritos, trámites y tasas en un mismo lugar. En el navegador, para todo el juzgado." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://iudex.com.ar/juzgados/" />
+  <meta property="og:image" content="https://iudex.com.ar/public/assets/screenshots-v3/01-dashboard.png" />
+  <meta property="og:locale" content="es_AR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://iudex.com.ar/juzgados/" />
+  <link rel="stylesheet" href="../public/css/styles.css" />
+  <link rel="icon" type="image/png" href="../assets/icon.png" />
+</head>
+<body class="cinematic">
+
+<!-- NAVBAR -->
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+  <div class="container">
+    <div class="navbar__inner">
+      <a href="../index.html" class="navbar__logo" aria-label="Iudex - Inicio">
+        <div class="navbar__logo-mark"><img src="../assets/icon.png" alt="Iudex" /></div>
+        <span class="navbar__logo-text">Iudex</span>
+      </a>
+      <ul class="navbar__links">
+        <li><a href="../abogados/index.html">Abogados</a></li>
+        <li><a href="index.html" aria-current="page">Juzgados</a></li>
+        <li><a href="../investigacion/index.html">Nexus</a></li>
+        <li><a href="../descargar/index.html">Escritorio</a></li>
+        <li><a href="../blog/index.html">Cuaderno</a></li>
+        <li><a href="https://app.iudex.com.ar/" class="navbar__cta" target="_blank" rel="noopener">Entrar</a></li>
+      </ul>
+      <button class="navbar__toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===========================================================
+     HERO
+     =========================================================== -->
+<section class="c-hero" aria-labelledby="c-jz-title">
+  <div class="c-hero__backdrop" aria-hidden="true"></div>
+  <div class="c-hero__container">
+    <div class="c-hero__copy">
+      <span class="c-eyebrow">Iudex para juzgados</span>
+      <h1 id="c-jz-title" class="c-display">
+        La mesa de entradas,<br/>en <em>orden</em>.
+      </h1>
+      <p class="c-hero__sub">
+        Los proveídos, los escritos que entran a la mesa, los trámites y las tasas — en un mismo lugar, con el estado a la vista de todo el juzgado.
+        <span class="c-hero__sub-line">Se abre en el navegador: nada que instalar en las máquinas del organismo, y todos ven lo mismo al mismo tiempo.</span>
+      </p>
+      <div class="c-hero__actions" role="group" aria-label="Acciones principales">
+        <a href="#contacto-juzgados" class="c-btn c-btn--primary">
+          Pedir acceso
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#c-jz-seguridad" class="c-btn c-btn--ghost">
+          Seguridad y datos
+        </a>
+      </div>
+    </div>
+
+    <div class="c-hero__stage">
+      <div class="c-window c-window--front" role="img"
+           aria-label="La mesa de proveídos de Iudex: cada expediente con su estado, el cargo que lo tiene y los trámites asociados.">
+        <div class="hwin">
+          <div class="hwin__bar"><span>Iudex Juzgados — Mesa de proveídos</span></div>
+          <div class="jz-mesa">
+            <div class="jz-mesa__tabs">
+              <span class="jz-tab is-on">Para control Secre · 10</span>
+              <span class="jz-tab">Para Firma Juez · 3</span>
+              <span class="jz-tab">Envío Pendiente · 2</span>
+              <span class="jz-tab">Tasas · 4</span>
+            </div>
+            <div class="jz-rows">
+              <div class="jz-row jz-row--hab" style="--i:0">
+                <b>EXP 255517/24</b>
+                <span class="iudex-chip iudex-chip--hab">⚡ Habilitación</span>
+                <span class="iudex-chip iudex-chip--live">Para control Secre</span>
+                <em>Contesta traslado</em>
+              </div>
+              <div class="jz-row" style="--i:1">
+                <b>EXP 255518/24</b>
+                <span class="iudex-chip iudex-chip--gold">Tasa · Aprobación</span>
+                <span class="iudex-chip iudex-chip--live">Para control Secre</span>
+                <em>Pide vista</em>
+              </div>
+              <div class="jz-row" style="--i:2">
+                <b>EXP 255519/24</b>
+                <span></span>
+                <span class="iudex-chip iudex-chip--ok">Para Firma Juez</span>
+                <em>Provee prueba</em>
+              </div>
+              <div class="jz-row" style="--i:3">
+                <b>EXP 255520/24</b>
+                <span class="iudex-chip iudex-chip--gold">Apertura de cuenta</span>
+                <span class="iudex-chip iudex-chip--live">Para control Secre</span>
+                <em>Acompaña comprobante</em>
+              </div>
+              <div class="jz-row" style="--i:4">
+                <b>EXP 255521/24</b>
+                <span></span>
+                <span class="iudex-chip iudex-chip--ok">Envío Pendiente</span>
+                <em>A disposición</em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     I · LA MESA
+     =========================================================== -->
+<section class="c-chapter" aria-labelledby="c-jz-ch1">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-eyebrow">I · La mesa</span>
+      <h2 id="c-jz-ch1" class="c-display">Un proveído,<br/>un <em>camino</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat">
+          <p>Cada proveído avanza por su circuito — control de secretaría, firma del juez, envío — y el estado lo ve todo el juzgado, al mismo tiempo.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Cada cargo ve su cola. El juez entra y encuentra lo que tiene para firmar; el proveyente, lo suyo.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Las habilitaciones se ven de lejos. Lo urgente no se pierde entre lo que puede esperar.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="iudex-frame" role="img"
+           aria-label="Circuito de un proveído en Iudex: de control de secretaría a firma del juez y envío, con comentarios internos por etapa.">
+        <div class="iudex-bar">
+          <span class="iudex-bar__search">Buscar proveídos — expediente, notas, envío…</span>
+          <span class="iudex-bar__spacer"></span>
+          <span class="iudex-chip iudex-chip--live"><span class="dot"></span>En vivo</span>
+          <span class="iudex-bar__account"><span class="iudex-bar__avatar">S</span>Secretaría</span>
+        </div>
+        <div class="iudex-frame__body jz-body">
+          <div class="jz-flow">
+            <div class="jz-step is-done"><b>Cargado</b><span>Proveyente · 09:12</span></div>
+            <div class="jz-step is-on"><b>Control Secre</b><span>En curso</span></div>
+            <div class="jz-step"><b>Firma Juez</b><span>—</span></div>
+            <div class="jz-step"><b>Envío</b><span>—</span></div>
+          </div>
+          <div class="jz-note">
+            <b>Comentarios de control</b>
+            <p><span>Secretaría</span> Falta agregar la foja 3 antes de que lo controle.</p>
+            <p><span>Proveyente</span> Corregido, vuelve a control.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     II · LOS ESCRITOS
+     =========================================================== -->
+<section class="c-chapter" aria-labelledby="c-jz-ch2">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-eyebrow">II · Los escritos</span>
+      <h2 id="c-jz-ch2" class="c-display">Del listado<br/>al <em>reparto</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat">
+          <p>Subís el listado que ya exportás del sistema judicial y la bandeja se arma sola, sin repetir lo que ya estaba. Más viejo primero.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>El reparto se hace en un click: por cantidad de escritos o de expedientes, en listas parejas y sin partir una causa entre dos personas.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Cada proveyente ve su listado. Lo que sobra al final del día vuelve a la bandeja y se reparte de nuevo mañana.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="iudex-frame" role="img"
+           aria-label="Bandeja de escritos de Iudex: import del listado del sistema judicial, reparto en listas y estado por presentante.">
+        <div class="iudex-bar">
+          <span class="iudex-bar__search">Expediente, presentante…</span>
+          <span class="iudex-bar__spacer"></span>
+          <span class="iudex-chip iudex-chip--live">Snapshot: recién</span>
+        </div>
+        <div class="iudex-frame__body jz-body">
+          <div class="jz-kpis">
+            <div><b>3</b><span>Pendientes</span></div>
+            <div><b>12</b><span>Asignados</span></div>
+            <div><b>28</b><span>Cargados</span></div>
+            <div><b>4 días</b><span>Más viejo</span></div>
+          </div>
+          <div class="jz-rows">
+            <div class="jz-row" style="--i:0"><b>EXP 255517/24</b><span class="iudex-chip iudex-chip--live">ESCRITO</span><span></span><em>Contesta traslado · PEREZ</em></div>
+            <div class="jz-row" style="--i:1"><b>EXP 255518/24</b><span class="iudex-chip iudex-chip--live">ESCRITO</span><span></span><em>Solicita habilitación · LOPEZ</em></div>
+            <div class="jz-row" style="--i:2"><b>EXP 255519/24</b><span class="iudex-chip iudex-chip--live">OFICIO</span><span></span><em>Acompaña comprobante · RUIZ</em></div>
+          </div>
+          <div class="jz-note">
+            <b>Reparto</b>
+            <p>4 listas · 15 escritos por lista · un expediente nunca se parte entre dos listas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     III · LAS CUENTAS
+     =========================================================== -->
+<section class="c-chapter" aria-labelledby="c-jz-ch3">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-eyebrow">III · Las cuentas</span>
+      <h2 id="c-jz-ch3" class="c-display">Los números,<br/><em>exactos</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat">
+          <p>Intereses con la curva oficial: Tasa Activa del Banco Nación, Banco de Corrientes, Municipalidad y DGR. Los valores los mantenemos nosotros, al día.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Pagos parciales que cortan el interés, con la imputación del art. 776 a la vista. La planilla se copia lista para pegar en la providencia.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Honorarios por Ley 5822 y el informe mensual de tasas pagadas por transferencia, en PDF o planilla.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="iudex-frame" role="img"
+           aria-label="Calculadora de intereses de Iudex: capital, período, tasa oficial y el detalle por tramos con el saldo final.">
+        <div class="iudex-bar">
+          <span class="iudex-bar__search">Calculadora — Intereses</span>
+          <span class="iudex-bar__spacer"></span>
+          <span class="iudex-chip iudex-chip--ok">Serie al día</span>
+        </div>
+        <div class="iudex-frame__body jz-body">
+          <div class="jz-calc">
+            <div class="jz-calc__row"><span>Capital</span><b>$ 1.000.000,00</b></div>
+            <div class="jz-calc__row"><span>Período</span><b>03/08/2026 — 28/08/2026</b></div>
+            <div class="jz-calc__row"><span>Tasa</span><b>Tasa Activa Banco Nación</b></div>
+          </div>
+          <div class="jz-calc__out">
+            <div><span>Interés devengado</span><b>$ 36.800,00</b></div>
+            <div><span>Pagos</span><b>-$ 300.000,00</b></div>
+            <div class="is-total"><span>Saldo</span><b>$ 736.800,00</b></div>
+          </div>
+          <div class="jz-note">
+            <b>Pagos imputados · art. 776 CCyCN</b>
+            <p>15/08/2026 · pago $ 300.000,00 → interés $ 20.000,00 · capital $ 280.000,00 (queda $ 720.000,00)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     SEGURIDAD
+     =========================================================== -->
+<section class="c-chapter" id="c-jz-seguridad" aria-labelledby="c-jz-sec">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-eyebrow">Seguridad y datos</span>
+      <h2 id="c-jz-sec" class="c-display">Los datos del juzgado,<br/>del <em>juzgado</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat">
+          <p>Todo viaja cifrado, de punta a punta. Cada dato que sale de una máquina del organismo lo hace por un canal seguro — nunca en claro, nunca por una red abierta.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Infraestructura de primer nivel. Los servidores están en un centro de datos profesional, con copias de respaldo, monitoreo permanente y la base de datos aislada de internet.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Cada organismo ve solo lo suyo. El aislamiento lo garantiza el servidor en cada consulta, y nada se comparte con terceros: sin publicidad, sin analítica externa, sin venta de datos.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Diseñado según la Ley 25.326 de Protección de Datos Personales: finalidad específica, datos mínimos, y el derecho del titular a acceder, rectificar y suprimir. Los datos son del juzgado y se exportan cuando el juzgado quiera.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="iudex-frame" role="img"
+           aria-label="Resumen de seguridad de Iudex: conexión cifrada, servidores con respaldo, aislamiento por organismo y cumplimiento de la Ley 25.326.">
+        <div class="iudex-bar">
+          <span class="iudex-bar__search">Seguridad</span>
+          <span class="iudex-bar__spacer"></span>
+          <span class="iudex-chip iudex-chip--ok">Conexión segura</span>
+        </div>
+        <div class="iudex-frame__body jz-body">
+          <div class="jz-sec">
+            <div class="jz-sec__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <div><b>Comunicaciones cifradas</b><span>Cada sesión viaja por un canal seguro, con certificado válido y renovación automática.</span></div>
+            </div>
+            <div class="jz-sec__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+              <div><b>Servidores profesionales</b><span>Centro de datos con respaldo diario, monitoreo permanente y base aislada de internet.</span></div>
+            </div>
+            <div class="jz-sec__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3l8 4v5c0 4.4-3.4 8.3-8 9-4.6-.7-8-4.6-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
+              <div><b>Cada organismo, aislado</b><span>El juzgado ve únicamente sus expedientes. Lo aplica el servidor, no la pantalla.</span></div>
+            </div>
+            <div class="jz-sec__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>
+              <div><b>Ley 25.326</b><span>Datos mínimos y con finalidad específica; acceso, rectificación y supresión a pedido del titular.</span></div>
+            </div>
+          </div>
+          <div class="jz-note">
+            <b>Sin IA sobre los datos del juzgado</b>
+            <p>El módulo no envía información del organismo a servicios de inteligencia artificial, propios ni de terceros. Y no nos conectamos a ningún sistema judicial: el listado de escritos lo sube el propio juzgado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERSTITIAL -->
+<section class="c-interstitial">
+  <h3 class="c-display">Hecho acá,<br/>con <em>quien lo usa</em>.</h3>
+  <p>Lo construimos entre dos — un abogado y un escribiente judicial, los dos programadores — trabajando junto al organismo que lo estrena. Lo que pedís se discute con nosotros, no con un ticket.</p>
+</section>
+
+<!-- CTA -->
+<section class="c-cta" id="contacto-juzgados">
+  <div class="c-cta__inner">
+    <span class="c-eyebrow">Puesta en marcha acompañada</span>
+    <h2 class="c-display" style="margin-top:24px">Empecemos por tu mesa.</h2>
+    <p class="c-lead" style="margin-left:auto;margin-right:auto">
+      Damos de alta las cuentas del organismo, migramos el circuito que ya usan y acompañamos las primeras semanas. Escribinos y coordinamos una demo sobre expedientes reales del juzgado.
+    </p>
+    <form class="c-cta__form" method="get" action="../contacto/index.html">
+      <label class="c-sr-only" for="cta-email">Tu correo electrónico</label>
+      <input id="cta-email" type="email" name="email" placeholder="tu@correo.com" required autocomplete="email" />
+      <button type="submit">Pedir acceso</button>
+    </form>
+    <p class="c-cta__trust">
+      <span aria-hidden="true">✓</span> Respondemos en 24 hs &nbsp; · &nbsp;
+      <span aria-hidden="true">✓</span> Sin costo durante la puesta en marcha &nbsp; · &nbsp;
+      <span aria-hidden="true">✓</span> Tus datos, exportables siempre
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="../index.html" class="navbar__logo" style="display:inline-flex">
+          <div class="navbar__logo-mark"><img src="../assets/icon.png" alt="Iudex" /></div>
+          <span class="navbar__logo-text" style="color:var(--cream)">Iudex</span>
+        </a>
+        <p>El espacio de trabajo donde el derecho se piensa. Expediente, jurisprudencia argentina y escritura en un mismo hilo, para estudios y juzgados.</p>
+      </div>
+      <div class="footer__col">
+        <h5>Producto</h5>
+        <ul>
+          <li><a href="../abogados/index.html">Abogados</a></li>
+          <li><a href="index.html">Juzgados</a></li>
+          <li><a href="../investigacion/index.html">Nexus</a></li>
+          <li><a href="../descargar/index.html">Escritorio</a></li>
+          <li><a href="../releases/index.html">Notas de versión</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Cuaderno</h5>
+        <ul>
+          <li><a href="../blog/index.html">Todas las notas</a></li>
+          <li><a href="../blog/historia-nahuel-vallejos.html">Historia de Nahuel</a></li>
+          <li><a href="../blog/historia-maxi-bury.html">Historia de Maxi</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="../about/index.html">Nosotros</a></li>
+          <li><a href="../contacto/index.html">Contacto</a></li>
+          <li><a href="../politica-privacidad/index.html">Privacidad</a></li>
+          <li><a href="../terminos/index.html">Términos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 Iudex. Todos los derechos reservados.</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/iudex.ai" aria-label="Instagram" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="../public/js/env.js"></script>
+<script src="../public/js/main.js"></script>
+</body>
+</html>
