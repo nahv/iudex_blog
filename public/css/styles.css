@@ -5389,6 +5389,56 @@ body.cinematic .navbar.scrolled {
   margin-right: 4px;
 }
 
+/* Carriles de acceso (juzgados / estudios / escritorio) del cierre.
+   El inner del CTA es de 680px para el form solo; con carriles necesita
+   más aire. */
+.c-cta__inner:has(.c-tracks) { max-width: 940px; }
+.c-tracks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 44px;
+  text-align: left;
+}
+.c-track {
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  padding: 22px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.c-track:hover {
+  border-color: var(--gold-deep);
+  transform: translateY(-2px);
+}
+.c-track h3 {
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  margin: 0;
+  color: var(--ink);
+}
+.c-track p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.c-track a {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--gold-deep);
+  text-decoration: none;
+}
+.c-track a:hover { text-decoration: underline; }
+@media (max-width: 860px) {
+  .c-tracks { grid-template-columns: 1fr; }
+}
+
 /* ===========================================================
    CHAPTER BREADCRUMB — above-fold roadmap
    =========================================================== */
@@ -7063,4 +7113,231 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
     --beat-progress: 1 !important;
     --seg-progress: 1 !important;
   }
+}
+
+/* ===========================================================
+   IUDEX JUZGADOS — mockups de la página /juzgados
+   Reusa los contenedores del sistema (.iudex-frame, .iudex-chip,
+   .hwin) y agrega solo las piezas propias de la mesa.
+   =========================================================== */
+.iudex-chip--hab {
+  background: rgba(127, 182, 220, 0.18);
+  color: #2b6a92;
+}
+
+/* El body del frame es flex-row por defecto: los mockups de juzgados
+   apilan bloques (circuito + nota, KPIs + filas), así que van en columna. */
+.iudex-frame__body.jz-body {
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Mesa del hero */
+.jz-mesa { padding: 14px 16px 18px; background: var(--white); }
+.jz-mesa__tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.jz-tab {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(15, 15, 14, 0.04);
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.jz-tab.is-on { background: var(--ink); color: var(--cream); }
+
+/* Filas de expediente (mesa y bandeja) */
+.jz-rows { display: flex; flex-direction: column; gap: 6px; }
+.jz-row {
+  display: grid;
+  grid-template-columns: 118px auto auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid var(--hair);
+  border-radius: 10px;
+  background: var(--white);
+  font-size: 0.72rem;
+  animation: jzRowIn 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+.jz-row--hab {
+  background: #e7f2fa;
+  border-color: #7fb6dc;
+}
+.jz-row b {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink);
+}
+.jz-row em {
+  font-style: normal;
+  color: var(--ink-muted, #6a6a64);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@keyframes jzRowIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Circuito del proveído */
+.jz-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 18px 16px 12px;
+  width: 100%;
+}
+.jz-step {
+  border: 1px solid var(--hair);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.jz-step b { font-size: 0.74rem; color: var(--ink); }
+.jz-step span {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-muted, #6a6a64);
+}
+.jz-step.is-done { border-color: rgba(46, 125, 90, 0.35); }
+.jz-step.is-on {
+  border-color: var(--gold-deep);
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.14);
+}
+
+/* Nota / detalle al pie de un frame */
+.jz-note {
+  margin: 12px 16px 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(15, 15, 14, 0.03);
+}
+.jz-note b {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.jz-note p {
+  margin: 0 0 4px;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.jz-note p span {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--gold-deep);
+  margin-right: 6px;
+}
+
+/* KPIs de la bandeja */
+.jz-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 16px 16px 12px;
+}
+.jz-kpis > div {
+  border: 1px solid var(--hair);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--white);
+}
+.jz-kpis b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.jz-kpis span {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-muted, #6a6a64);
+}
+
+/* Calculadora */
+.jz-calc { padding: 16px 16px 4px; }
+.jz-calc__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--hair);
+  font-size: 0.76rem;
+}
+.jz-calc__row span { color: var(--ink-muted, #6a6a64); }
+.jz-calc__row b { font-family: var(--font-mono); color: var(--ink); }
+.jz-calc__out {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  padding: 14px 16px 0;
+}
+.jz-calc__out > div { display: flex; flex-direction: column; gap: 2px; }
+.jz-calc__out span {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-muted, #6a6a64);
+}
+.jz-calc__out b {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.jz-calc__out .is-total b {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--gold-deep);
+}
+
+/* Requisitos técnicos */
+.jz-req { padding: 18px 16px 4px; display: flex; flex-direction: column; gap: 8px; }
+.jz-req__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--hair);
+  border-radius: 10px;
+  background: var(--white);
+}
+.jz-req__row b { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink); }
+.jz-req__row span {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  color: var(--gold-deep);
+}
+
+@media (max-width: 720px) {
+  .jz-row { grid-template-columns: 100px 1fr; }
+  .jz-row em, .jz-row > span:empty { display: none; }
+  .jz-flow, .jz-kpis { grid-template-columns: repeat(2, 1fr); }
+  /* En pantalla chica el 16/10 del frame recorta el mockup: dejamos que
+     crezca con su contenido y sacamos lo accesorio de la barra. */
+  .iudex-frame:has(.jz-body) { aspect-ratio: auto; }
+  .iudex-frame:has(.jz-body) .iudex-bar__account,
+  .iudex-frame:has(.jz-body) .iudex-bar__spacer { display: none; }
+  .iudex-bar { flex-wrap: wrap; height: auto; padding: 8px 12px; row-gap: 6px; }
+  .jz-mesa__tabs { flex-wrap: wrap; }
 }
