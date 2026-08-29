@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iudex para abogados — Tu estudio, en orden</title>
+  <meta name="description" content="Expedientes, tareas, agenda y escritos en un mismo lugar. Se abre en el navegador y es gratis para trabajar solo. Hecho en Corrientes, para el derecho argentino." />
+  <meta name="keywords" content="software para abogados, gestión de expedientes, estudio jurídico, agenda de plazos, escritos, Corrientes, Iudex" />
+  <meta property="og:title" content="Iudex para abogados — Tu estudio, en orden" />
+  <meta property="og:description" content="Expedientes, tareas, agenda y escritos en un mismo lugar. Gratis para trabajar solo, sin instalar nada." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://iudex.com.ar/abogados/" />
+  <meta property="og:image" content="https://iudex.com.ar/public/assets/screenshots-v3/01-dashboard.png" />
+  <meta property="og:locale" content="es_AR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://iudex.com.ar/abogados/" />
+  <link rel="stylesheet" href="../public/css/styles.css" />
+  <link rel="icon" type="image/png" href="../assets/icon.png" />
+</head>
+<body class="cinematic">
+
+<!-- NAVBAR -->
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+  <div class="container">
+    <div class="navbar__inner">
+      <a href="../index.html" class="navbar__logo" aria-label="Iudex - Inicio">
+        <div class="navbar__logo-mark"><img src="../assets/icon.png" alt="Iudex" /></div>
+        <span class="navbar__logo-text">Iudex</span>
+      </a>
+      <ul class="navbar__links">
+        <li><a href="index.html" aria-current="page">Abogados</a></li>
+        <li><a href="../juzgados/index.html">Juzgados</a></li>
+        <li><a href="../investigacion/index.html">Nexus</a></li>
+        <li><a href="../descargar/index.html">Escritorio</a></li>
+        <li><a href="../blog/index.html">Cuaderno</a></li>
+        <li><a href="https://app.iudex.com.ar/" class="navbar__cta" target="_blank" rel="noopener">Entrar</a></li>
+      </ul>
+      <button class="navbar__toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===========================================================
+     HERO — la app real: "Tus causas"
+     =========================================================== -->
+<section class="c-hero" aria-labelledby="c-ab-title">
+  <div class="c-hero__backdrop" aria-hidden="true"></div>
+  <div class="c-hero__container">
+    <div class="c-hero__copy">
+      <span class="c-eyebrow">Iudex para abogados</span>
+      <h1 id="c-ab-title" class="c-display">
+        Tu estudio,<br/>en <em>orden</em>.
+      </h1>
+      <p class="c-hero__sub">
+        Tus causas, tus plazos y tus escritos en un mismo lugar. Cargás una carátula y ya está: el resto se ordena solo.
+        <span class="c-hero__sub-line">Se abre en el navegador y es <strong>gratis mientras trabajás solo</strong>. Sin instalar nada, sin tarjeta.</span>
+      </p>
+      <div class="c-hero__actions" role="group" aria-label="Acciones principales">
+        <a href="https://app.iudex.com.ar/" class="c-btn c-btn--primary" target="_blank" rel="noopener">
+          Crear cuenta gratis
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#c-ab-planes" class="c-btn c-btn--ghost">Ver planes</a>
+      </div>
+    </div>
+
+    <div class="c-hero__stage">
+      <div class="c-window c-window--front" role="img"
+           aria-label="Iudex: la lista de causas del estudio, con el alta rápida arriba y el estado de cada expediente.">
+        <div class="ab-app">
+          <aside class="ab-side">
+            <div class="ab-side__brand"><b>Iudex</b><span>Estudio Vallejos</span></div>
+            <div class="ab-side__nav">
+              <span class="ab-side__item"><i>▣</i>Inicio</span>
+              <span class="ab-side__item"><i>◷</i>Tareas</span>
+              <span class="ab-side__item"><i>⚇</i>Clientes</span>
+              <span class="ab-side__item is-on"><i>▤</i>Expedientes</span>
+              <span class="ab-side__item"><i>▦</i>Agenda</span>
+              <span class="ab-side__item"><i>◪</i>Calculadora</span>
+            </div>
+          </aside>
+          <div class="ab-main">
+            <div class="ab-top">
+              <h4>Tus <em>causas</em></h4>
+              <span class="ab-top__right"><span class="ab-search">Buscar <b>⌘K</b></span><span class="ab-avatar">A</span></span>
+            </div>
+            <div class="ab-add">Nueva causa… Actora c/ Demandada s/ Objeto (Enter)<i>→</i></div>
+            <div class="ab-rows">
+              <div class="ab-row" style="--i:0"><div><b>Romero, Carlos c/ Municipalidad de Corrientes s/ Daños y Perjuicios</b><span>2025-01930</span></div><em>activo</em></div>
+              <div class="ab-row" style="--i:1"><div><b>Cabral, Florencia c/ Mansilla, Esteban s/ Alimentos</b><span>2026-00087</span></div><em>activo</em></div>
+              <div class="ab-row" style="--i:2"><div><b>González, Juan Carlos c/ Logística del Litoral S.A. s/ Despido</b><span>2026-00112</span></div><em>activo</em></div>
+              <div class="ab-row" style="--i:3"><div><b>Bianchi, Sofía c/ Aseguradora del Sur ART s/ Accidente Ley 24.557</b><span>2026-00045</span></div><em>activo</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     I · TU DÍA
+     =========================================================== -->
+<section class="c-chapter" aria-labelledby="c-ab-ch1">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-eyebrow">I · Tu día</span>
+      <h2 id="c-ab-ch1" class="c-display">Lo que hay<br/>que <em>hacer</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat">
+          <p>Entrás y ves el día: lo que vence, lo que quedó pendiente y lo que se movió mientras no estabas.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Las tareas se escriben como las pensás. <code>Contestar traslado Bianchi viernes 10am</code> — Iudex entiende la fecha, la causa y la prioridad.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Cuando no hay nada urgente, te lo dice. La pantalla vacía también es información.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="iudex-frame" role="img"
+           aria-label="Tablero de tareas de Iudex: columnas Por hacer, En progreso, En revisión y Hecho, con el alta rápida arriba.">
+        <div class="ab-app ab-app--flat">
+          <div class="ab-main">
+            <div class="ab-top">
+              <h4>Tus <em>tareas</em></h4>
+              <span class="ab-top__right"><span class="ab-search">Buscar <b>⌘K</b></span><span class="ab-avatar">A</span></span>
+            </div>
+            <div class="ab-add">Nueva tarea… contestar el traslado (Enter)<i>→</i></div>
+            <div class="ab-kanban">
+              <div class="ab-col">
+                <h6>Por hacer · 4</h6>
+                <div class="ab-card" style="--i:0"><b>Contestar traslado — Bianchi</b><span class="ab-pri ab-pri--alta">alta</span></div>
+                <div class="ab-card" style="--i:1"><b>Presentar alegato — González</b></div>
+                <div class="ab-card" style="--i:2"><b>Audiencia testimonial</b><span class="ab-pri ab-pri--urg">urgente</span></div>
+                <div class="ab-card" style="--i:3"><b>Liquidación de intereses — Romero</b></div>
+              </div>
+              <div class="ab-col"><h6>En progreso · 1</h6><div class="ab-card" style="--i:1"><b>Ofrecer prueba — Cabral</b></div></div>
+              <div class="ab-col"><h6>En revisión · 0</h6></div>
+              <div class="ab-col"><h6>Hecho · 2</h6><div class="ab-card is-done" style="--i:2"><b>Demanda presentada — Romero</b></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     II · LA CAUSA
+     =========================================================== -->
+<section class="c-chapter" aria-labelledby="c-ab-ch2">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-eyebrow">II · La causa</span>
+      <h2 id="c-ab-ch2" class="c-display">Todo el expediente,<br/>en una <em>ficha</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat">
+          <p>La causa se abre en una ventana propia: la seguís consultando mientras trabajás en otra cosa.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Clientes, tareas y documentos de esa causa, juntos. Arrastrás la demanda o la cédula y queda adentro.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Las tareas que nacen ahí quedan vinculadas solas. No hay que acordarse de relacionarlas.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="iudex-frame" role="img"
+           aria-label="Ficha de una causa en Iudex: carátula, clientes vinculados, tareas del caso y documentos.">
+        <div class="ab-app ab-app--flat">
+          <div class="ab-main ab-main--ficha">
+            <div class="ab-ficha">
+              <div class="ab-ficha__bar"><span>▢ EXPEDIENTE</span><i>—  ✕</i></div>
+              <div class="ab-ficha__body">
+                <h5>Bianchi, Sofía c/ Aseguradora del Sur ART s/ Accidente Ley 24.557</h5>
+                <p class="ab-ficha__num">2026-00045</p>
+                <div class="ab-ficha__sec">Clientes</div>
+                <div class="ab-ficha__chip">⚭ Bianchi, Sofía</div>
+                <div class="ab-ficha__sec">Tareas del caso · 2</div>
+                <div class="ab-add ab-add--sm">Nueva tarea del caso… (Enter)<i>→</i></div>
+                <div class="ab-card ab-card--sm"><b>Contestar traslado</b><span class="ab-pri ab-pri--alta">alta</span></div>
+                <div class="ab-card ab-card--sm"><b>Pericial médica — seguimiento</b></div>
+                <div class="ab-ficha__sec">Documentos de la causa</div>
+                <div class="ab-drop">Arrastrá la demanda, cédulas o pruebas acá<br/><span>o hacé click para elegirlas</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     III · NEXUS
+     =========================================================== -->
+<section class="c-chapter" aria-labelledby="c-ab-ch3">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-eyebrow">III · Investigar</span>
+      <h2 id="c-ab-ch3" class="c-display">Preguntá<br/>como a un <em>colega</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat">
+          <p>Nexus entiende el derecho argentino: preguntás en lenguaje natural y responde con los fallos que lo sostienen.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>No inventa: cita. Tocás la fuente y leés el fallo entero, listo para el memorial.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Empezás con una muestra gratis para ver de qué se trata. Sin límite viene con el plan Estudio.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="iudex-frame" role="img"
+           aria-label="Nexus respondiendo una consulta sobre incapacidad y accidente in itinere, con los fallos citados.">
+        <div class="ab-app ab-app--flat">
+          <div class="ab-main">
+            <div class="ab-top">
+              <h4>Nexus</h4>
+              <span class="ab-top__right"><span class="iudex-chip iudex-chip--live"><span class="dot"></span>En línea</span><span class="ab-avatar">A</span></span>
+            </div>
+            <div class="ab-chat">
+              <div class="ab-chat__q">¿Cómo se computa la incapacidad en un accidente in itinere?</div>
+              <div class="ab-chat__a">
+                <p>El accidente in itinere está cubierto por el art. 6.1 de la Ley 24.557 y la incapacidad se determina conforme al baremo del Decreto 659/96, ponderando los factores de edad, tipo de actividad y dificultad para la recolocación.</p>
+                <div class="ab-cites">
+                  <span class="ab-cite">CSJN · «Ledesma» · 2024</span>
+                  <span class="ab-cite">CNAT Sala II · 2025</span>
+                  <span class="ab-cite">STJ Ctes. · 2023</span>
+                </div>
+              </div>
+              <div class="ab-chat__input">Preguntá sobre esta causa…<i>→</i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     IV · LOS NÚMEROS
+     =========================================================== -->
+<section class="c-chapter" aria-labelledby="c-ab-ch4">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-eyebrow">IV · Los números</span>
+      <h2 id="c-ab-ch4" class="c-display">La liquidación,<br/>en un <em>minuto</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat">
+          <p>Intereses con la curva oficial del Banco Nación y las tasas del Banco de Corrientes, la Municipalidad y DGR — al día, sin que las cargues.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Pagos parciales que cortan el interés, con la imputación del art. 776 a la vista.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>La planilla se copia lista para pegar en el escrito. Y los honorarios salen por Ley 5822.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="iudex-frame" role="img"
+           aria-label="Calculadora de intereses de Iudex con el detalle por tramos y el total de la liquidación.">
+        <div class="ab-app ab-app--flat">
+          <div class="ab-main">
+            <div class="ab-top">
+              <h4>Calculadora</h4>
+              <span class="ab-top__right"><span class="iudex-chip iudex-chip--ok">Serie al día</span></span>
+            </div>
+            <div class="ab-calc">
+              <div class="ab-calc__row"><span>Capital</span><b>$ 1.250.000,50</b></div>
+              <div class="ab-calc__row"><span>Período</span><b>01/03/2025 — 29/08/2026</b></div>
+              <div class="ab-calc__row"><span>Tasa</span><b>Tasa Activa Banco Nación</b></div>
+            </div>
+            <div class="ab-calc__out">
+              <div><span>Capital</span><b>$ 1.250.000,50</b></div>
+              <div><span>Intereses</span><b>$ 1.106.243,10</b></div>
+              <div class="is-total"><span>Total</span><b>$ 2.356.243,60</b></div>
+            </div>
+            <div class="ab-calc__tabla">
+              <div class="ab-calc__th"><span>Desde</span><span>Hasta</span><span>Días</span><span>Tasa %</span><span>Interés</span></div>
+              <div class="ab-calc__tr"><span>01/03/2025</span><span>31/05/2025</span><span>92</span><span>5.83</span><span>$ 223.541,76</span></div>
+              <div class="ab-calc__tr"><span>01/06/2025</span><span>30/11/2025</span><span>183</span><span>6.12</span><span>$ 466.912,20</span></div>
+              <div class="ab-calc__tr"><span>01/12/2025</span><span>29/08/2026</span><span>272</span><span>4.95</span><span>$ 415.789,14</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERSTITIAL -->
+<section class="c-interstitial">
+  <h3 class="c-display">Hecho en Corrientes.<br/>Para el <em>derecho argentino</em>.</h3>
+  <p>Lo construimos entre dos — un abogado y un escribiente judicial, los dos programadores. Si encontrás una arista, te respondemos nosotros.</p>
+</section>
+
+<!-- ===========================================================
+     PLANES + CTA
+     =========================================================== -->
+<section class="c-cta" id="c-ab-planes">
+  <div class="c-cta__inner">
+    <span class="c-eyebrow">Empezá hoy · gratis</span>
+    <h2 class="c-display" style="margin-top:24px">Creá tu cuenta.</h2>
+    <p class="c-lead" style="margin-left:auto;margin-right:auto">
+      Entrás con tu correo, verificás y ya estás trabajando. Gratis mientras trabajás solo; cuando sumás gente al estudio, pasás a Estudio.
+    </p>
+
+    <div class="c-hero__actions" style="justify-content:center;margin-top:36px" role="group" aria-label="Crear cuenta">
+      <a href="https://app.iudex.com.ar/" class="c-btn c-btn--primary" target="_blank" rel="noopener">
+        Crear cuenta gratis
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="https://app.iudex.com.ar/" class="c-btn c-btn--ghost" target="_blank" rel="noopener">Ya tengo cuenta</a>
+    </div>
+
+    <div class="c-tracks" role="list">
+      <article class="c-track" role="listitem">
+        <h3>Gratis</h3>
+        <p>Para trabajar solo: expedientes, clientes, tareas, agenda, calculadora y escritos. Incluye una muestra de Nexus para probarlo.</p>
+        <a href="https://app.iudex.com.ar/" target="_blank" rel="noopener">Empezar ahora →</a>
+      </article>
+      <article class="c-track" role="listitem">
+        <h3>Estudio</h3>
+        <p>Sumás a tu equipo, compartís causas y usás Nexus sin límite. Para estudios que ya trabajan de a varios.</p>
+        <a href="../contacto/index.html">Hablar con nosotros →</a>
+      </article>
+      <article class="c-track" role="listitem">
+        <h3>Escritorio</h3>
+        <p>¿Mucho volumen y todo en tu máquina? La edición completa funciona offline y guarda las causas en tu disco.</p>
+        <a href="../descargar/index.html">Conocer el Escritorio →</a>
+      </article>
+    </div>
+
+    <p class="c-cta__trust">
+      <span aria-hidden="true">✓</span> Sin tarjeta &nbsp; · &nbsp;
+      <span aria-hidden="true">✓</span> Verificás tu correo y entrás &nbsp; · &nbsp;
+      <span aria-hidden="true">✓</span> Tus datos, exportables siempre
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="../index.html" class="navbar__logo" style="display:inline-flex">
+          <div class="navbar__logo-mark"><img src="../assets/icon.png" alt="Iudex" /></div>
+          <span class="navbar__logo-text" style="color:var(--cream)">Iudex</span>
+        </a>
+        <p>El espacio de trabajo donde el derecho se piensa. Expediente, jurisprudencia argentina y escritura en un mismo hilo, para estudios y juzgados.</p>
+      </div>
+      <div class="footer__col">
+        <h5>Producto</h5>
+        <ul>
+          <li><a href="index.html">Abogados</a></li>
+          <li><a href="../juzgados/index.html">Juzgados</a></li>
+          <li><a href="../investigacion/index.html">Nexus</a></li>
+          <li><a href="../descargar/index.html">Escritorio</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Cuaderno</h5>
+        <ul>
+          <li><a href="../blog/index.html">Todas las notas</a></li>
+          <li><a href="../blog/historia-nahuel-vallejos.html">Historia de Nahuel</a></li>
+          <li><a href="../blog/historia-maxi-bury.html">Historia de Maxi</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="../about/index.html">Nosotros</a></li>
+          <li><a href="../contacto/index.html">Contacto</a></li>
+          <li><a href="../politica-privacidad/index.html">Privacidad</a></li>
+          <li><a href="../terminos/index.html">Términos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 Iudex. Todos los derechos reservados.</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/iudex.ai" aria-label="Instagram" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="../public/js/env.js"></script>
+<script src="../public/js/main.js"></script>
+</body>
+</html>
