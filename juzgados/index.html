@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Iudex para juzgados — La mesa de entradas, en orden</title>
-  <meta name="description" content="La mesa de proveídos, los escritos de Forum, los trámites y las tasas — en el navegador, para todo el juzgado. Sin instalar nada. Hecho en Corrientes." />
+  <meta name="description" content="La mesa de proveídos, los escritos que entran, los trámites y las tasas — en el navegador, para todo el juzgado. Sin instalar nada. Hecho en Corrientes." />
   <meta name="keywords" content="gestión judicial, mesa de entradas, proveídos, juzgados Corrientes, tasas de justicia, reparto de escritos, Iudex" />
   <meta property="og:title" content="Iudex para juzgados — La mesa de entradas, en orden" />
   <meta property="og:description" content="Proveídos, escritos, trámites y tasas en un mismo lugar. En el navegador, para todo el juzgado." />
@@ -28,12 +28,12 @@
         <span class="navbar__logo-text">Iudex</span>
       </a>
       <ul class="navbar__links">
+        <li><a href="../abogados/index.html">Abogados</a></li>
         <li><a href="index.html" aria-current="page">Juzgados</a></li>
         <li><a href="../investigacion/index.html">Nexus</a></li>
         <li><a href="../descargar/index.html">Escritorio</a></li>
         <li><a href="../blog/index.html">Cuaderno</a></li>
-        <li><a href="../about/index.html">Nosotros</a></li>
-        <li><a href="#contacto-juzgados" class="navbar__cta">Pedir acceso</a></li>
+        <li><a href="https://app.iudex.com.ar/" class="navbar__cta">Entrar</a></li>
       </ul>
       <button class="navbar__toggle" aria-label="Abrir menú" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -54,7 +54,7 @@
         La mesa de entradas,<br/>en <em>orden</em>.
       </h1>
       <p class="c-hero__sub">
-        Los proveídos, los escritos que entran por Forum, los trámites y las tasas — en un mismo lugar, con el estado a la vista de todo el juzgado.
+        Los proveídos, los escritos que entran a la mesa, los trámites y las tasas — en un mismo lugar, con el estado a la vista de todo el juzgado.
         <span class="c-hero__sub-line">Se abre en el navegador: nada que instalar en las máquinas del organismo, y todos ven lo mismo al mismo tiempo.</span>
       </p>
       <div class="c-hero__actions" role="group" aria-label="Acciones principales">
@@ -176,7 +176,7 @@
       <h2 id="c-jz-ch2" class="c-display">Del listado<br/>al <em>reparto</em>.</h2>
       <div class="c-chapter__beats">
         <div class="c-chapter__beat">
-          <p>Subís el export de Forum y la bandeja se arma sola, sin repetir lo que ya estaba. Más viejo primero.</p>
+          <p>Subís el listado que ya exportás del sistema judicial y la bandeja se arma sola, sin repetir lo que ya estaba. Más viejo primero.</p>
         </div>
         <div class="c-chapter__beat">
           <p>El reparto se hace en un click: por cantidad de escritos o de expedientes, en listas parejas y sin partir una causa entre dos personas.</p>
@@ -188,7 +188,7 @@
     </div>
     <div class="c-chapter__stage">
       <div class="iudex-frame" role="img"
-           aria-label="Bandeja de escritos de Iudex: import del export de Forum, reparto en listas y estado por presentante.">
+           aria-label="Bandeja de escritos de Iudex: import del listado del sistema judicial, reparto en listas y estado por presentante.">
         <div class="iudex-bar">
           <span class="iudex-bar__search">Expediente, presentante…</span>
           <span class="iudex-bar__spacer"></span>
@@ -275,27 +275,49 @@
       <h2 id="c-jz-sec" class="c-display">Los datos del juzgado,<br/>del <em>juzgado</em>.</h2>
       <div class="c-chapter__beats">
         <div class="c-chapter__beat">
-          <p>Cada organismo ve únicamente lo suyo. El aislamiento lo aplica el servidor en cada consulta, no la pantalla.</p>
+          <p>Todo viaja cifrado, de punta a punta. Cada dato que sale de una máquina del organismo lo hace por un canal seguro — nunca en claro, nunca por una red abierta.</p>
         </div>
         <div class="c-chapter__beat">
-          <p>Todo el tráfico va cifrado (HTTPS). Las cuentas las damos de alta nosotros: no hay registro abierto al organismo.</p>
+          <p>Infraestructura de primer nivel. Los servidores están en un centro de datos profesional, con copias de respaldo, monitoreo permanente y la base de datos aislada de internet.</p>
         </div>
         <div class="c-chapter__beat">
-          <p>Sin IA sobre los datos del juzgado, sin terceros, sin publicidad — y no nos conectamos a Forum ni a ningún sistema del Poder Judicial: el listado lo sube el propio juzgado.</p>
+          <p>Cada organismo ve solo lo suyo. El aislamiento lo garantiza el servidor en cada consulta, y nada se comparte con terceros: sin publicidad, sin analítica externa, sin venta de datos.</p>
+        </div>
+        <div class="c-chapter__beat">
+          <p>Diseñado según la Ley 25.326 de Protección de Datos Personales: finalidad específica, datos mínimos, y el derecho del titular a acceder, rectificar y suprimir. Los datos son del juzgado y se exportan cuando el juzgado quiera.</p>
         </div>
       </div>
     </div>
     <div class="c-chapter__stage">
-      <div class="iudex-frame" role="img" aria-label="Resumen de requisitos técnicos: solo se habilita HTTPS saliente a dos dominios de Iudex.">
-        <div class="iudex-bar"><span class="iudex-bar__search">Qué necesita habilitar el área de sistemas</span></div>
+      <div class="iudex-frame" role="img"
+           aria-label="Resumen de seguridad de Iudex: conexión cifrada, servidores con respaldo, aislamiento por organismo y cumplimiento de la Ley 25.326.">
+        <div class="iudex-bar">
+          <span class="iudex-bar__search">Seguridad</span>
+          <span class="iudex-bar__spacer"></span>
+          <span class="iudex-chip iudex-chip--ok">Conexión segura</span>
+        </div>
         <div class="iudex-frame__body jz-body">
-          <div class="jz-req">
-            <div class="jz-req__row"><b>app.iudex.com.ar</b><span>HTTPS · 443</span></div>
-            <div class="jz-req__row"><b>api.iudex.com.ar</b><span>HTTPS · 443</span></div>
+          <div class="jz-sec">
+            <div class="jz-sec__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <div><b>Comunicaciones cifradas</b><span>Cada sesión viaja por un canal seguro, con certificado válido y renovación automática.</span></div>
+            </div>
+            <div class="jz-sec__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+              <div><b>Servidores profesionales</b><span>Centro de datos con respaldo diario, monitoreo permanente y base aislada de internet.</span></div>
+            </div>
+            <div class="jz-sec__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3l8 4v5c0 4.4-3.4 8.3-8 9-4.6-.7-8-4.6-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
+              <div><b>Cada organismo, aislado</b><span>El juzgado ve únicamente sus expedientes. Lo aplica el servidor, no la pantalla.</span></div>
+            </div>
+            <div class="jz-sec__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>
+              <div><b>Ley 25.326</b><span>Datos mínimos y con finalidad específica; acceso, rectificación y supresión a pedido del titular.</span></div>
+            </div>
           </div>
           <div class="jz-note">
-            <b>Nada más</b>
-            <p>Sin instalar software en las máquinas. Sin puertos entrantes. Sin certificados propios. Funciona en Chrome, Edge y Firefox.</p>
+            <b>Sin IA sobre los datos del juzgado</b>
+            <p>El módulo no envía información del organismo a servicios de inteligencia artificial, propios ni de terceros. Y no nos conectamos a ningún sistema judicial: el listado de escritos lo sube el propio juzgado.</p>
           </div>
         </div>
       </div>
@@ -344,6 +366,7 @@
       <div class="footer__col">
         <h5>Producto</h5>
         <ul>
+          <li><a href="../abogados/index.html">Abogados</a></li>
           <li><a href="index.html">Juzgados</a></li>
           <li><a href="../investigacion/index.html">Nexus</a></li>
           <li><a href="../descargar/index.html">Escritorio</a></li>
