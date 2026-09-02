@@ -7760,3 +7760,220 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .ab-calc__tr span:nth-child(3), .ab-calc__tr span:nth-child(4) { display: none; }
   .iudex-frame:has(.ab-app) { aspect-ratio: auto; }
 }
+
+/* ===========================================================
+   MOCKUPS DE LA APP — dibujados a mano contra el producto real
+   ===========================================================
+   Reemplazan a los `iudex-frame`, que retrataban la app de escritorio: barra
+   superior con buscador y nada de rail. La app de hoy tiene un rail a la
+   izquierda con las secciones, un titulo serif con la segunda palabra en
+   dorado, y —lo mas importante— una FILA DE CARGA arriba de cada lista donde
+   se escribe en una linea y se aprieta Enter. Esa fila es la personalidad del
+   producto y en los mocks viejos no aparecia.
+
+   Son HTML y no capturas a proposito: pesan nada, se leen en cualquier
+   pantalla, no envejecen con cada deploy y no arrastran la ventana del
+   sistema operativo de quien saco la foto.
+   =========================================================== */
+.app {
+  position: relative;
+  display: flex;
+  height: 100%;
+  background: var(--cream);
+  border-radius: inherit;
+  overflow: hidden;
+  font-size: 11px;
+  color: var(--ink);
+  text-align: left;
+}
+
+/* ── Rail ─────────────────────────────────────────────────── */
+.app__rail {
+  flex: none;
+  width: 104px;
+  padding: 14px 8px;
+  border-right: 1px solid var(--cream-dark);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.app__brand {
+  font-family: var(--font-display);
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 2px;
+}
+.app__studio {
+  font-family: var(--font-mono);
+  font-size: 6.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-align: center;
+  margin-bottom: 12px;
+}
+.app__nav {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  color: var(--ink-muted);
+}
+.app__nav i {
+  width: 11px;
+  height: 11px;
+  flex: none;
+  border-radius: 3px;
+  border: 1.2px solid currentColor;
+  opacity: 0.55;
+}
+.app__nav.is-on {
+  background: var(--cream-dark);
+  color: var(--ink);
+  font-weight: 500;
+}
+.app__nav.is-on i { opacity: 0.9; }
+
+/* Los íconos del rail. Van por máscara CSS —no como SVG en el HTML— porque el
+   rail se repite en seis mocks y como markup serían cuarenta y dos copias del
+   mismo dibujo. Con `currentColor` de fondo heredan el color del ítem, así el
+   seleccionado se oscurece solo. */
+.app__nav i {
+  width: 11px;
+  height: 11px;
+  flex: none;
+  border: 0;
+  border-radius: 0;
+  background: currentColor;
+  opacity: 0.5;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+.app__nav.is-on i { opacity: 0.95; }
+.app__nav--inicio i { -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%2218%22%20height%3D%2217%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M3%209h18M8%202v4M16%202v4%22%2F%3E%3C%2Fsvg%3E"); mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%2218%22%20height%3D%2217%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M3%209h18M8%202v4M16%202v4%22%2F%3E%3C%2Fsvg%3E"); }
+.app__nav--tareas i { -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M8%2012l3%203%205-6%22%2F%3E%3C%2Fsvg%3E"); mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M8%2012l3%203%205-6%22%2F%3E%3C%2Fsvg%3E"); }
+.app__nav--nexus i { -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%225%22%2F%3E%3Cpath%20d%3D%22M12%203v2M12%2019v2M3%2012h2M19%2012h2%22%2F%3E%3C%2Fsvg%3E"); mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%225%22%2F%3E%3Cpath%20d%3D%22M12%203v2M12%2019v2M3%2012h2M19%2012h2%22%2F%3E%3C%2Fsvg%3E"); }
+.app__nav--clientes i { -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%229%22%20cy%3D%229%22%20r%3D%223%22%2F%3E%3Cpath%20d%3D%22M3%2020c0-3%203-5%206-5s6%202%206%205%22%2F%3E%3Ccircle%20cx%3D%2217%22%20cy%3D%229%22%20r%3D%222%22%2F%3E%3C%2Fsvg%3E"); mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%229%22%20cy%3D%229%22%20r%3D%223%22%2F%3E%3Cpath%20d%3D%22M3%2020c0-3%203-5%206-5s6%202%206%205%22%2F%3E%3Ccircle%20cx%3D%2217%22%20cy%3D%229%22%20r%3D%222%22%2F%3E%3C%2Fsvg%3E"); }
+.app__nav--expedientes i { -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%207a2%202%200%20012-2h4l2%202h8a2%202%200%20012%202v9a2%202%200%2001-2%202H5a2%202%200%2001-2-2z%22%2F%3E%3C%2Fsvg%3E"); mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%207a2%202%200%20012-2h4l2%202h8a2%202%200%20012%202v9a2%202%200%2001-2%202H5a2%202%200%2001-2-2z%22%2F%3E%3C%2Fsvg%3E"); }
+.app__nav--agenda i { -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%2218%22%20height%3D%2216%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M3%2010h18M8%203v4M16%203v4%22%2F%3E%3C%2Fsvg%3E"); mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%2218%22%20height%3D%2216%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M3%2010h18M8%203v4M16%203v4%22%2F%3E%3C%2Fsvg%3E"); }
+.app__nav--calculadora i { -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%224%22%20y%3D%223%22%20width%3D%2216%22%20height%3D%2218%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M8%208h8M8%2012h3M8%2016h3M15%2012v4%22%2F%3E%3C%2Fsvg%3E"); mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%224%22%20y%3D%223%22%20width%3D%2216%22%20height%3D%2218%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M8%208h8M8%2012h3M8%2016h3M15%2012v4%22%2F%3E%3C%2Fsvg%3E"); }
+
+
+/* ── Lienzo ───────────────────────────────────────────────── */
+.app__main { flex: 1; min-width: 0; padding: 14px 18px; display: flex; flex-direction: column; }
+.app__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.app__title { font-family: var(--font-display); font-size: 19px; font-weight: 500; margin: 0; }
+.app__title em { font-style: italic; color: var(--gold); }
+.app__tools { display: flex; align-items: center; gap: 7px; flex: none; }
+.app__search {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 8.5px;
+  color: var(--ink-muted);
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: 999px;
+  padding: 4px 9px;
+}
+.app__search b { font-family: var(--font-mono); font-size: 7px; background: var(--cream-dark); border-radius: 4px; padding: 1px 4px; font-weight: 400; }
+.app__avatar { width: 17px; height: 17px; border-radius: 50%; background: var(--cream-dark); display: grid; place-items: center; font-size: 8px; }
+
+/* ── La fila de carga: una linea y Enter ──────────────────── */
+.app__add {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 12px;
+  padding: 9px 12px;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: 10px;
+  font-size: 9.5px;
+  color: var(--ink-muted);
+}
+.app__add span { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.app__add em { font-style: normal; color: var(--ink); }
+.app__add i { flex: none; width: 12px; height: 12px; border-radius: 3px; border: 1.2px solid currentColor; opacity: 0.45; }
+.app__add u { flex: none; text-decoration: none; opacity: 0.4; }
+/* El cursor que escribe. Se apaga con `prefers-reduced-motion` mas abajo. */
+.app__caret { display: inline-block; width: 1px; height: 10px; background: var(--gold); vertical-align: -1px; animation: appCaret 1s steps(2) infinite; }
+@keyframes appCaret { 50% { opacity: 0; } }
+
+/* ── Filas de una lista ───────────────────────────────────── */
+.app__rows { margin-top: 9px; display: flex; flex-direction: column; gap: 7px; }
+.app__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: 10px;
+}
+.app__row b { font-weight: 500; font-size: 9.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app__row small { flex: none; font-size: 8px; color: var(--ink-muted); }
+.app__row-sub { display: block; font-size: 8px; color: var(--ink-muted); font-weight: 400; margin-top: 2px; }
+.app__tag { flex: none; font-family: var(--font-mono); font-size: 7px; letter-spacing: 0.04em; color: #2e7d5a; background: rgba(46,125,90,0.1); border-radius: 999px; padding: 2px 6px; }
+.app__tag--gold { color: #8a6d1f; background: rgba(201,168,76,0.16); }
+
+/* ── Segmentos (Lista / Semana / Mes) ─────────────────────── */
+.app__segs { display: inline-flex; gap: 2px; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 999px; padding: 2px; }
+.app__segs span { font-size: 8px; padding: 3px 9px; border-radius: 999px; color: var(--ink-muted); }
+.app__segs .is-on { background: var(--gold); color: var(--white); }
+
+/* ── Grilla del mes ───────────────────────────────────────── */
+.app__cal { margin-top: 10px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.app__cal span { font-size: 7px; color: var(--ink-muted); text-align: center; padding-bottom: 2px; }
+.app__cal div { aspect-ratio: 1 / 0.72; border: 1px solid var(--cream-dark); border-radius: 5px; background: var(--white); font-size: 7.5px; color: var(--ink-muted); padding: 3px 4px; }
+.app__cal div.is-hoy { background: var(--gold); color: var(--white); border-color: var(--gold); }
+.app__cal div.tiene::after { content: ''; display: block; width: 3px; height: 3px; border-radius: 50%; background: var(--gold); margin: 3px auto 0; }
+
+/* ── Calculadora ──────────────────────────────────────────── */
+.app__form { margin-top: 12px; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 10px; padding: 12px; }
+.app__field { margin-bottom: 9px; }
+.app__field label { display: block; font-size: 7.5px; color: var(--ink-muted); margin-bottom: 3px; }
+.app__field div { background: var(--cream); border-radius: 6px; padding: 6px 8px; font-size: 9.5px; }
+.app__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.app__btn { margin-top: 3px; background: #17342c; color: var(--white); border-radius: 7px; text-align: center; padding: 7px; font-size: 9px; }
+
+/* ── Nexus ────────────────────────────────────────────────── */
+.app--nx .app__main { padding: 0; flex-direction: row; }
+.app__hilos { flex: none; width: 108px; border-right: 1px solid var(--cream-dark); padding: 12px 9px; }
+.app__hilos p { font-family: var(--font-mono); font-size: 6.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.app__hilos b { display: block; font-size: 8.5px; font-weight: 400; line-height: 1.35; color: var(--ink-soft); margin-bottom: 8px; }
+.app__hilos b.is-on { color: var(--ink); font-weight: 500; }
+.app__chat { flex: 1; min-width: 0; padding: 12px 14px; display: flex; flex-direction: column; }
+.app__q { align-self: flex-end; max-width: 78%; background: var(--cream-dark); border-radius: 9px; padding: 7px 10px; font-size: 9px; }
+.app__a { margin-top: 10px; font-size: 9px; line-height: 1.6; color: var(--ink-soft); }
+.app__a b { color: var(--ink); }
+.app__cite {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: 1px;
+  font-size: 7.5px;
+  color: #2f5d8a;
+  background: rgba(47,93,138,0.07);
+  border: 1px solid rgba(47,93,138,0.22);
+  border-radius: 5px;
+  padding: 1px 5px;
+  margin: 0 1px;
+}
+.app__cite i { font-style: normal; font-weight: 700; }
+.app__cite u { text-decoration: none; font-style: italic; opacity: 0.85; }
+.app__fuentes { flex: none; width: 116px; border-left: 1px solid var(--cream-dark); padding: 12px 9px; }
+.app__fuentes p { font-family: var(--font-mono); font-size: 6.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.app__fuente { border: 1px solid var(--cream-dark); border-radius: 7px; padding: 6px 7px; margin-bottom: 6px; background: var(--white); }
+.app__fuente b { display: block; font-size: 7.5px; font-weight: 500; line-height: 1.3; }
+.app__fuente small { display: block; font-family: var(--font-mono); font-size: 6.5px; color: var(--ink-muted); margin-top: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .app__caret { animation: none; }
+}

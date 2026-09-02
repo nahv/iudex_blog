@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iudex — Donde el derecho se piensa</title>
-  <meta name="description" content="Iudex es el espacio de trabajo jurídico para estudios y juzgados argentinos: expediente, escritos y búsqueda con IA en el navegador. Hecho en Corrientes." />
+  <title>Iudex — Pensá derecho</title>
+  <meta name="description" content="Tus causas, tu agenda y la jurisprudencia de Corrientes, en un mismo lugar. Se abre en el navegador y la beta está abierta. Hecho en Corrientes." />
   <meta name="keywords" content="software jurídico, gestión de expedientes, escritura legal, jurisprudencia argentina, Digesto Jurídico, abogados Corrientes, legaltech Argentina" />
-  <meta property="og:title" content="Iudex — Donde el derecho se piensa" />
-  <meta property="og:description" content="Investigar, escribir y decidir — en un mismo hilo. Hecho en Corrientes, para el derecho argentino." />
+  <meta property="og:title" content="Iudex — Pensá derecho" />
+  <meta property="og:description" content="Tus causas, tu agenda y la jurisprudencia de Corrientes, en un mismo lugar." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://iudex.com.ar/" />
   <meta property="og:image" content="https://iudex.com.ar/public/assets/screenshots-v2/01-dashboard.png" />
@@ -15,8 +15,8 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="es_AR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Iudex — Donde el derecho se piensa" />
-  <meta name="twitter:description" content="Investigar, escribir y decidir — en un mismo hilo. Hecho en Corrientes." />
+  <meta name="twitter:title" content="Iudex — Pensá derecho" />
+  <meta name="twitter:description" content="Tus causas, tu agenda y la jurisprudencia de Corrientes, en un mismo lugar." />
   <meta name="twitter:image" content="https://iudex.com.ar/public/assets/screenshots-v2/01-dashboard.png" />
   <link rel="canonical" href="https://iudex.com.ar/" />
   <link rel="stylesheet" href="public/css/styles.css" />
@@ -55,18 +55,18 @@
     <div class="c-hero__copy">
       <span class="c-eyebrow">Iudex</span>
       <h1 id="c-hero-title" class="c-display">
-        Donde el derecho<br/>se <em>piensa</em>.
+        Pensá <em>derecho</em>.
       </h1>
       <p class="c-hero__sub">
-        Investigá, escribí y resolvé sin cambiar de pantalla — el expediente, los escritos y la búsqueda con IA, en un mismo lugar.
-        <span class="c-hero__sub-line">Hecho en Corrientes, para el derecho argentino. Se abre en el navegador: creás tu cuenta y empezás. <b>La beta está abierta</b> y es gratis.</span>
+        Tus causas, tu agenda y la jurisprudencia de Corrientes, en un mismo lugar.
+        <span class="c-hero__sub-line">Se abre en el navegador. La beta está abierta.</span>
       </p>
       <div class="c-hero__actions" role="group" aria-label="Acciones principales">
         <a href="https://app.iudex.com.ar/" class="c-btn c-btn--primary" target="_blank" rel="noopener">
           Crear cuenta gratis
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="abogados/index.html" class="c-btn c-btn--ghost">
+        <a href="#capitulo-1" class="c-btn c-btn--ghost">
           Ver cómo funciona
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -74,63 +74,88 @@
     </div>
 
     <div class="c-hero__stage" aria-hidden="false">
-      <!-- Las dos ventanas de profundidad son MOCKS y no capturas.
-           Antes eran PNG de la app de escritorio: se les veía la barra de
-           macOS justo debajo de un titular que promete que esto se abre en el
-           navegador. Se intentó recortarla con un `scale` —está el comentario
-           en el CSS— pero tapar el problema no lo arregla, y además obligaba a
-           regenerar imágenes cada vez que la app cambia. Dibujadas en HTML se
-           mantienen solas, pesan nada y muestran el producto que hay hoy. -->
+      <!-- Las ventanas de profundidad son MOCKS dibujados contra la app real,
+           no capturas. Antes eran PNG del escritorio y se les veía la barra de
+           macOS justo debajo de un titular que promete el navegador. Además,
+           dibujadas no envejecen con cada deploy. -->
       <div class="c-window c-window--back" aria-hidden="true">
-        <div class="hwin">
-          <div class="hwin__bar"><span>Iudex — Expedientes</span></div>
-          <div class="hwin__dash">
-            <p class="hd-greet">Buen día, Ana</p>
-            <p class="hd-sub">4 vencimientos esta semana.</p>
-            <div class="hd-rows">
-              <div class="hd-row"><span>Bianchi c/ Aseguradora del Sur ART</span><b>Activo</b></div>
-              <div class="hd-row"><span>González c/ Logística del Litoral</span><b>Activo</b></div>
-              <div class="hd-row"><span>Cabral c/ Mansilla — alimentos</span><b>Activo</b></div>
-              <div class="hd-row"><span>Romero c/ Municipalidad de Corrientes</span><b>Activo</b></div>
+        <div class="app">
+          <div class="app__rail">
+            <div class="app__brand">Iudex</div>
+            <div class="app__studio">Estudio Vallejos</div>
+            <div class="app__nav app__nav--inicio"><i></i>Inicio</div>
+            <div class="app__nav app__nav--tareas"><i></i>Tareas</div>
+            <div class="app__nav app__nav--nexus"><i></i>Nexus</div>
+            <div class="app__nav app__nav--clientes"><i></i>Clientes</div>
+            <div class="app__nav app__nav--expedientes is-on"><i></i>Expedientes</div>
+            <div class="app__nav app__nav--agenda"><i></i>Agenda</div>
+            <div class="app__nav app__nav--calculadora"><i></i>Calculadora</div>
+          </div>
+          <div class="app__main">
+            <div class="app__head">
+              <h4 class="app__title">Tus <em>causas</em></h4>
+              <div class="app__tools"><span class="app__search">Buscar <b>⌘K</b></span><span class="app__avatar">A</span></div>
             </div>
-            <div class="hd-tiles">
-              <div><b>15</b><span>Activos</span></div>
-              <div><b>4</b><span>Esta semana</span></div>
-              <div><b>0</b><span>Vencidos</span></div>
+            <div class="app__add"><i></i><span>Nueva causa… 12345/2024 Sucesión s/ Ab intestato (Enter)</span><u>→</u></div>
+            <div class="app__rows">
+              <div class="app__row"><b>Bianchi, Sofía c/ Aseguradora del Sur ART<span class="app__row-sub">Juzgado del Trabajo N° 1</span></b><span class="app__tag">activo</span></div>
+              <div class="app__row"><b>González c/ Logística del Litoral<span class="app__row-sub">Juzgado del Trabajo N° 2</span></b><span class="app__tag">activo</span></div>
+              <div class="app__row"><b>Cabral c/ Mansilla — alimentos<span class="app__row-sub">Juzgado de Familia N° 1</span></b><span class="app__tag app__tag--gold">urgente</span></div>
+              <div class="app__row"><b>Romero c/ Municipalidad de Corrientes<span class="app__row-sub">Cámara Contencioso Administrativo</span></b><span class="app__tag">activo</span></div>
             </div>
           </div>
         </div>
       </div>
       <div class="c-window c-window--mid" aria-hidden="true">
-        <div class="hwin">
-          <div class="hwin__bar"><span>Iudex — Agenda</span></div>
-          <div class="hwin__dash">
-            <p class="hd-greet">Esta semana</p>
-            <p class="hd-sub">Audiencias, plazos y recordatorios.</p>
-            <div class="hd-rows">
-              <div class="hd-row"><span>Audiencia testimonial — Bianchi c/ ART</span><b>15/06</b></div>
-              <div class="hd-row"><span>Ofrece prueba — González</span><b>15/06</b></div>
-              <div class="hd-row"><span>Presentar alegato — Bianchi</span><b>Hoy</b></div>
-              <div class="hd-row"><span>Recurso de apelación — Romero</span><b>Mañana</b></div>
+        <div class="app">
+          <div class="app__rail">
+            <div class="app__brand">Iudex</div>
+            <div class="app__studio">Estudio Vallejos</div>
+            <div class="app__nav app__nav--inicio"><i></i>Inicio</div>
+            <div class="app__nav app__nav--tareas"><i></i>Tareas</div>
+            <div class="app__nav app__nav--nexus"><i></i>Nexus</div>
+            <div class="app__nav app__nav--clientes"><i></i>Clientes</div>
+            <div class="app__nav app__nav--expedientes"><i></i>Expedientes</div>
+            <div class="app__nav app__nav--agenda is-on"><i></i>Agenda</div>
+            <div class="app__nav app__nav--calculadora"><i></i>Calculadora</div>
+          </div>
+          <div class="app__main">
+            <div class="app__head">
+              <h4 class="app__title">Tu <em>agenda</em></h4>
+              <div class="app__tools"><span class="app__segs"><span>Lista</span><span>Semana</span><span class="is-on">Mes</span></span></div>
+            </div>
+            <div class="app__add"><i></i><span>Agendá natural… audiencia mañana 10hs (Enter)</span><u>→</u></div>
+            <div class="app__cal">
+              <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+              <div>1</div><div class="tiene">2</div><div>3</div><div>4</div><div class="tiene">5</div><div>6</div><div>7</div>
+              <div>8</div><div class="is-hoy">9</div><div>10</div><div class="tiene">11</div><div>12</div><div>13</div><div>14</div>
+              <div>15</div><div>16</div><div class="tiene">17</div><div>18</div><div>19</div><div>20</div><div>21</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="c-window c-window--front" role="img" aria-label="Iudex Nexus, el asistente del expediente, respondiendo en lenguaje natural sobre los embargos trabados en la causa, con la cita del proveído.">
+      <!-- La ventana del frente es NEXUS tal como se usa hoy: se le pregunta
+           por jurisprudencia y legislación de Corrientes y cada afirmación
+           viene con su cita. Antes mostraba un "asistente del expediente"
+           respondiendo sobre los embargos de una causa: eso es la app de
+           escritorio, no lo que hay hoy en el navegador. Prometer que la IA
+           lee tus documentos cuando todavía no los lee es la clase de detalle
+           que se descubre en el primer minuto de uso. -->
+      <div class="c-window c-window--front" role="img" aria-label="Nexus respondiendo sobre el plazo de gracia en Corrientes, con la cita del artículo al lado de cada afirmación.">
         <div class="hwin hwin--nx">
-          <div class="hwin__bar"><span>Iudex — Fisco c/ Maderera del Litoral</span></div>
+          <div class="hwin__bar"><span>Iudex — Nexus</span></div>
           <div class="hnx">
-            <div class="hnx__expte">2026-00318 · Fisco de Corrientes c/ Maderera del Litoral S.A. s/ Apremio</div>
-            <div class="hnx__head"><span class="nx-orb nx-orb--sm"></span>Asistente del expediente</div>
+            <div class="hnx__head"><span class="nx-orb nx-orb--sm"></span>Nexus</div>
             <div class="hnx__chat">
-              <div class="hnx-q">hay embargos trabados?</div>
+              <div class="hnx-q">¿cómo se computa el plazo de gracia en Corrientes?</div>
               <div class="hnx-a">
-                <p class="hnx-ln" style="--i:0">Sí. El <b>14/02/2025</b> el Juzgado ordenó <b>trabar embargo preventivo</b> sobre los fondos de MADERERA DEL LITORAL S.A.,</p>
-                <p class="hnx-ln" style="--i:1">instrumentado por el Sistema de Oficios Judiciales (SOJ), hasta cubrir la suma reclamada.</p>
-                <span class="hnx-cite" style="--i:2">⎘ Proveído 14/02/2025 · fs. 32</span>
+                <p class="hnx-ln" style="--i:0">En el fuero civil, la presentación electrónica se tiene por efectuada en la <b>fecha y hora</b> que registra el ingreso al sistema.</p>
+                <span class="hnx-cite" style="--i:1">⎘ Ley 6556 — CPCC · art. 102</span>
+                <p class="hnx-ln" style="--i:2">En el penal, el acto puede realizarse en las <b>dos primeras horas</b> de despacho del día hábil siguiente.</p>
+                <span class="hnx-cite" style="--i:3">⎘ CPP Corrientes · art. 116</span>
               </div>
             </div>
-            <div class="hnx__input"><span class="hnx-typed">¿puedo ampliar el embargo trabado?</span><span class="hnx-caret"></span><svg class="hnx-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="hnx__input"><span class="hnx-typed">¿y si el vencimiento cae feriado?</span><span class="hnx-caret"></span><svg class="hnx-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
           </div>
         </div>
       </div>
@@ -152,405 +177,57 @@
      =========================================================== -->
 <nav class="c-chapter-strip" aria-label="Capítulos">
   <ol class="c-chapter-strip__list">
-    <li><a href="#capitulo-1">El día</a></li>
-    <li><a href="#capitulo-2">El expediente</a></li>
-    <li><a href="#capitulo-3">El escrito</a></li>
-    <li><a href="#capitulo-4">Investigar</a></li>
-    <li><a href="#capitulo-5">Tu espacio</a></li>
+    <li><a href="#capitulo-1">Tu día</a></li>
+    <li><a href="#capitulo-2">Una línea</a></li>
+    <li><a href="#capitulo-3">Nexus</a></li>
+    <li><a href="#capitulo-4">Tasas</a></li>
   </ol>
 </nav>
 
 <!-- ===========================================================
-     CHAPTER I — El día, ordenado
-     Dashboard → Agenda → Calculadora
+     I — Tu día
      =========================================================== -->
 <section class="c-chapter" id="capitulo-1" data-chapter="1" data-live aria-labelledby="c-ch1-title">
   <div class="c-chapter__sticky">
     <div class="c-chapter__copy">
       <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
-      <span class="c-eyebrow">I · El día</span>
-      <h2 id="c-ch1-title" class="c-display">Todo en su lugar.</h2>
+      <span class="c-eyebrow">I · Tu día</span>
+      <h2 id="c-ch1-title" class="c-display">Qué toca hoy.</h2>
       <div class="c-chapter__beats">
         <div class="c-chapter__beat" data-beat="0">
-          <p>Tu estudio, tus causas, tus plazos. Una sola superficie que te muestra lo importante primero.</p>
+          <p>Abrís y ves lo que vence. Nada más.</p>
         </div>
         <div class="c-chapter__beat" data-beat="1">
-          <p>La agenda muestra los próximos vencimientos. Los plazos dejan de vivir en tu cabeza.</p>
-        </div>
-        <div class="c-chapter__beat" data-beat="2">
-          <p>Liquidás con la curva oficial del BNA y las tasas del Banco de Corrientes. La calculadora le ahorra horas al estudio.</p>
+          <p>Las causas, los clientes y la agenda, cada cosa en su lugar.</p>
         </div>
       </div>
     </div>
     <div class="c-chapter__stage">
-      <div class="iudex-frame iudex-frame--dash" role="img"
-           aria-label="Iudex al empezar el día: el saludo, las causas recientes, los próximos vencimientos y la liquidación lista.">
-        <div class="iudex-bar">
-          <span class="iudex-bar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Buscar por número de causa…</span>
-          <span class="iudex-bar__spacer"></span>
-          <span class="iudex-bar__account"><span class="iudex-bar__avatar">A</span>Dra. Ana M. Vallejos</span>
-        </div>
-        <div class="iudex-frame__body" data-shell="inicio">
-          <div class="iudex-frame__view dash">
-            <div class="dash__main">
-              <p class="sc-label">Martes 19 de mayo</p>
-              <h4 class="dash__greet">Buenos días, Ana</h4>
-              <p class="dash__sub">3 vencimientos esta semana.</p>
-              <p class="sc-label">Recientes</p>
-              <div class="dash__list">
-                <div class="dash-row" style="--i:0"><span class="dash-row__name">Bianchi, Sofía c/ Aseguradora del Sur ART s/ Accidente Ley 24.557</span><span class="dash-row__meta">Juzgado del Trabajo N°1 — Corrientes</span><span class="iudex-chip iudex-chip--ok">Activo</span></div>
-                <div class="dash-row" style="--i:1"><span class="dash-row__name">González, Juan Carlos c/ Logística del Litoral S.A. s/ Despido</span><span class="dash-row__meta">Juzgado del Trabajo N°2 — Corrientes</span><span class="iudex-chip iudex-chip--ok">Activo</span></div>
-                <div class="dash-row" style="--i:2"><span class="dash-row__name">Cabral, Florencia c/ Mansilla, Esteban s/ Alimentos</span><span class="dash-row__meta">Juzgado de Familia N°1 — Corrientes</span><span class="iudex-chip iudex-chip--ok">Activo</span></div>
-                <div class="dash-row" style="--i:3"><span class="dash-row__name">Romero, Carlos c/ Municipalidad de Corrientes s/ Daños y Perjuicios</span><span class="dash-row__meta">Cámara en lo Cont. Administrativo</span><span class="iudex-chip iudex-chip--ok">Activo</span></div>
-              </div>
+      <div class="c-window" style="position:relative" role="img"
+           aria-label="La pantalla de inicio de Iudex: el saludo del día, los vencimientos de la semana y las causas recientes.">
+        <div class="app">
+            <div class="app__rail">
+              <div class="app__brand">Iudex</div>
+              <div class="app__studio">Estudio Vallejos</div>
+              <div class="app__nav app__nav--inicio is-on"><i></i>Inicio</div>
+              <div class="app__nav app__nav--tareas"><i></i>Tareas</div>
+              <div class="app__nav app__nav--nexus"><i></i>Nexus</div>
+              <div class="app__nav app__nav--clientes"><i></i>Clientes</div>
+              <div class="app__nav app__nav--expedientes"><i></i>Expedientes</div>
+              <div class="app__nav app__nav--agenda"><i></i>Agenda</div>
+              <div class="app__nav app__nav--calculadora"><i></i>Calculadora</div>
             </div>
-            <aside class="dash__side">
-              <div class="dash__tiles">
-                <div class="dash-tile"><b>15</b><span>Activos</span></div>
-                <div class="dash-tile"><b>0</b><span>Paralizados</span></div>
-                <div class="dash-tile"><b>0</b><span>Sentencia</span></div>
-                <div class="dash-tile"><b>15</b><span>Total</span></div>
-              </div>
-              <div class="dash-prox">
-                <p class="sc-label">Próximos</p>
-                <div class="dash-prox__alert">⚠ 1 vencimiento atrasado</div>
-                <div class="prox-row"><b>Audiencia testimonial</b><span>Bianchi c/ ART · Mañana 09:00</span></div>
-                <div class="prox-row"><b>Contesta traslado</b><span>Vence 22/05 · 19:00</span></div>
-                <div class="prox-row"><b>Presentar alegato</b><span>24/05 · 12:00</span></div>
-              </div>
-            </aside>
-            <div class="dash__calc">Liquidación lista <b>$525.666,67</b></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INTERSTITIAL — calm pause -->
-<section class="c-interstitial c-interstitial--air">
-  <h3 class="c-display">Menos fricción.<br/><em>Más claridad.</em></h3>
-</section>
-
-<!-- ===========================================================
-     CHAPTER II — El expediente
-     Workspace 3-pane → timeline
-     =========================================================== -->
-<section class="c-chapter" id="capitulo-2" data-chapter="2" data-live aria-labelledby="c-ch2-title">
-  <div class="c-chapter__sticky">
-    <div class="c-chapter__copy">
-      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
-      <span class="c-eyebrow">II · El expediente</span>
-      <h2 id="c-ch2-title" class="c-display">Donde vive<br/>cada causa.</h2>
-      <div class="c-chapter__beats">
-        <div class="c-chapter__beat" data-beat="0">
-          <p>Actuaciones, documentos y tareas en un mismo hilo. Sin pestañas perdidas, sin pegado entre apps.</p>
-        </div>
-        <div class="c-chapter__beat" data-beat="1">
-          <p>Cada actuación en orden, con su tipo, páginas y estado. El expediente se lee de un vistazo.</p>
-        </div>
-        <div class="c-chapter__beat" data-beat="2">
-          <p>Cada documento, con huella. Subís a tu Drive o Dropbox, y el QR + hash quedan impresos en el escrito — la firma del archivo, verificable desde el papel.</p>
-        </div>
-      </div>
-    </div>
-    <div class="c-chapter__stage">
-      <div class="iudex-frame iudex-frame--exp" role="img"
-           aria-label="El expediente en Iudex: actuaciones, documento y datos en un solo hilo; y el panel de integridad con hash y vinculación a la nube.">
-        <div class="iudex-bar">
-          <span class="iudex-bar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Bianchi, Sofía c/ Aseguradora del Sur ART — 2026-00045</span>
-          <span class="iudex-bar__spacer"></span>
-          <span class="iudex-chip iudex-chip--gold">Pericial médica</span>
-          <span class="iudex-bar__account"><span class="iudex-bar__avatar">A</span>Dra. Ana M. Vallejos</span>
-        </div>
-        <div class="iudex-frame__body" data-shell="expedientes">
-          <div class="iudex-frame__view exp">
-            <div class="exp__acts">
-              <p class="sc-label">Actuaciones</p>
-              <div class="act-row" style="--i:0"><b>Alegato parte actora</b><span>Escrito · 6 págs</span></div>
-              <div class="act-row is-on" style="--i:1"><b>Pericial médica</b><span>Prueba · 4 págs</span></div>
-              <div class="act-row" style="--i:2"><b>Contesta ART</b><span>Escrito · 9 págs</span></div>
-              <div class="act-row" style="--i:3"><b>Ofrece prueba</b><span>Escrito · 3 págs</span></div>
-              <div class="act-row" style="--i:4"><b>Historia clínica</b><span>Documento · 12 págs</span></div>
-              <div class="act-row" style="--i:5"><b>Demanda</b><span>Escrito · 8 págs</span></div>
+          <div class="app__main">
+            <div class="app__head">
+              <h4 class="app__title">Tu <em>día</em></h4>
+              <div class="app__tools"><span class="app__search">Buscar <b>⌘K</b></span><span class="app__avatar">A</span></div>
             </div>
-            <div class="exp__doc">
-              <h5>Pericial médica</h5>
-              <p class="doc-cap">Bianchi, Sofía c/ Aseguradora del Sur ART — Secretaría Única</p>
-              <p>Pericia médica suscripta por el perito oficial Dr. Rodríguez, dando cuenta de una incapacidad permanente del 47% vinculada causalmente al accidente in itinere denunciado en autos.</p>
-              <p>El dictamen detalla las constancias médicas, los estudios complementarios y la valoración del nexo causal conforme al baremo aplicable.</p>
-            </div>
-            <div class="ii-scrim"></div>
-            <div class="ii-card">
-              <div class="ii-card__head">
-                <span class="ii-card__icon">✓</span>
-                <span><b>Integridad del documento</b><span>Pericia médica</span></span>
-              </div>
-              <div class="ii-upload" aria-hidden="true">
-                <div class="ii-up-row"><i class="ii-up-ic">▲</i>Subiendo a Google Drive…</div>
-                <div class="ii-up-bar"><span></span></div>
-                <div class="ii-up-cap">Calculando huella SHA-256</div>
-              </div>
-              <div class="ii-gen">
-                <div class="ii-row"><span class="iudex-chip iudex-chip--live">4.0 KB</span><span class="iudex-chip iudex-chip--ok">✓ Vinculado a Drive</span></div>
-                <p class="sc-label" style="margin:2px 0 5px">Huella SHA-256</p>
-                <div class="ii-hash">635425651e857ea45923baa83d13ac1a110f3d21895398073ef7f71f74831879</div>
-                <div class="ii-qrwrap">
-                  <svg class="ii-qr" viewBox="0 0 23 23" fill="#0f0f0e" fill-rule="evenodd" aria-hidden="true">
-                    <path d="M0 0h7v7H0zM1 1h5v5H1zM2 2h3v3H2z"/>
-                    <path d="M16 0h7v7h-7zM17 1h5v5h-5zM18 2h3v3h-3z"/>
-                    <path d="M0 16h7v7H0zM1 17h5v5H1zM2 18h3v3H2z"/>
-                    <path d="M9 0h1v1H9zM11 0h1v1h-1zM13 0h1v1h-1zM9 2h1v1H9zM12 3h1v1h-1zM10 4h1v1h-1zM14 4h1v1h-1zM8 5h1v1H8zM11 5h1v1h-1zM13 6h1v1h-1zM0 9h1v1H0zM2 9h1v1H2zM4 9h1v1H4zM6 9h1v1H6zM8 9h1v1H8zM10 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM16 9h1v1h-1zM18 9h1v1h-1zM20 9h1v1h-1zM22 9h1v1h-1zM9 11h1v1H9zM11 11h1v1h-1zM13 11h1v1h-1zM15 11h1v1h-1zM17 11h1v1h-1zM19 11h1v1h-1zM21 11h1v1h-1zM9 13h1v1H9zM10 14h1v1h-1zM12 13h1v1h-1zM14 14h1v1h-1zM16 13h1v1h-1zM18 14h1v1h-1zM20 13h1v1h-1zM22 14h1v1h-1zM9 16h1v1H9zM11 17h1v1h-1zM13 16h1v1h-1zM15 17h1v1h-1zM9 19h1v1H9zM12 20h1v1h-1zM14 19h1v1h-1zM16 20h1v1h-1zM10 22h1v1h-1zM13 22h1v1h-1zM15 21h1v1h-1z"/>
-                  </svg>
-                  <span class="ii-qrcap">drive.google.com · pericial-medica-bianchi.pdf<br><em>Verificable desde el papel</em></span>
-                </div>
-                <div class="ii-card__cta">✦ Insertar en proyecto</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===========================================================
-     CHAPTER III — El escrito
-     Editor full → close-up → autotext
-     =========================================================== -->
-<section class="c-chapter" id="capitulo-3" data-chapter="3" data-live aria-labelledby="c-ch3-title">
-  <div class="c-chapter__sticky">
-    <div class="c-chapter__copy">
-      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
-      <span class="c-eyebrow">III · El escrito</span>
-      <h2 id="c-ch3-title" class="c-display">Volvé a concentrarte<br/>en <em>el derecho</em>.</h2>
-      <div class="c-chapter__beats">
-        <div class="c-chapter__beat" data-beat="0">
-          <p>Foco total.</p>
-        </div>
-        <div class="c-chapter__beat" data-beat="1">
-          <p>Escribí con tus modelos.</p>
-        </div>
-        <div class="c-chapter__beat" data-beat="2">
-          <p>Con la automatización adecuada.</p>
-        </div>
-      </div>
-    </div>
-    <div class="c-chapter__stage">
-      <div class="iudex-frame iudex-frame--editor" role="img"
-           aria-label="El editor de escritos de Iudex: el escrito con la dignidad del papel, y las variables que se completan solas con los datos del expediente.">
-        <div class="ed">
-          <div class="ed__bar"><span class="ed__doc">Alega sobre la Prueba</span><span class="ed__expte">Expte. 2026-00045</span></div>
-          <div class="ed__tools">
-            <span class="ed__tg">↶</span><span class="ed__tg">↷</span>
-            <span class="ed__sep"></span>
-            <span class="ed__fld">Liberation Serif ▾</span><span class="ed__fld">12 ▾</span>
-            <span class="ed__sep"></span>
-            <span class="ed__tg"><b>B</b></span><span class="ed__tg"><em>I</em></span><span class="ed__tg"><u>U</u></span><span class="ed__tg">S</span>
-            <span class="ed__sep"></span>
-            <span class="ed__tg">≡</span><span class="ed__tg">☰</span><span class="ed__tg">⫶</span>
-            <span class="ed__export">Exportar PDF</span>
-          </div>
-          <div class="ed__scroll">
-            <div class="ed__paper">
-              <p class="ed__meta">Juzgado del Trabajo N°1 — Corrientes<br/>Secretaría Única<br/>Expte. N° 2026-00045<br/>"Bianchi, Sofía c/ Aseguradora del Sur ART s/ Accidente Ley 24.557"</p>
-              <p class="ed__title">ALEGA SOBRE LA PRUEBA</p>
-              <p class="ed-line ed-line--flush" style="--i:0">Sr. Juez:</p>
-              <p class="ed-line" style="--i:1">La Dra. <span class="ed-var">Ana María Vallejos</span>, Mat. T°152 F°88, en autos <span class="ed-var">"Bianchi, Sofía c/ Aseguradora del Sur ART"</span>, <span class="ed-var">Expte. N° 2026-00045</span>, ante el <span class="ed-var">Juzgado del Trabajo N°1</span>, me presento respetuosamente ante V.S. y digo:</p>
-              <p class="ed-line" style="--i:2"><b>I. OBJETO.</b> Que vengo en legal tiempo y forma a alegar sobre el mérito de la prueba producida en autos, conforme lo previsto por el art. 94 de la Ley 18.345, solicitando se haga lugar a la demanda en todas sus partes, con costas.</p>
-              <p class="ed-line" style="--i:3"><b>II. PRUEBA PERICIAL.</b> La pericia médica de fs. 142/151 determinó que la actora padece una incapacidad parcial y permanente del 18,4% de la total obrera, en relación causal directa con el accidente de trabajo denunciado en el escrito de inicio.</p>
-              <p class="ed-line" style="--i:4"><b>III. PRUEBA TESTIMONIAL.</b> La prueba testimonial rendida a fs. 120/124 resultó conteste y dio suficiente razón de sus dichos sobre la mecánica del siniestro y las tareas habituales de la trabajadora, corroborando la versión de esta parte.</p>
-              <p class="ed-line" style="--i:5"><b>IV. CONCLUSIÓN.</b> Valorada la totalidad de la prueba conforme las reglas de la sana crítica (art. 386 del CPCCN), queda acreditado el accidente, el nexo de causalidad y la incapacidad resultante. <em>Pido se dicte sentencia conforme a derecho.</em></p>
-              <p class="ed-line" style="--i:6">Por todo lo expuesto, a V.S. solicito: 1) Se tenga por presentado el alegato; 2) Oportunamente, se dicte sentencia haciendo lugar a la demanda, con expresa imposición de costas.<span class="ed-caret"></span></p>
-              <p class="ed-line ed__justicia" style="--i:7">SERÁ JUSTICIA.</p>
-              <p class="ed-line ed__sign" style="--i:8">(Fdo.) ELECTRÓNICAMENTE:<br/><b>DRA. ANA MARÍA VALLEJOS</b><br/>Abogada — M.P. T°152 F°88</p>
-            </div>
-          </div>
-          <div class="ed__vars">
-            <p class="ed__vars-head">Variables disponibles</p>
-            <div class="var-row is-on"><b>NUMERO_EXPEDIENTE</b><span>N° de Expediente</span><em>Expediente</em></div>
-            <div class="var-row"><b>CARATULA</b><span>Carátula</span><em>Expediente</em></div>
-            <div class="var-row"><b>JUZGADO</b><span>Juzgado</span><em>Expediente</em></div>
-            <div class="var-row"><b>SECRETARIA</b><span>Secretaría</span><em>Expediente</em></div>
-            <div class="var-row"><b>FUERO</b><span>Fuero</span><em>Expediente</em></div>
-          </div>
-          <div class="ed__toast"><span>✓ PDF exportado</span><b>· en 3 minutos</b></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===========================================================
-     CHAPTER IV — Investigar
-     Nexus → Digesto biblioteca → lector → ⌘⇧F
-     =========================================================== -->
-<section class="c-chapter" id="capitulo-4" data-chapter="4" data-live aria-labelledby="c-ch4-title">
-  <div class="c-chapter__sticky">
-    <div class="c-chapter__copy">
-      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
-      <span class="c-eyebrow">IV · Investigar</span>
-      <h2 id="c-ch4-title" class="c-display">Cada cita,<br/><em>rastreable</em>.</h2>
-      <div class="c-chapter__beats">
-        <div class="c-chapter__beat" data-beat="0">
-          <p>Preguntale en lenguaje natural, como le hablarías a un colega. Nexus entiende el derecho argentino.</p>
-        </div>
-        <div class="c-chapter__beat" data-beat="1">
-          <p>Busca en la jurisprudencia provincial y razona sobre los hechos del caso. No inventa: cita.</p>
-        </div>
-        <div class="c-chapter__beat" data-beat="2">
-          <p>Te responde con el fundamento y los fallos que lo sostienen — a la vista, listos para tu memorial.</p>
-        </div>
-        <div class="c-chapter__beat" data-beat="3">
-          <p>Tocás una fuente y leés el fallo entero: la cámara, la fecha, el resuelve. La cita, lista para copiar.</p>
-        </div>
-      </div>
-      <a href="investigacion/index.html" class="c-chapter__cta">
-        Conocé más de Nexus
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-    <div class="c-chapter__stage">
-      <div class="iudex-frame iudex-frame--nexus" role="img"
-           aria-label="Iudex Nexus responde una consulta de jurisprudencia y muestra los fallos citados como fuentes verificables.">
-        <div class="iudex-bar">
-          <span class="iudex-bar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Investigación — Bianchi c/ Aseguradora del Sur ART</span>
-          <span class="iudex-bar__spacer"></span>
-          <span class="iudex-chip iudex-chip--live"><span class="dot"></span>En línea · Nexus</span>
-          <span class="iudex-bar__account"><span class="iudex-bar__avatar">A</span>Dra. Ana M. Vallejos</span>
-        </div>
-        <div class="iudex-frame__body">
-          <div class="iudex-frame__view nx">
-            <div class="nx__main">
-              <div class="nx__thread">
-                <h4 class="nx__q">«¿Cómo prueba un trabajador en negro su fecha de ingreso?»</h4>
-                <div class="nx-searching" aria-hidden="true"><canvas class="nx-orb-canvas" data-nexus-orb data-nexus-orb-variant="mini" width="180" height="180"></canvas><span class="nx-searching__t">Razonando sobre el caso<br/>y buscando en la jurisprudencia…</span></div>
-                <div class="nx-answer">
-                  <p>La carga recae sobre el trabajador, pero rige la <strong>amplitud probatoria</strong>
-                     y la <em>primacía de la realidad</em>: la fecha de ingreso se acredita por cualquier
-                     medio, y la testimonial concordante suele ser decisiva.</p>
-                  <ul class="nx-points">
-                    <li><span>Testimonial</span> — testigos que sitúan al trabajador cumpliendo tareas desde la fecha invocada.</li>
-                    <li><span>Documental</span> — recibos informales, mensajes de WhatsApp y constancias de ingreso al establecimiento.</li>
-                    <li><span>Informativa</span> — oficios a bancos, clientes o proveedores que registren la prestación.</li>
-                    <li><span>Presunción (art. 52 LCT)</span> — incumplidos los deberes registrales, se presume cierta la fecha alegada.</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="nx-prompt">
-                <span class="nx-prompt__text">¿Cómo prueba un trabajador en negro su fecha de ingreso?</span><span class="nx-caret" aria-hidden="true"></span>
-                <span class="nx-prompt__hint">Preguntá, refiná o pedí otra cosa…</span>
-                <span class="nx-prompt__go">Investigar</span>
-              </div>
-            </div>
-            <aside class="nx__sources">
-              <div class="nx__sources-head">Fuentes <span>· 3 citas</span></div>
-              <div class="nx-source is-cited" style="--i:0">
-                <span class="nx-source__check">✓</span>
-                <span class="nx-source__name">González Ramón c/ Chávez, Ramona Mabel</span>
-                <span class="nx-source__court">Cámara de Apelaciones Civil y Comercial</span>
-                <span class="iudex-chip iudex-chip--gold">Fallo citado</span>
-              </div>
-              <div class="nx-source" style="--i:1">
-                <span class="nx-source__check">✓</span>
-                <span class="nx-source__name">Fernández, Antonio c/ Munic. de Bella Vista</span>
-                <span class="nx-source__court">Cámara Cont. Administrativa</span>
-                <span class="iudex-chip iudex-chip--gold">Fallo citado</span>
-              </div>
-              <div class="nx-source" style="--i:2">
-                <span class="nx-source__check">✓</span>
-                <span class="nx-source__name">Romero, Luis Daniel c/ Provincia de Corrientes</span>
-                <span class="nx-source__court">Cámara Cont. Administrativa</span>
-                <span class="iudex-chip iudex-chip--gold">Fallo citado</span>
-              </div>
-              <button class="nx__memorial">Crear memorial</button>
-            </aside>
-            <div class="nx-fallo-scrim"></div>
-            <div class="nx-fallo">
-              <div class="nx-fallo__head"><span class="nx-orb nx-orb--sm"></span>Fallo citado · 1<span class="iudex-chip iudex-chip--ok">Relevancia alta</span></div>
-              <h5 class="nx-fallo__title">«González Ramón c/ Chávez, Ramona Mabel y otro s/ Ordinario por audiencias»</h5>
-              <div class="nx-fallo__meta">
-                <span>Cámara de Apelaciones en lo Civil y Comercial de Corrientes</span>
-                <span>07/04/2026</span><span>Civil Comercial</span><span>Corrientes</span>
-              </div>
-              <p class="sc-label" style="margin:10px 0 5px">Resuelve</p>
-              <p class="nx-fallo__res">Por todo ello, en los términos expuestos, se recepta el agravio. El agravio sobre el Daño Moral debe prosperar, en razón de las lesiones y la incapacidad acreditadas…</p>
-              <div class="nx-fallo__actions"><span class="nx-fallo__more">Ver resolución completa</span><span class="nx-fallo__copy">⧉ Copiar cita</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INTERSTITIAL — number-led, future-proof (no "library" framing) -->
-<section class="c-interstitial c-interstitial--stat">
-  <p class="c-interstitial__eyebrow">Digesto Jurídico</p>
-  <h3 class="c-display c-interstitial__stat">
-    <span class="c-interstitial__num">16</span> códigos.
-    <span class="c-interstitial__num">5.717</span> artículos.<br/>
-    <span class="c-interstitial__num">+100.000</span> fallos del STJ y Cámaras correntinas.
-  </h3>
-</section>
-
-<!-- ===========================================================
-     CHAPTER V — Hecho con disciplina
-     Sidebar + Command palette + Sync
-     =========================================================== -->
-<section class="c-chapter" id="capitulo-5" data-chapter="5" data-live aria-labelledby="c-ch5-title">
-  <div class="c-chapter__sticky">
-    <div class="c-chapter__copy">
-      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
-      <span class="c-eyebrow">V · Tu espacio</span>
-      <h2 id="c-ch5-title" class="c-display">Tu trabajo,<br/><em>tuyo</em>.</h2>
-      <div class="c-chapter__beats">
-        <div class="c-chapter__beat" data-beat="0">
-          <p>En el navegador. Entrás desde cualquier máquina de la oficina —o del celular— sin instalar ni actualizar nada.</p>
-        </div>
-        <div class="c-chapter__beat" data-beat="1">
-          <p>Atajo universal. <code>Ctrl+K</code> abre todo: causas, modelos, agenda. Sin desviar el foco.</p>
-        </div>
-        <div class="c-chapter__beat" data-beat="2">
-          <p>Tus datos son tuyos. Exportás todo cuando quieras, en formatos que se abren sin nosotros.</p>
-        </div>
-      </div>
-    </div>
-    <div class="c-chapter__stage">
-      <div class="iudex-frame iudex-frame--espacio" role="img"
-           aria-label="Tu espacio en Iudex: la lista de expedientes, el atajo Ctrl+K que abre todo, y el control de privacidad y datos.">
-        <div class="iudex-bar">
-          <span class="iudex-bar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Buscar por carátula, número, juzgado…</span>
-          <span class="iudex-bar__spacer"></span>
-          <span class="iudex-chip iudex-chip--live"><span class="dot"></span>Guardado</span>
-          <span class="iudex-bar__account"><span class="iudex-bar__avatar">A</span>Dra. Ana M. Vallejos</span>
-        </div>
-        <div class="iudex-frame__body" data-shell="expedientes">
-          <div class="iudex-frame__view esp">
-            <div class="esp__head"><h5>Expedientes</h5></div>
-            <div class="esp-table">
-              <div class="esp-row"><span>Expediente</span><span>Juzgado</span><span>Estado</span><span>Fuero</span></div>
-              <div class="esp-row" style="--i:0"><b>González c/ Logística del Litoral</b><span>Trabajo N°2</span><span class="iudex-chip iudex-chip--ok">Activo</span><span>Laboral</span></div>
-              <div class="esp-row" style="--i:1"><b>Pereyra c/ Banco Patagonia</b><span>Civil N°4</span><span class="iudex-chip iudex-chip--ok">Activo</span><span>Civil</span></div>
-              <div class="esp-row" style="--i:2"><b>Bianchi c/ Aseguradora del Sur ART</b><span>Trabajo N°1</span><span class="iudex-chip iudex-chip--ok">Activo</span><span>Laboral</span></div>
-              <div class="esp-row" style="--i:3"><b>Cabral c/ Mansilla</b><span>Familia N°1</span><span class="iudex-chip iudex-chip--gold">Urgente</span><span>Familia</span></div>
-              <div class="esp-row" style="--i:4"><b>Romero c/ Municipalidad de Corrientes</b><span>Cont. Adm.</span><span class="iudex-chip iudex-chip--ok">Activo</span><span>C. Adm.</span></div>
-              <div class="esp-row" style="--i:5"><b>Suárez c/ Suárez</b><span>Familia N°3</span><span class="iudex-chip iudex-chip--ok">Activo</span><span>Familia</span></div>
-            </div>
-            <div class="cmdk-scrim"></div>
-            <div class="cmdk">
-              <div class="cmdk__field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;opacity:0.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Buscar expediente, modelo o acción…<span class="cmdk__kbd">Ctrl K</span></div>
-              <div class="cmdk__list">
-                <div class="cmdk__item is-on"><i>→</i>Ir al inicio</div>
-                <div class="cmdk__item"><i>▤</i>Ver expedientes</div>
-                <div class="cmdk__item"><i>◫</i>Ver modelos</div>
-                <div class="cmdk__item"><i>▦</i>Ver agenda</div>
-              </div>
-            </div>
-            <div class="esp__privacy">
-              <b>Privacidad y datos</b>
-              <p>Cada causa es de tu cuenta. Vos decidís qué se comparte con tu estudio.</p>
-              <div class="esp-toggle">Exportar todo <span class="sw"></span></div>
+            <div class="app__rows" style="margin-top:14px">
+              <div class="app__row"><b>Presentar alegato — Bianchi c/ ART<span class="app__row-sub">Vence hoy · 09:30</span></b><span class="app__tag app__tag--gold">hoy</span></div>
+              <div class="app__row"><b>Ofrece prueba — González<span class="app__row-sub">Vence mañana · 16:00</span></b><span class="app__tag app__tag--gold">mañana</span></div>
+              <div class="app__row"><b>Audiencia testimonial — Bianchi c/ ART<span class="app__row-sub">Jueves · 09:00</span></b><span class="app__tag">esta semana</span></div>
+              <div class="app__row"><b>Recurso de apelación — Romero<span class="app__row-sub">Viernes · 14:00</span></b><span class="app__tag">esta semana</span></div>
+              <div class="app__row"><b>Cabral c/ Mansilla — alimentos<span class="app__row-sub">Última actuación hace 4 días</span></b><span class="app__tag">activo</span></div>
             </div>
           </div>
         </div>
@@ -560,9 +237,201 @@
 </section>
 
 <!-- INTERSTITIAL -->
+<section class="c-interstitial c-interstitial--air">
+  <h3 class="c-display">Menos fricción.<br/><em>Más claridad.</em></h3>
+</section>
+
+<!-- ===========================================================
+     II — Una línea y Enter
+     =========================================================== -->
+<section class="c-chapter" id="capitulo-2" data-chapter="2" data-live aria-labelledby="c-ch2-title">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
+      <span class="c-eyebrow">II · Una línea</span>
+      <h2 id="c-ch2-title" class="c-display">Escribilo<br/>como lo <em>decís</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat" data-beat="0">
+          <p>«audiencia mañana 10hs» y Enter. Queda en la agenda, con su fecha.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="1">
+          <p>Lo mismo para una causa, un cliente o una tarea. Sin formularios.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="2">
+          <p><code>⌘K</code> abre todo desde cualquier pantalla.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="c-window" style="position:relative" role="img"
+           aria-label="La agenda de Iudex: se escribe «audiencia mañana 10hs» en una sola línea y queda agendada.">
+        <div class="app">
+            <div class="app__rail">
+              <div class="app__brand">Iudex</div>
+              <div class="app__studio">Estudio Vallejos</div>
+              <div class="app__nav app__nav--inicio"><i></i>Inicio</div>
+              <div class="app__nav app__nav--tareas"><i></i>Tareas</div>
+              <div class="app__nav app__nav--nexus"><i></i>Nexus</div>
+              <div class="app__nav app__nav--clientes"><i></i>Clientes</div>
+              <div class="app__nav app__nav--expedientes"><i></i>Expedientes</div>
+              <div class="app__nav app__nav--agenda is-on"><i></i>Agenda</div>
+              <div class="app__nav app__nav--calculadora"><i></i>Calculadora</div>
+            </div>
+          <div class="app__main">
+            <div class="app__head">
+              <h4 class="app__title">Tu <em>agenda</em></h4>
+              <div class="app__tools"><span class="app__segs"><span>Lista</span><span>Semana</span><span class="is-on">Mes</span></span><span class="app__avatar">A</span></div>
+            </div>
+            <div class="app__add"><i></i><span><em>audiencia Bianchi mañana 10hs</em><span class="app__caret"></span></span><u>→</u></div>
+            <div class="app__cal">
+              <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+              <div>1</div><div class="tiene">2</div><div>3</div><div>4</div><div class="tiene">5</div><div>6</div><div>7</div>
+              <div>8</div><div class="is-hoy">9</div><div class="tiene">10</div><div>11</div><div>12</div><div>13</div><div>14</div>
+              <div>15</div><div>16</div><div class="tiene">17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+              <div>22</div><div>23</div><div>24</div><div class="tiene">25</div><div>26</div><div>27</div><div>28</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     III — Nexus
+     =========================================================== -->
+<section class="c-chapter" id="capitulo-3" data-chapter="3" data-live aria-labelledby="c-ch3-title">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
+      <span class="c-eyebrow">III · Nexus</span>
+      <h2 id="c-ch3-title" class="c-display">Preguntá.<br/>Con la <em>fuente</em> al lado.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat" data-beat="0">
+          <p>Busca en la jurisprudencia y la legislación de Corrientes.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="1">
+          <p>Cada cita abre el fallo en la página que la respalda. Lo verificás vos.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="2">
+          <p>Le repreguntás como a un colega. La conversación queda guardada.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="c-window" style="position:relative" role="img"
+           aria-label="Nexus respondiendo sobre el plazo de gracia en Corrientes, con las citas de los fallos al lado del texto y el panel de fuentes a la derecha.">
+        <div class="app app--nx">
+            <div class="app__rail">
+              <div class="app__brand">Iudex</div>
+              <div class="app__studio">Estudio Vallejos</div>
+              <div class="app__nav app__nav--inicio"><i></i>Inicio</div>
+              <div class="app__nav app__nav--tareas"><i></i>Tareas</div>
+              <div class="app__nav app__nav--nexus is-on"><i></i>Nexus</div>
+              <div class="app__nav app__nav--clientes"><i></i>Clientes</div>
+              <div class="app__nav app__nav--expedientes"><i></i>Expedientes</div>
+              <div class="app__nav app__nav--agenda"><i></i>Agenda</div>
+              <div class="app__nav app__nav--calculadora"><i></i>Calculadora</div>
+            </div>
+          <div class="app__main">
+            <div class="app__hilos">
+              <p>Conversaciones</p>
+              <b class="is-on">¿Cómo se computa el plazo de gracia en Corrientes?</b>
+              <b>Daño moral en accidentes de tránsito</b>
+              <b>Requisitos de la medida cautelar de no innovar</b>
+            </div>
+            <div class="app__chat">
+              <div class="app__q">¿Cómo se computa el plazo de gracia en Corrientes?</div>
+              <div class="app__a">
+                En el fuero civil, las presentaciones electrónicas se tienen por efectuadas en la fecha y hora que registra el ingreso al sistema
+                <span class="app__cite"><i>1</i><u>Ley 6556</u> · art. 102</span>.
+                En el penal, el acto puede realizarse en las <b>dos primeras horas</b> de despacho del día hábil siguiente
+                <span class="app__cite"><i>2</i><u>CPP Corrientes</u> · art. 116</span>.
+              </div>
+            </div>
+            <div class="app__fuentes">
+              <p>Fuentes · 2</p>
+              <div class="app__fuente"><b>Ley 6556 — Código Procesal Civil y Comercial</b><small>NORMA · art. 102</small></div>
+              <div class="app__fuente"><b>Código Procesal Penal de Corrientes</b><small>NORMA · art. 116</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERSTITIAL -->
+<section class="c-interstitial c-interstitial--stat">
+  <p class="c-interstitial__eyebrow">El corpus</p>
+  <h3 class="c-display c-interstitial__stat">
+    <span class="c-interstitial__num">16</span> códigos.
+    <span class="c-interstitial__num">5.717</span> artículos.<br/>
+    <span class="c-interstitial__num">+100.000</span> fallos del STJ y Cámaras correntinas.
+  </h3>
+</section>
+
+<!-- ===========================================================
+     IV — Tasas
+     =========================================================== -->
+<section class="c-chapter" id="capitulo-4" data-chapter="4" data-live aria-labelledby="c-ch4-title">
+  <div class="c-chapter__sticky">
+    <div class="c-chapter__copy">
+      <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
+      <span class="c-eyebrow">IV · Tasas</span>
+      <h2 id="c-ch4-title" class="c-display">La liquidación,<br/>en <em>un minuto</em>.</h2>
+      <div class="c-chapter__beats">
+        <div class="c-chapter__beat" data-beat="0">
+          <p>Capital, fechas y tasa. La curva oficial ya está cargada.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="1">
+          <p>Banco Nación y Banco de Corrientes, con histórico.</p>
+        </div>
+        <div class="c-chapter__beat" data-beat="2">
+          <p>Pagos parciales: cada uno corta el interés en su fecha.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-chapter__stage">
+      <div class="c-window" style="position:relative" role="img"
+           aria-label="La calculadora de tasas de Iudex: capital, fechas desde y hasta, la tasa activa del Banco Nación y los pagos parciales.">
+        <div class="app">
+            <div class="app__rail">
+              <div class="app__brand">Iudex</div>
+              <div class="app__studio">Estudio Vallejos</div>
+              <div class="app__nav app__nav--inicio"><i></i>Inicio</div>
+              <div class="app__nav app__nav--tareas"><i></i>Tareas</div>
+              <div class="app__nav app__nav--nexus"><i></i>Nexus</div>
+              <div class="app__nav app__nav--clientes"><i></i>Clientes</div>
+              <div class="app__nav app__nav--expedientes"><i></i>Expedientes</div>
+              <div class="app__nav app__nav--agenda"><i></i>Agenda</div>
+              <div class="app__nav app__nav--calculadora is-on"><i></i>Calculadora</div>
+            </div>
+          <div class="app__main">
+            <div class="app__head">
+              <h4 class="app__title">Calculadora de <em>tasas</em></h4>
+              <div class="app__tools"><span class="app__avatar">A</span></div>
+            </div>
+            <div class="app__form">
+              <div class="app__field"><label>Capital</label><div>1.250.000,50</div></div>
+              <div class="app__pair">
+                <div class="app__field"><label>Desde</label><div>14/02/2025</div></div>
+                <div class="app__field"><label>Hasta</label><div>01/09/2026</div></div>
+              </div>
+              <div class="app__field"><label>Tasa de interés</label><div>Tasa Activa Banco Nación</div></div>
+              <div class="app__field"><label>Pagos parciales (opcional)</label><div style="color:var(--ink-muted);font-size:8.5px">+ Agregar pago</div></div>
+              <div class="app__btn">Calcular</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="c-interstitial">
-  <h3 class="c-display">Hecho en Corrientes.<br/>Para el <em>derecho argentino</em>.</h3>
-  <p>Lo construimos entre dos — un abogado y un escribiente judicial, los dos programadores. Si encontrás una arista, te respondemos nosotros.</p>
+  <h3 class="c-display">Hecho en Corrientes.</h3>
+  <p>Lo construimos entre dos: un abogado y un escribiente judicial. Si encontrás una arista, te respondemos nosotros.</p>
 </section>
 
 <!-- ===========================================================
@@ -573,8 +442,7 @@
     <span class="c-eyebrow">Beta abierta · gratis</span>
     <h2 class="c-display" style="margin-top:24px">Creá tu cuenta.</h2>
     <p class="c-lead" style="margin-left:auto;margin-right:auto">
-      Entrás con tu correo y ya estás trabajando: expedientes, agenda y escritos, sin instalar nada.
-      Estamos en beta y la beta está abierta — no hay lista de espera ni invitación que esperar.
+      Entrás con tu correo y ya estás trabajando. Sin instalar nada, sin lista de espera.
     </p>
 
     <div class="c-hero__actions" style="justify-content:center;margin-top:36px" role="group" aria-label="Crear cuenta">
@@ -588,18 +456,18 @@
     <div class="c-tracks" role="list">
       <article class="c-track" role="listitem">
         <h3>Trabajás solo</h3>
-        <p>Creás la cuenta y entrás. Tus expedientes, tu agenda y tus escritos, con Nexus para investigar. Gratis, ahora.</p>
+        <p>Tus causas, tu agenda y Nexus para investigar. Gratis, ahora.</p>
         <a href="https://app.iudex.com.ar/" target="_blank" rel="noopener">Crear mi cuenta →</a>
       </article>
       <article class="c-track c-track--closed" role="listitem">
         <span class="c-track__tag">Beta cerrada</span>
         <h3>Sos un estudio</h3>
-        <p>Si son varios y necesitan repartir el trabajo —quién hace qué, qué está trabado, qué vence— escribinos. Damos de alta el estudio nosotros y te ampliamos el cupo; a cambio te pedimos que nos cuentes qué falla.</p>
+        <p>Si son varios y necesitan repartir el trabajo, escribinos. Damos de alta el estudio y ampliamos el cupo, a cambio de tu devolución.</p>
         <a href="contacto/index.html?motivo=estudio">Contarnos de tu estudio →</a>
       </article>
       <article class="c-track" role="listitem">
         <h3>Sos un juzgado</h3>
-        <p>La mesa de proveídos, los escritos y las tasas para todo el organismo. Puesta en marcha acompañada.</p>
+        <p>La mesa de proveídos, los escritos y las tasas del organismo.</p>
         <a href="juzgados/index.html">Ver Iudex para juzgados →</a>
       </article>
     </div>
