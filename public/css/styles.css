@@ -6970,6 +6970,13 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .c-hero__stage { aspect-ratio: 5 / 6; max-width: 92vw; margin: 0 auto; }
   .c-window--back { transform: translate3d(-22%, -12%, -130px) rotateY(8deg) scale(0.82); }
   .c-window--mid  { transform: translate3d(22%, 18%, -70px) rotateY(-6deg) scale(0.88); }
+  /* En el telefono las dos ventanas de atras entran como tiras de 30px:
+     lo unico que se ve de ellas es un rail cortado y medio chip, que lee
+     como un error de layout y no como profundidad. Debajo de 640 se
+     muestra solo la de adelante, que es la que cuenta la historia. */
+  @media (max-width: 639px) {
+    .c-window--back, .c-window--mid { display: none; }
+  }
   /* The 'Seguir' scroll cue lives over the stage on phones; on
      touch devices the affordance is intuitive and the cue ends up
      overlapping the floating windows, breaking the composition.
@@ -7219,7 +7226,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 /* Circuito del proveído */
 .jz-flow {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   padding: 18px 16px 12px;
   width: 100%;
@@ -7277,7 +7284,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 /* KPIs de la bandeja */
 .jz-kpis {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   padding: 16px 16px 12px;
 }
@@ -7395,7 +7402,11 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 @media (max-width: 720px) {
   .jz-row { grid-template-columns: 100px 1fr; }
   .jz-row em, .jz-row > span:empty { display: none; }
-  .jz-flow, .jz-kpis { grid-template-columns: repeat(2, 1fr); }
+  /* Con dos chips y dos columnas, el segundo caia en la columna de 100px
+     y "Para control Secre" se cortaba a la mitad. Los chips van los dos a
+     la columna ancha, uno debajo del otro. */
+  .jz-row > .iudex-chip { grid-column: 2; justify-self: start; }
+  .jz-flow, .jz-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .jz-sec { grid-template-columns: 1fr; }
   /* En pantalla chica el 16/10 del frame recorta el mockup: dejamos que
      crezca con su contenido y sacamos lo accesorio de la barra. */
@@ -7580,7 +7591,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 /* Kanban de tareas */
 .ab-kanban {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   min-height: 0;
 }
@@ -7760,11 +7771,12 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 }
 .ab-calc__th { color: var(--ink-muted, #6a6a64); border-bottom: 1px solid var(--hair); margin-bottom: 3px; }
 .ab-calc__tr span:last-child, .ab-calc__th span:last-child { text-align: right; }
+.ab-calc__tr span, .ab-calc__th span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 @media (max-width: 720px) {
   .ab-side { display: none; }
-  .ab-kanban { grid-template-columns: repeat(2, 1fr); }
-  .ab-calc__th, .ab-calc__tr { grid-template-columns: 1fr 1fr 1fr; }
+  .ab-kanban { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ab-calc__th, .ab-calc__tr { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .ab-calc__th span:nth-child(3), .ab-calc__th span:nth-child(4),
   .ab-calc__tr span:nth-child(3), .ab-calc__tr span:nth-child(4) { display: none; }
   .iudex-frame:has(.ab-app) { aspect-ratio: auto; }
@@ -7928,7 +7940,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 }
 .app__row b { font-weight: 500; font-size: 9.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .app__row small { flex: none; font-size: 8px; color: var(--ink-muted); }
-.app__row-sub { display: block; font-size: 8px; color: var(--ink-muted); font-weight: 400; margin-top: 2px; }
+.app__row-sub { display: block; font-size: 8px; color: var(--ink-muted); font-weight: 400; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; }
 .app__tag { flex: none; font-family: var(--font-mono); font-size: 7px; letter-spacing: 0.04em; color: #2e7d5a; background: rgba(46,125,90,0.1); border-radius: 999px; padding: 2px 6px; }
 .app__tag--gold { color: #8a6d1f; background: rgba(201,168,76,0.16); }
 
@@ -7938,7 +7950,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 .app__segs .is-on { background: var(--gold); color: var(--white); }
 
 /* ── Grilla del mes ───────────────────────────────────────── */
-.app__cal { margin-top: 10px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.app__cal { margin-top: 10px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; }
 .app__cal span { font-size: 7px; color: var(--ink-muted); text-align: center; padding-bottom: 2px; }
 .app__cal div { aspect-ratio: 1 / 0.72; border: 1px solid var(--cream-dark); border-radius: 5px; background: var(--white); font-size: 7.5px; color: var(--ink-muted); padding: 3px 4px; }
 .app__cal div.is-hoy { background: var(--gold); color: var(--white); border-color: var(--gold); }
@@ -7949,7 +7961,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 .app__field { margin-bottom: 9px; }
 .app__field label { display: block; font-size: 7.5px; color: var(--ink-muted); margin-bottom: 3px; }
 .app__field div { background: var(--cream); border-radius: 6px; padding: 6px 8px; font-size: 9.5px; }
-.app__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.app__pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 9px; }
 /* El resultado de la liquidación. Existe porque el formulario vacío se
    estiraba para llenar la ventana y no contaba nada: lo que hay que mostrar
    es que la cuenta sale hecha, con los intereses y el pago parcial a la
@@ -8116,4 +8128,20 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .app--nx .app__rail,
   .app--nx .app__fuentes { display: none; }
   .nx-visor__hoja { margin: 10px 12px; padding: 12px 13px; }
+}
+
+/* ===========================================================
+   Mockups en pantallas muy angostas (≤ 420px)
+   ===========================================================
+   A partir de ahi el mockup mide menos de 290px y los accesorios del
+   encabezado —el selector Lista/Semana/Mes y el avatar— empujaban al
+   titulo fuera de la caja. Se van ellos, no el contenido: la fila de
+   carga y la lista, que son lo que cada escena cuenta, quedan enteras. */
+@media (max-width: 420px) {
+  .app__tools { display: none; }
+  .ab-top__right, .iudex-bar__account { display: none; }
+  /* La fila de la mesa tiene una columna fija para el numero de EXP; a
+     320px el chip de estado no entraba en lo que sobraba. */
+  .jz-row { grid-template-columns: 84px 1fr; font-size: 0.68rem; }
+  .jz-row > .iudex-chip { font-size: 0.56rem; padding: 2px 7px; }
 }
