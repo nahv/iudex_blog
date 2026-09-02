@@ -147,90 +147,96 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ---- Contact form (full pre-access registration) ----
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    // Pre-fill the email when arriving from a "Pedí tu invitación" CTA: those
-    // forms GET-navigate here with ?email=…, so we carry it over instead of
-    // making the visitor retype it, and focus the first empty field to
-    // continue the flow without hijacking the scroll position.
-    try {
-      const presetEmail = (new URLSearchParams(window.location.search).get('email') || '').trim();
-      const emailInput = contactForm.querySelector('#email');
-      if (presetEmail && emailInput) {
-        emailInput.value = presetEmail;
-        const firstField = contactForm.querySelector('#nombre');
-        if (firstField && !firstField.value) firstField.focus({ preventScroll: true });
-      }
-    } catch (_) { /* malformed query string — leave the form empty */ }
+  /* ----------- Contacto: una pregunta por vez -----------
+     Reemplaza al submit del formulario largo. Tres pasos: correo, cuántos son
+     y dónde. El envío se dispara SOLO al contestar el último — no hay botón
+     de enviar porque no hay nada más que completar.
 
-    contactForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+     Se sigue escribiendo en `registrations` con la misma forma de siempre
+     (ver supabase/README.md): el webhook de Supabase dispara la Edge Function
+     que manda el welcome y la notificación al equipo. Los campos que ya no se
+     preguntan van en `null`, que la tabla acepta —solo `email` es NOT NULL— y
+     `perfil` se DERIVA del tamaño del equipo para que la notificación interna
+     no llegue sin contexto. */
+  const pasos = document.getElementById('c-pasos');
+  if (pasos) {
+    const barra   = pasos.querySelectorAll('.c-pasos__barra li');
+    const fieldsets = pasos.querySelectorAll('.c-paso');
+    const email   = pasos.querySelector('#c-email');
+    const error   = pasos.querySelector('[data-error]');
+    const fallo   = pasos.querySelector('[data-fallo]');
+    const eco     = pasos.querySelector('[data-eco]');
+    const datos   = { tamano: null, provincia: null };
+    let actual = 1;
+    let enviando = false;
 
-      // Honeypot check
-      const honeypot = contactForm.querySelector('input[name="website"]');
-      if (honeypot && honeypot.value) {
-        // Bot detected — simulate success silently
-        contactForm.reset();
-        showFormFeedback(contactForm, '¡Gracias por tu interés! Te enviamos un email con información sobre Iudex.', true);
-        return;
-      }
+    const mostrar = (n) => {
+      actual = n;
+      fieldsets.forEach((f) => f.classList.toggle('is-on', Number(f.dataset.paso) === n));
+      barra.forEach((li, i) => li.classList.toggle('is-on', i < n));
+      // El foco viaja al paso nuevo: sin esto, quien navega con teclado sigue
+      // parado en un control que ya no está en pantalla.
+      const foco = pasos.querySelector(`.c-paso.is-on input, .c-paso.is-on .c-opcion`);
+      if (foco) foco.focus({ preventScroll: true });
+    };
 
-      const btn = contactForm.querySelector('button[type="submit"]');
-      const original = btn.textContent;
-      btn.textContent = 'Enviando...';
-      btn.disabled = true;
+    const emailValido = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email.value || '').trim());
 
-      const formData = {
-        nombre: contactForm.querySelector('#nombre').value.trim(),
-        apellido: contactForm.querySelector('#apellido').value.trim(),
-        email: contactForm.querySelector('#email').value.trim(),
-        telefono: contactForm.querySelector('#telefono').value.trim() || null,
-        perfil: contactForm.querySelector('#perfil').value || null,
-        provincia: contactForm.querySelector('#provincia').value,
-        fuero: contactForm.querySelector('#fuero').value || null,
-        tamano: contactForm.querySelector('#tamano').value || null,
-        mensaje: contactForm.querySelector('#mensaje').value.trim() || null,
-        source: 'contact-form',
-      };
+    const pasoUno = () => {
+      if (!emailValido()) { error.hidden = false; email.focus(); return; }
+      error.hidden = true;
+      mostrar(2);
+    };
 
-      // Validate required fields
-      if (!formData.nombre || !formData.apellido || !formData.email || !formData.provincia) {
-        showFormFeedback(contactForm, 'Por favor completá todos los campos requeridos.', false);
-        btn.textContent = original;
-        btn.disabled = false;
-        return;
-      }
-
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        showFormFeedback(contactForm, 'Por favor ingresá un email válido.', false);
-        btn.textContent = original;
-        btn.disabled = false;
-        return;
-      }
-
-      // Step 1: Save to Supabase
-      const { error: dbError } = await iudexDB.insert('registrations', formData);
-
-      if (dbError) {
-        if (dbError.duplicate) {
-          showFormFeedback(contactForm, 'Este email ya tiene una solicitud registrada. Si necesitás ayuda, escribinos a contacto@iudex.com.ar.', false);
-          btn.textContent = original;
-          btn.disabled = false;
-          return;
-        }
-        // Non-duplicate DB error — still try to send emails
-      }
-
-      // El webhook de Supabase dispara la Edge Function que envía el welcome
-      // institucional al usuario y la notificación al equipo via AWS SES.
-      // Ver supabase/functions/send-inscription-email + docs/aws-ses-setup.md.
-
-      // Step 2: Show success
-      btn.textContent = '¡Solicitud enviada!';
-      contactForm.reset();
-      showFormFeedback(contactForm, '¡Gracias por tu interés! Te enviamos un email con información sobre Iudex.', true);
-      setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 5000);
+    pasos.querySelector('[data-seguir]').addEventListener('click', pasoUno);
+    email.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); pasoUno(); }
     });
+    email.addEventListener('input', () => { error.hidden = true; });
+
+    pasos.querySelectorAll('.c-opcion').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        if (enviando) return;
+        datos[btn.dataset.campo] = btn.dataset.valor;
+        btn.classList.add('is-elegida');
+        if (btn.dataset.campo === 'tamano') { mostrar(3); return; }
+        // Última respuesta: se agradece de una y se manda en segundo plano.
+        // Hacer esperar por la red después del último click convierte un
+        // flujo de tres toques en una pantalla de carga.
+        enviando = true;
+        if (eco) eco.textContent = (email.value || '').trim();
+        mostrar(4);
+        await enviar();
+      });
+    });
+
+    async function enviar() {
+      const honeypot = pasos.querySelector('input[name="website"]');
+      if (honeypot && honeypot.value) return;   // bot: se agradece y no se guarda
+
+      const solo = datos.tamano === 'Solo yo';
+      const { error: dbError } = await iudexDB.insert('registrations', {
+        email: (email.value || '').trim(),
+        nombre: null,
+        apellido: null,
+        telefono: null,
+        // Derivado, no preguntado: con tres pasos no hay lugar para una
+        // pregunta que ya está contestada por la anterior.
+        perfil: solo ? 'Abogado/a independiente' : 'Estudio jurídico',
+        provincia: datos.provincia,
+        fuero: null,
+        tamano: datos.tamano,
+        mensaje: null,
+        source: 'contact-form',
+      });
+
+      if (dbError && !dbError.duplicate && fallo) {
+        // Un duplicado NO es un error para quien escribe: ya nos había
+        // escrito, y decírselo después de agradecerle solo genera dudas.
+        fallo.hidden = false;
+        fallo.textContent = 'No pudimos guardar tu correo. Escribinos a contacto@iudex.com.ar y lo resolvemos.';
+      }
+    }
   }
 
   // ---- Blog filter buttons ----
@@ -1096,7 +1102,9 @@ if (document.readyState === 'loading') {
     const typed  = hero.querySelector('.hnx-typed');
     const bubble = hero.querySelector('.hnx-q');
     const lines  = Array.from(hero.querySelectorAll('.hnx-ln, .hnx-cite'));
-    const Q1 = 'hay embargos trabados?';
+    // La pregunta sale del HTML, no de acá. Estaban duplicadas y se
+    // separaron: el mock decía una cosa y la intro tipeaba otra vieja.
+    const Q1 = bubble ? bubble.textContent.trim() : '';
     const Q2 = typed ? typed.textContent.trim() : '';
     const reveal = (el) => el && el.setAttribute('data-shown', '');
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
