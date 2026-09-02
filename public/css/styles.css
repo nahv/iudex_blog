@@ -7146,10 +7146,19 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 
 /* El body del frame es flex-row por defecto: los mockups de juzgados
    apilan bloques (circuito + nota, KPIs + filas), así que van en columna. */
+/* Con el rail adentro, el cuerpo es una FILA: rail a la izquierda y el
+   contenido —que sigue siendo una columna— a la derecha. El rail estaba
+   faltando en todos los mocks del juzgado y sin el la pantalla se lee como un
+   panel suelto y no como la app. */
 .iudex-frame__body.jz-body {
-  flex-direction: column;
+  flex-direction: row;
   overflow: hidden;
 }
+.jz-col { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
+.app__rail--jz { width: 96px; }
+.app__nav--proveidos i { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20h10M6 4l6 6M9 7l-5 5 3 3 5-5M14 6l4 4M16 4l4 4-3 3-4-4z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20h10M6 4l6 6M9 7l-5 5 3 3 5-5M14 6l4 4M16 4l4 4-3 3-4-4z'/%3E%3C/svg%3E"); }
+.app__nav--escritos i { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 16V4M8 8l4-4 4 4M4 18v2h16v-2'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 16V4M8 8l4-4 4 4M4 18v2h16v-2'/%3E%3C/svg%3E"); }
+.app__nav--modelos i { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='3' width='16' height='18' rx='2'/%3E%3Cpath d='M8 8h8M8 12h8M8 16h5'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='3' width='16' height='18' rx='2'/%3E%3Cpath d='M8 8h8M8 12h8M8 16h5'/%3E%3C/svg%3E"); }
 
 /* Mesa del hero */
 .jz-mesa { padding: 14px 16px 18px; background: var(--white); }
