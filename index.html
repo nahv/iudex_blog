@@ -36,7 +36,6 @@
         <li><a href="abogados/index.html">Abogados</a></li>
         <li><a href="juzgados/index.html">Juzgados</a></li>
         <li><a href="investigacion/index.html">Nexus</a></li>
-        <li><a href="descargar/index.html">Escritorio</a></li>
         <li><a href="blog/index.html">Cuaderno</a></li>
         <li><a href="https://app.iudex.com.ar/" class="navbar__cta" target="_blank" rel="noopener">Entrar</a></li>
       </ul>
@@ -60,7 +59,7 @@
       </h1>
       <p class="c-hero__sub">
         Investigá, escribí y resolvé sin cambiar de pantalla — el expediente, los escritos y la búsqueda con IA, en un mismo lugar.
-        <span class="c-hero__sub-line">Hecho en Corrientes, para el derecho argentino. Se abre en el navegador: creás tu cuenta y empezás — gratis para trabajar solo, sin instalar nada.</span>
+        <span class="c-hero__sub-line">Hecho en Corrientes, para el derecho argentino. Se abre en el navegador: creás tu cuenta y empezás. <b>La beta está abierta</b> y es gratis.</span>
       </p>
       <div class="c-hero__actions" role="group" aria-label="Acciones principales">
         <a href="https://app.iudex.com.ar/" class="c-btn c-btn--primary" target="_blank" rel="noopener">
@@ -75,11 +74,47 @@
     </div>
 
     <div class="c-hero__stage" aria-hidden="false">
+      <!-- Las dos ventanas de profundidad son MOCKS y no capturas.
+           Antes eran PNG de la app de escritorio: se les veía la barra de
+           macOS justo debajo de un titular que promete que esto se abre en el
+           navegador. Se intentó recortarla con un `scale` —está el comentario
+           en el CSS— pero tapar el problema no lo arregla, y además obligaba a
+           regenerar imágenes cada vez que la app cambia. Dibujadas en HTML se
+           mantienen solas, pesan nada y muestran el producto que hay hoy. -->
       <div class="c-window c-window--back" aria-hidden="true">
-        <img src="public/assets/screenshots-v3/01-dashboard.png" alt="" loading="eager" />
+        <div class="hwin">
+          <div class="hwin__bar"><span>Iudex — Expedientes</span></div>
+          <div class="hwin__dash">
+            <p class="hd-greet">Buen día, Ana</p>
+            <p class="hd-sub">4 vencimientos esta semana.</p>
+            <div class="hd-rows">
+              <div class="hd-row"><span>Bianchi c/ Aseguradora del Sur ART</span><b>Activo</b></div>
+              <div class="hd-row"><span>González c/ Logística del Litoral</span><b>Activo</b></div>
+              <div class="hd-row"><span>Cabral c/ Mansilla — alimentos</span><b>Activo</b></div>
+              <div class="hd-row"><span>Romero c/ Municipalidad de Corrientes</span><b>Activo</b></div>
+            </div>
+            <div class="hd-tiles">
+              <div><b>15</b><span>Activos</span></div>
+              <div><b>4</b><span>Esta semana</span></div>
+              <div><b>0</b><span>Vencidos</span></div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="c-window c-window--mid" aria-hidden="true">
-        <img src="public/assets/screenshots-v3/02-editor.png" alt="" loading="eager" />
+        <div class="hwin">
+          <div class="hwin__bar"><span>Iudex — Agenda</span></div>
+          <div class="hwin__dash">
+            <p class="hd-greet">Esta semana</p>
+            <p class="hd-sub">Audiencias, plazos y recordatorios.</p>
+            <div class="hd-rows">
+              <div class="hd-row"><span>Audiencia testimonial — Bianchi c/ ART</span><b>15/06</b></div>
+              <div class="hd-row"><span>Ofrece prueba — González</span><b>15/06</b></div>
+              <div class="hd-row"><span>Presentar alegato — Bianchi</span><b>Hoy</b></div>
+              <div class="hd-row"><span>Recurso de apelación — Romero</span><b>Mañana</b></div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="c-window c-window--front" role="img" aria-label="Iudex Nexus, el asistente del expediente, respondiendo en lenguaje natural sobre los embargos trabados en la causa, con la cita del proveído.">
         <div class="hwin hwin--nx">
@@ -149,7 +184,7 @@
     </div>
     <div class="c-chapter__stage">
       <div class="iudex-frame iudex-frame--dash" role="img"
-           aria-label="El escritorio de Iudex al empezar el día: el saludo, las causas recientes, los próximos vencimientos y la liquidación lista.">
+           aria-label="Iudex al empezar el día: el saludo, las causas recientes, los próximos vencimientos y la liquidación lista.">
         <div class="iudex-bar">
           <span class="iudex-bar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Buscar por número de causa…</span>
           <span class="iudex-bar__spacer"></span>
@@ -471,23 +506,23 @@
       <h2 id="c-ch5-title" class="c-display">Tu trabajo,<br/><em>tuyo</em>.</h2>
       <div class="c-chapter__beats">
         <div class="c-chapter__beat" data-beat="0">
-          <p>En el navegador. Entrás desde cualquier máquina de la oficina, sin instalar ni actualizar nada.</p>
+          <p>En el navegador. Entrás desde cualquier máquina de la oficina —o del celular— sin instalar ni actualizar nada.</p>
         </div>
         <div class="c-chapter__beat" data-beat="1">
           <p>Atajo universal. <code>Ctrl+K</code> abre todo: causas, modelos, agenda. Sin desviar el foco.</p>
         </div>
         <div class="c-chapter__beat" data-beat="2">
-          <p>¿Mucho volumen y todo en tu máquina? La <a href="descargar/index.html">edición Escritorio</a> guarda las causas localmente y trabaja sin conexión.</p>
+          <p>Tus datos son tuyos. Exportás todo cuando quieras, en formatos que se abren sin nosotros.</p>
         </div>
       </div>
     </div>
     <div class="c-chapter__stage">
       <div class="iudex-frame iudex-frame--espacio" role="img"
-           aria-label="Tu espacio en Iudex: la lista de expedientes guardada localmente, el atajo Ctrl+K que abre todo, y el control de privacidad y datos.">
+           aria-label="Tu espacio en Iudex: la lista de expedientes, el atajo Ctrl+K que abre todo, y el control de privacidad y datos.">
         <div class="iudex-bar">
           <span class="iudex-bar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>Buscar por carátula, número, juzgado…</span>
           <span class="iudex-bar__spacer"></span>
-          <span class="iudex-chip iudex-chip--live"><span class="dot"></span>Offline · datos locales</span>
+          <span class="iudex-chip iudex-chip--live"><span class="dot"></span>Guardado</span>
           <span class="iudex-bar__account"><span class="iudex-bar__avatar">A</span>Dra. Ana M. Vallejos</span>
         </div>
         <div class="iudex-frame__body" data-shell="expedientes">
@@ -514,8 +549,8 @@
             </div>
             <div class="esp__privacy">
               <b>Privacidad y datos</b>
-              <p>Almacenamiento local por defecto. Vos decidís qué se comparte con tu estudio.</p>
-              <div class="esp-toggle">Guardar solo en este equipo <span class="sw"></span></div>
+              <p>Cada causa es de tu cuenta. Vos decidís qué se comparte con tu estudio.</p>
+              <div class="esp-toggle">Exportar todo <span class="sw"></span></div>
             </div>
           </div>
         </div>
@@ -535,10 +570,11 @@
      =========================================================== -->
 <section class="c-cta" id="contacto-pre">
   <div class="c-cta__inner">
-    <span class="c-eyebrow">Empezá hoy · gratis</span>
+    <span class="c-eyebrow">Beta abierta · gratis</span>
     <h2 class="c-display" style="margin-top:24px">Creá tu cuenta.</h2>
     <p class="c-lead" style="margin-left:auto;margin-right:auto">
-      Entrás con tu correo y ya estás trabajando: expedientes, agenda y escritos, sin instalar nada. Gratis mientras trabajás solo.
+      Entrás con tu correo y ya estás trabajando: expedientes, agenda y escritos, sin instalar nada.
+      Estamos en beta y la beta está abierta — no hay lista de espera ni invitación que esperar.
     </p>
 
     <div class="c-hero__actions" style="justify-content:center;margin-top:36px" role="group" aria-label="Crear cuenta">
@@ -551,17 +587,18 @@
 
     <div class="c-tracks" role="list">
       <article class="c-track" role="listitem">
-        <h3>Gratis</h3>
-        <p>Tus expedientes, tu agenda y tus escritos, para trabajar solo. Con una muestra de Nexus para que veas de qué se trata.</p>
-        <a href="abogados/index.html">Ver qué incluye →</a>
+        <h3>Trabajás solo</h3>
+        <p>Creás la cuenta y entrás. Tus expedientes, tu agenda y tus escritos, con Nexus para investigar. Gratis, ahora.</p>
+        <a href="https://app.iudex.com.ar/" target="_blank" rel="noopener">Crear mi cuenta →</a>
+      </article>
+      <article class="c-track c-track--closed" role="listitem">
+        <span class="c-track__tag">Beta cerrada</span>
+        <h3>Sos un estudio</h3>
+        <p>Si son varios y necesitan repartir el trabajo —quién hace qué, qué está trabado, qué vence— escribinos. Damos de alta el estudio nosotros y te ampliamos el cupo; a cambio te pedimos que nos cuentes qué falla.</p>
+        <a href="contacto/index.html?motivo=estudio">Contarnos de tu estudio →</a>
       </article>
       <article class="c-track" role="listitem">
-        <h3>Estudio</h3>
-        <p>Sumá a tu equipo, compartí causas y trabajá con Nexus sin límites. Para estudios que ya trabajan de a varios.</p>
-        <a href="https://app.iudex.com.ar/" target="_blank" rel="noopener">Empezar y sumar al equipo →</a>
-      </article>
-      <article class="c-track" role="listitem">
-        <h3>Juzgados</h3>
+        <h3>Sos un juzgado</h3>
         <p>La mesa de proveídos, los escritos y las tasas para todo el organismo. Puesta en marcha acompañada.</p>
         <a href="juzgados/index.html">Ver Iudex para juzgados →</a>
       </article>
@@ -570,6 +607,7 @@
     <p class="c-cta__trust">
       <span aria-hidden="true">✓</span> Sin tarjeta &nbsp; · &nbsp;
       <span aria-hidden="true">✓</span> Verificás tu correo y entrás &nbsp; · &nbsp;
+      <span aria-hidden="true">✓</span> Sin instalar nada &nbsp; · &nbsp;
       <span aria-hidden="true">✓</span> Tus datos, exportables siempre
     </p>
   </div>
@@ -592,7 +630,6 @@
           <li><a href="abogados/index.html">Abogados</a></li>
           <li><a href="juzgados/index.html">Juzgados</a></li>
           <li><a href="investigacion/index.html">Nexus</a></li>
-          <li><a href="descargar/index.html">Escritorio</a></li>
           <li><a href="releases/index.html">Notas de versión</a></li>
         </ul>
       </div>
