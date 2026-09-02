@@ -60,160 +60,77 @@
 <!-- ===========================================================
      FORM + INFO  — two-column grid
      =========================================================== -->
-<section class="c-section" style="padding-top:32px" aria-labelledby="c-form-title">
-  <div class="c-section__inner" style="max-width:1080px">
-    <div class="c-contact-grid">
+<!-- ===========================================================
+     UN PASO A LA VEZ
+     ===========================================================
+     Antes había un formulario de nueve campos —nombre, apellido, email,
+     teléfono, perfil, ciudad, tamaño, fuero, mensaje— y al costado dos
+     bloques más de lectura. Para alguien que solo quiere decir «somos cuatro
+     en Corrientes» eso es una pared, y la pared la pagamos nosotros en leads
+     que no llegan.
 
-      <!-- FORM -->
-      <div class="c-form-card">
-        <h2 id="c-form-title" class="c-form-card__title">Contanos de vos</h2>
-        <p class="c-form-card__lead">Al enviar, te llega un correo con los próximos pasos. Si sos un estudio, coordinamos una charla corta antes de darlo de alta.</p>
+     Ahora son tres preguntas, una por pantalla, y dos de las tres se
+     contestan con un click. El resto de los datos los completamos hablando,
+     que además es lo que queremos hacer con cada estudio de la beta.
+     =========================================================== -->
+<section class="c-section" style="padding-top:24px" aria-labelledby="c-form-title">
+  <div class="c-section__inner" style="max-width:620px">
+    <h2 id="c-form-title" class="c-sr-only">Contanos de tu equipo</h2>
 
-        <form id="contact-form" class="c-form" novalidate>
-          <!-- Honeypot anti-spam -->
-          <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
-            <input type="text" name="website" tabindex="-1" autocomplete="off" />
-          </div>
-
-          <div class="c-form__row">
-            <div class="c-form__field">
-              <label for="nombre">Nombre</label>
-              <input type="text" id="nombre" name="nombre" placeholder="Juan" required />
-            </div>
-            <div class="c-form__field">
-              <label for="apellido">Apellido</label>
-              <input type="text" id="apellido" name="apellido" placeholder="García" required />
-            </div>
-          </div>
-
-          <div class="c-form__field">
-            <label for="email">Correo electrónico</label>
-            <input type="email" id="email" name="email" placeholder="juan@estudio.com.ar" required autocomplete="email" />
-          </div>
-
-          <div class="c-form__field">
-            <label for="telefono">Teléfono <span class="c-form__optional">(opcional)</span></label>
-            <input type="tel" id="telefono" name="telefono" placeholder="+54 9 11 0000-0000" />
-          </div>
-
-          <div class="c-form__field">
-            <label for="perfil">Perfil profesional</label>
-            <select id="perfil" name="perfil" required>
-              <option value="" disabled selected>Seleccioná tu perfil</option>
-              <option>Abogado/a independiente</option>
-              <option>Estudio jurídico</option>
-              <option>Juzgado</option>
-              <option>Organismo judicial</option>
-              <option>Otro</option>
-            </select>
-          </div>
-
-          <div class="c-form__row">
-            <div class="c-form__field">
-              <label for="provincia">Ciudad</label>
-              <select id="provincia" name="provincia" required>
-                <option value="" disabled>Seleccioná tu ciudad</option>
-                <option selected>Corrientes</option>
-                <option>Otra ciudad</option>
-              </select>
-            </div>
-            <div class="c-form__field">
-              <label for="tamano">Tamaño del equipo</label>
-              <select id="tamano" name="tamano">
-                <option value="" disabled selected>Cantidad</option>
-                <option>Solo yo</option>
-                <option>2 a 5 personas</option>
-                <option>6 a 15 personas</option>
-                <option>Más de 15</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="c-form__field">
-            <label for="fuero">Principal área de práctica <span class="c-form__optional">(opcional)</span></label>
-            <select id="fuero" name="fuero">
-              <option value="" disabled selected>Seleccioná un área</option>
-              <option>Civil y comercial</option>
-              <option>Laboral</option>
-              <option>Penal</option>
-              <option>Familia</option>
-              <option>Administrativo</option>
-              <option>Tributario</option>
-              <option>Societario</option>
-              <option>Sucesorio</option>
-              <option>Varias áreas</option>
-            </select>
-          </div>
-
-          <div class="c-form__field">
-            <label for="mensaje">¿Qué te come más tiempo en el día a día? <span class="c-form__optional">(opcional)</span></label>
-            <textarea id="mensaje" name="mensaje" rows="4" placeholder="Contanos en dos líneas qué problema te gustaría resolver primero…"></textarea>
-          </div>
-
-          <button type="submit" class="c-btn c-btn--primary c-form__submit">
-            Enviar
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-
-          <p class="c-form__disclaimer">
-            Al enviar, aceptás nuestra <a href="../politica-privacidad/index.html">política de privacidad</a>. Tus datos quedan entre vos y el equipo de Iudex.
-          </p>
-        </form>
+    <form id="c-pasos" class="c-pasos" novalidate>
+      <!-- Trampa para bots. Fuera de pantalla y no `display:none`: hay bots
+           que ignoran los campos ocultos, y este tiene que parecer real. -->
+      <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
       </div>
 
-      <!-- ASIDE: contact info + steps -->
-      <aside class="c-contact-aside">
-        <div class="c-contact-aside__block">
-          <span class="c-eyebrow">Otros canales</span>
-          <h3 class="c-contact-aside__title">¿Preferís escribirnos directo?</h3>
-          <p>Cualquiera de estos llega al equipo. Te contesta una persona, no un guion.</p>
+      <ol class="c-pasos__barra" aria-hidden="true">
+        <li class="is-on"></li><li></li><li></li>
+      </ol>
 
-          <ul class="c-contact-list">
-            <li>
-              <span class="c-contact-list__label">Email</span>
-              <a href="mailto:contacto@iudex.com.ar">contacto@iudex.com.ar</a>
-            </li>
-            <li>
-              <span class="c-contact-list__label">WhatsApp</span>
-              <a href="https://wa.me/5493794504737" target="_blank" rel="noreferrer">+54 9 3794 504737</a>
-              <a href="https://wa.me/5493794004023" target="_blank" rel="noreferrer">+54 9 3794 004023</a>
-            </li>
-            <li>
-              <span class="c-contact-list__label">Instagram</span>
-              <a href="https://www.instagram.com/iudex.ai" target="_blank" rel="noreferrer">@iudex.ai</a>
-            </li>
-          </ul>
-        </div>
+      <!-- 1 · Email -->
+      <fieldset class="c-paso is-on" data-paso="1">
+        <legend class="c-paso__pregunta">¿A qué correo te escribimos?</legend>
+        <input type="email" id="c-email" name="email" class="c-paso__input"
+               placeholder="tu@estudio.com.ar" required autocomplete="email" inputmode="email" />
+        <p class="c-paso__error" data-error hidden>Necesitamos un correo válido para responderte.</p>
+        <button type="button" class="c-btn c-btn--primary c-paso__seguir" data-seguir>
+          Seguir
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </fieldset>
 
-        <div class="c-contact-aside__block c-steps">
-          <span class="c-eyebrow">Qué sigue</span>
-          <h3 class="c-contact-aside__title">Después de enviar el formulario.</h3>
-          <ol class="c-steps__list">
-            <li>
-              <span class="c-steps__num">1</span>
-              <div>
-                <strong>Confirmación al instante.</strong>
-                <p>Un correo automático te avisa que el mensaje llegó bien.</p>
-              </div>
-            </li>
-            <li>
-              <span class="c-steps__num">2</span>
-              <div>
-                <strong>Te escribimos nosotros.</strong>
-                <p>En los días siguientes coordinamos una charla breve para recorrer cómo encaja Iudex en tu trabajo.</p>
-              </div>
-            </li>
-            <li>
-              <span class="c-steps__num">3</span>
-              <div>
-                <strong>Activamos tu Iudex Cloud.</strong>
-                <p>Si encaja para los dos, te habilitamos la IA y la sincronización, sin costo durante los primeros meses.</p>
-              </div>
-            </li>
-          </ol>
+      <!-- 2 · Cuántos son -->
+      <fieldset class="c-paso" data-paso="2">
+        <legend class="c-paso__pregunta">¿Trabajás solo o son varios?</legend>
+        <div class="c-opciones">
+          <button type="button" class="c-opcion" data-campo="tamano" data-valor="Solo yo">Trabajo solo</button>
+          <button type="button" class="c-opcion" data-campo="tamano" data-valor="2 a 5 personas">Somos 2 a 5</button>
+          <button type="button" class="c-opcion" data-campo="tamano" data-valor="6 a 15 personas">Somos 6 a 15</button>
+          <button type="button" class="c-opcion" data-campo="tamano" data-valor="Más de 15">Somos más de 15</button>
         </div>
-      </aside>
-    </div>
+      </fieldset>
+
+      <!-- 3 · Dónde -->
+      <fieldset class="c-paso" data-paso="3">
+        <legend class="c-paso__pregunta">¿Dónde trabajan?</legend>
+        <div class="c-opciones">
+          <button type="button" class="c-opcion" data-campo="provincia" data-valor="Corrientes">Corrientes capital</button>
+          <button type="button" class="c-opcion" data-campo="provincia" data-valor="Interior de Corrientes">Interior de Corrientes</button>
+          <button type="button" class="c-opcion" data-campo="provincia" data-valor="Otra provincia">Otra provincia</button>
+        </div>
+      </fieldset>
+
+      <!-- 4 · Gracias -->
+      <div class="c-paso c-paso--fin" data-paso="4" role="status">
+        <p class="c-paso__tilde" aria-hidden="true">✓</p>
+        <h3 class="c-display c-display--md">Gracias.</h3>
+        <p class="c-paso__cierre">Te escribimos a <b data-eco>tu correo</b> para coordinar una charla corta. Contesta una persona.</p>
+        <p class="c-paso__mientras">Mientras tanto, si trabajás solo podés <a href="https://app.iudex.com.ar/" target="_blank" rel="noopener">crear tu cuenta</a> y empezar hoy.</p>
+      </div>
+
+      <p class="c-paso__fallo" data-fallo hidden></p>
+    </form>
   </div>
 </section>
 
@@ -238,11 +155,11 @@
       </article>
       <article class="c-faq__item">
         <h4>¿Hace falta saber de tecnología?</h4>
-        <p>No. Si manejás Gmail o WhatsApp, manejás Iudex. El primer caso investigado, en diez minutos.</p>
+        <p>No. Se abre en el navegador y se carga escribiendo en una línea: «audiencia mañana 10hs» y Enter.</p>
       </article>
       <article class="c-faq__item">
         <h4>¿Sirve para cualquier fuero?</h4>
-        <p>El expediente, los plazos y la investigación funcionan para todo fuero. Los modelos de escrito crecen por área: arrancamos con laboral, civil y comercial en Corrientes, y seguimos.</p>
+        <p>Las causas, los plazos y la calculadora funcionan para todo fuero. Nexus busca sobre el corpus de Corrientes: jurisprudencia del STJ y de las Cámaras, y la legislación provincial.</p>
       </article>
     </div>
   </div>

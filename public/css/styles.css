@@ -7941,6 +7941,18 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 .app__field label { display: block; font-size: 7.5px; color: var(--ink-muted); margin-bottom: 3px; }
 .app__field div { background: var(--cream); border-radius: 6px; padding: 6px 8px; font-size: 9.5px; }
 .app__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+/* El resultado de la liquidación. Existe porque el formulario vacío se
+   estiraba para llenar la ventana y no contaba nada: lo que hay que mostrar
+   es que la cuenta sale hecha, con los intereses y el pago parcial a la
+   vista. */
+.app__res { margin-top: 9px; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 10px; padding: 4px 12px; }
+.app__res-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 0; font-size: 9px; color: var(--ink-muted); border-bottom: 1px solid var(--cream-dark); }
+.app__res-row:last-child { border-bottom: 0; }
+.app__res-row b { font-size: 10px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+.app__res-row--total span { color: var(--ink); }
+.app__res-row--total b { font-family: var(--font-display); font-size: 13px; color: #17342c; }
+.app__res-note { margin-top: 7px; font-family: var(--font-mono); font-size: 7px; letter-spacing: 0.04em; color: var(--ink-muted); }
+
 .app__btn { margin-top: 3px; background: #17342c; color: var(--white); border-radius: 7px; text-align: center; padding: 7px; font-size: 9px; }
 
 /* ── Nexus ────────────────────────────────────────────────── */
@@ -7976,4 +7988,85 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 
 @media (prefers-reduced-motion: reduce) {
   .app__caret { animation: none; }
+}
+
+/* ===========================================================
+   CONTACTO — una pregunta por vez
+   ===========================================================
+   Reemplaza al formulario de nueve campos. Dos de las tres preguntas se
+   contestan con un click y la tercera es el correo: lo mínimo para poder
+   responder. El resto lo completamos hablando.
+   =========================================================== */
+.c-pasos { position: relative; }
+.c-pasos__barra { display: flex; gap: 6px; list-style: none; padding: 0; margin: 0 0 34px; }
+.c-pasos__barra li { height: 2px; flex: 1; background: var(--cream-dark); border-radius: 999px; transition: background 0.35s var(--ease-out); }
+.c-pasos__barra li.is-on { background: var(--gold); }
+
+/* Los pasos se apilan y solo uno se ve. `display` y no opacidad: un campo
+   invisible pero enfocable es una trampa para quien navega con teclado. */
+.c-paso { display: none; border: 0; padding: 0; margin: 0; }
+.c-paso.is-on { display: block; animation: pasoEntra 0.34s var(--ease-out) both; }
+@keyframes pasoEntra { from { opacity: 0; transform: translateY(8px); } }
+
+.c-paso__pregunta {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+  line-height: 1.25;
+  color: var(--ink);
+  padding: 0;
+  margin-bottom: 22px;
+}
+.c-paso__input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: 12px;
+  padding: 15px 18px;
+}
+.c-paso__input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.16); }
+.c-paso__seguir { margin-top: 18px; }
+.c-paso__error, .c-paso__fallo { margin-top: 10px; font-size: 0.88rem; color: var(--red-accent); }
+
+/* Las opciones son el control: grandes, de una línea, y se eligen con un
+   click que además avanza. Un radio + un botón "siguiente" son dos gestos
+   para una sola decisión. */
+.c-opciones { display: grid; gap: 10px; }
+.c-opcion {
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: 12px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
+}
+.c-opcion:hover { border-color: var(--gold); transform: translateY(-1px); }
+.c-opcion:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.c-opcion.is-elegida { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+.c-paso--fin { text-align: center; padding: 8px 0 4px; }
+.c-paso__tilde {
+  width: 44px; height: 44px;
+  margin: 0 auto 18px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.14);
+  color: var(--gold);
+  font-size: 1.1rem;
+}
+.c-paso__cierre { margin-top: 12px; font-size: 1rem; line-height: 1.7; color: var(--ink-soft); }
+.c-paso__cierre b { font-weight: 500; color: var(--ink); }
+.c-paso__mientras { margin-top: 16px; font-size: 0.9rem; color: var(--ink-muted); }
+.c-paso__mientras a { color: var(--gold-deep, var(--gold)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .c-paso.is-on { animation: none; }
+  .c-opcion:hover { transform: none; }
 }
