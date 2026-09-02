@@ -8079,3 +8079,41 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .c-paso.is-on { animation: none; }
   .c-opcion:hover { transform: none; }
 }
+
+/* ===========================================================
+   NEXUS — el visor de la fuente y las repreguntas
+   ===========================================================
+   Los pasos de esta página mostraban capturas del escritorio: el fallo
+   abierto con subrayados y el memo de trabajo. Ninguna de las dos cosas
+   existe en el navegador. Lo que sí existe —la cita que abre el PDF en la
+   página que la respalda, y las repreguntas al terminar— se dibuja acá.
+   =========================================================== */
+.c-step__shot--mock { box-shadow: var(--shadow-window); background: var(--white); padding: 0; }
+.c-step__shot--mock .app { height: 340px; font-size: 11px; }
+
+.nx-visor { display: flex; flex-direction: column; height: 340px; background: var(--cream); border-radius: inherit; overflow: hidden; text-align: left; }
+.nx-visor__bar { flex: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 12px 14px; background: var(--white); border-bottom: 1px solid var(--cream-dark); }
+.nx-visor__bar b { display: block; font-size: 11px; font-weight: 600; line-height: 1.35; color: var(--ink); }
+.nx-visor__bar small { display: block; font-size: 9.5px; color: var(--ink-muted); margin-top: 2px; }
+.nx-visor__acciones { flex: none; display: flex; align-items: center; gap: 10px; font-size: 9.5px; color: var(--ink-muted); }
+
+/* La hoja del PDF: fondo gris y el papel centrado, como cualquier visor. */
+.nx-visor__hoja { flex: 1; min-height: 0; margin: 12px 26px; padding: 16px 18px; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 3px; overflow: hidden; }
+.nx-visor__hoja p { font-size: 9.5px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 9px; text-align: justify; }
+.nx-visor__sello { font-family: var(--font-display); font-size: 9px !important; font-style: italic; text-align: center !important; color: var(--ink-muted); margin-bottom: 12px !important; }
+.nx-visor__hoja mark { background: rgba(201,168,76,0.28); color: inherit; padding: 0 1px; }
+.nx-visor__pie { flex: none; display: flex; justify-content: space-between; padding: 8px 14px; font-family: var(--font-mono); font-size: 8px; color: var(--ink-muted); border-top: 1px solid var(--cream-dark); background: var(--white); }
+
+/* Las repreguntas, tal como aparecen debajo de una respuesta terminada. */
+.nx-repre { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.nx-repre span { font-size: 8.5px; color: var(--ink-soft); border: 1px solid var(--cream-dark); border-radius: 999px; padding: 4px 10px; }
+
+/* En pantallas chicas las tres columnas de Nexus no entran: el chat quedaba
+   con una palabra por renglón. Se va el rail —que en el resto de los mocks
+   sí entra, porque son de una sola columna— y se va el panel de fuentes;
+   quedan las conversaciones y la respuesta, que es lo que el paso cuenta. */
+@media (max-width: 720px) {
+  .app--nx .app__rail,
+  .app--nx .app__fuentes { display: none; }
+  .nx-visor__hoja { margin: 10px 12px; padding: 12px 13px; }
+}
