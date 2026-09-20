@@ -98,10 +98,10 @@
             </div>
             <div class="app__add"><i></i><span>Nueva causa… 12345/2024 Sucesión s/ Ab intestato (Enter)</span><u>→</u></div>
             <div class="app__rows">
-              <div class="app__row"><b>Bianchi, Sofía c/ Aseguradora del Sur ART<span class="app__row-sub">Juzgado del Trabajo N° 1</span></b><span class="app__tag">activo</span></div>
-              <div class="app__row"><b>González c/ Logística del Litoral<span class="app__row-sub">Juzgado del Trabajo N° 2</span></b><span class="app__tag">activo</span></div>
-              <div class="app__row"><b>Cabral c/ Mansilla — alimentos<span class="app__row-sub">Juzgado de Familia N° 1</span></b><span class="app__tag app__tag--gold">urgente</span></div>
-              <div class="app__row"><b>Romero c/ Municipalidad de Corrientes<span class="app__row-sub">Cámara Contencioso Administrativo</span></b><span class="app__tag">activo</span></div>
+              <div class="app__row"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Accidente Ley 24.557<span class="app__row-sub">Juzgado del Trabajo N° 1</span></b><span class="app__tag">activo</span></div>
+              <div class="app__row"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Despido<span class="app__row-sub">Juzgado del Trabajo N° 2</span></b><span class="app__tag">activo</span></div>
+              <div class="app__row"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Alimentos<span class="app__row-sub">Juzgado de Familia N° 1</span></b><span class="app__tag app__tag--gold">urgente</span></div>
+              <div class="app__row"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Amparo<span class="app__row-sub">Cámara Contencioso Administrativo</span></b><span class="app__tag">activo</span></div>
             </div>
           </div>
         </div>
@@ -134,31 +134,79 @@
           </div>
         </div>
       </div>
-      <!-- La ventana del frente es NEXUS tal como se usa hoy: se le pregunta
-           por jurisprudencia de Corrientes y cada afirmación viene con su
-           cita. La conversación es una real, tomada de una sesión de la app.
-
-           Antes mostraba un "asistente del expediente" respondiendo sobre los
-           embargos de una causa: eso es la app de escritorio. Prometer que la
-           IA lee tus documentos cuando todavía no los lee es la clase de
-           detalle que se descubre en el primer minuto de uso. -->
-      <div class="c-window c-window--front" role="img" aria-label="Nexus respondiendo sobre los criterios de la Cámara de Apelaciones de Corrientes para el daño moral en accidentes de tránsito, con la cita de cada fallo al lado de la afirmación que respalda.">
-        <div class="hwin hwin--nx">
-          <div class="hwin__bar"><span>Iudex — Nexus</span></div>
-          <div class="hnx">
-            <div class="hnx__head"><span class="nx-orb nx-orb--sm"></span>Nexus</div>
-            <div class="hnx__chat">
-              <div class="hnx-q">criterios de la Cámara de Corrientes para cuantificar el daño moral en accidentes de tránsito</div>
-              <div class="hnx-a">
-                <p class="hnx-ln" style="--i:0"><b>Naturaleza y prueba.</b> No está sujeto a parámetros objetivos: recae sobre el ámbito espiritual de la víctima, y basta la certeza de su existencia.</p>
-                <span class="hnx-cite" style="--i:1">3 · DEGREGORIO c/ BENITEZ · p. 11</span>
-                <p class="hnx-ln" style="--i:2"><b>In re ipsa.</b> Acreditado el daño físico o psíquico derivado del accidente, el daño moral surge de esa sola prueba.</p>
-                <span class="hnx-cite" style="--i:3">5 · BAUMANN c/ IMPULSO S.A. · p. 17</span>
-                <p class="hnx-ln" style="--i:4"><b>Función.</b> No se trata de proporcionar «placeres sustitutivos», sino de reparar en relación con la entidad del perjuicio.</p>
-                <span class="hnx-cite" style="--i:5">2 · MARTIN c/ GUTIERREZ · p. 15</span>
-              </div>
+      <!-- La ventana del frente cuenta el trabajo de todos los días, sola:
+           la causa con sus movimientos, «Nuevo escrito» sobre el último,
+           el editor que se abre y una plantilla que deja el escrito armado
+           con carátula, juzgado y firma. Es lo que el aviso de Novedades
+           promete, en diez segundos. main.js avanza `data-step` en .hx. -->
+      <div class="c-window c-window--front" role="img" aria-label="Iudex: la ficha de una causa con sus movimientos; sobre el último se elige «Nuevo escrito», se abre el editor y una plantilla deja el escrito armado con carátula, juzgado y firma.">
+        <div class="hx" data-step="0">
+          <div class="app">
+            <div class="app__rail">
+              <div class="app__brand">Iudex</div>
+              <div class="app__studio">Estudio Vallejos</div>
+              <div class="app__nav app__nav--inicio"><i></i>Inicio</div>
+              <div class="app__nav app__nav--agenda"><i></i>Agenda</div>
+              <div class="app__nav app__nav--expedientes is-on"><i></i>Expedientes</div>
+              <div class="app__nav app__nav--calculadora"><i></i>Calculadora</div>
+              <div class="app__nav app__nav--tareas"><i></i>Plantillas</div>
+              <div class="app__nav app__nav--nexus"><i></i>Nexus</div>
+              <div class="app__nav app__nav--clientes"><i></i>Clientes</div>
             </div>
-            <div class="hnx__input"><span class="hnx-typed">¿hay fallos en sentido contrario?</span><span class="hnx-caret"></span><svg class="hnx-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="app__main hx__main">
+              <div class="ml-ficha__head">
+                <h4 class="app__title">PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios</h4>
+                <div class="ml-chips"><span>EXP 48583/12</span><span>Juzgado Civil y Comercial N° 4</span><span>Secretaría N° 8</span><span>Civil y Comercial</span></div>
+              </div>
+              <div class="ml-sec">Movimientos <b>· 2</b></div>
+              <div class="app__add ml-add"><i></i><span><u class="ml-hint">Nuevo movimiento… (Enter)</u></span><u>→</u></div>
+              <div class="hx__mes">SEPTIEMBRE 2026</div>
+              <div class="ml-time">
+                <div class="ml-mov"><i></i>
+                  <div class="ml-mov__card">
+                    <div class="ml-mov__top"><b>12/09/2026</b><span class="ml-kind">Resolución</span><span>Traslado de la demanda por cinco días</span></div>
+                    <p>Corrientes, 12 de septiembre de 2026. Por presentado, parte y domicilio constituido. De la demanda de ejecución promovida córrase traslado a la PARTE DEMANDADA por el término de CINCO (5) DÍAS…</p>
+                    <div class="ml-mov__foot">
+                      <div class="ml-mov__grp"><small>Archivos</small><span class="ml-act"><i class="ml-ic ml-ic--pdf"></i>Subir archivo</span><span class="ml-act ml-act--gold hx__nuevo"><i class="ml-ic ml-ic--doc"></i>Nuevo escrito</span><span class="ml-act"><i class="ml-ic ml-ic--mic"></i>Nota de voz</span></div>
+                      <div class="ml-mov__grp"><small>Acciones</small><span class="ml-act"><i class="ml-ic ml-ic--ced"></i>Hacer cédula</span><span class="ml-act"><i class="ml-ic ml-ic--calc"></i>Practicar planilla</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ml-mov"><i></i>
+                  <div class="ml-mov__card ml-mov__card--min">
+                    <div class="ml-mov__top"><b>14/08/2026</b><span class="ml-kind">Escrito</span><span>Promueve ejecución de honorarios</span><span class="ml-mov__count">1 archivo</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Editor: se abre sobre la ficha -->
+              <div class="hx__editor">
+                <div class="hx__bar">
+                  <span class="hx__doc"><i class="ml-ic ml-ic--doc"></i>Nuevo escrito · Resolución 12/09</span>
+                  <span class="hx__tools"><span class="ml-btn hx__tpl"><i class="ml-ic ml-ic--tpl"></i>Plantilla ▾</span><span class="ml-btn ml-btn--ink hx__export">Exportar PDF</span></span>
+                  <div class="hx__menu">
+                    <div>Contesta demanda</div>
+                    <div class="hx__pick">Contesta traslado</div>
+                    <div>Interpone recurso de apelación</div>
+                    <div>Ofrece prueba</div>
+                    <div>Practica planilla</div>
+                  </div>
+                </div>
+                <div class="hx__page">
+                  <span class="hx__caret"></span>
+                  <div class="hx__t ml-sheet__h">CONTESTA TRASLADO</div>
+                  <div class="hx__t ml-sheet__l">Señora Jueza:</div>
+                  <div class="hx__t ml-sheet__p"><mark>Lucía Ferreyra</mark>, abogada, <mark>M.P. 5.812</mark>, en autos <mark>«PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios», Expte. N° 48583/12</mark>, que tramita ante el <mark>Juzgado Civil y Comercial N° 4, Secretaría N° 8</mark>, a V.S. digo:</div>
+                  <div class="hx__t ml-sheet__p">Que vengo en tiempo y forma a contestar el traslado conferido por resolución del <mark>12/09/2026</mark>…</div>
+                  <div class="hx__t ml-sheet__p ml-sheet__p--sk"></div>
+                  <div class="hx__t ml-sheet__p ml-sheet__p--sk" style="width:58%"></div>
+                  <div class="hx__t ml-sheet__sign"><b>Firmado electrónicamente por: Lucía Ferreyra</b><span>M.P. 5.812 · CUIT 27-31XXXXXX-4</span></div>
+                  <div class="hx__t ml-toast"><i class="ml-ic ml-ic--ok"></i>Listo para presentar</div>
+                </div>
+              </div>
+              <!-- El cursor que hace el recorrido -->
+              <svg class="hx__cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 9-6 1.5L16 20l-2.5 1-3-6.5L6 18z" fill="#0f0f0e" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            </div>
           </div>
         </div>
       </div>
@@ -223,7 +271,7 @@
           </div>
           <div class="app__main">
             <div class="ml-ficha__head">
-              <h4 class="app__title">Pérez, Juan c/ García, Roberto s/ Ejecución de honorarios</h4>
+              <h4 class="app__title">PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios</h4>
               <div class="ml-chips">
                 <span>EXP 48583/12</span><span>Juzgado Civil y Comercial N° 4</span><span>Secretaría N° 8</span><span>Civil y Comercial</span>
               </div>
@@ -300,10 +348,10 @@
               <div class="app__tools"><span class="ml-btn ml-btn--on"><i class="ml-ic ml-ic--bell"></i>Notificaciones de ForumNA</span></div>
             </div>
             <div class="app__rows ml-causas">
-              <div class="app__row ml-causa" style="--i:0"><b>Pérez, Juan c/ García, Roberto s/ Ejecución de honorarios<span class="app__row-sub">48583/12 · Juzgado Civil y Comercial N° 4</span></b><span class="ml-notif"><i class="ml-ic ml-ic--bell"></i>Notificación · 19/09</span></div>
-              <div class="app__row ml-causa" style="--i:1"><b>Bianchi, Sofía c/ Aseguradora del Sur ART s/ Accidente<span class="app__row-sub">31207/24 · Juzgado del Trabajo N° 1</span></b><span class="ml-notif"><i class="ml-ic ml-ic--bell"></i>Notificación · 19/09</span></div>
-              <div class="app__row ml-causa" style="--i:2"><b>Cabral c/ Mansilla s/ Alimentos<span class="app__row-sub">20115/25 · Juzgado de Familia N° 1</span></b><span class="app__tag">activo</span></div>
-              <div class="app__row ml-causa" style="--i:3"><b>Romero c/ Municipalidad de Corrientes s/ Amparo<span class="app__row-sub">7720/26 · Cámara Contencioso Administrativo</span></b><span class="ml-notif"><i class="ml-ic ml-ic--bell"></i>Notificación · 19/09</span></div>
+              <div class="app__row ml-causa" style="--i:0"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios<span class="app__row-sub">48583/12 · Juzgado Civil y Comercial N° 4</span></b><span class="ml-notif"><i class="ml-ic ml-ic--bell"></i>Notificación · 19/09</span></div>
+              <div class="app__row ml-causa" style="--i:1"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Accidente Ley 24.557<span class="app__row-sub">31207/24 · Juzgado del Trabajo N° 1</span></b><span class="ml-notif"><i class="ml-ic ml-ic--bell"></i>Notificación · 19/09</span></div>
+              <div class="app__row ml-causa" style="--i:2"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Alimentos<span class="app__row-sub">20115/25 · Juzgado de Familia N° 1</span></b><span class="app__tag">activo</span></div>
+              <div class="app__row ml-causa" style="--i:3"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Amparo<span class="app__row-sub">7720/26 · Cámara Contencioso Administrativo</span></b><span class="ml-notif"><i class="ml-ic ml-ic--bell"></i>Notificación · 19/09</span></div>
             </div>
             <div class="ml-scrim"></div>
             <div class="ml-dialog ml-forum">
@@ -324,7 +372,7 @@
 
 <!-- ===========================================================
      III — Desde el PDF
-     Los datos de la causa se completan en un clic desde la primera foja,
+     Los datos de la causa se completan en un click desde la primera foja,
      cruzados con la base oficial de autoridades (Guía Judicial).
      =========================================================== -->
 <section class="c-chapter" id="cap-pdf" data-chapter="3" data-live aria-labelledby="c-pdf-title">
@@ -332,7 +380,7 @@
     <div class="c-chapter__copy">
       <span class="c-chapter__rail" aria-hidden="true"><span class="c-chapter__rail-fill"></span></span>
       <span class="c-eyebrow">III · Desde el PDF</span>
-      <h2 id="c-pdf-title" class="c-display">Los datos,<br/>en un clic.</h2>
+      <h2 id="c-pdf-title" class="c-display">Los datos,<br/>en un click.</h2>
       <div class="c-chapter__beats">
         <div class="c-chapter__beat" data-beat="0"><p>Subís la resolución.</p></div>
         <div class="c-chapter__beat" data-beat="1"><p>Iudex lee carátula, juzgado, secretaría, juez.</p></div>
@@ -359,7 +407,7 @@
             <div class="ml-pdf__grid">
               <div class="ml-page">
                 <div class="ml-page__scan"></div>
-                <div class="ml-page__l ml-page__l--h" data-f="caratula">«PÉREZ, JUAN C/ GARCÍA, ROBERTO S/ EJECUCIÓN DE HONORARIOS»</div>
+                <div class="ml-page__l ml-page__l--h" data-f="caratula">«PARTE ACTORA C/ PARTE DEMANDADA S/ EJECUCIÓN DE HONORARIOS»</div>
                 <div class="ml-page__l" data-f="exp">Expte. N° 48583/12</div>
                 <div class="ml-page__l" data-f="juzgado">Juzgado Civil y Comercial N° 4</div>
                 <div class="ml-page__l" data-f="secretaria">Secretaría N° 8</div>
@@ -369,7 +417,7 @@
                 <div class="ml-page__l" data-f="juez">Dra. María Laura Gómez — Jueza</div>
               </div>
               <div class="ml-fields">
-                <div class="ml-field" data-f="caratula"><label>Carátula</label><div>Pérez, Juan c/ García, Roberto s/ Ejecución de honorarios</div><em class="ml-check"></em></div>
+                <div class="ml-field" data-f="caratula"><label>Carátula</label><div>PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios</div><em class="ml-check"></em></div>
                 <div class="ml-field" data-f="exp"><label>Expediente</label><div>48583/12</div><em class="ml-check"></em></div>
                 <div class="ml-field" data-f="juzgado"><label>Juzgado</label><div>Juzgado Civil y Comercial N° 4</div><em class="ml-check ml-check--guia"></em></div>
                 <div class="ml-field" data-f="secretaria"><label>Secretaría</label><div>Secretaría N° 8 · Dr. P. Ojeda</div><em class="ml-check ml-check--guia"></em></div>
@@ -386,7 +434,7 @@
 </section>
 
 <section class="c-interstitial c-interstitial--air">
-  <h3 class="c-display">Y sobre cada movimiento,<br/>lo que hay que hacer.</h3>
+  <h3 class="c-display">Organizá en cada movimiento<br/>lo que hay que hacer.</h3>
 </section>
 
 <!-- ===========================================================
@@ -431,7 +479,7 @@
             <div class="ml-sheet">
               <div class="ml-sheet__h ml-fill" data-f="1">INTERPONE RECURSO DE APELACIÓN</div>
               <div class="ml-sheet__l ml-fill" data-f="1">Señora Jueza:</div>
-              <div class="ml-sheet__p"><span class="ml-fill" data-f="2">Lucía Ferreyra</span>, abogada, <span class="ml-fill" data-f="2">M.P. 5.812</span>, en autos <span class="ml-fill" data-f="2">«Pérez, Juan c/ García, Roberto s/ Ejecución de honorarios», Expte. N° 48583/12</span>, que tramita ante el <span class="ml-fill" data-f="2">Juzgado Civil y Comercial N° 4, Secretaría N° 8</span>, a V.S. digo:</div>
+              <div class="ml-sheet__p"><span class="ml-fill" data-f="2">Lucía Ferreyra</span>, abogada, <span class="ml-fill" data-f="2">M.P. 5.812</span>, en autos <span class="ml-fill" data-f="2">«PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios», Expte. N° 48583/12</span>, que tramita ante el <span class="ml-fill" data-f="2">Juzgado Civil y Comercial N° 4, Secretaría N° 8</span>, a V.S. digo:</div>
               <div class="ml-sheet__p">Que vengo en tiempo y forma a interponer recurso de apelación contra la sentencia del <span class="ml-fill" data-f="2">12/09/2026</span>, por causarme gravamen irreparable…</div>
               <div class="ml-sheet__p ml-sheet__p--sk"></div>
               <div class="ml-sheet__p ml-sheet__p--sk" style="width:62%"></div>
@@ -489,12 +537,12 @@
                 <div class="ml-chips ml-chips--seg"><span class="is-on">Cédula local</span><span>Cédula Ley 22172/3556</span><span>Contenido reservado</span></div>
                 <div class="ml-sec">Resolución a notificar</div>
                 <div class="ml-extract"><i class="ml-ic ml-ic--pdf"></i>Resolución.pdf<span class="ml-file__bar"><span></span></span><b>transcripta</b></div>
-                <div class="ml-box ml-box--text">Corrientes, 12 de septiembre de 2026. Por presentado, parte y domicilio constituido. De la demanda de ejecución promovida córrase traslado al demandado GARCÍA, ROBERTO por el término de CINCO (5) DÍAS, bajo apercibimiento de ley. Notifíquese con copias.</div>
+                <div class="ml-box ml-box--text">Corrientes, 12 de septiembre de 2026. Por presentado, parte y domicilio constituido. De la demanda de ejecución promovida córrase traslado a la PARTE DEMANDADA por el término de CINCO (5) DÍAS, bajo apercibimiento de ley. Notifíquese con copias.</div>
               </div>
               <div class="ml-ced__pane" data-s="2">
                 <div class="ml-sec">Encabezado</div>
                 <div class="ml-fields ml-fields--2">
-                  <div class="ml-field"><label>Notificar a</label><div>García, Roberto</div><em class="ml-check"></em></div>
+                  <div class="ml-field"><label>Notificar a</label><div>PARTE DEMANDADA</div><em class="ml-check"></em></div>
                   <div class="ml-field"><label>Domicilio</label><div>San Juan 1120, Corrientes</div><em class="ml-check"></em></div>
                   <div class="ml-field"><label>Carácter</label><div>Denunciado</div><em class="ml-check"></em></div>
                   <div class="ml-field"><label>Juzgado</label><div>Civil y Comercial N° 4 · Sec. N° 8</div><em class="ml-check ml-check--guia"></em></div>
@@ -560,7 +608,7 @@
           <div class="app__main ml-pla">
             <div class="app__head">
               <h4 class="app__title">Practicar planilla</h4>
-              <div class="app__tools"><span class="ml-chip-mini">Pérez c/ García · 48583/12</span></div>
+              <div class="app__tools"><span class="ml-chip-mini">PARTE ACTORA c/ PARTE DEMANDADA · 48583/12</span></div>
             </div>
             <div class="ml-pla__grid">
               <div class="app__form ml-pla__form">
@@ -583,7 +631,7 @@
                 </div>
                 <div class="ml-sheet ml-sheet--mini">
                   <div class="ml-sheet__h">PRACTICA PLANILLA</div>
-                  <div class="ml-sheet__p">Lucía Ferreyra, en autos «Pérez, Juan c/ García, Roberto s/ Ejecución de honorarios», Expte. N° 48583/12, a V.S. digo: Que vengo a practicar planilla de liquidación…</div>
+                  <div class="ml-sheet__p">Lucía Ferreyra, en autos «PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios», Expte. N° 48583/12, a V.S. digo: Que vengo a practicar planilla de liquidación…</div>
                   <div class="ml-sheet__p ml-sheet__p--sk"></div>
                   <div class="ml-sheet__p ml-sheet__p--sk" style="width:55%"></div>
                   <div class="ml-sheet__sign"><b>Firmado electrónicamente por: Lucía Ferreyra</b></div>

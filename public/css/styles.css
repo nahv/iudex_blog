@@ -2,7 +2,7 @@
    IUDEX BLOG - Global Styles
    =========================== */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400&family=Playfair+Display:wght@500&display=swap');
 
 /* CSS Variables */
 :root {
@@ -20,6 +20,8 @@
      títulos, DM Sans para el cuerpo. Sin serif, sin cursivas, el oro sólo
      como acento decorativo (cursor, chips, barras), nunca como palabra. */
   --font-display: 'DM Sans', system-ui, sans-serif;
+  /* La única serif que queda: el logotipo «Iudex» (navbar, footer, mocks). */
+  --font-logo: 'Playfair Display', Georgia, serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
   --font-mono: 'DM Mono', monospace;
 
@@ -202,10 +204,10 @@ html[data-hero-intro="play"] .navbar { opacity: 0; transform: translateY(-100%);
 }
 
 .navbar__logo-text {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.25rem;
-  letter-spacing: -0.03em;
+  font-family: var(--font-logo);
+  font-weight: 500;
+  font-size: 1.3rem;
+  letter-spacing: 0;
   color: var(--ink);
 }
 
@@ -4323,7 +4325,10 @@ body.cinematic .navbar.scrolled {
 /* Hero-specific h1 sizing — pushes more aggressively below 980px so
    the mobile hero hits real editorial scale (~44 px+ at 375 viewport). */
 .c-hero h1.c-display {
-  font-size: clamp(2.6rem, 8vw, 5.2rem);
+  /* Dos líneas («El expediente, / en orden.») en la columna de ~400 px del
+     desktop: 4.1rem entra justo; en móvil el vw manda y sube a ~44 px. */
+  font-size: clamp(2.6rem, 8vw, 4.1rem);
+  text-wrap: balance;
 }
 .c-hero__sub {
   margin: 28px 0 0;
@@ -7830,7 +7835,8 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   gap: 2px;
 }
 .app__brand {
-  font-family: var(--font-display);
+  font-family: var(--font-logo);
+  font-weight: 500;
   font-size: 15px;
   text-align: center;
   margin-bottom: 2px;
@@ -8163,9 +8169,6 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
    scroll los recorre con `data-beat` / `--beat-progress`. Poco texto,
    una sola voz tipográfica (DM Sans Light), oro sólo como acento.
    =========================================================== */
-/* El titular del hero pide dos líneas exactas («El expediente, / en orden.»):
-   un punto menos de cuerpo para que la primera entre en la columna. */
-.c-hero .c-display { font-size: clamp(2.2rem, 4.4vw, 4.3rem); text-wrap: balance; }
 .ml-window { position: relative; }
 .ml-window .app { min-height: 400px; }
 .ml-window .app__main { padding: 16px 20px; gap: 0; position: relative; }
@@ -8383,4 +8386,68 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .ml-page { min-height: 0; }
   .ml-dialog { width: 90%; }
   .ml-ced__panes { min-height: 230px; }
+}
+
+/* ===========================================================
+   HERO — la escena «de la causa al escrito» (self-running).
+   `data-step` en .hx: 0 ficha · 1 cursor a «Nuevo escrito» · 2 editor
+   abierto · 3 menú de plantillas · 4 plantilla aplicada (título, datos
+   de la causa marcados, firma, toast). main.js avanza los pasos con
+   tiempos; reduced-motion salta al 4.
+   =========================================================== */
+.hx { position: absolute; inset: 0; }
+.hx .app { height: 100%; }
+.hx__main { position: relative; overflow: hidden; }
+.hx__mes { margin: 8px 0 -2px 18px; font-family: var(--font-mono); font-size: 6.5px; letter-spacing: 0.1em; color: var(--ink-muted); }
+.hx .ml-add .app__caret { display: none; }
+.ml-ic--mic { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='3' width='6' height='11' rx='3'/%3E%3Cpath d='M5 11a7 7 0 0014 0M12 18v3'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='3' width='6' height='11' rx='3'/%3E%3Cpath d='M5 11a7 7 0 0014 0M12 18v3'/%3E%3C/svg%3E"); }
+.ml-ic--tpl { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='3' width='16' height='18' rx='2'/%3E%3Cpath d='M8 8h8M8 12h8M8 16h5'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='3' width='16' height='18' rx='2'/%3E%3Cpath d='M8 8h8M8 12h8M8 16h5'/%3E%3C/svg%3E"); }
+
+/* «Nuevo escrito» se enciende al pasar el cursor */
+.hx__nuevo { position: relative; border-radius: 6px; padding: 2px 5px; margin: -2px -5px; transition: background 220ms var(--ease-cinema), color 220ms; }
+.hx[data-step="1"] .hx__nuevo { background: rgba(201,168,76,0.18); color: var(--ink); }
+
+/* Editor: entra desde abajo, ocupa la ficha */
+.hx__editor { position: absolute; inset: 0; background: var(--cream); display: flex; flex-direction: column; opacity: 0; transform: translateY(24px); transition: opacity 420ms var(--ease-cinema), transform 520ms var(--ease-cinema); pointer-events: none; }
+.hx:is([data-step="2"],[data-step="3"],[data-step="4"]) .hx__editor { opacity: 1; transform: none; }
+.hx__bar { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--cream-dark); background: var(--white); }
+.hx__doc { display: inline-flex; align-items: center; gap: 6px; font-size: 9.5px; color: var(--ink); }
+.hx__doc .ml-ic { color: var(--gold-deep); width: 10px; height: 10px; }
+.hx__tools { display: inline-flex; gap: 6px; }
+.hx__tpl { transition: border-color 220ms, background 220ms; }
+.hx[data-step="3"] .hx__tpl { border-color: var(--gold); background: var(--cream); }
+.hx__export { opacity: 0.45; transition: opacity 300ms; }
+.hx[data-step="4"] .hx__export { opacity: 1; }
+.hx__menu { position: absolute; right: 88px; top: 36px; width: 160px; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 10px; box-shadow: var(--shadow-window-soft); padding: 5px; z-index: 2; opacity: 0; transform: translateY(-6px); transition: opacity 240ms var(--ease-cinema), transform 300ms var(--ease-cinema); }
+.hx__menu div { font-size: 8.5px; padding: 6px 9px; border-radius: 6px; color: var(--ink-soft); }
+.hx[data-step="3"] .hx__menu { opacity: 1; transform: none; }
+.hx[data-step="3"] .hx__menu .hx__pick { background: var(--cream); color: var(--ink); box-shadow: inset 2px 0 0 var(--gold); }
+.hx__page { flex: 1; min-height: 0; margin: 12px 26px 0; background: var(--white); border: 1px solid var(--cream-dark); border-bottom: 0; border-radius: 6px 6px 0 0; padding: 18px 22px 0; font-family: Georgia, serif; position: relative; }
+.hx__caret { position: absolute; left: 22px; top: 20px; width: 1px; height: 11px; background: var(--ink); animation: appCaret 1s steps(2) infinite; }
+.hx[data-step="4"] .hx__caret { display: none; }
+.hx__t { opacity: 0; transform: translateY(5px); transition: opacity 360ms var(--ease-cinema), transform 420ms var(--ease-cinema); }
+.hx[data-step="4"] .hx__t { opacity: 1; transform: none; }
+.hx[data-step="4"] .hx__t:nth-child(2) { transition-delay: 60ms; }
+.hx[data-step="4"] .hx__t:nth-child(3) { transition-delay: 140ms; }
+.hx[data-step="4"] .hx__t:nth-child(4) { transition-delay: 260ms; }
+.hx[data-step="4"] .hx__t:nth-child(5) { transition-delay: 380ms; }
+.hx[data-step="4"] .hx__t:nth-child(6) { transition-delay: 440ms; }
+.hx[data-step="4"] .hx__t:nth-child(7) { transition-delay: 500ms; }
+.hx[data-step="4"] .hx__t:nth-child(8) { transition-delay: 720ms; }
+.hx[data-step="4"] .hx__t:nth-child(9) { transition-delay: 1000ms; }
+.hx__page mark { background: rgba(201,168,76,0.22); color: inherit; border-radius: 2px; padding: 0 1px; }
+.hx .ml-toast { right: 14px; bottom: 14px; }
+
+/* El cursor: aparece en el paso 1, viaja a los controles y desaparece al final */
+.hx__cursor { position: absolute; width: 16px; height: 16px; left: 62%; top: 82%; opacity: 0; z-index: 3; filter: drop-shadow(0 2px 3px rgba(15,15,14,0.35)); transition: left 700ms var(--ease-cinema), top 700ms var(--ease-cinema), opacity 300ms var(--ease-cinema), transform 140ms var(--ease-cinema); }
+.hx[data-step="1"] .hx__cursor { opacity: 1; left: 36%; top: 62%; }
+.hx[data-step="1"][data-click] .hx__cursor, .hx[data-step="3"][data-click] .hx__cursor { transform: scale(0.85); }
+.hx[data-step="2"] .hx__cursor { opacity: 1; left: 36%; top: 62%; }
+.hx[data-step="3"] .hx__cursor { opacity: 1; left: 71%; top: 23%; }
+.hx[data-step="4"] .hx__cursor { opacity: 0; left: 71%; top: 23%; }
+
+/* En la composición final (intro=done) el frente sigue mostrando el escrito
+   terminado: es el "después". */
+@media (prefers-reduced-motion: reduce) {
+  .hx__editor, .hx__t { transition: none !important; }
 }

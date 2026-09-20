@@ -1099,32 +1099,24 @@ if (document.readyState === 'loading') {
     hero.dataset.state = 'enter';
     requestAnimationFrame(() => requestAnimationFrame(() => { hero.dataset.state = 'in'; }));
 
-    const typed  = hero.querySelector('.hnx-typed');
-    const bubble = hero.querySelector('.hnx-q');
-    const lines  = Array.from(hero.querySelectorAll('.hnx-ln, .hnx-cite'));
-    // La pregunta sale del HTML, no de acá. Estaban duplicadas y se
-    // separaron: el mock decía una cosa y la intro tipeaba otra vieja.
-    const Q1 = bubble ? bubble.textContent.trim() : '';
-    const Q2 = typed ? typed.textContent.trim() : '';
-    const reveal = (el) => el && el.setAttribute('data-shown', '');
+    // La escena de la ventana del frente (ver el comentario en index.html):
+    // ficha → «Nuevo escrito» → editor → plantilla → escrito armado. Los
+    // pasos son `data-step` en .hx; el CSS dibuja cada uno.
+    const hx = hero.querySelector('.hx');
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     // Mirror the intro state onto <html> too, so the navbar (not a descendant
     // of .c-hero) can hide during the intro and reappear when it settles.
     const setIntro = (s) => { hero.dataset.intro = s; document.documentElement.dataset.heroIntro = s; };
-    const typeInto = (el, text, dur) => new Promise((res) => {
-      if (!el) return res();
-      el.textContent = '';
-      const n = text.length, t0 = performance.now();
-      const step = (now) => {
-        const k = Math.min(n, Math.round(((now - t0) / dur) * n));
-        if (el.textContent.length !== k) el.textContent = text.slice(0, k);
-        if (k < n) requestAnimationFrame(step); else res();
-      };
-      requestAnimationFrame(step);
-    });
+    const paso = (n) => { if (hx) hx.dataset.step = String(n); };
+    const click = async () => {
+      if (!hx) return;
+      hx.setAttribute('data-click', '');
+      await sleep(140);
+      hx.removeAttribute('data-click');
+    };
 
     // `?intro=0` salta la secuencia: para revisar los capítulos sin esperar
-    // los doce segundos de la intro cada vez que se recarga.
+    // los diez segundos de la intro cada vez que se recarga.
     const saltarIntro = /(?:\?|&)intro=0(?:&|$)/.test(location.search);
     // `?go=<id>:<0..1>` deja la página parada en un punto de un capítulo
     // (fracción de su recorrido): sirve para capturar cada beat sin scroll.
@@ -1139,26 +1131,27 @@ if (document.readyState === 'loading') {
         salto(); setTimeout(salto, 120); setTimeout(salto, 600);
       }
     }
-    if (reduceMotion || saltarIntro || !typed) {
-      reveal(bubble); lines.forEach(reveal);
+    if (reduceMotion || saltarIntro || !hx) {
+      paso(4);
       setIntro('done');
     } else {
       setIntro('play');
-      bubble && bubble.removeAttribute('data-shown');
-      lines.forEach((l) => l.removeAttribute('data-shown'));
-      typed.textContent = '';
+      paso(0);
       (async () => {
-        await sleep(700);
-        await typeInto(typed, Q1, 1200);       // type the question
-        await sleep(450);
-        typed.textContent = '';                // "send"
-        reveal(bubble);                        // question becomes a bubble
-        await sleep(900);                      // Nexus reads (orb pulses)
-        for (const l of lines) { reveal(l); await sleep(360); }  // answer + cite
-        await sleep(550);
-        await typeInto(typed, Q2, 1500);       // type the follow-up
-        await sleep(750);
-        setIntro('done');                      // settle into the hero, reveal headline + navbar
+        await sleep(1100);           // la ficha, quieta: se lee la causa
+        paso(1);                     // el cursor va a «Nuevo escrito»
+        await sleep(900);
+        await click();
+        await sleep(120);
+        paso(2);                     // se abre el editor, en blanco
+        await sleep(1300);
+        paso(3);                     // Plantilla ▾ → menú
+        await sleep(1000);
+        await click();               // elige «Contesta traslado»
+        await sleep(160);
+        paso(4);                     // el escrito, armado y firmado
+        await sleep(2300);
+        setIntro('done');            // settle into the hero, reveal headline + navbar
       })();
     }
   }
