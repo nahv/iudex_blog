@@ -1123,7 +1123,23 @@ if (document.readyState === 'loading') {
       requestAnimationFrame(step);
     });
 
-    if (reduceMotion || !typed) {
+    // `?intro=0` salta la secuencia: para revisar los capítulos sin esperar
+    // los doce segundos de la intro cada vez que se recarga.
+    const saltarIntro = /(?:\?|&)intro=0(?:&|$)/.test(location.search);
+    // `?go=<id>:<0..1>` deja la página parada en un punto de un capítulo
+    // (fracción de su recorrido): sirve para capturar cada beat sin scroll.
+    const ir = /(?:\?|&)go=([\w-]+):([\d.]+)/.exec(location.search);
+    if (ir) {
+      const cap = document.getElementById(ir[1]);
+      if (cap) {
+        const salto = () => {
+          const total = cap.offsetHeight - innerHeight;
+          window.scrollTo(0, cap.offsetTop + total * parseFloat(ir[2]));
+        };
+        salto(); setTimeout(salto, 120); setTimeout(salto, 600);
+      }
+    }
+    if (reduceMotion || saltarIntro || !typed) {
       reveal(bubble); lines.forEach(reveal);
       setIntro('done');
     } else {

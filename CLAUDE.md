@@ -36,7 +36,7 @@ git push origin main
 ## Convenciones
 
 - **CSS**: Usar CSS custom properties de `:root` (--ink, --cream, --gold, etc.). No hardcodear colores. Naming BEM (block__element--modifier).
-- **Tipografia**: `--font-display` (Playfair Display) para headings, `--font-body` (DM Sans) para body, `--font-mono` (DM Mono) para labels/code.
+- **Tipografia**: una sola voz (campaña «Una línea», 2026-09): `--font-display` = DM Sans **Light (300)** para headings, `--font-body` (DM Sans 300/400) para body, `--font-mono` (DM Mono) para labels/code. Sin serif, sin cursivas doradas: el `<em>` dentro de un título se neutraliza en CSS (mismo peso, misma tinta). El oro es acento decorativo (cursor, chips, barras), nunca una palabra.
 - **HTML**: Semantico (nav, main, section, article, footer). `lang="es"`. Toda pagina necesita title, meta description, meta keywords, og:title, og:description.
 - **JS**: Vanilla ES6+ exclusivamente. Sin frameworks, sin build step. Todo en `public/js/main.js`.
 - **Blog**: Cada articulo es un .html independiente en `blog/`. Al crear uno nuevo, agregar tambien la card en `blog/index.html`.
