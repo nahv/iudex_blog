@@ -7463,7 +7463,8 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 .ab-side__brand { text-align: center; }
 .ab-side__brand b {
   display: block;
-  font-family: var(--font-display);
+  font-family: var(--font-logo);
+  font-weight: 500;
   font-size: 1.05rem;
   letter-spacing: 0.01em;
 }
@@ -7513,11 +7514,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   margin: 0;
   font-family: var(--font-display);
   font-size: 1.35rem;
-  font-weight: 400;
-}
-.ab-top h4 em {
-  font-style: italic;
-  color: var(--gold-deep);
+  font-weight: 300;
 }
 .ab-top__right {
   margin-left: auto;
