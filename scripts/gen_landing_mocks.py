@@ -165,7 +165,7 @@ CH.append('''<!-- ===========================================================
 # I · Movimientos
 nuevo = mov_card('12/09/2026','Sentencia','Sentencia de trance y remate','Corrientes, 12 de septiembre de 2026. Y VISTOS… RESUELVO: mandar llevar adelante la ejecución…', extra_cls='ml-mov--new')
 CH.append(chapter('cap-movimientos', 1, 'I · Movimientos', 'La causa,<br/>por momentos.',
-    ['Lo que pasó en el juzgado, con fecha.', '«12/09 Sentencia» y Enter.', 'Los archivos y las tareas cuelgan de su movimiento.'],
+    ['Lo que pasó en el juzgado, con fecha.', '«12/09 Sentencia» y Enter.', 'Cada movimiento con sus archivos, escritos y funciones.'],
     ficha(extra_mov=nuevo, count='3'), 'expedientes',
     'La ficha de una causa en Iudex: la carátula, los chips de juzgado y secretaría, la fila «Nuevo movimiento… (Enter)» y la línea de movimientos con fecha, cada uno con sus archivos y acciones.'))
 
