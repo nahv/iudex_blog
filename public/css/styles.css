@@ -8451,3 +8451,72 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 @media (prefers-reduced-motion: reduce) {
   .hx__editor, .hx__t { transition: none !important; }
 }
+
+/* ===========================================================
+   «UNA LÍNEA» — el scrollytelling, capa 2 (2026-09-20)
+   Lo que se suma sobre los beats: la entrada del capítulo (título y
+   ventana), un cursor que hace el recorrido dentro de cada mock, y los
+   interstitials que se revelan. Todo transform/opacity; reduced-motion lo
+   deja en el estado final.
+   =========================================================== */
+
+/* Entrada del capítulo: eyebrow → título → primer beat, en escalera; la
+   ventana sube, se asienta y su sombra se hace más profunda. */
+.c-chapter .c-eyebrow,
+.c-chapter .c-display,
+.c-chapter .c-chapter__beats { opacity: 0; transform: translateY(22px); transition: opacity 700ms var(--ease-cinema), transform 900ms var(--ease-cinema); }
+.c-chapter .c-display { transition-delay: 90ms; }
+.c-chapter .c-chapter__beats { transition-delay: 220ms; }
+.c-chapter.is-on .c-eyebrow,
+.c-chapter.is-on .c-display,
+.c-chapter.is-on .c-chapter__beats { opacity: 1; transform: none; }
+.c-chapter .ml-window { opacity: 0; transform: translateY(40px) scale(0.965); transition: opacity 900ms var(--ease-cinema), transform 1100ms var(--ease-cinema), box-shadow 1100ms var(--ease-cinema); box-shadow: var(--shadow-window-soft); }
+.c-chapter.is-on .ml-window { opacity: 1; transform: none; box-shadow: var(--shadow-window); }
+/* Mientras el capítulo avanza la ventana respira apenas con el scroll:
+   se levanta 6 px por beat y vuelve. */
+.c-chapter.is-on[data-live] .ml-window { transform: translateY(calc((0.5 - var(--seg-progress, 0.5)) * -6px)); }
+
+/* Interstitials: la frase se revela de abajo, con un velo que se corre. */
+.c-interstitial .c-display,
+.c-interstitial p { opacity: 0; transform: translateY(26px); transition: opacity 800ms var(--ease-cinema), transform 1000ms var(--ease-cinema); }
+.c-interstitial p { transition-delay: 160ms; }
+.c-interstitial.is-on .c-display,
+.c-interstitial.is-on p { opacity: 1; transform: none; }
+
+/* El cursor: la mano de quien usa la app. Cada capítulo lo lleva a lo que
+   el beat cuenta; entre beats viaja con easing y hace un «clic» (escala). */
+.ml-cursor { position: absolute; width: 15px; height: 15px; left: 50%; top: 50%; opacity: 0; z-index: 4; pointer-events: none; filter: drop-shadow(0 2px 3px rgba(15,15,14,0.35)); transition: left 720ms var(--ease-cinema), top 720ms var(--ease-cinema), opacity 320ms var(--ease-cinema), transform 200ms var(--ease-cinema); }
+/* «clic»: al principio de cada beat el cursor se achica un instante. */
+.c-chapter[data-live] .ml-cursor { transform: scale(calc(1 - 0.18 * (1 - min(1, var(--seg-progress, 1) * 6)))); }
+/* I · Movimientos: fila de carga (beat 1) → «Nuevo escrito» del movimiento nuevo (beat 2) */
+#cap-movimientos[data-beat="1"] .ml-cursor { opacity: 1; left: 40%; top: 36%; }
+#cap-movimientos[data-beat="2"] .ml-cursor { opacity: 1; left: 33%; top: 66%; }
+/* II · ForumNA: botón (beat 0) → archivo (beat 1) → se va (beat 2) */
+#cap-forumna[data-beat="0"] .ml-cursor { opacity: 1; left: 78%; top: 9%; }
+#cap-forumna[data-beat="1"] .ml-cursor { opacity: 1; left: 50%; top: 68%; }
+#cap-forumna[data-beat="2"] .ml-cursor { opacity: 0; left: 50%; top: 68%; }
+/* III · Desde el PDF: la foja (beat 0) → los campos (beat 1) → Guardar (beat 2) */
+#cap-pdf[data-beat="0"] .ml-cursor { opacity: 1; left: 22%; top: 40%; }
+#cap-pdf[data-beat="1"] .ml-cursor { opacity: 1; left: 62%; top: 34%; }
+#cap-pdf[data-beat="2"] .ml-cursor { opacity: 1; left: 88%; top: 80%; }
+/* IV · Escrito: la plantilla (beat 0) → la hoja (beat 1) → la firma (beat 2) */
+#cap-escrito[data-beat="0"] .ml-cursor { opacity: 1; left: 20%; top: 24%; }
+#cap-escrito[data-beat="1"] .ml-cursor { opacity: 1; left: 60%; top: 34%; }
+#cap-escrito[data-beat="2"] .ml-cursor { opacity: 0; left: 82%; top: 70%; }
+/* V · Cédula: «Siguiente» en cada paso, «Generar» al final */
+#cap-cedula[data-beat="0"] .ml-cursor { opacity: 1; left: 88%; top: 86%; }
+#cap-cedula[data-beat="1"] .ml-cursor { opacity: 1; left: 88%; top: 86%; }
+#cap-cedula[data-beat="2"] .ml-cursor { opacity: 1; left: 86%; top: 86%; }
+/* VI · Planilla: el formulario (beat 0) → los tramos (beat 1) → se va (beat 2) */
+#cap-planilla[data-beat="0"] .ml-cursor { opacity: 1; left: 26%; top: 34%; }
+#cap-planilla[data-beat="1"] .ml-cursor { opacity: 1; left: 70%; top: 30%; }
+#cap-planilla[data-beat="2"] .ml-cursor { opacity: 0; left: 70%; top: 30%; }
+
+@media (max-width: 720px) {
+  /* En el teléfono no hay puntero: el cursor sobra y tapa. */
+  .ml-cursor { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .c-chapter .c-eyebrow, .c-chapter .c-display, .c-chapter .c-chapter__beats, .c-chapter .ml-window,
+  .c-interstitial .c-display, .c-interstitial p { opacity: 1 !important; transform: none !important; }
+}

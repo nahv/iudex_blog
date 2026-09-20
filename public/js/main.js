@@ -1242,6 +1242,14 @@ if (document.readyState === 'loading') {
       onScroll();
     }, { rootMargin: '50% 0px' });
 
+    // `is-on` cuando el capítulo entra de verdad en pantalla (no el margen
+    // de precarga de arriba): dispara la entrada del título y la ventana.
+    const ioOn = new IntersectionObserver((entries) => {
+      for (const e of entries) e.target.classList.toggle('is-on', e.isIntersecting);
+    }, { threshold: 0.18 });
+    chapters.forEach((c) => ioOn.observe(c));
+    document.querySelectorAll('.c-interstitial').forEach((el) => ioOn.observe(el));
+
     chapters.forEach((c) => {
       io.observe(c);
       const firstBeat = c.querySelector('.c-chapter__beat');
