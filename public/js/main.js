@@ -1305,3 +1305,41 @@ if (document.readyState === 'loading') {
      Native scroll is already smooth on every platform that ships with
      the kind of input device legal professionals use. */
 })();
+
+/* ----------- Interstitial tipeado (2026-09-20) -----------
+   La frase completa se lee mientras el bloque entra; con el scroll se
+   borra letra por letra (de atrás para adelante) y se tipea el remate.
+   Scrub puro: ida y vuelta con el scroll, sin timers. */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const bloques = Array.from(document.querySelectorAll('.c-interstitial--tipeo'));
+  if (!bloques.length) return;
+  for (const b of bloques) {
+    const frase = b.dataset.frase || '';
+    const remate = b.dataset.remate || '';
+    const out = b.querySelector('.c-tipeo');
+    if (!out) continue;
+    if (reduce) { out.textContent = `${frase}\n${remate}`; continue; }
+    const pinta = () => {
+      const vh = innerHeight || 800;
+      const total = b.offsetHeight - vh;
+      if (total <= 0) return;
+      const r = Math.min(1, Math.max(0, -b.getBoundingClientRect().top / total));
+      // 0–0.30 quieta · 0.30–0.62 borra · 0.62–0.72 pausa · 0.72–0.92 tipea · resto quieta
+      let texto;
+      let tipeando = false;
+      if (r < 0.30) texto = frase;
+      else if (r < 0.62) { const q = (r - 0.30) / 0.32; texto = frase.slice(0, Math.round(frase.length * (1 - q))); tipeando = true; }
+      else if (r < 0.72) texto = '';
+      else if (r < 0.92) { const q = (r - 0.72) / 0.20; texto = remate.slice(0, Math.round(remate.length * q)); tipeando = true; }
+      else texto = remate;
+      if (out.textContent !== texto) out.textContent = texto;
+      if (tipeando) b.setAttribute('data-tipeando', ''); else b.removeAttribute('data-tipeando');
+    };
+    let raf = 0;
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; pinta(); }); };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll, { passive: true });
+    pinta();
+  }
+})();
