@@ -8396,7 +8396,9 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 .ml-menu.is-on { opacity: 1; transform: none; }
 .ml-menu.is-on .ml-menu__pick { background: var(--cream); color: var(--ink); box-shadow: inset 2px 0 0 var(--gold); }
 .ml-ruler { height: 6px; margin: 6px 14px 0; background: repeating-linear-gradient(90deg, var(--cream-dark) 0 1px, transparent 1px 8px); opacity: 0.8; }
-.ml-page { flex: 1; min-height: 0; margin: 4px 14px 0; background: var(--white); border: 1px solid var(--cream-dark); border-bottom: 0; border-radius: 4px 4px 0 0; padding: 16px 18px 0; font-family: Georgia, serif; position: relative; }
+.ml-page { flex: 1; min-height: 0; margin: 4px 14px 0; background: var(--white); border: 1px solid var(--cream-dark); border-bottom: 0; border-radius: 4px 4px 0 0; padding: 16px 18px 0; font-family: Georgia, serif; position: relative; overflow: hidden; }
+/* El pie (Guardado · Exportar) siempre por encima de la hoja: en el teléfono
+   la hoja desbordaba y el botón quedaba pisado por la firma (2026-09-21). */
 .ml-page__caret { position: absolute; left: 18px; top: 18px; width: 1px; height: 10px; background: var(--ink); animation: appCaret 1s steps(2) infinite; }
 .ml-t { opacity: 0; transform: translateY(5px); transition: opacity 360ms var(--ease-cinema), transform 420ms var(--ease-cinema); }
 .ml-t.is-on { opacity: 1; transform: none; }
@@ -8408,7 +8410,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 .ml-sheet__sign b { display: block; font-weight: 500; color: var(--ink); }
 .ml-page mark { background: rgba(201,168,76,0.22); color: inherit; border-radius: 2px; padding: 0 1px; transition: background 400ms var(--ease-cinema); }
 .ml-page.is-calm mark { background: transparent; }
-.ml-tarea__foot { flex: none; display: flex; justify-content: space-between; align-items: center; padding: 6px 14px 0; }
+.ml-tarea__foot { flex: none; display: flex; justify-content: space-between; align-items: center; padding: 6px 14px 8px; position: relative; z-index: 2; background: #fbfaf6; }
 .ml-export { transition: box-shadow 300ms; }
 .ml-export.is-hot { box-shadow: 0 0 0 3px rgba(201,168,76,0.3); }
 /* estados por beat (IV) — la hoja parte con el cursor y el menú abierto */
@@ -8708,7 +8710,6 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   /* Angosto: el capítulo sigue anclado (data-live); la escena ocupa lo que
      queda bajo el texto, centrada. */
   .c-chapter--dim[data-live] { min-height: 230vh; }
-  .c-chapter--dim[data-live] .nx-dim { flex: 0 0 auto; margin-top: 20px; max-width: 560px; }
 }
 
 /* ===========================================================
@@ -8724,4 +8725,77 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .c-chapter__rail { left: -34px; }
   .c-chapter__stage { padding-right: 0; padding-left: 0; }
   .nx-dim { padding-right: 0; }
+}
+
+/* Nexus · mocks como la app real (2026-09-21): la respuesta con títulos de
+   sección y chips numerados; el visor con la barra oscura del PDF. */
+.app__a .app__h { display: block; font-size: 10px; font-weight: 600; color: var(--ink); margin: 0 0 3px; }
+
+.nx-visor { height: 340px; }
+.nx-visor__pdfbar { flex: none; display: flex; align-items: center; gap: 12px; padding: 8px 14px; background: #323639; color: rgba(255,255,255,0.85); font-size: 9.5px; }
+.nx-visor__pdfbar b { flex: 1; min-width: 0; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-visor__pdfbar .nx-visor__pag { background: rgba(255,255,255,0.12); padding: 2px 6px; border-radius: 3px; font-family: var(--font-mono); }
+.nx-visor__hoja { background: var(--white); }
+.nx-visor { background: #525659; }
+.nx-visor__hoja p:first-child { margin-top: 2px; }
+
+/* ===========================================================
+   Nexus · la red (2026-09-21). Reemplaza la ficha + lentes: un campo de
+   fallos (círculos) y normas (cuadrados) alrededor de «tu caso», y una
+   sonda dorada que los recorre con el scroll. Cada beat aplica una
+   dimensión y deja su huella: los que no pasan se apagan; al final los
+   pertinentes quedan unidos en dorado. Todo CSS: data-beat + --seg-progress.
+   =========================================================== */
+.nx-red { position: relative; width: 100%; max-width: 620px; margin: 0 auto; padding: 0 12px; box-sizing: border-box; opacity: 0; transform: translateY(24px); transition: opacity 900ms var(--ease-cinema), transform 1100ms var(--ease-cinema); }
+.c-chapter.is-on .nx-red { opacity: 1; transform: none; }
+.nx-red__svg { width: 100%; height: auto; display: block; overflow: visible; }
+.nx-enlace { stroke: var(--hair-strong); stroke-width: 1; transition: stroke 600ms var(--ease-cinema), stroke-width 600ms var(--ease-cinema), opacity 600ms var(--ease-cinema); }
+.nx-nodo circle, .nx-nodo rect { fill: var(--white); stroke: var(--hair-strong); stroke-width: 1.2; transition: fill 600ms var(--ease-cinema), stroke 600ms var(--ease-cinema), stroke-dasharray 600ms; }
+.nx-nodo { transition: opacity 700ms var(--ease-cinema); }
+.nx-nodo circle { transition: r 700ms var(--ease-cinema), fill 600ms var(--ease-cinema), stroke 600ms var(--ease-cinema); }
+.nx-nodo__l { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.02em; fill: var(--ink-muted); text-anchor: middle; }
+.nx-nodo__tag { font-family: var(--font-mono); font-size: 7px; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--gold-deep); text-anchor: middle; opacity: 0; transition: opacity 500ms var(--ease-cinema); }
+.nx-centro__p { fill: var(--ink); }
+.nx-centro__halo { fill: rgba(201,168,76,0.10); stroke: rgba(201,168,76,0.45); stroke-width: 1; opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.6); transition: opacity 700ms var(--ease-cinema), transform 900ms var(--ease-cinema); }
+.nx-centro__l { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; fill: var(--ink); text-anchor: middle; }
+/* La sonda: recorre el camino con el scroll (4 beats = el camino entero). */
+.nx-sonda { fill: var(--gold); offset-rotate: 0deg; offset-distance: calc((var(--beat-idx, 0) + var(--seg-progress, 0)) / 4 * 100%); transition: offset-distance 80ms linear; }
+.nx-sonda--halo { fill: rgba(201,168,76,0.18); }
+.c-chapter--dim[data-beat="1"] .nx-sonda { --beat-idx: 1; }
+.c-chapter--dim[data-beat="2"] .nx-sonda { --beat-idx: 2; }
+.c-chapter--dim[data-beat="3"] .nx-sonda { --beat-idx: 3; }
+/* 01 Jerarquía: el STJ pesa más; primera instancia, menos. */
+/* (el translate va en el atributo del <g>: nada de transform en CSS) */
+.c-chapter--dim .nx-nodo[data-j="stj"] circle { r: 17; stroke: var(--gold); stroke-width: 1.6; }
+.c-chapter--dim .nx-nodo[data-j="1a"] circle { r: 10; }
+.c-chapter--dim .nx-nodo[data-j="1a"] { opacity: 0.55; }
+/* 02 Jurisdicción: lo de otra jurisdicción se apaga. */
+.c-chapter--dim[data-beat="1"] .nx-nodo[data-jur="no"], .c-chapter--dim[data-beat="2"] .nx-nodo[data-jur="no"], .c-chapter--dim[data-beat="3"] .nx-nodo[data-jur="no"] { opacity: 0.18; }
+.c-chapter--dim[data-beat="1"] .nx-enlace[data-jur="no"], .c-chapter--dim[data-beat="2"] .nx-enlace[data-jur="no"], .c-chapter--dim[data-beat="3"] .nx-enlace[data-jur="no"] { opacity: 0.15; stroke-dasharray: 3 3; }
+/* 03 Vigencia: el criterio viejo se tacha; el vigente lleva su etiqueta. */
+.c-chapter--dim[data-beat="2"] .nx-nodo[data-vig="no"], .c-chapter--dim[data-beat="3"] .nx-nodo[data-vig="no"] { opacity: 0.2; }
+.c-chapter--dim[data-beat="2"] .nx-nodo[data-vig="no"] .nx-nodo__l, .c-chapter--dim[data-beat="3"] .nx-nodo[data-vig="no"] .nx-nodo__l { text-decoration: line-through; }
+.c-chapter--dim[data-beat="2"] .nx-enlace[data-vig="no"], .c-chapter--dim[data-beat="3"] .nx-enlace[data-vig="no"] { opacity: 0.15; }
+.c-chapter--dim[data-beat="2"] .nx-nodo[data-sim="alta"] .nx-nodo__tag, .c-chapter--dim[data-beat="3"] .nx-nodo[data-sim="alta"] .nx-nodo__tag { opacity: 1; }
+/* 04 Similitud: los pertinentes quedan unidos a tu caso, en dorado. */
+.c-chapter--dim[data-beat="3"] .nx-enlace[data-sim="alta"] { stroke: var(--gold); stroke-width: 1.8; }
+.c-chapter--dim[data-beat="3"] .nx-enlace:not([data-sim="alta"]) { opacity: 0.12; }
+.c-chapter--dim[data-beat="3"] .nx-nodo:not([data-sim="alta"]) { opacity: 0.22; }
+.c-chapter--dim[data-beat="3"] .nx-nodo[data-sim="alta"] circle, .c-chapter--dim[data-beat="3"] .nx-nodo[data-sim="alta"] rect { fill: rgba(201,168,76,0.16); stroke: var(--gold); stroke-width: 1.6; }
+.c-chapter--dim[data-beat="3"] .nx-nodo[data-sim="alta"] .nx-nodo__l { fill: var(--ink); }
+.c-chapter--dim[data-beat="3"] .nx-centro__halo { opacity: 1; transform: scale(1); }
+/* Dimensiones al pie, la activa en dorado; el sello al final. */
+.nx-red__dims { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 14px; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); }
+.nx-red__dims span { transition: color 400ms var(--ease-cinema); }
+.c-chapter--dim[data-beat="0"] .nx-red__dims span[data-d="0"], .c-chapter--dim[data-beat="1"] .nx-red__dims span[data-d="1"], .c-chapter--dim[data-beat="2"] .nx-red__dims span[data-d="2"], .c-chapter--dim[data-beat="3"] .nx-red__dims span[data-d="3"] { color: var(--gold-deep); }
+.nx-red__sello { position: absolute; left: 50%; top: 14px; transform: translate(-50%, -6px); display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-deep); background: rgba(247,244,238,0.92); border: 1px solid rgba(201,168,76,0.55); border-radius: 999px; padding: 5px 10px; opacity: 0; transition: opacity 500ms var(--ease-cinema), transform 600ms var(--ease-cinema); white-space: nowrap; }
+.nx-red__sello i { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.25); }
+.c-chapter--dim[data-beat="3"] .nx-red__sello { opacity: 1; transform: translate(-50%, 0); transition-delay: 400ms; }
+@media (max-width: 979px) {
+  .c-chapter--dim[data-live] .nx-red { flex: 0 0 auto; margin-top: 16px; max-width: 520px; padding: 0; }
+  .nx-red__dims { gap: 12px; font-size: 0.6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-red { opacity: 1 !important; transform: none !important; }
+  .nx-sonda { transition: none; }
 }
