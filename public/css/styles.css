@@ -7006,7 +7006,10 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
      conversation window up to play centred, then glide it gently back to its
      place while the headline fades in softly behind it. */
   .c-hero[data-intro="play"] .c-hero__copy { opacity: 0; }
-  .c-hero[data-intro="play"] .c-hero__stage { transform: translateY(-54vh) scale(1.02); }
+  /* La ventana se centra en la pantalla mientras juega: el corrimiento lo
+     calcula el JS con la altura real (en teléfonos el -54vh fijo la dejaba
+     demasiado arriba, feedback 2026-09-21). */
+  .c-hero[data-intro="play"] .c-hero__stage { transform: translateY(var(--intro-shift, -54vh)) scale(1.02); }
   .c-hero__stage { transition: transform 1.6s var(--ease-cinema); }
   /* Headline fades in only once the window has glided down (delay ~= settle). */
   .c-hero__copy { transition: opacity 0.9s ease 1.2s; }
@@ -7111,6 +7114,17 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .c-chapter__beat[data-beat="1"] { order: 6; }
   .c-chapter__beat[data-beat="2"] { order: 8; }
   .c-chapter__beat[data-beat="3"] { order: 10; }
+  /* Capítulos sin data-beat (Abogados, Juzgados): el mismo orden por
+     posición, y la ventana única (.iudex-frame) entre el título y los
+     beats. Sin esto los beats y la ventana quedaban ANTES del título
+     (orden 0), pisándose con el capítulo anterior (feedback 2026-09-21). */
+  .c-chapter__beats > .c-chapter__beat:not([data-beat]):nth-child(1) { order: 4; }
+  .c-chapter__beats > .c-chapter__beat:not([data-beat]):nth-child(2) { order: 6; }
+  .c-chapter__beats > .c-chapter__beat:not([data-beat]):nth-child(3) { order: 8; }
+  .c-chapter__beats > .c-chapter__beat:not([data-beat]):nth-child(4) { order: 10; }
+  .c-chapter:not([data-live]) .c-chapter__stage > .iudex-frame,
+  .c-chapter:not([data-live]) .c-chapter__stage > .ml-window { order: 3; margin: 0 24px 28px; width: auto; }
+  .c-chapter:not([data-live]) .c-chapter__stage > .iudex-frame { max-height: 72vh; overflow: hidden; }
 
   /* CTA at the bottom of the chapter copy column. Without explicit
      order it defaults to 0 and floats above the eyebrow when
@@ -8637,14 +8651,14 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 /* 01 Jerarquía: tres niveles; se enciende el del tribunal. */
 .nx-lente__g--jer { display: grid; align-content: center; gap: 5px; }
 .nx-lente__g--jer i { position: relative; display: block; height: 10px; border-radius: 3px; background: var(--cream-dark); transition: background 500ms var(--ease-cinema), transform 500ms var(--ease-cinema); }
-.nx-lente__g--jer i:nth-child(1) { width: 30%; }
-.nx-lente__g--jer i:nth-child(2) { width: 50%; }
-.nx-lente__g--jer i:nth-child(3) { width: 78%; }
+/* El STJ arriba y con más peso; primera instancia, el menor. */
+.nx-lente__g--jer i:nth-child(1) { width: 70%; height: 12px; }
+.nx-lente__g--jer i:nth-child(2) { width: 48%; }
+.nx-lente__g--jer i:nth-child(3) { width: 26%; height: 7px; opacity: 0.7; }
 .nx-lente__g--jer i::after { content: attr(data-t); position: absolute; left: calc(100% + 6px); top: -2px; font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.06em; color: var(--ink-muted); white-space: nowrap; opacity: 0; transition: opacity 400ms var(--ease-cinema); }
-.nx-lente__g--jer i:nth-child(3)::after { display: none; }
 .nx-lente.is-lit .nx-lente__g--jer i::after, .c-chapter--dim[data-beat]:not([data-beat="-1"]) .nx-lente[data-lente="0"] .nx-lente__g--jer i::after { opacity: 1; }
-.c-chapter--dim .nx-lente[data-lente="0"] .nx-lente__g--jer i:nth-child(2) { background: var(--gold); transform: scaleX(calc(0.7 + 0.3 * var(--beat-progress, 1))); transform-origin: left; }
-.c-chapter--dim[data-beat="0"] .nx-lente[data-lente="0"] .nx-lente__g--jer i:nth-child(2) { transform: scaleX(calc(0.55 + 0.45 * var(--beat-progress, 1))); }
+.c-chapter--dim .nx-lente[data-lente="0"] .nx-lente__g--jer i:nth-child(1) { background: var(--gold); transform: scaleX(calc(0.7 + 0.3 * var(--beat-progress, 1))); transform-origin: left; }
+.c-chapter--dim[data-beat="0"] .nx-lente[data-lente="0"] .nx-lente__g--jer i:nth-child(1) { transform: scaleX(calc(0.55 + 0.45 * var(--beat-progress, 1))); }
 
 /* 02 Jurisdicción: dos anillos (provincia, fuero) y la etiqueta. */
 .nx-lente__g--jur { display: grid; place-items: center; }
@@ -8695,4 +8709,19 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
      queda bajo el texto, centrada. */
   .c-chapter--dim[data-live] { min-height: 230vh; }
   .c-chapter--dim[data-live] .nx-dim { flex: 0 0 auto; margin-top: 20px; max-width: 560px; }
+}
+
+/* ===========================================================
+   Columna única en escritorio (2026-09-21): los capítulos anclados
+   comparten el mismo contenedor que el hero, la CTA y el pie (1280 px
+   centrados con 32 px de canaleta). Antes iban a sangre: el texto
+   arrancaba a 64 px del borde y la ventana terminaba a 56 px del otro,
+   mientras las demás secciones quedaban centradas.
+   =========================================================== */
+@media (min-width: 980px) {
+  .c-chapter__sticky { max-width: 1280px; margin: 0 auto; padding: 0 32px; box-sizing: border-box; width: 100%; }
+  .c-chapter__copy { padding-left: 0; }
+  .c-chapter__rail { left: -34px; }
+  .c-chapter__stage { padding-right: 0; padding-left: 0; }
+  .nx-dim { padding-right: 0; }
 }

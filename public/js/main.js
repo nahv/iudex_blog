@@ -1107,6 +1107,26 @@ if (document.readyState === 'loading') {
     // Mirror the intro state onto <html> too, so the navbar (not a descendant
     // of .c-hero) can hide during the intro and reappear when it settles.
     const setIntro = (s) => { hero.dataset.intro = s; document.documentElement.dataset.heroIntro = s; };
+    // Teléfono/tablet: mientras juega la intro, la ventana se corre hasta
+    // quedar centrada en la pantalla real (no a un -54vh a ciegas).
+    const centrarVentana = () => {
+      const st = hero.querySelector('.c-hero__stage');
+      if (!st || matchMedia('(min-width: 980px)').matches) { document.documentElement.style.removeProperty('--intro-shift'); return; }
+      // Se llama antes de entrar en «play»: la ventana está en su lugar
+      // natural (debajo del titular, que sigue en flujo aunque se oculte).
+      // El inline script ya puso «play» (y con él el corrimiento por
+      // defecto): se mide con el corrimiento en cero y recién después se fija.
+      // Sin transición mientras se mide: si no, el rect devuelve la posición
+      // a mitad de camino.
+      st.style.transition = 'none';
+      document.documentElement.style.setProperty('--intro-shift', '0px');
+      const r = st.getBoundingClientRect();
+      const topDocumento = r.top + scrollY;
+      const objetivo = Math.max(72, (innerHeight - r.height) / 2);
+      document.documentElement.style.setProperty('--intro-shift', `${Math.round(objetivo - topDocumento)}px`);
+      void st.offsetHeight;
+      st.style.transition = '';
+    };
     const paso = (n) => { if (hx) hx.dataset.step = String(n); };
     const click = async () => {
       if (!hx) return;
@@ -1135,6 +1155,7 @@ if (document.readyState === 'loading') {
       paso(4);
       setIntro('done');
     } else {
+      centrarVentana();
       setIntro('play');
       paso(0);
       (async () => {
