@@ -8583,11 +8583,13 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .ml-tarea__docs, .ml-tarea__comments { display: none; }
   .ml-dialog { width: 94%; max-height: 96%; overflow: hidden; }
   .ml-ced__panes { min-height: 300px; }
-  /* El diálogo de la cédula es alto: la ventana se estira para que entre. */
+  /* El diálogo de la cédula es alto: en el teléfono se achica (zoom) para
+     que la ventana entre debajo del título sin pisarlo (100vh − copy). */
   #cap-cedula .ml-window .app { max-height: none; }
-  #cap-cedula .ml-window .app__main { min-height: 720px; }
-  #cap-cedula .ml-ced__panes { min-height: 420px; }
-  #cap-cedula .ml-dialog { top: 4%; transform: translate(-50%, 0); max-height: none; }
+  #cap-cedula .ml-window .app__main { min-height: 0; height: min(500px, calc(100vh - 330px)); }
+  #cap-cedula .ml-ced { zoom: 0.72; }
+  #cap-cedula .ml-ced__panes { min-height: 400px; }
+  #cap-cedula .ml-dialog { top: 3%; transform: translate(-50%, 0); max-height: 94%; overflow: hidden; }
   .ml-toast--pla { float: none; display: inline-flex; margin-top: 10px; }
   .ml-cursor { display: none; }
   .ml-detalle { display: none; }
