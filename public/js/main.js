@@ -1099,50 +1099,80 @@ if (document.readyState === 'loading') {
     hero.dataset.state = 'enter';
     requestAnimationFrame(() => requestAnimationFrame(() => { hero.dataset.state = 'in'; }));
 
-    const typed  = hero.querySelector('.hnx-typed');
-    const bubble = hero.querySelector('.hnx-q');
-    const lines  = Array.from(hero.querySelectorAll('.hnx-ln, .hnx-cite'));
-    // La pregunta sale del HTML, no de acá. Estaban duplicadas y se
-    // separaron: el mock decía una cosa y la intro tipeaba otra vieja.
-    const Q1 = bubble ? bubble.textContent.trim() : '';
-    const Q2 = typed ? typed.textContent.trim() : '';
-    const reveal = (el) => el && el.setAttribute('data-shown', '');
+    // La escena de la ventana del frente (ver el comentario en index.html):
+    // ficha → «Nuevo escrito» → editor → plantilla → escrito armado. Los
+    // pasos son `data-step` en .hx; el CSS dibuja cada uno.
+    const hx = hero.querySelector('.hx');
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     // Mirror the intro state onto <html> too, so the navbar (not a descendant
     // of .c-hero) can hide during the intro and reappear when it settles.
     const setIntro = (s) => { hero.dataset.intro = s; document.documentElement.dataset.heroIntro = s; };
-    const typeInto = (el, text, dur) => new Promise((res) => {
-      if (!el) return res();
-      el.textContent = '';
-      const n = text.length, t0 = performance.now();
-      const step = (now) => {
-        const k = Math.min(n, Math.round(((now - t0) / dur) * n));
-        if (el.textContent.length !== k) el.textContent = text.slice(0, k);
-        if (k < n) requestAnimationFrame(step); else res();
-      };
-      requestAnimationFrame(step);
-    });
+    // Teléfono/tablet: mientras juega la intro, la ventana se corre hasta
+    // quedar centrada en la pantalla real (no a un -54vh a ciegas).
+    const centrarVentana = () => {
+      const st = hero.querySelector('.c-hero__stage');
+      if (!st || matchMedia('(min-width: 980px)').matches) { document.documentElement.style.removeProperty('--intro-shift'); return; }
+      // Se llama antes de entrar en «play»: la ventana está en su lugar
+      // natural (debajo del titular, que sigue en flujo aunque se oculte).
+      // El inline script ya puso «play» (y con él el corrimiento por
+      // defecto): se mide con el corrimiento en cero y recién después se fija.
+      // Sin transición mientras se mide: si no, el rect devuelve la posición
+      // a mitad de camino.
+      st.style.transition = 'none';
+      document.documentElement.style.setProperty('--intro-shift', '0px');
+      const r = st.getBoundingClientRect();
+      const topDocumento = r.top + scrollY;
+      const objetivo = Math.max(72, (innerHeight - r.height) / 2);
+      document.documentElement.style.setProperty('--intro-shift', `${Math.round(objetivo - topDocumento)}px`);
+      void st.offsetHeight;
+      st.style.transition = '';
+    };
+    const paso = (n) => { if (hx) hx.dataset.step = String(n); };
+    const click = async () => {
+      if (!hx) return;
+      hx.setAttribute('data-click', '');
+      await sleep(140);
+      hx.removeAttribute('data-click');
+    };
 
-    if (reduceMotion || !typed) {
-      reveal(bubble); lines.forEach(reveal);
+    // `?intro=0` salta la secuencia: para revisar los capítulos sin esperar
+    // los diez segundos de la intro cada vez que se recarga.
+    const saltarIntro = /(?:\?|&)intro=0(?:&|$)/.test(location.search);
+    // `?go=<id>:<0..1>` deja la página parada en un punto de un capítulo
+    // (fracción de su recorrido): sirve para capturar cada beat sin scroll.
+    const ir = /(?:\?|&)go=([\w-]+):([\d.]+)/.exec(location.search);
+    if (ir) {
+      const cap = document.getElementById(ir[1]);
+      if (cap) {
+        const salto = () => {
+          const total = cap.offsetHeight - innerHeight;
+          window.scrollTo(0, cap.offsetTop + total * parseFloat(ir[2]));
+        };
+        salto(); setTimeout(salto, 120); setTimeout(salto, 600);
+      }
+    }
+    if (reduceMotion || saltarIntro || !hx) {
+      paso(4);
       setIntro('done');
     } else {
+      centrarVentana();
       setIntro('play');
-      bubble && bubble.removeAttribute('data-shown');
-      lines.forEach((l) => l.removeAttribute('data-shown'));
-      typed.textContent = '';
+      paso(0);
       (async () => {
-        await sleep(700);
-        await typeInto(typed, Q1, 1200);       // type the question
-        await sleep(450);
-        typed.textContent = '';                // "send"
-        reveal(bubble);                        // question becomes a bubble
-        await sleep(900);                      // Nexus reads (orb pulses)
-        for (const l of lines) { reveal(l); await sleep(360); }  // answer + cite
-        await sleep(550);
-        await typeInto(typed, Q2, 1500);       // type the follow-up
-        await sleep(750);
-        setIntro('done');                      // settle into the hero, reveal headline + navbar
+        await sleep(1100);           // la ficha, quieta: se lee la causa
+        paso(1);                     // el cursor va a «Nuevo escrito»
+        await sleep(900);
+        await click();
+        await sleep(120);
+        paso(2);                     // se abre el editor, en blanco
+        await sleep(1300);
+        paso(3);                     // Plantilla ▾ → menú
+        await sleep(1000);
+        await click();               // elige «Contesta traslado»
+        await sleep(160);
+        paso(4);                     // el escrito, armado y firmado
+        await sleep(2300);
+        setIntro('done');            // settle into the hero, reveal headline + navbar
       })();
     }
   }
@@ -1233,6 +1263,14 @@ if (document.readyState === 'loading') {
       onScroll();
     }, { rootMargin: '50% 0px' });
 
+    // `is-on` cuando el capítulo entra de verdad en pantalla (no el margen
+    // de precarga de arriba): dispara la entrada del título y la ventana.
+    const ioOn = new IntersectionObserver((entries) => {
+      for (const e of entries) e.target.classList.toggle('is-on', e.isIntersecting);
+    }, { threshold: 0.18 });
+    chapters.forEach((c) => ioOn.observe(c));
+    document.querySelectorAll('.c-interstitial').forEach((el) => ioOn.observe(el));
+
     chapters.forEach((c) => {
       io.observe(c);
       const firstBeat = c.querySelector('.c-chapter__beat');
@@ -1287,4 +1325,42 @@ if (document.readyState === 'loading') {
      trackpad's native momentum, making the scroll feel "swimming".
      Native scroll is already smooth on every platform that ships with
      the kind of input device legal professionals use. */
+})();
+
+/* ----------- Interstitial tipeado (2026-09-20) -----------
+   La frase completa se lee mientras el bloque entra; con el scroll se
+   borra letra por letra (de atrás para adelante) y se tipea el remate.
+   Scrub puro: ida y vuelta con el scroll, sin timers. */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const bloques = Array.from(document.querySelectorAll('.c-interstitial--tipeo'));
+  if (!bloques.length) return;
+  for (const b of bloques) {
+    const frase = b.dataset.frase || '';
+    const remate = b.dataset.remate || '';
+    const out = b.querySelector('.c-tipeo');
+    if (!out) continue;
+    if (reduce) { out.textContent = `${frase}\n${remate}`; continue; }
+    const pinta = () => {
+      const vh = innerHeight || 800;
+      const total = b.offsetHeight - vh;
+      if (total <= 0) return;
+      const r = Math.min(1, Math.max(0, -b.getBoundingClientRect().top / total));
+      // 0–0.30 quieta · 0.30–0.62 borra · 0.62–0.72 pausa · 0.72–0.92 tipea · resto quieta
+      let texto;
+      let tipeando = false;
+      if (r < 0.30) texto = frase;
+      else if (r < 0.62) { const q = (r - 0.30) / 0.32; texto = frase.slice(0, Math.round(frase.length * (1 - q))); tipeando = true; }
+      else if (r < 0.72) texto = '';
+      else if (r < 0.92) { const q = (r - 0.72) / 0.20; texto = remate.slice(0, Math.round(remate.length * q)); tipeando = true; }
+      else texto = remate;
+      if (out.textContent !== texto) out.textContent = texto;
+      if (tipeando) b.setAttribute('data-tipeando', ''); else b.removeAttribute('data-tipeando');
+    };
+    let raf = 0;
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; pinta(); }); };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll, { passive: true });
+    pinta();
+  }
 })();
