@@ -23,6 +23,10 @@ verify_jwt = false
 [functions.notify-email-events]
 verify_jwt = false
 
+# Leads de eventos (NEA Tech): Database Webhook sobre event_leads, Bearer custom.
+[functions.notify-event-lead]
+verify_jwt = false
+
 # --- User-driven (auth via JWT de Supabase Auth) ---
 [functions.send-custom-email]
 verify_jwt = true
