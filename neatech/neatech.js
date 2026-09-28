@@ -682,7 +682,12 @@
   // Envío (con cola local si no hay señal)
   // ---------------------------------------------------------------------
 
-  const config = (window.ENV && window.ENV.supabase) || {};
+  // env.js viene en dos formatos: `window.ENV = …` (el que inyecta el
+  // deploy) y el viejo `const ENV = …` de algunos env.js locales, que no
+  // cuelga de window. Se leen los dos, igual que main.js.
+  // eslint-disable-next-line no-undef
+  const envGlobal = typeof ENV !== 'undefined' ? ENV : window.ENV;
+  const config = (envGlobal && envGlobal.supabase) || {};
   const sinBackend = !config.url || String(config.url).includes('YOUR_');
   // Sólo se simula en local. En producción, si env.js no cargó, NO se
   // finge el envío (se perdería el lead): va a la cola y se reintenta.
