@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Iudex Labs · Contanos tu problema</title>
+  <meta name="description" content="Hicimos Iudex para la justicia. Lo que aprendimos lo aplicamos a tu industria: contanos tu organización y el problema que querés resolver. Te respondemos en 48 horas." />
+  <meta name="keywords" content="Iudex Labs, CRM a medida, CRM con agentes, NEA Tech 2026, software Corrientes, automatización de procesos, inteligencia artificial pymes" />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121210" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="Iudex Labs · Contanos tu problema" />
+  <meta property="og:description" content="Hicimos Iudex para la justicia. Lo que aprendimos lo aplicamos a tu problema. Cinco preguntas, menos de un minuto." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://iudex.com.ar/neatech/" />
+  <meta property="og:image" content="https://iudex.com.ar/assets/icon.png" />
+  <link rel="canonical" href="https://iudex.com.ar/neatech/" />
+  <link rel="icon" type="image/png" href="../assets/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" />
+  <link rel="stylesheet" href="neatech.css" />
+</head>
+<body class="nt">
+
+<!-- Progreso: la «una línea» de la marca, que avanza con cada respuesta. -->
+<div class="nt-progreso" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+  <span class="nt-progreso__linea"></span>
+</div>
+
+<header class="nt-top">
+  <a class="nt-marca" href="../index.html" aria-label="Iudex, inicio">
+    <span class="nt-marca__iudex">Iudex</span><span class="nt-marca__labs">Labs</span>
+  </a>
+  <span class="nt-top__paso" aria-hidden="true"><span data-paso-actual>00</span> / 05</span>
+</header>
+
+<main class="nt-escena">
+
+  <!-- Las preguntas -->
+  <form class="nt-form" id="nt-form" novalidate autocomplete="on">
+    <!-- Honeypot: los humanos no lo ven. -->
+    <input type="text" name="website" class="nt-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+    <!-- 0 · Portada -->
+    <section class="nt-paso nt-paso--portada is-activo" data-paso="0" aria-labelledby="t0">
+      <p class="nt-eyebrow">NEA Tech 2026 · Iudex Labs</p>
+      <h1 class="nt-titulo nt-titulo--xl" id="t0">
+        <span class="nt-linea-texto">Hicimos Iudex para la justicia.</span>
+        <span class="nt-linea-texto" data-tipeo-portada>Contanos tu problema.</span>
+      </h1>
+      <svg class="nt-trazo" viewBox="0 0 600 8" preserveAspectRatio="none" aria-hidden="true"><path d="M1 4 C 150 1, 300 7, 599 3" /></svg>
+      <p class="nt-bajada">Lo que aprendimos haciendo un sistema para estudios y juzgados lo aplicamos a cualquier industria: CRMs con agentes, hechos a medida. Cinco preguntas, menos de un minuto. Te respondemos en 48 horas.</p>
+      <div class="nt-acciones">
+        <button type="button" class="nt-btn nt-btn--primario" data-accion="empezar">Empezar <span class="nt-tecla" aria-hidden="true">Enter ↵</span></button>
+        <p class="nt-retomar" hidden>Guardamos lo que ya habías respondido. <button type="button" class="nt-link" data-accion="reiniciar">Empezar de nuevo</button></p>
+      </div>
+    </section>
+
+    <!-- 1 · Industria -->
+    <section class="nt-paso" data-paso="1" aria-labelledby="t1" hidden>
+      <p class="nt-eyebrow"><span class="nt-num">01</span> Tu organización</p>
+      <h2 class="nt-titulo" id="t1" tabindex="-1">¿A qué se dedica?</h2>
+      <div class="nt-opciones nt-opciones--grilla" role="radiogroup" aria-labelledby="t1" data-campo="industria"></div>
+      <div class="nt-campo nt-campo--otra" hidden>
+        <label class="nt-label" for="nt-industria-otra">¿Cuál?</label>
+        <input class="nt-input" id="nt-industria-otra" name="industria_otra" type="text" maxlength="120" placeholder="Ej.: cooperativa eléctrica" />
+      </div>
+      <div class="nt-nav">
+        <button type="button" class="nt-btn nt-btn--fantasma" data-accion="atras">Atrás</button>
+        <button type="button" class="nt-btn nt-btn--primario" data-accion="siguiente" disabled>Seguir <span class="nt-tecla" aria-hidden="true">↵</span></button>
+      </div>
+    </section>
+
+    <!-- 2 · Problema -->
+    <section class="nt-paso" data-paso="2" aria-labelledby="t2" hidden>
+      <p class="nt-eyebrow"><span class="nt-num">02</span> El problema</p>
+      <h2 class="nt-titulo" id="t2" tabindex="-1">¿Qué te gustaría resolver?</h2>
+      <p class="nt-ayuda">Elegí lo que aplique y, si querés, contalo con tus palabras.</p>
+      <div class="nt-chips" role="group" aria-labelledby="t2" data-campo="problemas"></div>
+      <div class="nt-campo nt-campo--texto">
+        <label class="nt-label nt-sr" for="nt-problema">Contalo con tus palabras</label>
+        <textarea class="nt-input nt-textarea" id="nt-problema" name="problema" rows="3" maxlength="2000" placeholder="Contalo con tus palabras…"></textarea>
+        <button type="button" class="nt-mic" data-accion="dictar" hidden aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg>
+          <span class="nt-mic__txt">Dictar</span>
+        </button>
+      </div>
+      <p class="nt-aviso-mic" role="status" hidden></p>
+      <div class="nt-nav">
+        <button type="button" class="nt-btn nt-btn--fantasma" data-accion="atras">Atrás</button>
+        <button type="button" class="nt-btn nt-btn--primario" data-accion="siguiente" disabled>Seguir <span class="nt-tecla" aria-hidden="true">⌘↵</span></button>
+      </div>
+    </section>
+
+    <!-- 3 · Tamaño -->
+    <section class="nt-paso" data-paso="3" aria-labelledby="t3" hidden>
+      <p class="nt-eyebrow"><span class="nt-num">03</span> El equipo</p>
+      <h2 class="nt-titulo" id="t3" tabindex="-1">¿Cuántas personas trabajan ahí?</h2>
+      <div class="nt-opciones nt-opciones--fila" role="radiogroup" aria-labelledby="t3" data-campo="tamano"></div>
+      <div class="nt-nav">
+        <button type="button" class="nt-btn nt-btn--fantasma" data-accion="atras">Atrás</button>
+        <button type="button" class="nt-btn nt-btn--primario" data-accion="siguiente" disabled>Seguir <span class="nt-tecla" aria-hidden="true">↵</span></button>
+      </div>
+    </section>
+
+    <!-- 4 · Quién -->
+    <section class="nt-paso" data-paso="4" aria-labelledby="t4" hidden>
+      <p class="nt-eyebrow"><span class="nt-num">04</span> Vos</p>
+      <h2 class="nt-titulo" id="t4" tabindex="-1">¿Con quién hablamos?</h2>
+      <div class="nt-campos">
+        <div class="nt-campo">
+          <label class="nt-label" for="nt-nombre">Tu nombre</label>
+          <input class="nt-input" id="nt-nombre" name="nombre" type="text" autocomplete="name" maxlength="120" required placeholder="Nombre y apellido" />
+        </div>
+        <div class="nt-campo">
+          <label class="nt-label" for="nt-organizacion">Organización <span class="nt-opcional">opcional</span></label>
+          <input class="nt-input" id="nt-organizacion" name="organizacion" type="text" autocomplete="organization" maxlength="160" placeholder="Empresa, municipio, estudio…" />
+        </div>
+      </div>
+      <div class="nt-nav">
+        <button type="button" class="nt-btn nt-btn--fantasma" data-accion="atras">Atrás</button>
+        <button type="button" class="nt-btn nt-btn--primario" data-accion="siguiente" disabled>Seguir <span class="nt-tecla" aria-hidden="true">↵</span></button>
+      </div>
+    </section>
+
+    <!-- 5 · Contacto -->
+    <section class="nt-paso" data-paso="5" aria-labelledby="t5" hidden>
+      <p class="nt-eyebrow"><span class="nt-num">05</span> Último paso</p>
+      <h2 class="nt-titulo" id="t5" tabindex="-1">¿Por dónde te escribimos?</h2>
+      <div class="nt-segmento" role="radiogroup" aria-label="Medio de contacto">
+        <button type="button" role="radio" aria-checked="true" class="nt-segmento__op" data-medio="whatsapp">WhatsApp</button>
+        <button type="button" role="radio" aria-checked="false" class="nt-segmento__op" data-medio="email">Email</button>
+        <span class="nt-segmento__fondo" aria-hidden="true"></span>
+      </div>
+      <div class="nt-campo">
+        <label class="nt-label" for="nt-contacto" data-label-contacto>Tu WhatsApp</label>
+        <input class="nt-input nt-input--grande" id="nt-contacto" name="contacto" type="tel" inputmode="tel" autocomplete="tel" maxlength="160" required placeholder="379 412 3456" />
+        <p class="nt-error" role="alert" hidden></p>
+      </div>
+      <p class="nt-legal">Al enviar aceptás que te contactemos por este medio para responder tu consulta. Tratamos tus datos según la Ley 25.326; leé la <a href="../politica-privacidad/index.html" target="_blank" rel="noopener">política de privacidad</a>.</p>
+      <div class="nt-nav">
+        <button type="button" class="nt-btn nt-btn--fantasma" data-accion="atras">Atrás</button>
+        <button type="submit" class="nt-btn nt-btn--primario nt-btn--enviar" disabled>Enviar <span class="nt-tecla" aria-hidden="true">↵</span></button>
+      </div>
+    </section>
+
+    <!-- 6 · Listo -->
+    <section class="nt-paso nt-paso--fin" data-paso="6" aria-labelledby="t6" hidden>
+      <svg class="nt-check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24" /><path d="M15 27 l7 7 l15 -16" /></svg>
+      <h2 class="nt-titulo nt-titulo--xl" id="t6" tabindex="-1" data-fin-titulo>Listo.</h2>
+      <p class="nt-bajada" data-fin-mensaje>Te escribimos en las próximas 48 horas con una primera idea concreta.</p>
+      <p class="nt-estado-envio" data-estado-envio role="status"></p>
+      <div class="nt-fin-ficha" data-fin-ficha></div>
+      <p class="nt-bajada nt-bajada--chica">Si estás en el MACC, pasá por el stand: te mostramos Iudex funcionando, con casos reales de prueba.</p>
+      <div class="nt-acciones">
+        <button type="button" class="nt-btn nt-btn--fantasma" data-accion="otra">Cargar otra consulta</button>
+      </div>
+    </section>
+  </form>
+
+  <!-- La ficha que se arma mientras respondés (desktop: al costado; teléfono: hoja que sube). -->
+  <aside class="nt-ficha" aria-label="Tu ficha" data-ficha>
+    <button type="button" class="nt-ficha__asa" data-accion="ficha" aria-expanded="false" aria-controls="nt-ficha-cuerpo">
+      <span>Tu ficha</span><span class="nt-ficha__cuenta" data-ficha-cuenta>0 de 5</span>
+      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 7.5 L6 4.5 L9 7.5" /></svg>
+    </button>
+    <div class="nt-ficha__cuerpo" id="nt-ficha-cuerpo">
+      <div class="nt-ficha__cabecera">
+        <span class="nt-ficha__ref" data-ficha-ref>NT-0000</span>
+        <span class="nt-ficha__estado" data-ficha-estado>borrador</span>
+      </div>
+      <p class="nt-ficha__intro">Mientras respondés, armamos tu ficha. Es lo mismo que hace un CRM con agentes: ordenar lo que llega para que alguien pueda actuar.</p>
+      <dl class="nt-ficha__datos">
+        <div class="nt-dato" data-dato="industria"><dt>Industria</dt><dd>—</dd></div>
+        <div class="nt-dato" data-dato="problemas"><dt>Quiere resolver</dt><dd>—</dd></div>
+        <div class="nt-dato" data-dato="tamano"><dt>Equipo</dt><dd>—</dd></div>
+        <div class="nt-dato" data-dato="quien"><dt>Contacto</dt><dd>—</dd></div>
+      </dl>
+      <div class="nt-ficha__paso" data-ficha-sugerencia hidden>
+        <span class="nt-ficha__paso-titulo">Primer paso posible</span>
+        <p data-sugerencia-texto></p>
+        <span class="nt-ficha__paso-nota">Una idea para empezar la charla, no un presupuesto.</span>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer class="nt-pie">
+  <span>Hecho en Corrientes</span>
+</footer>
+
+<script src="../public/js/env.js"></script>
+<script src="neatech.js" defer></script>
+</body>
+</html>

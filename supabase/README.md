@@ -377,6 +377,35 @@ Cargar en https://supabase.com/dashboard/project/zbysecepjvyyiufbliub/functions/
 | `ADMIN_ALLOWLIST` | send-custom-email, list-audiences | Comma-separated. Emails autorizados a usar el admin panel. Ej: `nahuel@iudex.com.ar,mbury@iudex.com.ar` |
 | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | (auto) | Auto-provistos por Supabase |
 
+### Leads de eventos (NEA Tech 2026)
+
+Formulario `/neatech/` (Iudex Labs): gente de cualquier industria cuenta su
+organización y el problema que quiere resolver. **Tabla aparte de
+`registrations`** a propósito: el welcome de registrations está escrito para
+abogados y el sync a Notion mapea campos del producto legal.
+
+```
+[browser /neatech/] --POST /rest/v1/event_leads (anon, sólo INSERT)-->
+      [public.event_leads] --Database Webhook INSERT-->
+            [notify-event-lead] --Resend--> equipo (RESEND_TEAM_TO) + acuse al lead si dejó email
+                               --UPDATE--> notified_at | notify_error
+```
+
+- **Migración**: `20260928120000_event_leads.sql` (RLS: `anon` sólo INSERT; `authenticated` lee).
+- **Idempotencia**: `client_id` único lo genera el browser; un reintento que ya había
+  entrado vuelve 409 y el formulario lo da por enviado. La función, por `notified_at`
+  y por `Idempotency-Key` de Resend.
+- **Sin señal** (Wi-Fi del evento): el formulario guarda el envío en `localStorage`
+  y reintenta solo (al volver la red, cada 10 s y al reabrir la página).
+- **Parámetros**: `?s=qr` → `origen = qr`; `?modo=stand` → `origen = stand` y la
+  pantalla final vuelve sola a la portada a los 25 s (tablet del stand).
+- **Si lo dejó por WhatsApp** no se le manda nada automático: el mail al equipo trae
+  el link `wa.me` para responder a mano.
+
+Setup (una vez): `supabase db push`, `supabase functions deploy notify-event-lead` y un
+Database Webhook `notify-event-lead-on-insert` sobre `public.event_leads` (INSERT) con
+`Authorization: Bearer <WEBHOOK_SECRET>` (ver la tabla de abajo).
+
 ### Database Webhooks en Supabase
 
 https://supabase.com/dashboard/project/zbysecepjvyyiufbliub/database/hooks
@@ -387,6 +416,12 @@ https://supabase.com/dashboard/project/zbysecepjvyyiufbliub/database/hooks
 |---|---|---|---|
 | `send-inscription-email-on-insert` (o similar) | Supabase Edge Functions | `send-inscription-email` | `Bearer <WEBHOOK_SECRET>` |
 | `sync-to-notion-on-insert` | Supabase Edge Functions | `sync-to-notion` | `Bearer <WEBHOOK_SECRET>` (mismo valor) |
+
+Y **uno** sobre `public.event_leads` (INSERT):
+
+| Name | Type | Function | Authorization header |
+|---|---|---|---|
+| `notify-event-lead-on-insert` | Supabase Edge Functions | `notify-event-lead` | `Bearer <WEBHOOK_SECRET>` (mismo valor) |
 
 **⚠️ Importante**: el UI de Supabase auto-puebla `Authorization` con un JWT del service_role cuando creás un webhook nuevo. **Tenés que sobreescribirlo manualmente** con el `Bearer <WEBHOOK_SECRET>` custom — caso contrario el código de la función rechaza con 401.
 
@@ -523,6 +558,7 @@ git checkout development && git pull   # tener el código actualizado
 supabase functions deploy send-inscription-email
 supabase functions deploy sync-to-notion
 supabase functions deploy notify-email-events
+supabase functions deploy notify-event-lead
 supabase functions deploy send-custom-email
 supabase functions deploy list-audiences
 
