@@ -293,18 +293,34 @@
 
   const Reconocimiento = window.SpeechRecognition || window.webkitSpeechRecognition;
   const botonMic = $('[data-accion="dictar"]');
+  const cajaAvisoMic = $('.nt-aviso-mic');
+  const avisoMic = (texto) => {
+    cajaAvisoMic.textContent = texto;
+    cajaAvisoMic.hidden = !texto;
+  };
   if (Reconocimiento && botonMic) {
     botonMic.hidden = false;
     let rec = null;
     let base = '';
-    botonMic.addEventListener('click', () => {
+    const avisoPermiso = 'El navegador no dio permiso para el micrófono. Podés escribirlo acá.';
+    botonMic.addEventListener('click', async () => {
       if (rec) { rec.stop(); return; }
+      // Si el permiso ya está negado, se avisa sin intentar (Chrome y Edge
+      // lo informan; Safari no tiene esta consulta y sigue de largo).
+      try {
+        const permiso = await navigator.permissions?.query({ name: 'microphone' });
+        if (permiso?.state === 'denied') { avisoMic(avisoPermiso); return; }
+      } catch { /* sin Permissions API: se intenta igual */ }
       rec = new Reconocimiento();
       rec.lang = 'es-AR';
       rec.interimResults = true;
       rec.continuous = true;
       base = inputProblema.value ? inputProblema.value.replace(/\s*$/, ' ') : '';
+      let oyo = false;
+      let fallo = false;
       rec.onresult = (e) => {
+        oyo = true;
+        avisoMic('');
         let texto = '';
         for (let i = 0; i < e.results.length; i++) texto += e.results[i][0].transcript;
         inputProblema.value = (base + texto).slice(0, 2000);
@@ -316,14 +332,34 @@
         botonMic.setAttribute('aria-pressed', 'false');
         $('.nt-mic__txt', botonMic).textContent = 'Dictar';
       };
-      rec.onend = fin;
-      rec.onerror = fin;
+      // Algunos navegadores (o el permiso bloqueado) cortan sin evento de
+      // error: si terminó sin haber escuchado nada, también se avisa.
+      rec.onend = () => {
+        if (!oyo && !fallo) avisoMic('No pudimos escucharte. Revisá el permiso del micrófono o escribilo acá.');
+        fin();
+      };
+      // Nunca falla callado (2026-09-28): si el navegador no deja usar el
+      // micrófono o no escuchó nada, se dice y se ofrece escribir.
+      rec.onerror = (e) => {
+        fallo = true;
+        avisoMic(({
+          'not-allowed': avisoPermiso,
+          'service-not-allowed': avisoPermiso,
+          'no-speech': 'No escuchamos nada. Tocá «Dictar» y hablá cerca del teléfono.',
+          'audio-capture': 'No encontramos un micrófono. Podés escribirlo acá.',
+          'network': 'El dictado necesita conexión. Podés escribirlo acá.',
+        })[e.error] || 'No pudimos usar el dictado. Podés escribirlo acá.');
+        fin();
+      };
       try {
         rec.start();
         botonMic.setAttribute('aria-pressed', 'true');
         $('.nt-mic__txt', botonMic).textContent = 'Escuchando…';
         vibrar();
-      } catch { fin(); }
+      } catch {
+        avisoMic('No pudimos usar el dictado en este navegador. Podés escribirlo acá.');
+        fin();
+      }
     });
   }
 
