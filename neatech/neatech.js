@@ -150,6 +150,93 @@
   const vibrar = () => { try { navigator.vibrate && navigator.vibrate(8); } catch { /* sin háptica */ } };
   const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // ---------------------------------------------------------------------
+  // Tipeo «agéntico»: el texto aparece como si lo escribiera un agente,
+  // sin hacer esperar a nadie (2026-09-28).
+  //  - El texto completo reserva el lugar (invisible) y el tipeo va encima:
+  //    cero saltos de layout, las opciones no se corren bajo el dedo.
+  //  - Lectores de pantalla leen el texto entero de una.
+  //  - Ritmo humano: velocidad con variación y pausa en la puntuación.
+  //  - Nunca bloquea: tocar o apretar una tecla lo completa al instante.
+  //  - Movimiento reducido: el texto aparece directo.
+  // ---------------------------------------------------------------------
+
+  const tipeosActivos = new Set();
+
+  function tipear(el, texto, { cps = 40, espera = 0, pensando = false, cursor = 'se-va', alTerminar } = {}) {
+    for (const t of tipeosActivos) if (t.el === el) t.cancelar();
+    el.classList.add('nt-tipeable');
+    if (reducido || !texto) {
+      el.textContent = texto;
+      if (alTerminar) alTerminar();
+      return;
+    }
+    const sr = document.createElement('span');
+    sr.className = 'nt-sr';
+    sr.textContent = texto;
+    const fantasma = document.createElement('span');
+    fantasma.className = 'nt-tipeo-fantasma';
+    fantasma.setAttribute('aria-hidden', 'true');
+    fantasma.textContent = texto;
+    const vivo = document.createElement('span');
+    vivo.className = 'nt-tipeo-vivo';
+    vivo.setAttribute('aria-hidden', 'true');
+    const escrito = document.createElement('span');
+    const caret = document.createElement('span');
+    caret.className = 'nt-cursor';
+    vivo.append(escrito, caret);
+    el.replaceChildren(sr, fantasma, vivo);
+    if (pensando) {
+      caret.hidden = true;
+      escrito.innerHTML = '<span class="nt-pensando"><i></i><i></i><i></i></span>';
+    }
+
+    let i = 0;
+    let timer = null;
+    const registro = { el };
+    const cerrar = () => {
+      clearTimeout(timer);
+      tipeosActivos.delete(registro);
+    };
+    registro.cancelar = cerrar;
+    registro.completar = () => {
+      cerrar();
+      // Termina como texto común (con su corte de línea balanceado) y el
+      // cursor al final, fuera del árbol de accesibilidad.
+      caret.hidden = false;
+      caret.setAttribute('aria-hidden', 'true');
+      el.replaceChildren(document.createTextNode(texto), caret);
+      if (cursor === 'se-va') {
+        caret.classList.add('is-quieto');
+        setTimeout(() => caret.classList.add('is-fuera'), 1100);
+      } else {
+        caret.classList.add('is-quieto');
+      }
+      if (alTerminar) alTerminar();
+    };
+    const tecla = () => {
+      if (i === 0) { escrito.textContent = ''; caret.hidden = false; }
+      i += 1;
+      escrito.textContent = texto.slice(0, i);
+      if (i >= texto.length) { registro.completar(); return; }
+      const c = texto[i - 1];
+      let d = (1000 / cps) * (0.55 + Math.random() * 0.9);
+      if (/[.?!]/.test(c)) d += 220;
+      else if (/[,;:]/.test(c)) d += 110;
+      timer = setTimeout(tecla, d);
+    };
+    tipeosActivos.add(registro);
+    timer = setTimeout(tecla, espera);
+  }
+
+  // Cualquier toque o tecla completa lo que se esté escribiendo.
+  const completarTipeos = () => { for (const t of [...tipeosActivos]) t.completar(); };
+  document.addEventListener('pointerdown', completarTipeos, true);
+  document.addEventListener('keydown', completarTipeos, true);
+
+  // Textos originales de los títulos (se retipean al entrar a cada paso).
+  const titulosOriginales = new Map();
+
   // Referencia corta de la ficha, como un número de expediente.
   $('[data-ficha-ref]').textContent = 'NT-' + datos.client_id.slice(0, 4).toUpperCase();
 
@@ -421,6 +508,7 @@
   }
 
   let lleno = 0;
+  let ultimaSugerencia = '';
   function actualizar() {
     setDato('industria', textoIndustria());
     setDato('problemas', textoProblemas());
@@ -430,7 +518,11 @@
     const sug = sugerencia();
     const cajaSug = $('[data-ficha-sugerencia]');
     cajaSug.hidden = !sug;
-    $('[data-sugerencia-texto]').textContent = sug;
+    if (sug !== ultimaSugerencia) {
+      ultimaSugerencia = sug;
+      // Piensa un momento y la escribe: es el gesto «agente» de la ficha.
+      tipear($('[data-sugerencia-texto]'), sug, { cps: 58, espera: 520, pensando: true });
+    }
 
     const antes = lleno;
     lleno = [1, 2, 3, 4, 5].filter((n) => valido[n]()).length;
@@ -473,6 +565,14 @@
     body.dataset.paso = String(n);
     progreso(n);
     actualizar();
+    // El agente «pregunta»: el título se escribe rápido (≈ medio segundo)
+    // y las opciones ya se pueden tocar.
+    if (n >= 1 && n <= 5) {
+      const h = $('.nt-titulo', sec);
+      if (!titulosOriginales.has(h)) titulosOriginales.set(h, h.textContent.trim());
+      tipear(h, titulosOriginales.get(h), { cps: 62, espera: 120 });
+    }
+    if (n === 0) animarPortada();
     if (!foco) return;
     // Foco: el campo si el paso es de escribir, si no el título (lector de
     // pantalla). En teléfono no se abre el teclado solo en pasos de opciones.
@@ -573,6 +673,7 @@
     $('[data-accion="empezar"]').firstChild.textContent = 'Empezar ';
     $('[data-fin-ficha]').innerHTML = '';
     lleno = 0;
+    ultimaSugerencia = '';
     ir(0);
     actualizar();
   }
@@ -689,7 +790,7 @@
   function finalizar(ok, ms) {
     borrar(CLAVE_BORRADOR);
     const nombre = datos.nombre.trim().split(/\s+/)[0] || '';
-    $('[data-fin-nombre]').textContent = nombre ? `, ${nombre}` : '';
+    const tituloFin = `Listo${nombre ? `, ${nombre}` : ''}.`;
     $('[data-fin-mensaje]').textContent = datos.contacto_tipo === 'email'
       ? 'Te escribimos por mail en las próximas 48 horas con una primera idea concreta.'
       : 'Te escribimos por WhatsApp en las próximas 48 horas con una primera idea concreta.';
@@ -709,6 +810,7 @@
     fin.appendChild(copia);
     ficha.classList.remove('is-abierta');
     ir(6);
+    tipear($('[data-fin-titulo]'), tituloFin, { cps: 18, espera: 420, cursor: 'queda' });
     vibrar();
     if (modoStand) setTimeout(() => { if (paso === 6) reiniciar(); }, 25000);
   }
@@ -732,7 +834,22 @@
   // Arranque
   // ---------------------------------------------------------------------
 
+  // Portada: la primera línea entra sola, «Contanos tu problema.» se escribe
+  // y recién ahí se dibuja el trazo dorado. El cursor queda titilando: la
+  // invitación a empezar.
+  function animarPortada() {
+    const trazo = $('.nt-trazo');
+    trazo.classList.remove('is-trazado');
+    tipear($('[data-tipeo-portada]'), 'Contanos tu problema.', {
+      cps: 17,
+      espera: reducido ? 0 : 650,
+      cursor: 'queda',
+      alTerminar: () => trazo.classList.add('is-trazado'),
+    });
+  }
+
   body.dataset.paso = '0';
+  animarPortada();
   pintarChips();
   restaurar();
   progreso(0);
