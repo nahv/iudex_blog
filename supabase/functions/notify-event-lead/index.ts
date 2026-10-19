@@ -1,4 +1,5 @@
-// notify-event-lead — aviso de un lead de evento (NEA Tech 2026).
+// notify-event-lead — aviso de un lead de evento (NEA Tech 2026) o del
+// formulario de contacto de NM Labs (evento «nmlabs-web»; ver MARCAS).
 //
 // Disparo: Database Webhook sobre INSERT en public.event_leads, con header
 // `Authorization: Bearer <WEBHOOK_SECRET>` (mismo secreto que las otras
@@ -77,59 +78,118 @@ function linkRespuesta(lead: EventLead): string {
   return `https://wa.me/${n}`;
 }
 
+/**
+ * Marca por evento (2026-10-19). La tabla la comparten el formulario de NEA Tech
+ * (iudex.com.ar/neatech/) y el de contacto de NM Labs (evento «nmlabs-web»):
+ * cada uno firma, nombra y colorea sus mails. Lo que no está acá usa NEA Tech.
+ */
+type Marca = {
+  nombre: string; // firma y remitente visible
+  asuntoEquipo: string; // prefijo del asunto del mail al equipo
+  acuse: string; // primera línea del acuse a la persona
+  pie: string; // segunda línea de la firma
+  fondo: string;
+  acento: string; // filetes
+  acentoTexto: string; // eyebrow
+  industrias?: Record<string, string>; // id del formulario → texto
+};
+
+const MARCA_NEATECH: Marca = {
+  nombre: "Iudex Labs",
+  asuntoEquipo: "Lead NEA Tech",
+  acuse: "Recibimos lo que nos contaste en NEA Tech. Lo leemos con calma y te escribimos en las próximas 48 horas con una primera idea concreta.",
+  pie: "Iudex Labs · iudex.com.ar",
+  fondo: "#f7f4ee",
+  acento: "#c9a84c",
+  acentoTexto: "#8a6b1c",
+};
+
+const MARCAS: Record<string, Marca> = {
+  "nmlabs-web": {
+    nombre: "NM Labs",
+    asuntoEquipo: "Lead NM Labs",
+    acuse: "Recibimos tu consulta. La leemos con calma y te escribimos en las próximas 48 horas hábiles con una primera idea concreta.",
+    pie: "NM Labs · software con IA, aplicado con criterio",
+    fondo: "#f6f5f2",
+    acento: "#d67227",
+    acentoTexto: "#a4501a",
+    industrias: {
+      empresa: "Empresa",
+      gobierno: "Organismo público o municipio",
+      legal: "Estudio jurídico o juzgado",
+      salud: "Salud",
+      educacion: "Educación",
+      ong: "Cooperativa u ONG",
+      otra: "Otra",
+    },
+  },
+};
+
+const marcaDe = (lead: EventLead): Marca => MARCAS[lead.evento] ?? MARCA_NEATECH;
+
+/** Mismo buzón verificado en Resend; cambia sólo el nombre visible del remitente. */
+function remitente(marca: Marca): string {
+  if (marca === MARCA_NEATECH) return RESEND_FROM;
+  const m = RESEND_FROM.match(/<([^>]+)>/);
+  return m ? `${marca.nombre} <${m[1]}>` : RESEND_FROM;
+}
+
 function fila(etiqueta: string, valor: string | null | undefined): string {
   const v = valor && valor.trim() ? esc(valor.trim()) : "—";
   return `<tr><td style="padding:6px 16px 6px 0;color:#5a5a56;font:12px 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;vertical-align:top">${etiqueta}</td><td style="padding:6px 0;color:#0f0f0e;font:15px/1.5 'DM Sans',Arial,sans-serif">${v}</td></tr>`;
 }
 
 function mailEquipo(lead: EventLead): { subject: string; html: string; text: string } {
-  const industria = lead.industria_otra?.trim() || lead.industria;
+  const marca = marcaDe(lead);
+  const industria = lead.industria_otra?.trim() || marca.industrias?.[lead.industria] || lead.industria;
   const problemas = (lead.problemas ?? []).join(" · ");
   const link = linkRespuesta(lead);
-  const html = `<!doctype html><html lang="es"><body style="margin:0;background:#f7f4ee;padding:32px 16px">
+  const html = `<!doctype html><html lang="es"><body style="margin:0;background:${marca.fondo};padding:32px 16px">
 <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #edeae2;border-radius:12px;padding:28px">
-<div style="font:12px 'DM Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#8a6b1c">Iudex Labs · ${esc(lead.evento)} · ${esc(lead.origen)}</div>
+<div style="font:12px 'DM Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:${marca.acentoTexto}">${esc(marca.nombre)} · ${esc(lead.evento)} · ${esc(lead.origen)}</div>
 <h1 style="font:500 24px/1.25 'DM Sans',Arial,sans-serif;color:#0f0f0e;margin:10px 0 4px">${esc(lead.nombre)}${lead.organizacion ? ` · ${esc(lead.organizacion)}` : ""}</h1>
-<div style="height:1px;background:#c9a84c;margin:16px 0 12px"></div>
+<div style="height:1px;background:${marca.acento};margin:16px 0 12px"></div>
 <table role="presentation" style="border-collapse:collapse">
-${fila("Industria", industria)}
+${fila(marca === MARCA_NEATECH ? "Industria" : "Organización", industria)}
 ${fila("Equipo", lead.tamano)}
 ${fila("Quiere resolver", problemas)}
 ${fila("En sus palabras", lead.problema)}
 ${fila(lead.contacto_tipo === "whatsapp" ? "WhatsApp" : "Email", lead.contacto)}
 </table>
-<p style="margin:24px 0 0"><a href="${link}" style="display:inline-block;background:#0f0f0e;color:#f7f4ee;text-decoration:none;font:500 14px 'DM Sans',Arial,sans-serif;padding:11px 18px;border-radius:8px">Responder por ${lead.contacto_tipo === "whatsapp" ? "WhatsApp" : "mail"}</a></p>
+<p style="margin:24px 0 0"><a href="${link}" style="display:inline-block;background:#0f0f0e;color:${marca.fondo};text-decoration:none;font:500 14px 'DM Sans',Arial,sans-serif;padding:11px 18px;border-radius:8px">Responder por ${lead.contacto_tipo === "whatsapp" ? "WhatsApp" : "mail"}</a></p>
 <p style="font:12px/1.5 'DM Sans',Arial,sans-serif;color:#5a5a56;margin:18px 0 0">Prometimos respuesta en 48 h.</p>
 </div></body></html>`;
   const text = [
     `Nuevo lead ${lead.evento} (${lead.origen})`,
     `${lead.nombre}${lead.organizacion ? ` · ${lead.organizacion}` : ""}`,
-    `Industria: ${industria}`,
+    `${marca === MARCA_NEATECH ? "Industria" : "Organización"}: ${industria}`,
     `Equipo: ${lead.tamano ?? "—"}`,
     `Quiere resolver: ${problemas || "—"}`,
     `En sus palabras: ${lead.problema ?? "—"}`,
     `${lead.contacto_tipo}: ${lead.contacto}`,
     `Responder: ${link}`,
   ].join("\n");
-  const subject = `Lead NEA Tech — ${lead.nombre}${lead.organizacion ? ` (${lead.organizacion})` : ""} · ${industria}`;
+  const subject = `${marca.asuntoEquipo} — ${lead.nombre}${lead.organizacion ? ` (${lead.organizacion})` : ""} · ${industria}`;
   return { subject, html, text };
 }
 
 function mailAcuse(lead: EventLead): { subject: string; html: string; text: string } {
+  const marca = marcaDe(lead);
   const nombre = lead.nombre.trim().split(/\s+/)[0];
-  const html = `<!doctype html><html lang="es"><body style="margin:0;background:#f7f4ee;padding:32px 16px">
+  const html = `<!doctype html><html lang="es"><body style="margin:0;background:${marca.fondo};padding:32px 16px">
 <div style="max-width:520px;margin:0 auto;font:16px/1.6 'DM Sans',Arial,sans-serif;color:#2a2a28">
 <p style="font:500 22px/1.3 'DM Sans',Arial,sans-serif;color:#0f0f0e;margin:0 0 14px">Gracias, ${esc(nombre)}.</p>
-<p style="margin:0 0 12px">Recibimos lo que nos contaste en NEA Tech. Lo leemos con calma y te escribimos en las próximas 48 horas con una primera idea concreta.</p>
+<p style="margin:0 0 12px">${esc(marca.acuse)}</p>
 <p style="margin:0 0 12px">Si querés sumar algo, respondé este mail.</p>
-<div style="height:1px;background:#c9a84c;width:48px;margin:22px 0"></div>
-<p style="margin:0;font-size:14px;color:#5a5a56">Nahuel y Max<br>Iudex Labs · iudex.com.ar</p>
+<div style="height:1px;background:${marca.acento};width:48px;margin:22px 0"></div>
+<p style="margin:0;font-size:14px;color:#5a5a56">Nahuel y Max<br>${esc(marca.pie)}</p>
 </div></body></html>`;
-  const text = `Gracias, ${nombre}.\n\nRecibimos lo que nos contaste en NEA Tech. Lo leemos con calma y te escribimos en las próximas 48 horas con una primera idea concreta.\n\nSi querés sumar algo, respondé este mail.\n\nNahuel y Max\nIudex Labs · iudex.com.ar`;
-  return { subject: "Recibimos tu consulta — Iudex Labs", html, text };
+  const text = `Gracias, ${nombre}.\n\n${marca.acuse}\n\nSi querés sumar algo, respondé este mail.\n\nNahuel y Max\n${marca.pie}`;
+  return { subject: `Recibimos tu consulta — ${marca.nombre}`, html, text };
 }
 
 async function resendSend(opts: {
+  from?: string;
   to: string | string[];
   subject: string;
   html: string;
@@ -146,7 +206,7 @@ async function resendSend(opts: {
       "Idempotency-Key": opts.idempotencyKey,
     },
     body: JSON.stringify({
-      from: RESEND_FROM,
+      from: opts.from ?? RESEND_FROM,
       to: opts.to,
       subject: opts.subject,
       html: opts.html,
@@ -188,6 +248,7 @@ Deno.serve(async (req) => {
     const m = mailEquipo(lead);
     // Responder desde el mail del equipo le escribe directo al lead si dejó email.
     const r = await resendSend({
+      from: remitente(marcaDe(lead)),
       to: equipo,
       ...m,
       reply_to: lead.contacto_tipo === "email" ? lead.contacto : undefined,
@@ -200,6 +261,7 @@ Deno.serve(async (req) => {
 
   if (lead.contacto_tipo === "email") {
     const r = await resendSend({
+      from: remitente(marcaDe(lead)),
       to: lead.contacto,
       ...mailAcuse(lead),
       idempotencyKey: `event-lead-ack-${lead.id}`,
