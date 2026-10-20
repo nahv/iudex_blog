@@ -126,39 +126,9 @@ EDITOR = f'''<div class="ml-tarea">
   </div>
 </div>'''
 
-# Hero «Pedíselo a Nexus.» (2026-10-20): la ventana del frente es el panel
-# de Nexus con la causa abierta. Se le pide el traslado y la planilla, cita
-# los papeles de la causa y deja tres tarjetas para confirmar, como en la app.
-# nexus-escena.js la reproduce paso a paso (`data-paso`); sin JS o con
-# «reducir movimiento» se ve el estado final.
-HN_PEDIDO = 'Contestá el traslado del 12/09 y practicá planilla desde el 14/08.'
-
-def hn_card(k, t, d, i, ok=False):
-    estado = ('<span class="hn-card__ok">✓ Listo</span>' if ok else '') + '<span class="hn-card__btns"><u>Editar</u><em>Confirmar</em></span>'
-    return f'<div class="hn-card{" hn-card--ok" if ok else ""}" style="--i:{i}"><span class="hn-card__k">{k}</span><b class="hn-card__t">{t}</b><span class="hn-card__d">{d}</span><span class="hn-card__st">{estado}</span></div>'
-
-HERO = f'''      <div class="c-window c-window--front" role="img" aria-label="Nexus en Iudex, con una causa abierta. Se le pide contestar el traslado y practicar la planilla; responde citando la resolución y el escrito de la causa y deja armados el escrito, la planilla y la tarea, cada uno para confirmar.">
-        <div class="hn">
-          <div class="app">
-            {rail('nexus')}
-            <div class="app__main hn__main">
-              <div class="hn__head"><span class="hn__orb" aria-hidden="true"></span><b>Nexus</b><span class="hn__causa"><i class="ml-ic ml-ic--folder"></i>48583/12 · {CAR}</span></div>
-              <div class="hn__chat">
-                <div class="hn-q">{HN_PEDIDO}</div>
-                <div class="hn-dots" aria-hidden="true"><i></i><i></i><i></i></div>
-                <p class="hn-a">Te lo dejo armado con la resolución <span class="hn-cite">Resolución · 12/09</span> y tu escrito <span class="hn-cite">Escrito · 14/08</span>. Revisalo y confirmá.</p>
-                <div class="hn-cards">
-                  {hn_card('Escrito', 'Contesta traslado', 'Desde tu plantilla · carátula y juzgado puestos', 0, ok=True)}
-                  {hn_card('Planilla', 'Capital e intereses', '14/08/2026 a hoy · tasa activa del BNA', 1)}
-                  {hn_card('Tarea', 'Presentar la contestación', 'Vence el 19/09 · en el movimiento del 12/09', 2)}
-                </div>
-              </div>
-              <div class="hn__input"><span class="hn-typed"></span><span class="hn-caret" aria-hidden="true"></span><span class="hn__ph">Pedile algo a Nexus…</span><svg class="hn__send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div>
-            </div>
-          </div>
-        </div>
-      </div>
-'''
+# El hero ya no es una ventana: lo genera scripts/gen_nexus_escenas.py
+# con objetos sueltos (2026-10-20).
+HERO = '      <!-- ver scripts/gen_nexus_escenas.py -->\n'
 
 # ───────────────── Capítulos ─────────────────
 CH = []

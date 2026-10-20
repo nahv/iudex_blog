@@ -108,10 +108,87 @@
     medir();
   }
 
-  // Para los capítulos que vienen (F2/F3).
-  window.IudexEscena = { split, tipear, escribir, partesDe, alVerse, linea, sleep };
+  /* ---------- Escenas fijadas que se recorren con el scroll ----------
+     `.nx-escena` mide varias pantallas; adentro, `.nx-escena__fija` queda
+     fija. Mientras se baja se escribe en la escena:
+       --p     avance total 0..1
+       --bp    avance dentro del paso actual 0..1
+       data-beat = paso actual (0..n-1, n = data-pasos)
+     y en cada `[data-desde]` (umbral 0..1) se pone `is-on` cuando --p lo
+     pasa. `[data-tipeo]` muestra su texto en proporción a su tramo
+     (`data-tipeo="desde hasta"`). Todo se puede volver para atrás. */
+  function escena(el) {
+    const pasos = Math.max(1, parseInt(el.dataset.pasos || '1', 10));
+    const umbrales = [...el.querySelectorAll('[data-desde]')].map((n) => [n, parseFloat(n.dataset.desde)]);
+    const tipeos = [...el.querySelectorAll('[data-tipeo]')].map((n) => {
+      const [a, b] = n.dataset.tipeo.split(' ').map(parseFloat);
+      return { n, a, b, texto: n.textContent, mostrado: -1 };
+    });
+    const textosPaso = [...el.querySelectorAll('[data-paso-texto]')];
+    // `data-estados="a:0 b:.4 c:.8"`: el último cuyo umbral ya pasó.
+    const estados = [...el.querySelectorAll('[data-estados]')].map((n) => ({
+      n,
+      lista: n.dataset.estados.trim().split(/\s+/).map((x) => {
+        const [nombre, u] = x.split(':');
+        return [nombre, parseFloat(u)];
+      }),
+    }));
+    const pasosLinea = [...el.querySelectorAll('.nx-pasos')];
+    let ultimoBeat = -1;
+    const medir = () => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      const total = el.offsetHeight - vh;
+      const p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1;
+      const f = Math.min(pasos - 0.0001, p * pasos);
+      const beat = Math.floor(f);
+      el.style.setProperty('--p', p.toFixed(4));
+      pasosLinea.forEach((l) => l.style.setProperty('--p', p.toFixed(4)));
+      el.style.setProperty('--bp', (f - beat).toFixed(4));
+      if (beat !== ultimoBeat) {
+        ultimoBeat = beat;
+        el.dataset.beat = String(beat);
+        textosPaso.forEach((t) => {
+          const i = parseInt(t.dataset.pasoTexto, 10);
+          t.classList.toggle('is-on', i === beat);
+          t.classList.toggle('is-past', i < beat);
+        });
+      }
+      for (const [n, u] of umbrales) n.classList.toggle('is-on', p >= u);
+      for (const { n, lista } of estados) {
+        let actual = lista[0][0];
+        for (const [nombre, u] of lista) if (p >= u) actual = nombre;
+        if (n.dataset.estado !== actual) n.dataset.estado = actual;
+      }
+      for (const t of tipeos) {
+        const k = Math.min(1, Math.max(0, (p - t.a) / (t.b - t.a)));
+        const cuantos = Math.round(t.texto.length * k);
+        if (cuantos !== t.mostrado) {
+          t.mostrado = cuantos;
+          t.n.textContent = t.texto.slice(0, cuantos);
+        }
+        t.n.classList.toggle('is-tipeando', cuantos > 0 && cuantos < t.texto.length);
+      }
+    };
+    return medir;
+  }
+
+  // Para los capítulos que vienen (F3).
+  window.IudexEscena = { split, tipear, escribir, partesDe, alVerse, linea, escena, sleep };
 
   if (!conMovimiento) return;
+
+  // Las escenas sólo se fijan con movimiento: sin él, la página las muestra
+  // terminadas y en su altura natural (ver .motion .nx-escena en el CSS).
+  const escenas = [...document.querySelectorAll('.nx-escena')].map(escena);
+  if (escenas.length) {
+    let pedidoEscenas = false;
+    const todas = () => { pedidoEscenas = false; escenas.forEach((m) => m()); };
+    const pedir = () => { if (!pedidoEscenas) { pedidoEscenas = true; requestAnimationFrame(todas); } };
+    addEventListener('scroll', pedir, { passive: true });
+    addEventListener('resize', pedir);
+    todas();
+  }
 
   document.querySelectorAll('[data-split]').forEach(split);
   fuentes.then(() => requestAnimationFrame(() => {
@@ -120,47 +197,55 @@
   document.querySelectorAll('[data-linea]').forEach(linea);
 
   /* ---------- El hero: «Pedíselo a Nexus.» ----------
-     0 compositor vacío · 1 se tipea el pedido · 2 sale la burbuja y piensa
-     · 3 responde con las citas · 4 caen las tarjetas · 5 la primera queda
-     lista. Al terminar se saca `data-paso` y queda el estado final. */
-  const hn = document.querySelector('.c-hero .hn');
-  if (hn) {
-    const q = hn.querySelector('.hn-q');
-    const a = hn.querySelector('.hn-a');
-    const typed = hn.querySelector('.hn-typed');
-    const pedido = q.textContent;
-    const respuesta = partesDe(a);
+     0 nada · 1 se escribe el pedido · 2 Nexus piensa (el orbe acelera)
+     · 3 responde con las citas · 4 caen las tres tarjetas · 5 la primera
+     se confirma («Enviando…»). Al terminar se saca `data-paso` y queda el
+     estado final: la primera tarjeta «Hecho». */
+  const hero = document.querySelector('.nx-hero');
+  if (hero) {
+    const pedido = hero.querySelector('.nx-hero__pedido');
+    const resp = hero.querySelector('.nx-hero__resp');
+    const t0 = hero.querySelector('.nx-hero__t0');
+    const textoPedido = pedido.textContent;
+    const respuesta = partesDe(resp);
     let corrida = 0;
-    const paso = (n) => { hn.dataset.paso = String(n); };
+    const paso = (n) => { hero.dataset.paso = String(n); };
 
     const jugar = async () => {
       const id = ++corrida;
       const vivo = () => id === corrida;
       paso(0);
-      typed.textContent = '';
+      t0.dataset.estado = 'pendiente';
+      pedido.textContent = '';
       await fuentes;
-      await sleep(600);
+      await sleep(500);
       if (!vivo()) return;
       paso(1);
-      if (!(await tipear(typed, pedido, vivo))) return;
-      await sleep(320);
+      if (!(await tipear(pedido, textoPedido, vivo, 22, 46))) return;
+      await sleep(300);
       if (!vivo()) return;
-      typed.textContent = '';
       paso(2);
-      await sleep(1100);
+      await sleep(1400);
       if (!vivo()) return;
       paso(3);
-      if (!(await escribir(a, respuesta, vivo))) return;
-      await sleep(260);
+      if (!(await escribir(resp, respuesta, vivo))) return;
+      await sleep(300);
       if (!vivo()) return;
       paso(4);
-      await sleep(1500);
+      await sleep(1600);
+      if (!vivo()) return;
+      t0.dataset.estado = 'pulsado';
+      await sleep(160);
       if (!vivo()) return;
       paso(5);
-      await sleep(900);
-      if (vivo()) delete hn.dataset.paso;
+      t0.dataset.estado = 'enviando';
+      await sleep(1100);
+      if (!vivo()) return;
+      t0.dataset.estado = 'hecho';
+      delete hero.dataset.paso;
     };
     paso(0);
+    t0.dataset.estado = 'pendiente';
     jugar();
   }
 })();

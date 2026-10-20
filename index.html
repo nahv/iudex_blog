@@ -21,6 +21,7 @@
   <link rel="canonical" href="https://iudex.com.ar/" />
   <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion');</script>
   <link rel="stylesheet" href="public/css/styles.css" />
+  <link rel="stylesheet" href="public/css/nexus-objetos.css" />
   <link rel="icon" type="image/png" href="assets/icon.png" />
 </head>
 <body class="cinematic">
@@ -74,97 +75,38 @@
     </div>
 
     <div class="c-hero__stage">
-      <!-- Las ventanas de profundidad son MOCKS dibujados contra la app real,
-           no capturas. Antes eran PNG del escritorio y se les veía la barra de
-           macOS justo debajo de un titular que promete el navegador. Además,
-           dibujadas no envejecen con cada deploy. -->
-      <div class="c-window c-window--back" aria-hidden="true">
-        <div class="app">
-          <div class="app__rail">
-            <div class="app__brand">Iudex</div>
-            <div class="app__studio">Estudio Vallejos</div>
-            <div class="app__nav app__nav--inicio"><i></i>Inicio</div>
-            <div class="app__nav app__nav--tareas"><i></i>Tareas</div>
-            <div class="app__nav app__nav--nexus"><i></i>Nexus</div>
-            <div class="app__nav app__nav--clientes"><i></i>Clientes</div>
-            <div class="app__nav app__nav--expedientes is-on"><i></i>Expedientes</div>
-            <div class="app__nav app__nav--agenda"><i></i>Agenda</div>
-            <div class="app__nav app__nav--calculadora"><i></i>Calculadora</div>
-          </div>
-          <div class="app__main">
-            <div class="app__head">
-              <h4 class="app__title">Tus causas</h4>
-              <div class="app__tools"><span class="app__search">Buscar <b>⌘K</b></span><span class="app__avatar">A</span></div>
-            </div>
-            <div class="app__add"><i></i><span>Nueva causa… 12345/2024 Sucesión s/ Ab intestato (Enter)</span><u>→</u></div>
-            <div class="app__rows">
-              <div class="app__row"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Accidente Ley 24.557<span class="app__row-sub">Juzgado del Trabajo N° 1</span></b><span class="app__tag">activo</span></div>
-              <div class="app__row"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Despido<span class="app__row-sub">Juzgado del Trabajo N° 2</span></b><span class="app__tag">activo</span></div>
-              <div class="app__row"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Alimentos<span class="app__row-sub">Juzgado de Familia N° 1</span></b><span class="app__tag app__tag--gold">urgente</span></div>
-              <div class="app__row"><b>PARTE ACTORA c/ PARTE DEMANDADA s/ Amparo<span class="app__row-sub">Cámara Contencioso Administrativo</span></b><span class="app__tag">activo</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="c-window c-window--mid" aria-hidden="true">
-        <div class="app">
-          <div class="app__rail">
-            <div class="app__brand">Iudex</div>
-            <div class="app__studio">Estudio Vallejos</div>
-            <div class="app__nav app__nav--inicio"><i></i>Inicio</div>
-            <div class="app__nav app__nav--tareas"><i></i>Tareas</div>
-            <div class="app__nav app__nav--nexus"><i></i>Nexus</div>
-            <div class="app__nav app__nav--clientes"><i></i>Clientes</div>
-            <div class="app__nav app__nav--expedientes"><i></i>Expedientes</div>
-            <div class="app__nav app__nav--agenda is-on"><i></i>Agenda</div>
-            <div class="app__nav app__nav--calculadora"><i></i>Calculadora</div>
-          </div>
-          <div class="app__main">
-            <div class="app__head">
-              <h4 class="app__title">Tu agenda</h4>
-              <div class="app__tools"><span class="app__segs"><span>Lista</span><span>Semana</span><span class="is-on">Mes</span></span></div>
-            </div>
-            <div class="app__add"><i></i><span>Agendá natural… audiencia mañana 10hs (Enter)</span><u>→</u></div>
-            <div class="app__cal">
-              <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
-              <div>1</div><div class="tiene">2</div><div>3</div><div>4</div><div class="tiene">5</div><div>6</div><div>7</div>
-              <div>8</div><div class="is-hoy">9</div><div>10</div><div class="tiene">11</div><div>12</div><div>13</div><div>14</div>
-              <div>15</div><div>16</div><div class="tiene">17</div><div>18</div><div>19</div><div>20</div><div>21</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="c-window c-window--front" role="img" aria-label="Nexus en Iudex, con una causa abierta. Se le pide contestar el traslado y practicar la planilla; responde citando la resolución y el escrito de la causa y deja armados el escrito, la planilla y la tarea, cada uno para confirmar.">
-        <div class="hn">
-          <div class="app">
-            <div class="app__rail">
-<div class="app__brand">Iudex</div>
-<div class="app__studio">Estudio Vallejos</div>
-<div class="app__nav app__nav--inicio"><i></i>Inicio</div>
-<div class="app__nav app__nav--agenda"><i></i>Agenda</div>
-<div class="app__nav app__nav--expedientes"><i></i>Expedientes</div>
-<div class="app__nav app__nav--calculadora"><i></i>Calculadora</div>
-<div class="app__nav app__nav--tareas"><i></i>Plantillas</div>
-<div class="app__nav app__nav--nexus is-on"><i></i>Nexus</div>
-<div class="app__nav app__nav--clientes"><i></i>Clientes</div>
+      <!-- Objetos sueltos de Iudex, no ventanas (2026-10-20). Los genera
+           scripts/gen_nexus_escenas.py. -->
+      <!-- nexus:hero -->
+<div class="nx-hero" role="img" aria-label="Nexus con una causa abierta. Se le pide contestar el traslado y practicar la planilla; responde citando dos papeles de la causa y deja tres tarjetas para confirmar: el escrito, la tarea y la liquidación. El escrito ya está confirmado.">
+  <div class="ob-orbe-g nx-hero__orbe" style="--s:260px" aria-hidden="true"><i class="ob-orbe-g__glow"></i><i class="ob-orbe-g__aurora"></i><i class="ob-orbe-g__nucleo"></i><i class="ob-orbe-g__nodos"><b></b><b></b><b></b><b></b></i></div>
+  <div class="nx-hero__col ob-escala">
+    <div class="ob ob-burbuja nx-hero__pedido">Contestá el traslado del 12/09 y practicá planilla desde el 14/08/2025.</div>
+    <div class="ob ob-pensando nx-hero__pensando"><div class="ob-orbe-g is-busca" style="--s:46px" aria-hidden="true"><i class="ob-orbe-g__glow"></i><i class="ob-orbe-g__aurora"></i><i class="ob-orbe-g__nucleo"></i><i class="ob-orbe-g__nodos"><b></b><b></b><b></b><b></b></i></div><span>Leyendo la causa…</span></div>
+    <p class="ob ob-respuesta nx-hero__resp">Te lo dejo armado con la resolución <span class="ob-cita"><b>1</b><span class="ob-cita__l">Traslado de la demanda</span><span class="ob-cita__u">12/09</span><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span> y tu escrito <span class="ob-cita"><b>2</b><span class="ob-cita__l">Promueve ejecución</span><span class="ob-cita__u">14/08</span><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span>. Revisalo y confirmá.</p>
+    <div class="nx-hero__tarjetas">
+      <div class="ob ob-tarjeta nx-hero__t0" data-estado="hecho" style="--i:0">
+  <div class="ob-tarjeta__cab"><span class="ob-etiqueta">Preparar escrito</span><b class="ob-tarjeta__t">Contesta traslado</b><span class="ob-pill ob-pill--pendiente">Por confirmar</span><span class="ob-pill ob-pill--enviando">Enviando…</span><span class="ob-pill ob-pill--hecho">Hecho</span><span class="ob-tarjeta__chev"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+  <div class="ob-tarjeta__cuerpo"><ol class="ob-pasos"><li><span class="ob-pasos__n"><b>1</b><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Movimiento «Contesta traslado» del 12/09</span></li><li><span class="ob-pasos__n"><b>2</b><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Redactar el escrito desde tu plantilla</span></li><li><span class="ob-pasos__n"><b>3</b><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Firmarlo con tu firma</span></li></ol></div>
+  <div class="ob-tarjeta__envio"><i class="ob-spin"></i>Guardando…</div>
+  <div class="ob-tarjeta__acciones"><span class="ob-acc ob-acc--pend"><span class="ob-btn ob-btn--lleno">Confirmar</span><span class="ob-btn ob-btn--borde">Editar</span><span class="ob-btn ob-btn--peligro">Cancelar</span></span><span class="ob-acc ob-acc--hecho"><span class="ob-btn ob-btn--borde">Abrir</span></span></div>
 </div>
-            <div class="app__main hn__main">
-              <div class="hn__head"><span class="hn__orb" aria-hidden="true"></span><b>Nexus</b><span class="hn__causa"><i class="ml-ic ml-ic--folder"></i>48583/12 · PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios</span></div>
-              <div class="hn__chat">
-                <div class="hn-q">Contestá el traslado del 12/09 y practicá planilla desde el 14/08.</div>
-                <div class="hn-dots" aria-hidden="true"><i></i><i></i><i></i></div>
-                <p class="hn-a">Te lo dejo armado con la resolución <span class="hn-cite">Resolución · 12/09</span> y tu escrito <span class="hn-cite">Escrito · 14/08</span>. Revisalo y confirmá.</p>
-                <div class="hn-cards">
-                  <div class="hn-card hn-card--ok" style="--i:0"><span class="hn-card__k">Escrito</span><b class="hn-card__t">Contesta traslado</b><span class="hn-card__d">Desde tu plantilla · carátula y juzgado puestos</span><span class="hn-card__st"><span class="hn-card__ok">✓ Listo</span><span class="hn-card__btns"><u>Editar</u><em>Confirmar</em></span></span></div>
-                  <div class="hn-card" style="--i:1"><span class="hn-card__k">Planilla</span><b class="hn-card__t">Capital e intereses</b><span class="hn-card__d">14/08/2026 a hoy · tasa activa del BNA</span><span class="hn-card__st"><span class="hn-card__btns"><u>Editar</u><em>Confirmar</em></span></span></div>
-                  <div class="hn-card" style="--i:2"><span class="hn-card__k">Tarea</span><b class="hn-card__t">Presentar la contestación</b><span class="hn-card__d">Vence el 19/09 · en el movimiento del 12/09</span><span class="hn-card__st"><span class="hn-card__btns"><u>Editar</u><em>Confirmar</em></span></span></div>
-                </div>
-              </div>
-              <div class="hn__input"><span class="hn-typed"></span><span class="hn-caret" aria-hidden="true"></span><span class="hn__ph">Pedile algo a Nexus…</span><svg class="hn__send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="ob ob-tarjeta is-plegada" data-estado="pendiente" style="--i:1">
+  <div class="ob-tarjeta__cab"><span class="ob-etiqueta">Crear tarea</span><b class="ob-tarjeta__t">Presentar la contestación</b><span class="ob-pill ob-pill--pendiente">Por confirmar</span><span class="ob-pill ob-pill--enviando">Enviando…</span><span class="ob-pill ob-pill--hecho">Hecho</span><span class="ob-tarjeta__chev"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+  <div class="ob-tarjeta__resumen">vos (Lucía Ferreyra) · vie 18/09/2026 18:00</div>
+  <div class="ob-tarjeta__envio"><i class="ob-spin"></i>Guardando…</div>
+  <div class="ob-tarjeta__acciones"><span class="ob-acc ob-acc--pend"><span class="ob-btn ob-btn--lleno">Confirmar</span><span class="ob-btn ob-btn--borde">Editar</span><span class="ob-btn ob-btn--peligro">Cancelar</span></span><span class="ob-acc ob-acc--hecho"><span class="ob-btn ob-btn--borde">Abrir</span></span></div>
+</div>
+      <div class="ob ob-tarjeta is-plegada" data-estado="pendiente" style="--i:2">
+  <div class="ob-tarjeta__cab"><span class="ob-etiqueta">Liquidación</span><b class="ob-tarjeta__t">$ 1.500.000,00</b><span class="ob-pill ob-pill--pendiente">Por confirmar</span><span class="ob-pill ob-pill--enviando">Enviando…</span><span class="ob-pill ob-pill--hecho">Hecho</span><span class="ob-tarjeta__chev"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+  <div class="ob-tarjeta__resumen">Total $ 2.159.758,50 · 432 días · Tasa Activa Banco Nación</div>
+  <div class="ob-tarjeta__envio"><i class="ob-spin"></i>Guardando…</div>
+  <div class="ob-tarjeta__acciones"><span class="ob-acc ob-acc--pend"><span class="ob-btn ob-btn--lleno">Confirmar</span><span class="ob-btn ob-btn--borde">Editar</span><span class="ob-btn ob-btn--peligro">Cancelar</span></span><span class="ob-acc ob-acc--hecho"><span class="ob-btn ob-btn--borde">Abrir</span></span></div>
+</div>
+    </div>
+  </div>
+</div>
+<!-- /nexus:hero -->
     </div>
   </div>
 
@@ -173,6 +115,153 @@
     <span>Seguir</span>
   </div>
 </section>
+
+<!-- ===========================================================
+     NEXUS AL FRENTE — escenas con objetos de la app, fijadas y recorridas
+     con el scroll (nexus-escena.js). Las genera gen_nexus_escenas.py.
+     =========================================================== -->
+<!-- nexus:escenas -->
+<section class="nx-escena nx-escena--a" id="asi-trabaja" data-pasos="4" style="--alto:420vh" aria-labelledby="asi-trabaja-t">
+  <div class="nx-escena__fija">
+    <div class="nx-escena__grid">
+      <div class="nx-escena__copy">
+        <span class="c-eyebrow">Así trabaja Nexus</span>
+        <h2 id="asi-trabaja-t" class="c-display nx-escena__t">Pedís. Nexus lo arma. Vos confirmás.</h2>
+        
+        <ol class="nx-pasos"><li data-paso-texto="0"><b>Pedís.</b><span>Con tus palabras, escrito o dictado, desde la causa abierta.</span></li><li data-paso-texto="1"><b>Nexus revisa la causa.</b><span>Lee las actuaciones y busca en tus causas.</span></li><li data-paso-texto="2"><b>Te lo deja para confirmar.</b><span>Confirmar, Editar o Cancelar. Nada se hace solo.</span></li><li data-paso-texto="3"><b>Queda hecho.</b><span>En la causa, con fecha y con quién lo hizo.</span></li></ol>
+      </div>
+      <div class="nx-escena__stage">
+        <div class="ob-orbe-g nx-a__orbe" style="--s:300px" data-estado="fuera" data-estados="quieto:0 busca:.27 fuera:.52" aria-hidden="true"><i class="ob-orbe-g__glow"></i><i class="ob-orbe-g__aurora"></i><i class="ob-orbe-g__nucleo"></i><i class="ob-orbe-g__nodos"><b></b><b></b><b></b><b></b></i></div>
+        <div class="nx-chat ob-escala">
+          <div class="ob ob-burbuja ob-recede" data-desde=".26">Creá la tarea de contestar el traslado para el viernes</div>
+          <div class="ob ob-progreso ob-recede" data-estado="plegado" data-estados="oculto:0 abierto:.28 plegado:.52">
+            <div class="ob-progreso__lista">
+              <div class="ob-fase" data-estado="ok" data-estados="oculto:0 ok:.29">Revisando el expediente</div>
+              <div class="ob-fila" data-estado="hecho" data-estados="oculto:0 corre:.30 hecho:.37"><span class="ob-ind"><i class="ob-spin"></i><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Leyendo la causa<em> — 12 actuaciones</em></span></div>
+              <div class="ob-fase" data-estado="ok" data-estados="oculto:0 ok:.38">En tus causas</div>
+              <div class="ob-fila" data-estado="hecho" data-estados="oculto:0 corre:.39 hecho:.46"><span class="ob-ind"><i class="ob-spin"></i><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Buscando quién la lleva<em> — 2 responsables</em></span></div>
+            </div>
+            <div class="ob-progreso__resumen"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>1 paso en el expediente · 1 consulta a tus causas</span><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <p class="ob ob-respuesta" data-desde=".53">Te dejo la tarea para que la confirmes.<span class="ob-respuesta__listo" data-desde=".89"> Listo: creé la tarea «Contestar el traslado».</span></p>
+          <div class="nx-a__tarjeta">
+            <div class="ob ob-tarjeta" data-estado="hecho" data-estados="oculto:0 pendiente:.56 pulsado:.79 enviando:.81 hecho:.88" style="--i:0">
+  <div class="ob-tarjeta__cab"><span class="ob-etiqueta">Crear tarea</span><b class="ob-tarjeta__t">Contestar el traslado</b><span class="ob-pill ob-pill--pendiente">Por confirmar</span><span class="ob-pill ob-pill--enviando">Enviando…</span><span class="ob-pill ob-pill--hecho">Hecho</span><span class="ob-tarjeta__chev"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+  <div class="ob-tarjeta__cuerpo"><div class="ob-filas"><span class="ob-filas__k">Responsable</span><span class="ob-filas__v">vos (Lucía Ferreyra)</span><span class="ob-filas__k">Vence</span><span class="ob-filas__v ob-mono">vie 23/10/2026 18:00</span><span class="ob-filas__k">Causa</span><span class="ob-filas__v">MARTÍNEZ, ANA c/ SEGUROS DEL SUR s/ DAÑOS</span></div></div>
+  <div class="ob-tarjeta__envio"><i class="ob-spin"></i>Creando la tarea…</div>
+  <div class="ob-tarjeta__acciones"><span class="ob-acc ob-acc--pend"><span class="ob-btn ob-btn--lleno">Confirmar</span><span class="ob-btn ob-btn--borde">Editar</span><span class="ob-btn ob-btn--peligro">Cancelar</span></span><span class="ob-acc ob-acc--hecho"><span class="ob-btn ob-btn--borde">Abrir</span></span></div>
+</div>
+            <span class="ob-cursor" data-estado="fuera" data-estados="oculto:0 va:.74 clic:.79 fuera:.805"><svg class="ob-cursor__svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 9-6 1.5L16 20l-2.5 1-3-6.5L6 18z" fill="#0f0f0e" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="ob ob-compositor" data-estado="vacio" data-estados="vacio:0 escribe:.02 vacio:.26">
+  <div class="ob-compositor__campo"><span class="ob-compositor__texto" data-tipeo=".03 .2">Creá la tarea de contestar el traslado para el viernes</span><i class="ob-caret"></i><span class="ob-compositor__ph">Pedile algo sobre esta causa…</span></div>
+  <div class="ob-compositor__barra"><span class="ob-cbtn ob-cbtn--adj"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span class="ob-compositor__sp"></span><span class="ob-cbtn"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V7a3 3 0 0 0-3-3zM6 11a6 6 0 0 0 12 0M12 17v3"/></svg></span><span class="ob-cbtn ob-cbtn--enviar"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span></div>
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nx-escena nx-escena--b" id="cap-nexus-escrito" data-pasos="3" style="--alto:380vh" aria-labelledby="cap-nexus-escrito-t">
+  <div class="nx-escena__fija">
+    <div class="nx-escena__grid">
+      <div class="nx-escena__copy">
+        <span class="c-eyebrow">I · Escritos</span>
+        <h2 id="cap-nexus-escrito-t" class="c-display nx-escena__t">Del pedido al escrito.</h2>
+        
+        <ol class="nx-pasos"><li data-paso-texto="0"><b>Contale qué necesitás.</b><span>Si no sabe en qué causa, te pregunta.</span></li><li data-paso-texto="1"><b>Te propone el plan.</b><span>Crear la causa, el movimiento y el escrito. Lo confirmás una vez.</span></li><li data-paso-texto="2"><b>Lo escribe en tu editor.</b><span>Párrafo por párrafo, con tu firma al pie. Lo podés detener.</span></li></ol>
+      </div>
+      <div class="nx-escena__stage">
+        <div class="nx-chat ob-escala ob-recede-b">
+          <div class="ob ob-burbuja" data-desde=".02">Haceme una demanda de daños por un choque, contra Seguros del Sur</div>
+          <div class="nx-b__slot">
+            <div class="nx-b__opciones" data-estado="fuera" data-estados="oculto:0 ver:.08 elegida:.18 fuera:.25">
+              <p class="ob ob-respuesta">Encontré varias causas que pueden ser. ¿En cuál lo hago?</p>
+              <div class="ob-opciones">
+                <div class="ob-opcion"><span class="ob-opcion__n">1</span><span>Martínez c/ Paz · 2210/25</span></div>
+                <div class="ob-opcion"><span class="ob-opcion__n">2</span><span>Martínez, Ana s/ sucesión · 87/24</span></div>
+                <div class="ob-opcion ob-opcion--crear"><span class="ob-opcion__n"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span>Crear expediente nuevo</span></div>
+              </div>
+            </div>
+            <div class="nx-b__plan">
+              <p class="ob ob-respuesta" data-desde=".26">No encontré esa causa. Te propongo crearla y redactar ahí la demanda.</p>
+              <div class="ob ob-tarjeta" data-estado="hecho" data-estados="oculto:0 pendiente:.29 pulsado:.37 enviando:.39 hecho:.58" style="--i:0">
+  <div class="ob-tarjeta__cab"><span class="ob-etiqueta">Preparar escrito</span><b class="ob-tarjeta__t">MARTÍNEZ, ANA C/ SEGUROS DEL SUR S/ DAÑOS Y PERJUICIOS</b><span class="ob-pill ob-pill--pendiente">Por confirmar</span><span class="ob-pill ob-pill--enviando">Enviando…</span><span class="ob-pill ob-pill--hecho">Hecho</span><span class="ob-tarjeta__chev"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+  <div class="ob-tarjeta__cuerpo"><ol class="ob-pasos"><li data-estado="ok" data-estados="num:0 ok:.44"><span class="ob-pasos__n"><b>1</b><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Crear el expediente MARTÍNEZ, ANA C/ SEGUROS DEL SUR S/ DAÑOS Y PERJUICIOS (S/N, sin juzgado)</span></li><li data-estado="ok" data-estados="num:0 ok:.5"><span class="ob-pasos__n"><b>2</b><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Movimiento «Redactar demanda de daños y perjuicios»</span></li><li data-estado="ok" data-estados="num:0 ok:.56"><span class="ob-pasos__n"><b>3</b><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Redactar la demanda en el editor</span></li></ol></div>
+  <div class="ob-tarjeta__envio"><i class="ob-spin"></i>Guardando…</div>
+  <div class="ob-tarjeta__acciones"><span class="ob-acc ob-acc--pend"><span class="ob-btn ob-btn--lleno">Confirmar</span><span class="ob-btn ob-btn--borde">Editar</span><span class="ob-btn ob-btn--peligro">Cancelar</span></span><span class="ob-acc ob-acc--hecho"><span class="ob-btn ob-btn--borde">Abrir el escrito</span></span></div>
+</div>
+            </div>
+          </div>
+        </div>
+        <div class="nx-b__hoja" data-estado="entra" data-estados="oculto:0 entra:.64">
+          <div class="ob ob-pildora-esc" data-estado="fin" data-estados="oculto:0 p1:.66 p2:.76 p3:.86 fin:.96"><span class="ob-orbe is-trabajando" style="--s:14px" aria-hidden="true"><i class="ob-orbe__nucleo"></i><i class="ob-orbe__orbita"><b></b><b></b><b></b></i></span><span>Nexus está escribiendo · <b class="ob-n1">1</b><b class="ob-n2">2</b><b class="ob-n3">3</b> de 3</span><span class="ob-pildora-esc__det">Detener</span></div>
+          <div class="ob ob-a4">
+            <div class="ob-a4__regla" aria-hidden="true"></div>
+            <div class="ob-a4__pag">
+              <p data-tipeo=".66 .68">Señor Juez:</p>
+              <p data-tipeo=".68 .76">LUCÍA FERREYRA, abogada, M.P. 5.812, por la parte actora, en los autos «MARTÍNEZ, ANA c/ SEGUROS DEL SUR s/ DAÑOS Y PERJUICIOS», respetuosamente digo:</p>
+              <p class="ob-a4__h" data-tipeo=".76 .77">I. OBJETO</p>
+              <p data-tipeo=".77 .86">Que vengo a promover demanda de daños y perjuicios contra SEGUROS DEL SUR S.A. por el choque del 14/08/2025, con costas.</p>
+              <p class="ob-a4__h" data-tipeo=".86 .87">II. PETITORIO</p>
+              <p data-tipeo=".87 .93">Se tenga por promovida la demanda y se corra traslado. SERÁ JUSTICIA.</p>
+              <div class="ob-a4__firma" data-desde=".94"><i>Firmado electrónicamente por</i><b>Dra. Lucía Ferreyra</b><span>Abogada · M.P. 5.812</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nx-escena nx-escena--c" id="cap-nexus-fuente" data-pasos="3" style="--alto:380vh" aria-labelledby="cap-nexus-fuente-t">
+  <div class="nx-escena__fija">
+    <div class="nx-escena__grid">
+      <div class="nx-escena__copy">
+        <span class="c-eyebrow">II · Fuentes</span>
+        <h2 id="cap-nexus-fuente-t" class="c-display nx-escena__t">Con la fuente al lado.</h2>
+        <p class="nx-escena__sub">Más de 80.000 fallos y la legislación, citados en cada respuesta.</p>
+        <ol class="nx-pasos"><li data-paso-texto="0"><b>Preguntá como a un colega.</b><span>Nexus busca, lee y compara antes de contestar.</span></li><li data-paso-texto="1"><b>Cada dato, con su cita.</b><span>Cada chip es un fallo o una norma que podés abrir.</span></li><li data-paso-texto="2"><b>El fallo, a un toque.</b><span>La cita con su página y el PDF original.</span></li></ol>
+      </div>
+      <div class="nx-escena__stage">
+        <div class="ob-orbe-g nx-c__orbe" style="--s:240px" data-estado="fuera" data-estados="oculto:0 busca:.12 fuera:.33" aria-hidden="true"><i class="ob-orbe-g__glow"></i><i class="ob-orbe-g__aurora"></i><i class="ob-orbe-g__nucleo"></i><i class="ob-orbe-g__nodos"><b></b><b></b><b></b><b></b></i></div>
+        <div class="nx-chat ob-escala ob-recede">
+          <div class="ob ob-burbuja" data-desde=".03">¿Desde cuándo corren los intereses en un accidente de tránsito?</div>
+          <div class="ob ob-pensando nx-c__pensando" data-estado="fuera" data-estados="oculto:0 f1:.12 f2:.19 f3:.26 fuera:.33"><div class="ob-orbe-g is-busca" style="--s:46px" aria-hidden="true"><i class="ob-orbe-g__glow"></i><i class="ob-orbe-g__aurora"></i><i class="ob-orbe-g__nucleo"></i><i class="ob-orbe-g__nodos"><b></b><b></b><b></b><b></b></i></div><span class="ob-frase ob-frase--f1">Buscando jurisprudencia aplicable…</span><span class="ob-frase ob-frase--f2">Leyendo el fallo en detalle…</span><span class="ob-frase ob-frase--f3">Comparando fallos similares…</span></div>
+          <div class="ob ob-progreso" data-estado="plegado" data-estados="oculto:0 plegado:.34"><div class="ob-progreso__resumen"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>2 búsquedas · 1 lectura</span><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div></div>
+          <p class="ob ob-respuesta"><span data-tipeo=".35 .41">Desde el día del hecho. Las cámaras civiles cuentan los intereses desde que se produjo el daño </span><span class="ob-cita" data-desde=".41"><b>1</b><span class="ob-cita__l">Romero</span><span class="ob-cita__u">p. 4</span><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span><span data-tipeo=".42 .47">, con tasa activa hasta el pago </span><span class="ob-cita" data-desde=".47"><b>2</b><span class="ob-cita__l">Acosta</span><span class="ob-cita__u">p. 7</span><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span><span data-tipeo=".48 .53">. Para el daño moral hay fallos que los cuentan desde la sentencia </span><span class="ob-cita" data-desde=".53"><b>3</b><span class="ob-cita__l">Benítez</span><span class="ob-cita__u">p. 2</span><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span><span data-tipeo=".54 .55">.</span></p>
+        </div>
+        <div class="nx-c__fuentes ob-escala">
+          <span class="nx-c__cab" data-desde=".42">Fuentes</span>
+          <div class="ob ob-fuente nx-c__f1" data-desde=".42">
+  <div class="ob-fuente__top"><span class="ob-badge">1</span><b>Romero, Juan c/ Transportes del Litoral s/ daños y perjuicios</b></div>
+  <p class="ob-fuente__s">…los intereses se devengan desde el día del hecho, momento en que se produjo el perjuicio…</p>
+  <div class="ob-fuente__meta"><span>Fallo · p. 4 · Civil</span><span class="ob-fuente__pdf"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7zM14 3v5h5M9.5 14h5M9.5 17h3"/></svg>Ver PDF original</span></div>
+</div>
+          <div class="ob ob-fuente nx-c__f2" data-desde=".48">
+  <div class="ob-fuente__top"><span class="ob-badge">2</span><b>Acosta, Marta c/ Gutiérrez, Pablo s/ daños</b></div>
+  <p class="ob-fuente__s">…se aplicará la tasa activa desde la mora y hasta el efectivo pago…</p>
+  <div class="ob-fuente__meta"><span>Fallo · p. 7 · Civil</span><span class="ob-fuente__pdf"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7zM14 3v5h5M9.5 14h5M9.5 17h3"/></svg>Ver PDF original</span></div>
+</div>
+          <div class="ob ob-fuente nx-c__f3" data-desde=".54">
+  <div class="ob-fuente__top"><span class="ob-badge">3</span><b>Benítez c/ Expreso Mercedes s/ daños</b></div>
+  <p class="ob-fuente__s">…los intereses por daño moral corren desde la fecha de la sentencia…</p>
+  <div class="ob-fuente__meta"><span>Fallo · p. 2 · Civil</span><span class="ob-fuente__pdf"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7zM14 3v5h5M9.5 14h5M9.5 17h3"/></svg>Ver PDF original</span></div>
+</div>
+        </div>
+        <div class="ob ob-hojafuente nx-c__hoja" data-desde=".72">
+          <i class="ob-hojafuente__asa"></i>
+          <div class="ob-hojafuente__t"><b>1</b><span>Romero, Juan c/ Transportes del Litoral s/ daños y perjuicios</span></div>
+          <div class="ob-hojafuente__tipo">Fallo · p. 4</div>
+          <blockquote>«…los intereses se devengan desde el día del hecho, momento en que se produjo el perjuicio, y hasta su efectivo pago…»</blockquote>
+          <div class="ob-hojafuente__btns"><span class="ob-btn ob-btn--lleno"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7zM14 3v5h5M9.5 14h5M9.5 17h3"/></svg>Ver PDF</span><span class="ob-btn ob-btn--borde"><svg class="ob-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h10v11H9zM5 15V4h10"/></svg>Copiar cita</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /nexus:escenas -->
 
 <!-- ===========================================================
      CHAPTER BREADCRUMB — above-fold roadmap
@@ -701,11 +790,6 @@
 </div>
     </div>
   </div>
-</section>
-
-<section class="c-interstitial c-interstitial--nexus">
-  <h3 class="c-display">Y Nexus responde<br/>con la fuente al lado.</h3>
-  <p><a href="investigacion/index.html" class="c-link">Ver Nexus →</a></p>
 </section>
 
 <section class="c-interstitial">
