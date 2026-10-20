@@ -159,13 +159,6 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   box-shadow: 0 4px 32px rgba(15, 15, 14, 0.06);
 }
 
-/* Homepage cinematic intro: the navbar slides up out of view while the window
-   animates and slides back down once the hero settles, keeping focus on the
-   animation. Applies on mobile and desktop. State lives on <html> (set
-   pre-paint by an inline script and updated by main.js) because the navbar is
-   not a descendant of .c-hero. */
-html[data-hero-intro="play"] .navbar { opacity: 0; transform: translateY(-100%); pointer-events: none; }
-
 .navbar__inner {
   display: flex;
   align-items: center;
@@ -4514,44 +4507,11 @@ body.cinematic .navbar.scrolled {
 .hnx-caret { width: 1.5px; height: 13px; background: #1d4f7a; flex: none; animation: nx-blink 1s steps(1) infinite; }
 .hnx-send { width: 15px; height: 15px; flex: none; margin-left: auto; color: #1d4f7a; }
 
-/* ---- Cinematic intro: the conversation plays alone, front & centre, then
-   the window settles into the hero composition and the headline appears. JS
-   drives it (data-intro on .c-hero, data-shown per line). Without JS or under
-   reduced motion, everything is simply visible. ---- */
-.c-hero__copy { transition: opacity 0.9s var(--ease-cinema), transform 0.9s var(--ease-cinema); }
-.c-hero__stage { transition: transform 1.1s var(--ease-cinema); }
-.c-window--back, .c-window--mid { transition: opacity 0.9s var(--ease-cinema); }
-.c-hero[data-intro="play"] .c-hero__copy { opacity: 0; transform: translateY(14px); }
-/* During the intro the window plays ALONE and flat (back/mid hidden, front at
-   identity), so the stage's 3D context buys nothing here — but `perspective` +
-   `preserve-3d` force the subtree into an intermediate render surface that the
-   browser rasterizes at 1× and then resamples, softening the DOM mockup's text
-   on non-retina displays (the blur was the 3D flattening, not the zoom amount).
-   Flatten the context during play so the stage's plain 2D scale paints crisply
-   and re-rasters at the displayed size — which lets it be enlarged for impact
-   without going soft. The 3D depth returns the instant it settles. */
-.c-hero[data-intro="play"] .c-hero__stage {
-  perspective: none;
-  transform-style: flat;
-  transform: translateX(-26%) scale(1.40);
-}
-/* Desktop only: nudge the settled window group slightly right so the back
-   dashboard's dark nav rail sits clear of the headline column. Mobile keeps
-   the composition as-is. */
+/* Escritorio: el grupo de ventanas se corre un poco a la derecha para que el
+   rail de la ventana de atrás no pise la columna del titular. */
 @media (min-width: 980px) {
   .c-hero[data-intro="done"] .c-hero__stage { transform: translateX(5%); }
 }
-.c-hero[data-intro="play"] .c-window--back,
-.c-hero[data-intro="play"] .c-window--mid { opacity: 0; }
-/* Window faces straight (no z-axis tilt) during the intro, then settles into
-   its 3D depth as the hero composition assembles. */
-.c-hero[data-intro="play"] .c-window--front { transform: rotateY(0deg) rotateX(0deg) scale(1); }
-.c-hero[data-intro] .hnx-q,
-.c-hero[data-intro] .hnx-ln,
-.c-hero[data-intro] .hnx-cite { opacity: 0; transform: translateY(6px); }
-.c-hero[data-intro] .hnx-q[data-shown],
-.c-hero[data-intro] .hnx-ln[data-shown],
-.c-hero[data-intro] .hnx-cite[data-shown] { opacity: 1; transform: none; }
 
 /* Hero ambient backdrop (very restrained) */
 .c-hero__backdrop {
@@ -4588,9 +4548,6 @@ body.cinematic .navbar.scrolled {
   /* Appears after the headline when the intro settles (delay > copy reveal). */
   transition: opacity 0.8s var(--ease-cinema) 0.8s;
 }
-/* During the cinematic intro the scroll cue is hidden; it fades in after the
-   headline once the hero settles. (Desktop only — hidden on mobile anyway.) */
-.c-hero[data-intro="play"] .c-hero__hint { opacity: 0; transition-delay: 0s; }
 .c-hero__hint-line {
   width: 1px;
   height: 36px;
@@ -6998,22 +6955,6 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
      Hide it on mobile — desktop keeps it. */
   .c-hero__hint { display: none; }
 
-  /* Mobile cinematic intro — the desktop translateX/scale shoves the window
-     off-screen in a single column. Instead collapse the headline so the
-     conversation window rises and plays near centre, then expand it back to
-     reveal the headline (the window settles down as the copy grows). */
-  /* Keep the copy in flow (so there's no layout jump) but hidden; lift the
-     conversation window up to play centred, then glide it gently back to its
-     place while the headline fades in softly behind it. */
-  .c-hero[data-intro="play"] .c-hero__copy { opacity: 0; }
-  /* La ventana se centra en la pantalla mientras juega: el corrimiento lo
-     calcula el JS con la altura real (en teléfonos el -54vh fijo la dejaba
-     demasiado arriba, feedback 2026-09-21). */
-  .c-hero[data-intro="play"] .c-hero__stage { transform: translateY(var(--intro-shift, -54vh)) scale(1.02); }
-  .c-hero__stage { transition: transform 1.6s var(--ease-cinema); }
-  /* Headline fades in only once the window has glided down (delay ~= settle). */
-  .c-hero__copy { transition: opacity 0.9s ease 1.2s; }
-
   .c-chapter { min-height: auto; padding: 80px 0 64px; }
   /* Flatten the sticky/grid layout into a single flex column we can
      reorder. `display: contents` on the sub-containers makes their
@@ -8187,8 +8128,8 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 /* Altura fija: la ventana es un objeto, no una página; lo que no entra se
    recorta abajo (en la app se scrollea). */
 .ml-window .app { height: clamp(380px, 56vh, 500px); }
-.ml-window .app__main, .hx__main { position: relative; overflow: hidden; margin: 6px 6px 6px 0; padding: 14px 18px; border-radius: 12px; background: #fbfaf6; gap: 0; }
-.ml-window .app__title, .hx .app__title { font-size: 14px; font-weight: 300; line-height: 1.25; letter-spacing: -0.01em; }
+.ml-window .app__main { position: relative; overflow: hidden; margin: 6px 6px 6px 0; padding: 14px 18px; border-radius: 12px; background: #fbfaf6; gap: 0; }
+.ml-window .app__title { font-size: 14px; font-weight: 300; line-height: 1.25; letter-spacing: -0.01em; }
 .app__head { margin-bottom: 8px; }
 
 /* Piezas comunes */
@@ -8501,42 +8442,6 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 .c-interstitial--nexus .c-link:hover { border-bottom-color: var(--ink); }
 
 /* ===========================================================
-   HERO — la escena «de la causa al escrito» (self-running).
-   `data-step` en .hx: 0 ficha · 1 cursor a «Nuevo escrito» · 2 la página
-   de la tarea (editor en blanco) · 3 menú Plantilla · 4 plantilla
-   aplicada (título, datos marcados, firma, Exportar). Reduced-motion
-   salta al 4.
-   =========================================================== */
-.hx { position: absolute; inset: 0; }
-.hx .app { height: 100%; }
-.hx__main { padding: 12px 16px; }
-.hx__ficha { position: absolute; inset: 12px 16px; transition: opacity 360ms var(--ease-cinema); }
-.hx__ficha .ml-ficha { height: 100%; }
-.hx__editor { position: absolute; inset: 12px 16px; background: #fbfaf6; border-radius: 10px; opacity: 0; transform: translateY(24px); transition: opacity 420ms var(--ease-cinema), transform 520ms var(--ease-cinema); pointer-events: none; }
-.hx:is([data-step="2"],[data-step="3"],[data-step="4"]) .hx__editor { opacity: 1; transform: none; }
-.hx:is([data-step="2"],[data-step="3"],[data-step="4"]) .hx__ficha { opacity: 0; }
-.hx[data-step="1"] .ml-act--nuevo { background: rgba(201,168,76,0.18); border-radius: 6px; box-shadow: 0 0 0 3px rgba(201,168,76,0.18); }
-.hx[data-step="3"] .ml-menu { opacity: 1; transform: none; }
-.hx[data-step="3"] .ml-menu .ml-menu__pick { background: var(--cream); color: var(--ink); box-shadow: inset 2px 0 0 var(--gold); }
-.hx[data-step="3"] .ml-tpl-btn { border-color: var(--gold); background: var(--cream); }
-.hx[data-step="4"] .ml-page__caret { display: none; }
-.hx[data-step="4"] .ml-t { opacity: 1; transform: none; }
-.hx[data-step="4"] .ml-t:nth-child(3) { transition-delay: 80ms; }
-.hx[data-step="4"] .ml-t:nth-child(4) { transition-delay: 180ms; }
-.hx[data-step="4"] .ml-t:nth-child(5) { transition-delay: 300ms; }
-.hx[data-step="4"] .ml-t:nth-child(6) { transition-delay: 380ms; }
-.hx[data-step="4"] .ml-t:nth-child(7) { transition-delay: 440ms; }
-.hx[data-step="4"] .ml-t:nth-child(8) { transition-delay: 720ms; }
-.hx[data-step="4"] .ml-export { box-shadow: 0 0 0 3px rgba(201,168,76,0.3); transition-delay: 900ms; }
-.hx__cursor { position: absolute; width: 16px; height: 16px; left: 62%; top: 82%; opacity: 0; z-index: 6; filter: drop-shadow(0 2px 3px rgba(15,15,14,0.35)); transition: left 700ms var(--ease-cinema), top 700ms var(--ease-cinema), opacity 300ms var(--ease-cinema), transform 140ms var(--ease-cinema); }
-.hx[data-step="1"] .hx__cursor { opacity: 1; left: 28%; top: 58%; }
-.hx[data-click] .hx__cursor { transform: scale(0.85); }
-.hx[data-step="2"] .hx__cursor { opacity: 1; left: 28%; top: 58%; }
-.hx[data-step="3"] .hx__cursor { opacity: 1; left: 33%; top: 34%; }
-.hx[data-step="4"] .hx__cursor { opacity: 0; left: 33%; top: 34%; }
-@media (prefers-reduced-motion: reduce) { .hx__editor, .ml-t { transition: none !important; } }
-
-/* ===========================================================
    «UNA LÍNEA» — el scrollytelling, capa 2 (2026-09-20)
    Entrada del capítulo (título y ventana en escalera), interstitials
    revelados, y un cursor que hace el recorrido en cada mock.
@@ -8575,7 +8480,7 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
    rail; la ventana crece con su contenido; sin cursor (no hay puntero). ── */
 @media (max-width: 720px) {
   .ml-window .app { height: auto; min-height: 0; max-height: 70vh; }
-  .ml-window .app__rail, .hx .app__rail { display: none; }
+  .ml-window .app__rail { display: none; }
   .ml-window .app__main { margin: 0; padding: 10px 10px; }
   .ml-ficha__cols, .ml-calc, .ml-copias__grid, .ml-fields--2 { grid-template-columns: 1fr; }
   .ml-ficha__side { display: none; }
@@ -8593,9 +8498,6 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
   .ml-toast--pla { float: none; display: inline-flex; margin-top: 10px; }
   .ml-cursor { display: none; }
   .ml-detalle { display: none; }
-  .hx__main { padding: 8px; }
-  .hx__ficha, .hx__editor { inset: 8px; }
-  .hx__ficha .ml-ficha__side { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .c-chapter .c-eyebrow, .c-chapter .c-display, .c-chapter .c-chapter__beats, .c-chapter .ml-window,
@@ -8780,4 +8682,230 @@ body.cinematic .post-content .btn svg { width: 16px; height: 16px; }
 @media (prefers-reduced-motion: reduce) {
   .nx-cinta__haz { display: none; }
   .c-chapter--dim .nx-fuente { --paso: 1; }
+}
+
+/* ===========================================================
+   NEXUS AL FRENTE (2026-10-20) — hero «Pedíselo a Nexus.» y las piezas
+   de movimiento de nexus-escena.js, inspiradas en NM Labs. El HTML trae el
+   estado final; `html.motion` (puesto antes de pintar) habilita los estados
+   de partida. Dorado sólo en cursor, chips y líneas.
+   =========================================================== */
+:root { --ease-nm: cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+@media (prefers-reduced-motion: reduce) { .ml-t { transition: none !important; } }
+
+/* Palabras con desenfoque: sólo titulares. */
+[data-split] .w { display: inline-block; }
+.motion [data-split] .w {
+  opacity: 0;
+  transform: translateY(0.45em);
+  filter: blur(6px);
+  transition: opacity 0.9s var(--ease-nm), transform 0.9s var(--ease-nm), filter 0.9s var(--ease-nm);
+  transition-delay: calc(var(--i) * 45ms + 120ms);
+}
+.motion [data-split].is-on .w { opacity: 1; transform: none; filter: none; }
+
+/* Renglones de foja detrás del titular, en lugar de la grilla de puntos. */
+.c-hero__foja {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent 0 31px, rgba(15, 15, 14, 0.055) 31px 32px);
+  -webkit-mask-image: radial-gradient(ellipse 55% 60% at 28% 42%, #000 10%, transparent 72%);
+          mask-image: radial-gradient(ellipse 55% 60% at 28% 42%, #000 10%, transparent 72%);
+}
+
+/* Botones: el relleno sube desde abajo y la flecha se corre. */
+.c-btn { position: relative; overflow: hidden; isolation: isolate; }
+.c-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  transform: translateY(101%);
+  transition: transform 0.45s var(--ease-nm);
+}
+.c-btn--primary::before { background: var(--ink-soft); }
+.c-btn--ghost::before { background: var(--cream-dark); }
+.c-btn:hover::before { transform: none; }
+.c-btn svg { transition: transform 0.35s var(--ease-nm); }
+.c-btn:hover svg { transform: translateX(3px); }
+
+/* La bajada corta antes de la ventana de atrás, que en escritorio entra
+   unos 25px en la columna del titular. */
+@media (min-width: 980px) { .c-hero__sub { max-width: 34ch; } }
+
+/* ---- La ventana del frente: el panel de Nexus con la causa abierta ---- */
+.hn { position: absolute; inset: 0; }
+.hn .app { height: 100%; }
+.hn__main {
+  position: relative;
+  overflow: hidden;
+  margin: 6px 6px 6px 0;
+  padding: 14px 18px 12px;
+  border-radius: 12px;
+  background: #fbfaf6;
+  gap: 0;
+}
+.hn__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--hair);
+  font-size: 12px;
+}
+.hn__head b { font-weight: 500; }
+.hn__orb {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.8) 0 9%, transparent 28%),
+    radial-gradient(circle at 60% 70%, rgba(201, 168, 76, 0.6) 0 22%, transparent 55%),
+    radial-gradient(circle at 50% 50%, #2a2a28, #0f0f0e 72%);
+  box-shadow: 0 2px 6px -2px rgba(15, 15, 14, 0.5);
+}
+.hn[data-paso="2"] .hn__orb { animation: hn-orb 1.1s var(--ease-in-out, ease-in-out) infinite; }
+.hn__causa {
+  margin-left: auto;
+  min-width: 0;
+  max-width: 62%;
+  font-size: 9.5px;
+  color: var(--ink-muted);
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  padding: 3px 9px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hn__causa .ml-ic { vertical-align: -2px; margin-right: 4px; }
+
+.hn__chat {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  /* Como un chat de verdad: lo último queda abajo, pegado al compositor; si
+     la ventana es baja, lo que no entra se va por arriba. */
+  justify-content: flex-end;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16px);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 16px);
+  gap: 8px;
+  padding: 12px 0 10px;
+}
+.hn-q {
+  align-self: flex-end;
+  max-width: 78%;
+  background: var(--cream-dark);
+  border-radius: 11px 11px 3px 11px;
+  padding: 8px 11px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ink);
+  flex: none;
+  transition: opacity 0.4s var(--ease-nm), transform 0.4s var(--ease-nm);
+}
+.hn-dots { display: none; gap: 4px; height: 14px; align-items: center; }
+.hn-dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-muted); animation: hn-dot 1.1s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.hn-dots i:nth-child(2) { animation-delay: 0.15s; }
+.hn-dots i:nth-child(3) { animation-delay: 0.3s; }
+.hn-a { margin: 0; font-size: 11px; line-height: 1.65; color: var(--ink-soft); }
+.hn-cite {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.02em;
+  color: var(--gold-deep);
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.45);
+  border-radius: 999px;
+  padding: 1px 7px;
+  margin: 0 1px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.hn-cite.is-pop { animation: hn-pop 0.45s var(--ease-nm) both; }
+
+.hn-cards { display: grid; gap: 6px; flex: none; }
+.hn-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  align-items: center;
+  background: var(--white);
+  border: 1px solid var(--hair-strong);
+  border-radius: 10px;
+  padding: 7px 10px;
+  transition: opacity 0.6s var(--ease-nm), transform 0.6s var(--ease-nm);
+  transition-delay: calc(var(--i) * 140ms);
+}
+.hn-card::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: -1px;
+  height: 1px;
+  background: var(--gold);
+  transform-origin: left;
+  transition: transform 0.8s var(--ease-nm);
+  transition-delay: calc(var(--i) * 140ms + 150ms);
+}
+.hn-card__k { grid-row: 1 / span 2; font-family: var(--font-mono); font-size: 7.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+.hn-card__t { grid-column: 2; font-size: 11px; font-weight: 500; color: var(--ink); }
+.hn-card__d { grid-column: 2; font-size: 9px; color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hn-card__st { grid-column: 3; grid-row: 1 / span 2; display: flex; align-items: center; }
+.hn-card__btns { display: flex; gap: 4px; align-items: center; }
+.hn-card__btns u { text-decoration: none; font-size: 9px; color: var(--ink-soft); padding: 4px 7px; }
+.hn-card__btns em { font-style: normal; font-size: 9px; color: var(--cream); background: var(--ink); border-radius: 999px; padding: 4px 10px; }
+.hn-card__ok { font-size: 9px; color: #2e7d5a; background: rgba(46, 125, 90, 0.1); border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+.hn-card--ok .hn-card__btns { display: none; }
+
+.hn__input {
+  position: relative;
+  flex: none;
+  min-height: 34px;
+  padding: 9px 36px 9px 12px;
+  border: 1px solid var(--hair-strong);
+  border-radius: 11px;
+  background: var(--white);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.hn-caret { display: inline-block; width: 1.5px; height: 13px; margin-left: 1px; vertical-align: -2px; background: var(--gold); animation: hn-blink 1s steps(1) infinite; }
+.hn__ph { color: var(--ink-muted); margin-left: 3px; }
+.hn-typed:not(:empty) ~ .hn__ph { display: none; }
+.hn__send { position: absolute; right: 7px; bottom: 7px; width: 20px; height: 20px; padding: 3px; border-radius: 50%; color: var(--cream); background: var(--ink); }
+
+/* Los pasos de la escena (data-paso lo pone nexus-escena.js). */
+.hn:is([data-paso="0"], [data-paso="1"]) .hn-q { opacity: 0; transform: translateY(6px); }
+.hn[data-paso="2"] .hn-dots { display: flex; }
+.hn:is([data-paso="0"], [data-paso="1"], [data-paso="2"]) .hn-a { display: none; }
+.hn:is([data-paso="0"], [data-paso="1"], [data-paso="2"], [data-paso="3"]) .hn-card { opacity: 0; transform: translateY(10px); transition-delay: 0s; }
+.hn:is([data-paso="0"], [data-paso="1"], [data-paso="2"], [data-paso="3"]) .hn-card::before { transform: scaleX(0); transition-delay: 0s; }
+.hn[data-paso]:not([data-paso="5"]) .hn-card--ok .hn-card__ok { display: none; }
+.hn[data-paso]:not([data-paso="5"]) .hn-card--ok .hn-card__btns { display: flex; }
+
+@keyframes hn-dot { 0%, 100% { opacity: 0.25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+@keyframes hn-pop { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }
+@keyframes hn-blink { 50% { opacity: 0; } }
+@keyframes hn-orb { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+
+@media (max-width: 720px) {
+  .hn .app__rail { display: none; }
+  .hn__main { margin: 0; padding: 12px; }
+  .hn__causa { max-width: 58%; }
+  .hn-card { grid-template-columns: 46px minmax(0, 1fr) auto; }
+  .hn-card__btns u { display: none; }
 }

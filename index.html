@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iudex — El expediente, en orden</title>
-  <meta name="description" content="Movimientos, notificaciones de ForumNA, cédulas, planillas y escritos: cada cosa sale de la causa. Se abre en el navegador, gratis para empezar. Hecho en Corrientes." />
+  <title>Iudex — Pedíselo a Nexus</title>
+  <meta name="description" content="Nexus arma escritos, planillas y tareas desde tu causa, con la fuente al lado. Movimientos, ForumNA y cédulas, en orden. Se abre en el navegador, gratis para empezar. Hecho en Corrientes." />
   <meta name="keywords" content="software jurídico, gestión de expedientes, escritura legal, jurisprudencia argentina, Digesto Jurídico, abogados Corrientes, legaltech Argentina" />
-  <meta property="og:title" content="Iudex — El expediente, en orden" />
-  <meta property="og:description" content="Movimientos, notificaciones, cédulas, planillas y escritos. Cada cosa sale de la causa." />
+  <meta property="og:title" content="Iudex — Pedíselo a Nexus" />
+  <meta property="og:description" content="Escritos, planillas y tareas, armados desde tu causa. Vos confirmás." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://iudex.com.ar/" />
   <meta property="og:image" content="https://iudex.com.ar/public/assets/screenshots-v2/01-dashboard.png" />
@@ -15,10 +15,11 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="es_AR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Iudex — El expediente, en orden" />
-  <meta name="twitter:description" content="Movimientos, notificaciones, cédulas, planillas y escritos. Cada cosa sale de la causa." />
+  <meta name="twitter:title" content="Iudex — Pedíselo a Nexus" />
+  <meta name="twitter:description" content="Escritos, planillas y tareas, armados desde tu causa. Vos confirmás." />
   <meta name="twitter:image" content="https://iudex.com.ar/public/assets/screenshots-v2/01-dashboard.png" />
   <link rel="canonical" href="https://iudex.com.ar/" />
+  <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion');</script>
   <link rel="stylesheet" href="public/css/styles.css" />
   <link rel="icon" type="image/png" href="assets/icon.png" />
 </head>
@@ -49,16 +50,15 @@
 <!-- ===========================================================
      HERO — floating workspace composition
      =========================================================== -->
-<section class="c-hero" aria-labelledby="c-hero-title">
+<section class="c-hero" data-intro="done" aria-labelledby="c-hero-title">
   <div class="c-hero__backdrop" aria-hidden="true"></div>
+  <div class="c-hero__foja" aria-hidden="true"></div>
   <div class="c-hero__container">
     <div class="c-hero__copy">
-      <span class="c-eyebrow">Iudex</span>
-      <h1 id="c-hero-title" class="c-display">
-        El expediente, en orden.
-      </h1>
+      <span class="c-eyebrow">Iudex · Nexus</span>
+      <h1 id="c-hero-title" class="c-display" data-split>Pedíselo a Nexus.</h1>
       <p class="c-hero__sub">
-        Movimientos, notificaciones, cédulas, planillas y escritos. Cada cosa sale de la causa.
+        Escritos, planillas y tareas, armados desde tu causa. Vos confirmás.
         <span class="c-hero__sub-line">Se abre en el navegador. Gratis para empezar.</span>
       </p>
       <div class="c-hero__actions" role="group" aria-label="Acciones principales">
@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <div class="c-hero__stage" aria-hidden="false">
+    <div class="c-hero__stage">
       <!-- Las ventanas de profundidad son MOCKS dibujados contra la app real,
            no capturas. Antes eran PNG del escritorio y se les veía la barra de
            macOS justo debajo de un titular que promete el navegador. Además,
@@ -134,102 +134,33 @@
           </div>
         </div>
       </div>
-      <!-- La ventana del frente cuenta el trabajo de todos los días, sola:
-           la ficha de la causa con sus movimientos, «Nuevo escrito» sobre el
-           último, la página de la tarea con el editor y una plantilla que
-           deja el escrito armado con carátula, juzgado y firma. Los mocks
-           siguen la estructura real del CRM. main.js avanza `data-step`. -->
-      <div class="c-window c-window--front" role="img" aria-label="Iudex: la ficha de una causa con sus movimientos; sobre el último se elige «Nuevo escrito», se abre el editor y una plantilla deja el escrito armado con carátula, juzgado y firma.">
-        <div class="hx" data-step="0">
+      <div class="c-window c-window--front" role="img" aria-label="Nexus en Iudex, con una causa abierta. Se le pide contestar el traslado y practicar la planilla; responde citando la resolución y el escrito de la causa y deja armados el escrito, la planilla y la tarea, cada uno para confirmar.">
+        <div class="hn">
           <div class="app">
             <div class="app__rail">
 <div class="app__brand">Iudex</div>
 <div class="app__studio">Estudio Vallejos</div>
 <div class="app__nav app__nav--inicio"><i></i>Inicio</div>
 <div class="app__nav app__nav--agenda"><i></i>Agenda</div>
-<div class="app__nav app__nav--expedientes is-on"><i></i>Expedientes</div>
+<div class="app__nav app__nav--expedientes"><i></i>Expedientes</div>
 <div class="app__nav app__nav--calculadora"><i></i>Calculadora</div>
 <div class="app__nav app__nav--tareas"><i></i>Plantillas</div>
-<div class="app__nav app__nav--nexus"><i></i>Nexus</div>
+<div class="app__nav app__nav--nexus is-on"><i></i>Nexus</div>
 <div class="app__nav app__nav--clientes"><i></i>Clientes</div>
 </div>
-            <div class="app__main hx__main">
-              <div class="hx__ficha"><div class="ml-ficha">
-  <div class="ml-ficha__bar"><span><i class="ml-ic ml-ic--folder"></i>EXPEDIENTE</span><span class="ml-ficha__win"><i>–</i><i>⤢</i><i>×</i></span></div>
-  <div class="ml-ficha__body">
-    <div class="ml-ficha__head">
-      <h4 class="app__title">PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios <em class="ml-edit">✎</em></h4>
-      <div class="ml-chips"><span>48583/12</span><span>Juzgado Civil y Comercial N° 4</span><span>Secretaría N° 8</span><span class="ml-chips__add">+ Juez/a</span><span>Civil y Comercial</span></div>
-    </div>
-    <div class="ml-ficha__cols">
-      <div class="ml-ficha__main">
-        <div class="ml-sec">Movimientos <b>· 2</b></div>
-        <div class="ml-sub">Último: 12/09/2026 · 0 tareas abiertas · 0 archivos</div>
-        <div class="app__add ml-add"><i>+</i><span><em class="ml-typed"></em><span class="app__caret"></span><u class="ml-hint">Nuevo movimiento… (Enter)</u></span><u>→</u></div>
-        <div class="ml-sub ml-sub--hint">Con fecha adelante si no es de hoy. Ej. 28/02 Sentencia</div>
-        <div class="ml-mes">SEPTIEMBRE 2026</div>
-        <div class="ml-time">
-          
-          <div class="ml-mov "><i></i>
-  <div class="ml-mov__card">
-    <div class="ml-mov__top"><b>12/09/2026</b><span class="ml-kind"><i class="ml-ic ml-ic--gavel"></i>Resolución ▾</span><span class="ml-mov__title">Traslado de la demanda por cinco días</span><em class="ml-edit">✎</em><u class="ml-more">⋯</u></div>
-    
-    <div class="ml-mov__foot">
-      <div class="ml-mov__grp"><small>Archivos</small><div class="ml-acts"><span class="ml-act"><span class="ml-ib"><i class="ml-ic ml-ic--pdf"></i></span>Subir archivo</span><span class="ml-act ml-act--nuevo"><span class="ml-ib ml-ib--gold"><i class="ml-ic ml-ic--doc"></i></span>Nuevo escrito</span><span class="ml-act"><span class="ml-ib"><i class="ml-ic ml-ic--mic"></i></span>Nota de voz</span></div></div>
-      <div class="ml-mov__grp"><small>Acciones</small><div class="ml-acts"><span class="ml-act ml-act--cedula"><span class="ml-ib"><i class="ml-ic ml-ic--ced"></i></span>Hacer cédula</span><span class="ml-act ml-act--planilla"><span class="ml-ib"><i class="ml-ic ml-ic--calc"></i></span>Practicar planilla</span></div></div>
-    </div>
-  </div>
-</div>
-          <div class="ml-mes ml-mes--in">AGOSTO 2026</div>
-          <div class="ml-mov "><i></i>
-  <div class="ml-mov__card">
-    <div class="ml-mov__top"><b>14/08/2026</b><span class="ml-kind"><i class="ml-ic ml-ic--gavel"></i>Escrito ▾</span><span class="ml-mov__title">Promueve ejecución de honorarios</span><em class="ml-edit">✎</em><u class="ml-more">⋯</u></div>
-    
-    <div class="ml-mov__foot">
-      <div class="ml-mov__grp"><small>Archivos</small><div class="ml-acts"><span class="ml-act"><span class="ml-ib"><i class="ml-ic ml-ic--pdf"></i></span>Subir archivo</span><span class="ml-act ml-act--nuevo"><span class="ml-ib ml-ib--gold"><i class="ml-ic ml-ic--doc"></i></span>Nuevo escrito</span><span class="ml-act"><span class="ml-ib"><i class="ml-ic ml-ic--mic"></i></span>Nota de voz</span></div></div>
-      <div class="ml-mov__grp"><small>Acciones</small><div class="ml-acts"><span class="ml-act ml-act--cedula"><span class="ml-ib"><i class="ml-ic ml-ic--ced"></i></span>Hacer cédula</span><span class="ml-act ml-act--planilla"><span class="ml-ib"><i class="ml-ic ml-ic--calc"></i></span>Practicar planilla</span></div></div>
-    </div>
-  </div>
-</div>
-        </div>
-      </div>
-      <aside class="ml-ficha__side">
-        <div class="ml-sec">Clientes</div>
-        <div class="ml-side__link"><i class="ml-ic ml-ic--user"></i>Sumá el primer cliente de esta causa</div>
-        <div class="ml-sec">En la causa · sin movimiento</div>
-        <div class="ml-sub">Lo que no es de un movimiento en particular. Arrastrá acá (o a un movimiento) para mover archivos y tareas.</div>
-        <div class="ml-side__box"><small>Archivos</small><div class="ml-acts"><span class="ml-ib"><i class="ml-ic ml-ic--pdf"></i></span><span class="ml-ib ml-ib--gold"><i class="ml-ic ml-ic--doc"></i></span><span class="ml-ib"><i class="ml-ic ml-ic--mic"></i></span></div><span>Arrastrá archivos a cualquier parte de esta columna, o tocá «Subir archivo».</span></div>
-      </aside>
-    </div>
-  </div>
-</div></div>
-              <div class="hx__editor"><div class="ml-tarea">
-  <div class="ml-tarea__head"><span class="ml-back">←</span><b class="ml-tarea__title">Nuevo escrito</b><span class="ml-sub">Enter guarda · Esc cancela</span></div>
-  <div class="ml-chips ml-chips--tarea"><span>Por hacer</span><span><i class="ml-ic ml-ic--cal"></i>Poner fecha…</span><span>prioridad: normal ▾</span><span><i class="ml-ic ml-ic--folder"></i>48583/12 PARTE ACTORA c/ PARTE DEMANDADA s/…</span><span>Abrir expediente</span><span class="ml-chips__on"><i class="ml-ic ml-ic--ok"></i>Marcar hecha</span></div>
-  <div class="ml-tarea__cols">
-    <div class="ml-tarea__docs"><div class="ml-sec">Documentos</div><div class="ml-drop"><i class="ml-ic ml-ic--pdf"></i>Arrastrá los PDFs o fotos de la causa acá, o hacé click para elegirlos.</div><div class="ml-sec">De la causa</div><div class="ml-sub">Los documentos que cargues en la ficha de la causa aparecen acá.</div></div>
-    <div class="ml-tarea__editor">
-      <div class="ml-tabs"><span>☰ Tarea</span><span class="is-on">✎ Escrito</span></div>
-      <div class="ml-toolbar"><span>↶</span><span>↷</span><b>B</b><i>I</i><u>U</u><span>☰</span><span>≡</span><span>❞</span><span class="ml-toolbar__sep"></span><span class="ml-btn">A4 ▾</span><span class="ml-btn">Márgenes · Normal ▾</span><span class="ml-btn">Ajustar</span><span class="ml-btn ml-tpl-btn"><i class="ml-ic ml-ic--tpl"></i>Plantilla</span><span class="ml-btn ml-firma-btn"><i class="ml-ic ml-ic--pen"></i>Firmar</span>
-        <div class="ml-menu"><div>Contesta demanda</div><div class="ml-menu__pick">Contesta traslado</div><div>Interpone recurso de apelación</div><div>Ofrece prueba</div><div>Practica planilla</div></div>
-      </div>
-      <div class="ml-ruler"></div>
-      <div class="ml-page">
-        <span class="ml-page__caret"></span>
-        <div class="ml-t ml-sheet__h">CONTESTA TRASLADO</div>
-        <div class="ml-t ml-sheet__l">Señora Jueza:</div>
-        <div class="ml-t ml-sheet__p"><mark>Lucía Ferreyra</mark>, abogada, <mark>M.P. 5.812</mark>, en autos <mark>«PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios», Expte. N° 48583/12</mark>, que tramita ante el <mark>Juzgado Civil y Comercial N° 4, Secretaría N° 8</mark>, a V.S. digo:</div>
-        <div class="ml-t ml-sheet__p">Que vengo en tiempo y forma a contestar el traslado conferido por resolución del <mark>12/09/2026</mark>…</div>
-        <div class="ml-t ml-sheet__p ml-sheet__p--sk"></div>
-        <div class="ml-t ml-sheet__p ml-sheet__p--sk" style="width:58%"></div>
-        <div class="ml-t ml-sheet__sign"><b>Firmado electrónicamente por: Lucía Ferreyra</b><span>M.P. 5.812 · CUIT 27-31XXXXXX-4</span></div>
-      </div>
-      <div class="ml-tarea__foot"><span class="ml-sub">Guardado</span><span class="ml-btn ml-btn--gold ml-export"><i class="ml-ic ml-ic--down"></i>Exportar ▾</span></div>
-    </div>
-    <div class="ml-tarea__comments"><div class="ml-sec">Comentarios</div><div class="ml-side__box ml-side__box--note">Acá quedan tus notas y avances sobre la tarea. El chat con otras personas del estudio (asignar, comentar, notas de voz entre colegas) viene con los planes de Estudio.</div></div>
-  </div>
-</div></div>
-              <svg class="hx__cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 9-6 1.5L16 20l-2.5 1-3-6.5L6 18z" fill="#0f0f0e" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <div class="app__main hn__main">
+              <div class="hn__head"><span class="hn__orb" aria-hidden="true"></span><b>Nexus</b><span class="hn__causa"><i class="ml-ic ml-ic--folder"></i>48583/12 · PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios</span></div>
+              <div class="hn__chat">
+                <div class="hn-q">Contestá el traslado del 12/09 y practicá planilla desde el 14/08.</div>
+                <div class="hn-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                <p class="hn-a">Te lo dejo armado con la resolución <span class="hn-cite">Resolución · 12/09</span> y tu escrito <span class="hn-cite">Escrito · 14/08</span>. Revisalo y confirmá.</p>
+                <div class="hn-cards">
+                  <div class="hn-card hn-card--ok" style="--i:0"><span class="hn-card__k">Escrito</span><b class="hn-card__t">Contesta traslado</b><span class="hn-card__d">Desde tu plantilla · carátula y juzgado puestos</span><span class="hn-card__st"><span class="hn-card__ok">✓ Listo</span><span class="hn-card__btns"><u>Editar</u><em>Confirmar</em></span></span></div>
+                  <div class="hn-card" style="--i:1"><span class="hn-card__k">Planilla</span><b class="hn-card__t">Capital e intereses</b><span class="hn-card__d">14/08/2026 a hoy · tasa activa del BNA</span><span class="hn-card__st"><span class="hn-card__btns"><u>Editar</u><em>Confirmar</em></span></span></div>
+                  <div class="hn-card" style="--i:2"><span class="hn-card__k">Tarea</span><b class="hn-card__t">Presentar la contestación</b><span class="hn-card__d">Vence el 19/09 · en el movimiento del 12/09</span><span class="hn-card__st"><span class="hn-card__btns"><u>Editar</u><em>Confirmar</em></span></span></div>
+                </div>
+              </div>
+              <div class="hn__input"><span class="hn-typed"></span><span class="hn-caret" aria-hidden="true"></span><span class="hn__ph">Pedile algo a Nexus…</span><svg class="hn__send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div>
             </div>
           </div>
         </div>
@@ -242,10 +173,6 @@
     <span>Seguir</span>
   </div>
 </section>
-<!-- Enter the cinematic intro state before first paint, so the resting hero
-     (headline) never flashes in then fades out. Runs only with JS; no-JS
-     users get the plain hero. main.js then plays the sequence. -->
-<script>(function(){var h=document.currentScript.previousElementSibling;if(h&&h.classList&&h.classList.contains('c-hero')){h.setAttribute('data-intro','play');document.documentElement.setAttribute('data-hero-intro','play');}})();</script>
 
 <!-- ===========================================================
      CHAPTER BREADCRUMB — above-fold roadmap
@@ -893,5 +820,6 @@
 
 <script src="public/js/env.js"></script>
 <script src="public/js/main.js"></script>
+<script src="public/js/nexus-escena.js"></script>
 </body>
 </html>

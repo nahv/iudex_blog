@@ -126,19 +126,34 @@ EDITOR = f'''<div class="ml-tarea">
   </div>
 </div>'''
 
-HERO = f'''      <!-- La ventana del frente cuenta el trabajo de todos los días, sola:
-           la ficha de la causa con sus movimientos, «Nuevo escrito» sobre el
-           último, la página de la tarea con el editor y una plantilla que
-           deja el escrito armado con carátula, juzgado y firma. Los mocks
-           siguen la estructura real del CRM. main.js avanza `data-step`. -->
-      <div class="c-window c-window--front" role="img" aria-label="Iudex: la ficha de una causa con sus movimientos; sobre el último se elige «Nuevo escrito», se abre el editor y una plantilla deja el escrito armado con carátula, juzgado y firma.">
-        <div class="hx" data-step="0">
+# Hero «Pedíselo a Nexus.» (2026-10-20): la ventana del frente es el panel
+# de Nexus con la causa abierta. Se le pide el traslado y la planilla, cita
+# los papeles de la causa y deja tres tarjetas para confirmar, como en la app.
+# nexus-escena.js la reproduce paso a paso (`data-paso`); sin JS o con
+# «reducir movimiento» se ve el estado final.
+HN_PEDIDO = 'Contestá el traslado del 12/09 y practicá planilla desde el 14/08.'
+
+def hn_card(k, t, d, i, ok=False):
+    estado = ('<span class="hn-card__ok">✓ Listo</span>' if ok else '') + '<span class="hn-card__btns"><u>Editar</u><em>Confirmar</em></span>'
+    return f'<div class="hn-card{" hn-card--ok" if ok else ""}" style="--i:{i}"><span class="hn-card__k">{k}</span><b class="hn-card__t">{t}</b><span class="hn-card__d">{d}</span><span class="hn-card__st">{estado}</span></div>'
+
+HERO = f'''      <div class="c-window c-window--front" role="img" aria-label="Nexus en Iudex, con una causa abierta. Se le pide contestar el traslado y practicar la planilla; responde citando la resolución y el escrito de la causa y deja armados el escrito, la planilla y la tarea, cada uno para confirmar.">
+        <div class="hn">
           <div class="app">
-            {rail('expedientes')}
-            <div class="app__main hx__main">
-              <div class="hx__ficha">{ficha()}</div>
-              <div class="hx__editor">{EDITOR}</div>
-              <svg class="hx__cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 9-6 1.5L16 20l-2.5 1-3-6.5L6 18z" fill="#0f0f0e" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            {rail('nexus')}
+            <div class="app__main hn__main">
+              <div class="hn__head"><span class="hn__orb" aria-hidden="true"></span><b>Nexus</b><span class="hn__causa"><i class="ml-ic ml-ic--folder"></i>48583/12 · {CAR}</span></div>
+              <div class="hn__chat">
+                <div class="hn-q">{HN_PEDIDO}</div>
+                <div class="hn-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                <p class="hn-a">Te lo dejo armado con la resolución <span class="hn-cite">Resolución · 12/09</span> y tu escrito <span class="hn-cite">Escrito · 14/08</span>. Revisalo y confirmá.</p>
+                <div class="hn-cards">
+                  {hn_card('Escrito', 'Contesta traslado', 'Desde tu plantilla · carátula y juzgado puestos', 0, ok=True)}
+                  {hn_card('Planilla', 'Capital e intereses', '14/08/2026 a hoy · tasa activa del BNA', 1)}
+                  {hn_card('Tarea', 'Presentar la contestación', 'Vence el 19/09 · en el movimiento del 12/09', 2)}
+                </div>
+              </div>
+              <div class="hn__input"><span class="hn-typed"></span><span class="hn-caret" aria-hidden="true"></span><span class="hn__ph">Pedile algo a Nexus…</span><svg class="hn__send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div>
             </div>
           </div>
         </div>
