@@ -31,6 +31,11 @@ P = {
     'copy': 'M9 9h10v11H9zM5 15V4h10',
     'sub': 'M6 4v9h12M14 9l4 4-4 4',
     'folder': 'M4 6h6l2 2h8v10H4z',
+    'x': 'M6 6l12 12M18 6L6 18',
+    'sol': 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+    'scan': 'M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M7 12h10',
+    'unir': 'M7 4l5 5 5-5M12 9v11',
+    'camara': 'M4 8h3l2-2h6l2 2h3v11H4zM12 11a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
 }
 
 
@@ -106,11 +111,11 @@ def fuente(n, label, snippet, meta, extra='', cls=''):
 </div>'''
 
 
-def compositor(texto, ph, tipeo='', estados='', estado='vacio'):
+def compositor(texto, ph, tipeo='', estados='', estado='vacio', adj=''):
     t = f' data-tipeo="{tipeo}"' if tipeo else ''
     e = f' data-estados="{estados}"' if estados else ''
     return f'''<div class="ob ob-compositor" data-estado="{estado}"{e}>
-  <div class="ob-compositor__campo"><span class="ob-compositor__texto"{t}>{texto}</span><i class="ob-caret"></i><span class="ob-compositor__ph">{ph}</span></div>
+  {f'<div class="ob-compositor__adjs">{adj}</div>' if adj else ''}<div class="ob-compositor__campo"><span class="ob-compositor__texto"{t}>{texto}</span><i class="ob-caret"></i><span class="ob-compositor__ph">{ph}</span></div>
   <div class="ob-compositor__barra"><span class="ob-cbtn ob-cbtn--adj">{ic("plus")}</span><span class="ob-compositor__sp"></span><span class="ob-cbtn">{ic("mic")}</span><span class="ob-cbtn ob-cbtn--enviar">{ic("up")}</span></div>
 </div>'''
 
@@ -118,7 +123,7 @@ def compositor(texto, ph, tipeo='', estados='', estado='vacio'):
 CURSOR = '<svg class="ob-cursor__svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 9-6 1.5L16 20l-2.5 1-3-6.5L6 18z" fill="#0f0f0e" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>'
 
 CAR = 'PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios'
-CAR_M = 'MARTÍNEZ, ANA C/ SEGUROS DEL SUR S/ DAÑOS Y PERJUICIOS'
+CAR_M = 'PARTE ACTORA C/ PARTE DEMANDADA S/ DAÑOS Y PERJUICIOS'
 
 # ───────────────────────── Hero ─────────────────────────
 # El pedido, la respuesta con dos citas a papeles de la causa y tres
@@ -133,7 +138,7 @@ HERO = f'''<div class="nx-hero" role="img" aria-label="Nexus con una causa abier
     <div class="nx-hero__tarjetas">
       {tarjeta("Preparar escrito", "Contesta traslado", pasos(["Movimiento «Contesta traslado» del 12/09", "Redactar el escrito desde tu plantilla", "Firmarlo con tu firma"]), estado="hecho", plegable=True, i=0, cls="nx-hero__t0")}
       {tarjeta("Crear tarea", "Presentar la contestación", "", estado="pendiente", plegable=True, plegada=True, resumen="vos (Lucía Ferreyra) · vie 18/09/2026 18:00", i=1)}
-      {tarjeta("Liquidación", "$ 1.500.000,00", "", estado="pendiente", plegable=True, plegada=True, resumen="Total $ 2.159.758,50 · 432 días · Tasa Activa Banco Nación", i=2)}
+      {tarjeta("Liquidación", "$ 1.500.000,00", "", estado="pendiente", plegable=True, plegada=True, resumen="Total $ 2.159.383,56 · 432 días · Tasa Activa Banco Nación", i=2)}
     </div>
   </div>
 </div>'''
@@ -174,7 +179,7 @@ A = f'''        {orbe_grande(300, ' data-estado="fuera" data-estados="quieto:0 b
           </div>
           <p class="ob ob-respuesta" data-desde=".53">Te dejo la tarea para que la confirmes.<span class="ob-respuesta__listo" data-desde=".89"> Listo: creé la tarea «Contestar el traslado».</span></p>
           <div class="nx-a__tarjeta">
-            {tarjeta("Crear tarea", "Contestar el traslado", filas([("Responsable", "vos (Lucía Ferreyra)"), ("Vence", "vie 23/10/2026 18:00"), ("Causa", "MARTÍNEZ, ANA c/ SEGUROS DEL SUR s/ DAÑOS")]), estado="hecho", estados="oculto:0 pendiente:.56 pulsado:.79 enviando:.81 hecho:.88", envio="Creando la tarea…", plegable=True)}
+            {tarjeta("Crear tarea", "Contestar el traslado", filas([("Responsable", "vos (Lucía Ferreyra)"), ("Vence", "vie 23/10/2026 18:00"), ("Causa", "PARTE ACTORA c/ PARTE DEMANDADA s/ DAÑOS")]), estado="hecho", estados="oculto:0 pendiente:.56 pulsado:.79 enviando:.81 hecho:.88", envio="Creando la tarea…", plegable=True)}
             <span class="ob-cursor" data-estado="fuera" data-estados="oculto:0 va:.74 clic:.79 fuera:.805">{CURSOR}</span>
           </div>
           {compositor("Creá la tarea de contestar el traslado para el viernes", "Pedile algo sobre esta causa…", tipeo=".03 .2", estados="vacio:0 escribe:.02 vacio:.26")}
@@ -189,19 +194,19 @@ ESC_A = escena('asi-trabaja', 'Así trabaja Nexus', 'Pedís. Nexus lo arma. Vos 
 
 # ─────────────── I · Del pedido al escrito ───────────────
 B = f'''        <div class="nx-chat ob-escala ob-recede-b">
-          <div class="ob ob-burbuja" data-desde=".02">Haceme una demanda de daños por un choque, contra Seguros del Sur</div>
+          <div class="ob ob-burbuja" data-desde=".02">Haceme una demanda de daños por un choque</div>
           <div class="nx-b__slot">
             <div class="nx-b__opciones" data-estado="fuera" data-estados="oculto:0 ver:.08 elegida:.18 fuera:.25">
               <p class="ob ob-respuesta">Encontré varias causas que pueden ser. ¿En cuál lo hago?</p>
               <div class="ob-opciones">
-                <div class="ob-opcion"><span class="ob-opcion__n">1</span><span>Martínez c/ Paz · 2210/25</span></div>
-                <div class="ob-opcion"><span class="ob-opcion__n">2</span><span>Martínez, Ana s/ sucesión · 87/24</span></div>
+                <div class="ob-opcion"><span class="ob-opcion__n">1</span><span>PARTE ACTORA c/ PARTE DEMANDADA s/ Despido · 2210/25</span></div>
+                <div class="ob-opcion"><span class="ob-opcion__n">2</span><span>PARTE ACTORA c/ PARTE DEMANDADA s/ Alimentos · 87/24</span></div>
                 <div class="ob-opcion ob-opcion--crear"><span class="ob-opcion__n">{ic("plus")}</span><span>Crear expediente nuevo</span></div>
               </div>
             </div>
             <div class="nx-b__plan">
               <p class="ob ob-respuesta" data-desde=".26">No encontré esa causa. Te propongo crearla y redactar ahí la demanda.</p>
-              {tarjeta("Preparar escrito", CAR_M, pasos(["Crear el expediente MARTÍNEZ, ANA C/ SEGUROS DEL SUR S/ DAÑOS Y PERJUICIOS (S/N, sin juzgado)", "Movimiento «Redactar demanda de daños y perjuicios»", "Redactar la demanda en el editor"], estados=[".44", ".5", ".56"]), estado="hecho", estados="oculto:0 pendiente:.29 pulsado:.37 enviando:.39 hecho:.58", envio="Guardando…", hecho_btn="Abrir el escrito", plegable=True)}
+              {tarjeta("Preparar escrito", CAR_M, pasos(["Crear el expediente PARTE ACTORA C/ PARTE DEMANDADA S/ DAÑOS Y PERJUICIOS (S/N, sin juzgado)", "Movimiento «Redactar demanda de daños y perjuicios»", "Redactar la demanda en el editor"], estados=[".44", ".5", ".56"]), estado="hecho", estados="oculto:0 pendiente:.29 pulsado:.37 enviando:.39 hecho:.58", envio="Guardando…", hecho_btn="Abrir el escrito", plegable=True)}
             </div>
           </div>
         </div>
@@ -211,9 +216,9 @@ B = f'''        <div class="nx-chat ob-escala ob-recede-b">
             <div class="ob-a4__regla" aria-hidden="true"></div>
             <div class="ob-a4__pag">
               <p data-tipeo=".66 .68">Señor Juez:</p>
-              <p data-tipeo=".68 .76">LUCÍA FERREYRA, abogada, M.P. 5.812, por la parte actora, en los autos «MARTÍNEZ, ANA c/ SEGUROS DEL SUR s/ DAÑOS Y PERJUICIOS», respetuosamente digo:</p>
+              <p data-tipeo=".68 .76">LUCÍA FERREYRA, abogada, M.P. 5.812, por la parte actora, en los autos «PARTE ACTORA c/ PARTE DEMANDADA s/ DAÑOS Y PERJUICIOS», respetuosamente digo:</p>
               <p class="ob-a4__h" data-tipeo=".76 .77">I. OBJETO</p>
-              <p data-tipeo=".77 .86">Que vengo a promover demanda de daños y perjuicios contra SEGUROS DEL SUR S.A. por el choque del 14/08/2025, con costas.</p>
+              <p data-tipeo=".77 .86">Que vengo a promover demanda de daños y perjuicios contra PARTE DEMANDADA por el choque del 14/08/2025, con costas.</p>
               <p class="ob-a4__h" data-tipeo=".86 .87">II. PETITORIO</p>
               <p data-tipeo=".87 .93">Se tenga por promovida la demanda y se corra traslado. SERÁ JUSTICIA.</p>
               <div class="ob-a4__firma" data-desde=".94"><i>Firmado electrónicamente por</i><b>Dra. Lucía Ferreyra</b><span>Abogada · M.P. 5.812</span></div>
@@ -233,17 +238,17 @@ C = f'''        {orbe_grande(240, ' data-estado="fuera" data-estados="oculto:0 b
           <div class="ob ob-burbuja" data-desde=".03">¿Desde cuándo corren los intereses en un accidente de tránsito?</div>
           <div class="ob ob-pensando nx-c__pensando" data-estado="fuera" data-estados="oculto:0 f1:.12 f2:.19 f3:.26 fuera:.33">{orbe_grande(46, cls="is-busca")}<span class="ob-frase ob-frase--f1">Buscando jurisprudencia aplicable…</span><span class="ob-frase ob-frase--f2">Leyendo el fallo en detalle…</span><span class="ob-frase ob-frase--f3">Comparando fallos similares…</span></div>
           <div class="ob ob-progreso" data-estado="plegado" data-estados="oculto:0 plegado:.34"><div class="ob-progreso__resumen">{ic("check")}<span>2 búsquedas · 1 lectura</span>{ic("chev")}</div></div>
-          <p class="ob ob-respuesta"><span data-tipeo=".35 .41">Desde el día del hecho. Las cámaras civiles cuentan los intereses desde que se produjo el daño </span>{cita(1, "Romero", "p. 4", ' data-desde=".41"')}<span data-tipeo=".42 .47">, con tasa activa hasta el pago </span>{cita(2, "Acosta", "p. 7", ' data-desde=".47"')}<span data-tipeo=".48 .53">. Para el daño moral hay fallos que los cuentan desde la sentencia </span>{cita(3, "Benítez", "p. 2", ' data-desde=".53"')}<span data-tipeo=".54 .55">.</span></p>
+          <p class="ob ob-respuesta"><span data-tipeo=".35 .41">Desde el día del hecho. Las cámaras civiles cuentan los intereses desde que se produjo el daño </span>{cita(1, "PARTE ACTORA", "p. 4", ' data-desde=".41"')}<span data-tipeo=".42 .47">, con tasa activa hasta el pago </span>{cita(2, "PARTE ACTORA", "p. 7", ' data-desde=".47"')}<span data-tipeo=".48 .53">. Para el daño moral hay fallos que los cuentan desde la sentencia </span>{cita(3, "PARTE ACTORA", "p. 2", ' data-desde=".53"')}<span data-tipeo=".54 .55">.</span></p>
         </div>
         <div class="nx-c__fuentes ob-escala">
           <span class="nx-c__cab" data-desde=".42">Fuentes</span>
-          {fuente(1, "Romero, Juan c/ Transportes del Litoral s/ daños y perjuicios", "…los intereses se devengan desde el día del hecho, momento en que se produjo el perjuicio…", "Fallo · p. 4 · Civil", ' data-desde=".42"', "nx-c__f1")}
-          {fuente(2, "Acosta, Marta c/ Gutiérrez, Pablo s/ daños", "…se aplicará la tasa activa desde la mora y hasta el efectivo pago…", "Fallo · p. 7 · Civil", ' data-desde=".48"', "nx-c__f2")}
-          {fuente(3, "Benítez c/ Expreso Mercedes s/ daños", "…los intereses por daño moral corren desde la fecha de la sentencia…", "Fallo · p. 2 · Civil", ' data-desde=".54"', "nx-c__f3")}
+          {fuente(1, "PARTE ACTORA c/ PARTE DEMANDADA s/ daños y perjuicios", "…los intereses se devengan desde el día del hecho, momento en que se produjo el perjuicio…", "Fallo · p. 4 · Civil", ' data-desde=".42"', "nx-c__f1")}
+          {fuente(2, "PARTE ACTORA c/ PARTE DEMANDADA s/ accidente de tránsito", "…se aplicará la tasa activa desde la mora y hasta el efectivo pago…", "Fallo · p. 7 · Civil", ' data-desde=".48"', "nx-c__f2")}
+          {fuente(3, "PARTE ACTORA c/ PARTE DEMANDADA s/ daño moral", "…los intereses por daño moral corren desde la fecha de la sentencia…", "Fallo · p. 2 · Civil", ' data-desde=".54"', "nx-c__f3")}
         </div>
         <div class="ob ob-hojafuente nx-c__hoja" data-desde=".72">
           <i class="ob-hojafuente__asa"></i>
-          <div class="ob-hojafuente__t"><b>1</b><span>Romero, Juan c/ Transportes del Litoral s/ daños y perjuicios</span></div>
+          <div class="ob-hojafuente__t"><b>1</b><span>PARTE ACTORA c/ PARTE DEMANDADA s/ daños y perjuicios</span></div>
           <div class="ob-hojafuente__tipo">Fallo · p. 4</div>
           <blockquote>«…los intereses se devengan desde el día del hecho, momento en que se produjo el perjuicio, y hasta su efectivo pago…»</blockquote>
           <div class="ob-hojafuente__btns">{btn("Ver PDF", "lleno", "pdf")}{btn("Copiar cita", "borde", "copy")}</div>
@@ -256,7 +261,158 @@ ESC_C = escena('cap-nexus-fuente', 'II · Fuentes', 'Con la fuente al lado.',
                 ('El fallo, a un toque.', 'La cita con su página y el PDF original.')],
                C, 380, 'nx-escena--c')
 
-ESCENAS = '\n\n'.join([ESC_A, ESC_B, ESC_C])
+# ─────────────── III · La planilla, en una frase ───────────────
+# Tramos de la Tasa Activa Banco Nación (valores de ejemplo, la cuenta es
+# la de la calculadora: capital × tasa × días / 365).
+CAPITAL = 1_500_000
+TRAMOS = [('14/08/2025', '30/09/2025', 47, 41.00), ('01/10/2025', '31/12/2025', 92, 38.50),
+          ('01/01/2026', '31/03/2026', 90, 36.00), ('01/04/2026', '30/06/2026', 91, 35.20),
+          ('01/07/2026', '20/10/2026', 112, 36.90)]
+
+
+def pesos(v):
+    """`$ ` + #,##0.00 es-AR (planilla_escrito.dart)."""
+    ent, dec = f'{v:,.2f}'.split('.')
+    return '$ ' + ent.replace(',', '.') + ',' + dec
+
+
+FILAS = [(d, h, n, t, round(t * n / 365, 2), round(CAPITAL * t * n / 36500, 2)) for d, h, n, t in TRAMOS]
+INTERES = round(sum(f[5] for f in FILAS), 2)
+TOTAL = CAPITAL + INTERES
+DIAS = sum(f[2] for f in FILAS)
+
+
+def liquidacion():
+    """Tarjeta «Liquidación» (tarjetas_turno.dart:728): mismo marco, filas en
+    mono, bloque Total y «Guardar en la causa» → «Guardando…» → «Ver en la
+    causa»."""
+    cuerpo = filas([('Capital', pesos(CAPITAL)), ('Período', f'14/08/2025 → 20/10/2026 · {DIAS} días'),
+                    ('Tasa', 'Tasa Activa Banco Nación'), ('Tasas', 'Hasta el 20/10/2026')])
+    total = (f'<div class="ob-liq__total"><span>Total</span><b>{pesos(TOTAL)}</b>'
+             f'<span>interés {pesos(INTERES)}</span></div>')
+    return f'''<div class="ob ob-tarjeta ob-liq" data-estado="guardada" data-estados="oculto:0 lista:.36 guardando:.47 guardada:.53">
+  <div class="ob-tarjeta__cab"><span class="ob-etiqueta">Liquidación</span><b class="ob-tarjeta__t">{pesos(CAPITAL)}</b><span class="ob-pill ob-pill--fija">En la calculadora</span><span class="ob-tarjeta__chev">{ic("chev")}</span></div>
+  <div class="ob-tarjeta__cuerpo">{cuerpo}{total}</div>
+  <div class="ob-tarjeta__acciones"><span class="ob-acc ob-acc--siempre"><span class="ob-btn ob-btn--lleno ob-liq__guardar"><i class="ob-spin ob-spin--claro"></i><span class="ob-liq__g1">Guardar en la causa</span><span class="ob-liq__g2">Guardando…</span><span class="ob-liq__g3">Ver en la causa</span></span>{btn("Ver en la calculadora", "borde")}</span></div>
+</div>'''
+
+
+def tabla_tramos():
+    """_TablaTramos (calculadora_page.dart:1954): DM Mono 12px; Tasa % e
+    Interés % con punto (toStringAsFixed), montos es-AR."""
+    cab = ''.join(f'<span>{c}</span>' for c in ('Desde', 'Hasta', 'Días', 'Tasa %', 'Interés %', 'Interés'))
+    filas_html = []
+    for i, (d, h, n, t, ip, monto) in enumerate(FILAS):
+        u = .62 + i * .035
+        filas_html.append(f'<div class="ob-tramos__fila" data-desde="{u:.3f}"><span>{d}</span><span>{h}</span><span>{n}</span>'
+                          f'<span>{t:.2f}</span><span>{ip:.2f}</span><span>{pesos(monto)}</span></div>')
+    return f'''<div class="ob ob-tramos">
+  <div class="ob-tramos__t"><b>Detalle por período · {len(FILAS)} tramos</b><span class="ob-tramos__copiar">{ic("copy")}Copiar tabla</span></div>
+  <div class="ob-tramos__cab">{cab}</div>
+  {''.join(filas_html)}
+</div>'''
+
+
+def cifras():
+    """_Cifra: etiqueta 11px y valor DM Mono 17px; el Total, 22px."""
+    return f'''<div class="ob ob-cifras">
+  <div class="ob-cifras__fila"><div><span>Capital</span><b>{pesos(CAPITAL)}</b></div><div><span>Intereses</span><b>{pesos(INTERES)}</b></div><div class="ob-cifras__total"><span>Total</span><b>{pesos(TOTAL)}</b></div></div>
+  <div class="ob-cifras__serie">{ic("check")}Tasa Activa Banco Nación · serie al 20/10/2026</div>
+</div>'''
+
+
+D = f'''        <div class="nx-chat ob-escala ob-recede-b">
+          <div class="ob ob-burbuja" data-desde=".03">Liquidá capital de $ 1.500.000 con intereses desde el 14/08/2025</div>
+          <div class="ob ob-pensando" data-estado="fuera" data-estados="oculto:0 f1:.07 f2:.15 f3:.23 fuera:.31">{orbe_grande(46, cls="is-busca")}<span class="ob-frase ob-frase--f1">Leyendo los datos de la planilla…</span><span class="ob-frase ob-frase--f2">Trayendo la serie de la tasa…</span><span class="ob-frase ob-frase--f3">Calculando los intereses por tramo…</span></div>
+          <p class="ob ob-respuesta" data-desde=".32">Listo. Con capital {pesos(CAPITAL)} desde el 14/08/2025 hasta el 20/10/2026 a tasa activa del Banco Nación, los intereses son {pesos(INTERES)} y el total {pesos(TOTAL)}.</p>
+          {liquidacion()}
+        </div>
+        <div class="nx-d__calc" data-estado="entra" data-estados="oculto:0 entra:.58">
+          {cifras()}
+          {tabla_tramos()}
+        </div>'''
+
+ESC_D = escena('cap-nexus-planilla', 'III · Planillas', 'La planilla, en una frase.', '',
+               [('Decile capital y fecha.', 'Nexus trae la serie oficial de la tasa.'),
+                ('Te la deja calculada.', 'Capital, período, tasa y total. La guardás en la causa.'),
+                ('Tramo por tramo.', 'La calculadora completa, con la serie oficial.')],
+               D, 380, 'nx-escena--d')
+
+
+# ─────────────── IV · En el teléfono, con el pulgar ───────────────
+def vidrio(contenido, cls='', extra=''):
+    """VidrioNexus (nexus_a_mano.dart): blur 22, degradé blanco → crema,
+    borde blanco 65 %, radio 24."""
+    return f'<div class="ob ob-vidrio{(" " + cls) if cls else ""}"{extra}>{contenido}</div>'
+
+
+def foto_acta(n, rot):
+    """Una foto del acta: la hoja sobre la mesa (sin imágenes, en CSS)."""
+    return f'<span class="ob-foto" style="--rot:{rot}deg" aria-hidden="true"><i></i></span>'
+
+
+HOJAS = ''.join(
+    f'<div class="ob-hoja" data-desde="{u}"><span class="ob-hoja__img">{foto_acta(i + 1, r)}</span>'
+    f'<span class="ob-hoja__n">Hoja {i + 1}</span><span class="ob-hoja__x">{ic("x")}</span></div>'
+    for i, (u, r) in enumerate([('.38', -3), ('.44', 2), ('.50', -1)]))
+
+ADJ = f'''<div class="ob-adj" data-estado="leido" data-estados="subiendo:0 leyendo:.74 leido:.88"><span class="ob-tap__adj-ic">{orbe(15, True)}{ic("pdf")}</span><span><b>Acta de audiencia.pdf</b><small class="ob-adj1">Subiendo…</small><small class="ob-adj2">Nexus está leyendo 2/3 págs.</small><small class="ob-adj3">3 hojas</small></span></div>'''
+
+TEL = f'''        <div class="nx-tel ob-escala">
+          <div class="nx-tel__pantalla">
+            <div class="nx-tel__fondo" aria-hidden="true">
+              <div class="nx-tel__barra">← Expediente</div>
+              <b class="nx-tel__car">PARTE ACTORA c/ PARTE DEMANDADA s/ Despido</b>
+              <div class="nx-tel__chips"><span>2210/25</span><span>Juzgado Laboral N° 1</span></div>
+              <div class="nx-tel__mov"><b>20/10/2026</b><span>Audiencia de conciliación</span></div>
+              <div class="nx-tel__mov"><b>12/09/2026</b><span>Traslado de la demanda</span></div>
+              <div class="nx-tel__mov"><b>14/08/2026</b><span>Promueve demanda</span></div>
+            </div>
+
+            {vidrio(f'''<div class="ob-escucha__fila">{orbe(40, True)}<div class="ob-escucha__txt"><b class="ob-escucha__t1">Te escucho…</b><b class="ob-escucha__t2">Pasando a texto…</b><span class="ob-escucha__s1">Soltá para preguntarle · ← deslizá para cancelar</span><span class="ob-escucha__s2">Ya se lo paso a Nexus.</span></div></div><div class="ob-escucha__onda"><span class="ob-barras"><i></i><i></i><i></i><i></i><i></i></span><span class="ob-escucha__reloj">0:04</span></div>''', "ob-escucha", ' data-estado="fuera" data-estados="oculto:0 escucha:.05 pasando:.22 fuera:.31"')}
+
+            {vidrio(f'''<div class="ob-esc__cab"><span class="ob-esc__ic">{ic("scan")}</span><b>Unir en un PDF</b><span class="ob-esc__x">{ic("x")}</span></div><p class="ob-esc__sub">Ordenalas como van en el escrito: arrastrá para mover. Cada foto es una hoja.</p><div class="ob-esc__hojas">{HOJAS}<div class="ob-hoja ob-hoja--otra">{ic("camara")}<span>Otra hoja</span></div></div><div class="ob-esc__campo"><small>Nombre del PDF</small><span>{ic("pdf")}Acta de audiencia</span></div><span class="ob-btn ob-btn--lleno ob-esc__unir">{ic("unir")}Unir 3 hojas en un PDF</span>''', "ob-esc", ' data-estado="fuera" data-estados="oculto:0 entra:.34 unir:.6 fuera:.65"')}
+
+            {vidrio(f'''<i class="ob-hojafuente__asa"></i><div class="ob-tap__cab">{orbe(26)}<b>Nexus</b><span class="ob-tap__conv">Conversación</span></div><div class="ob-tap__causa">{ic("folder")}<span>2210/25 · PARTE ACTORA C/ PARTE DEMANDADA</span><span class="ob-tap__x">{ic("x")}</span></div>{compositor("¿Qué se resolvió en la audiencia?", "Pedile algo sobre esta causa…", tipeo=".76 .88", estados="vacio:0 escribe:.75", estado="escribe", adj=ADJ)}<p class="ob-tap__tip">Tip: mantené apretado el orbe para hablarle sin abrir esto.</p>''', "ob-tap", ' data-estado="entra" data-estados="oculto:0 entra:.67"')}
+
+            <div class="ob-flotante" data-estado="oculto" data-estados="quieto:0 aprieta:.05 quieto:.31 oculto:.34">{vidrio(orbe(32, True), "ob-flotante__vidrio")}<i class="ob-dedo"></i></div>
+          </div>
+        </div>'''
+
+ESC_E = escena('cap-nexus-telefono', 'IV · En el teléfono', 'En el teléfono, con el pulgar.', '',
+               [('Mantené apretado y hablale.', 'Soltás y se lo pasa a Nexus. Deslizá para cancelar.'),
+                ('Sacale fotos al acta.', 'Las ordenás como van y se unen en un PDF.'),
+                ('Nexus lo lee.', 'Y te contesta sobre la causa que tenés abierta.')],
+               TEL, 380, 'nx-escena--e')
+
+
+# ─────────────── Tu día: el Informe del día ───────────────
+def paso_dia(n, titulo, motivo, boton, u):
+    return (f'<div class="ob-dia__paso" data-desde="{u}"><span class="ob-dia__n">{n}</span>'
+            f'<span class="ob-dia__txt"><b>{titulo}</b><small>{motivo}</small></span>{btn(boton, "borde")}</div>')
+
+
+DIA = f'''        <div class="nx-dia ob-escala">
+          <div class="ob ob-dia__seccion">{ic("chev")}<span class="ob-dia__sol">{ic("sol")}</span><b>Informe del día  ·  3</b></div>
+          <div class="ob ob-dia" data-desde=".04">
+            <div class="ob-dia__top">{orbe_grande(20)}<span class="ob-dia__nexus">Nexus</span><span class="ob-dia__fecha">martes 20 de octubre</span></div>
+            <h3 class="ob-dia__hola" data-tipeo=".08 .2">Hola, Lucía.</h3>
+            <p class="ob-dia__res" data-tipeo=".2 .4">Tenés 3 cosas para hoy: el traslado que vence, una audiencia el jueves y la planilla de PARTE ACTORA c/ PARTE DEMANDADA.</p>
+            <span class="ob-dia__pp" data-desde=".42">Próximos pasos</span>
+            {paso_dia(1, "Contestar traslado", "vence hoy", "Abrir en el editor", ".48")}
+            {paso_dia(2, "Audiencia de conciliación", "jueves 23/10 a las 10:00", "Ver en la agenda", ".54")}
+            {paso_dia(3, "Practicar planilla", "capital e intereses desde el 14/08/2025", "Hacer la planilla", ".6")}
+            <div class="ob-dia__pie" data-desde=".64"><span>Actualizado a las 08:12</span><span class="ob-btn ob-btn--texto">Actualizar</span></div>
+          </div>
+        </div>'''
+
+ESC_F = escena('cap-nexus-dia', 'Tu día', 'Abrís Iudex y ya sabés qué toca.', '',
+               [('Nexus repasa tus causas.', 'Vencimientos, audiencias y lo que quedó pendiente.'),
+                ('Te arma el día.', 'Un resumen corto y los próximos pasos.'),
+                ('Un toque y empezás.', 'Cada paso abre lo que hace falta.')],
+               DIA, 300, 'nx-escena--f')
+
+ESCENAS = '\n\n'.join([ESC_A, ESC_B, ESC_C, ESC_D, ESC_E, ESC_F])
 
 
 def poner(html, marca, contenido):

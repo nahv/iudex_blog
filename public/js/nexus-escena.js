@@ -211,6 +211,20 @@
     let corrida = 0;
     const paso = (n) => { hero.dataset.paso = String(n); };
 
+    // Teléfono (2026-10-20, Nahuel): primero la escena, después el texto.
+    // `html.intro-movil` (puesto antes de pintar) esconde el titular y sube
+    // la escena hasta arriba; al terminar se saca y todo baja a su lugar.
+    const intro = raiz.classList.contains('intro-movil');
+    const terminarIntro = () => raiz.classList.remove('intro-movil');
+    if (intro) {
+      const stage = document.querySelector('.c-hero__stage');
+      raiz.style.setProperty('--intro-shift', '0px');
+      const arriba = stage.getBoundingClientRect().top + scrollY;
+      raiz.style.setProperty('--intro-shift', `${Math.round(84 - arriba)}px`);
+      // Si alguien baja mientras corre, el texto aparece igual.
+      addEventListener('scroll', terminarIntro, { once: true, passive: true });
+    }
+
     const jugar = async () => {
       const id = ++corrida;
       const vivo = () => id === corrida;
@@ -243,6 +257,8 @@
       if (!vivo()) return;
       t0.dataset.estado = 'hecho';
       delete hero.dataset.paso;
+      await sleep(700);
+      terminarIntro();
     };
     paso(0);
     t0.dataset.estado = 'pendiente';
