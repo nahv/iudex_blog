@@ -52,6 +52,22 @@ for m in re.finditer(r'<article class="nx-grilla__item".*?</article>', g.GRILLA,
         'html': art,
     }
 
+# «Cuatro dimensiones, a la vez» (/investigacion): cómo lee un precedente.
+# No la genera gen_nexus_escenas.py: se toma tal cual de la página.
+RAIZ = os.path.dirname(os.path.dirname(AQUI))
+_inv = open(os.path.join(RAIZ, 'investigacion', 'index.html'), encoding='utf-8').read()
+DIMENSIONES = re.search(r'<section class="c-chapter c-chapter--dim".*?</section>', _inv, re.S).group(0)
+ESCENAS['dimensiones'] = {
+    'eyebrow': re.search(r'<span class="c-eyebrow">(.*?)</span>', DIMENSIONES).group(1),
+    'titulo': re.sub(r'<br\s*/?>', ' ', re.search(r'<h2 [^>]*>(.*?)</h2>', DIMENSIONES).group(1)),
+    'sub': '',
+    'pasos': [
+        {'b': b, 't': t} for b, t in zip(
+            ('Jerarquía.', 'Jurisdicción.', 'Vigencia.', 'Similitud.'),
+            re.findall(r'<div class="c-chapter__beat" data-beat="\d"><p>(.*?)</p></div>', DIMENSIONES))
+    ],
+}
+
 ESCENAS['hero'] = {
     'eyebrow': 'Iudex · Nexus',
     'titulo': 'Pedíselo a Nexus.',
@@ -82,6 +98,7 @@ HTML = f'''<!DOCTYPE html>
   <div class="sc__stage"><div class="sc__mover"><div class="sc__zoom">
     <div class="sc__escena" data-escena="hero">{g.HERO}</div>
     {''.join(f'<div class="sc__escena" data-escena="{k}">{s}</div>' for k, s in zip(list(ESCENAS)[:6], (g.ESC_A, g.ESC_B, g.ESC_C, g.ESC_D, g.ESC_E, g.ESC_F)))}
+    <div class="sc__escena" data-escena="dimensiones">{DIMENSIONES}</div>
     <div class="sc__escena sc__minis" data-escena="minis">{minis_html}</div>
   </div></div></div>
   <div class="sc__paso"><b></b><span></span></div>

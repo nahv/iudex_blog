@@ -43,9 +43,28 @@
     let aplicar = () => {};
     if (id === 'hero') aplicar = motorHero(caja);
     else if (id === 'minis') aplicar = () => {};
+    else if (id === 'dimensiones') aplicar = motorCapitulo(caja.querySelector('.c-chapter'));
     else aplicar = window.IudexEscena.escena(caja.querySelector('.nx-escena')).aplicar;
     motores[id] = { id, caja, aplicar };
     return motores[id];
+  }
+
+  // Los capítulos fijados del sitio (main.js): data-beat, --beat-progress
+  // (con easing), --seg-progress y el paso activo. Mismas cuentas que allá.
+  function motorCapitulo(cap) {
+    cap.classList.add('is-on');
+    const beats = [...cap.querySelectorAll('.c-chapter__beat')];
+    const n = Math.max(beats.length, 1);
+    return (p) => {
+      const f = Math.min(n - 0.0001, p * n);
+      const i = Math.floor(f);
+      const seg = f - i;
+      cap.dataset.beat = String(i);
+      cap.style.setProperty('--progress', `${(p * 100).toFixed(2)}%`);
+      cap.style.setProperty('--seg-progress', seg.toFixed(3));
+      cap.style.setProperty('--beat-progress', suave(seg).toFixed(3));
+      beats.forEach((b, k) => { if (k === i) b.setAttribute('data-active', 'true'); else b.removeAttribute('data-active'); });
+    };
   }
 
   // El hero del sitio corre con setTimeout; acá lo mismo, pero por avance.
@@ -118,7 +137,7 @@
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
     // Sólo los objetos (`.ob`) y el núcleo del orbe: los contenedores del
     // sitio tienen alto mínimo y medirían aire.
-    for (const n of raizEscena.querySelectorAll('.ob, .ob-orbe-g__nucleo, .nx-tel__pantalla')) {
+    for (const n of raizEscena.querySelectorAll('.ob, .ob-orbe-g__nucleo, .nx-tel__pantalla, .nx-dim__card, .nx-cinta, .nx-lente')) {
       const r = n.getBoundingClientRect();
       if (r.width < 2 || r.height < 2 || !visible(n)) continue;
       x0 = Math.min(x0, r.left); y0 = Math.min(y0, r.top); x1 = Math.max(x1, r.right); y1 = Math.max(y1, r.bottom);

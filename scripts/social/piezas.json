@@ -22,7 +22,8 @@
    "id": "r03-del-pedido-al-escrito",
    "tipo": "reel",
    "escena": "cap-nexus-escrito",
-   "msPaso": 5600
+   "msPaso": 5600,
+   "fondo": "ink"
   },
   {
    "id": "r04-con-la-fuente",
@@ -34,7 +35,8 @@
    "id": "r05-la-planilla",
    "tipo": "reel",
    "escena": "cap-nexus-planilla",
-   "msPaso": 4200
+   "msPaso": 4200,
+   "fondo": "ink"
   },
   {
    "id": "r06-en-el-telefono",
@@ -49,10 +51,11 @@
    ]
   },
   {
-   "id": "r07-tu-dia",
+   "id": "r07-cuatro-dimensiones",
    "tipo": "reel",
-   "escena": "cap-nexus-dia",
-   "msPaso": 3800
+   "escena": "dimensiones",
+   "msPaso": 3600,
+   "tope": 1.6
   },
   {
    "id": "r08-en-orden",
@@ -109,7 +112,8 @@
     0.3,
     0.62,
     0.97
-   ]
+   ],
+   "fondo": "ink"
   },
   {
    "id": "c05-en-el-telefono",
@@ -128,13 +132,15 @@
    ]
   },
   {
-   "id": "c06-tu-dia",
+   "id": "c06-cuatro-dimensiones",
    "tipo": "carrusel",
-   "escena": "cap-nexus-dia",
+   "escena": "dimensiones",
+   "fondo": "ink",
    "pasosP": [
-    0.42,
-    0.64,
-    0.97
+    0.24,
+    0.49,
+    0.74,
+    0.995
    ]
   },
   {
@@ -144,6 +150,15 @@
    "titulo": "El expediente, en orden.",
    "sub": "Lo de todos los días, cada cosa en su causa.",
    "cierre": "El expediente, en orden."
+  },
+  {
+   "id": "p02-vos-confirmas",
+   "tipo": "post",
+   "escena": "asi-trabaja",
+   "fondo": "ink",
+   "eyebrow": "Así trabaja Nexus",
+   "titulo": "Queda hecho.",
+   "p": 0.97
   }
  ]
 }

@@ -170,7 +170,7 @@ async function hacerSlides(pg, pz, dir) {
   const base = { ...pz, formato: 'post' };
   const slides = [];
   if (pz.tipo === 'post') {
-    slides.push({ ...base, modo: 'portada', p: 1 });
+    slides.push({ ...base, modo: 'portada', p: pz.p ?? 1 });
   } else if (pz.tipo === 'carrusel') {
     const n = await pg.ev(`(__sc.datos.escenas[${J(pz.escena)}].pasos || []).length`);
     slides.push({ ...base, modo: 'portada', p: 1 });

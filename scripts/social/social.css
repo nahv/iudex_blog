@@ -58,6 +58,12 @@ body.cinematic { background: var(--cream); }
 .sc .nx-hero { width: 560px; margin: 0 auto; padding: 60px 0 20px; }
 .sc .nx-hero__col { --z: 1.05; width: 470px; }
 
+/* «Cuatro dimensiones»: el capítulo sin fijar y sin su columna de texto. */
+.sc .c-chapter, .sc .c-chapter--dim { min-height: 0; height: auto; padding: 0; }
+.sc .c-chapter__sticky { position: static; height: auto; display: block; padding: 0; }
+.sc .c-chapter__copy { display: none; }
+.sc .nx-dim { width: 560px; max-width: none; padding: 0; }
+
 /* Los objetos de la base: uno a la vez, grande, sin su leyenda. */
 .sc__minis .sc__mini { display: none; }
 .sc__minis .sc__mini.is-activa { display: block; }
@@ -90,3 +96,19 @@ body.cinematic { background: var(--cream); }
 .sc[data-modo="portada"] .sc__stage { opacity: 1; }
 .sc[data-modo="cierre"] .sc__cierre { opacity: 1; }
 .sc[data-titulo="no"] .sc__t, .sc[data-titulo="no"] .sc__sub { display: none; }
+
+/* Fondo tinta (2026-10-21): los objetos blancos sobre ink, para darle ritmo a
+   la grilla. La voz pasa a crema; el eyebrow, al dorado claro. */
+.sc[data-fondo="ink"], .sc[data-fondo="ink"] .sc__cierre { background: var(--ink); color: var(--cream); }
+.sc[data-fondo="ink"] .sc__foja { display: none; }
+.sc[data-fondo="ink"] .sc__eyebrow { color: var(--gold); }
+.sc[data-fondo="ink"] .sc__contador, .sc[data-fondo="ink"] .sc__url, .sc[data-fondo="ink"] .sc__cierre-url { color: rgba(247, 244, 238, 0.55); }
+.sc[data-fondo="ink"] .sc__sub, .sc[data-fondo="ink"] .sc__paso span { color: rgba(247, 244, 238, 0.72); }
+.sc[data-fondo="ink"] .sc__logo img, .sc[data-fondo="ink"] .sc__cierre-logo img { filter: brightness(1.15); }
+/* Lo que en crema «retrocede» (opacidad baja) sobre tinta se apaga más. */
+.sc[data-fondo="ink"] .nx-escena--a[data-beat="3"] .ob-recede,
+.sc[data-fondo="ink"] .nx-escena--b[data-beat="2"] .ob-recede-b,
+.sc[data-fondo="ink"] .nx-escena--c[data-beat="2"] .ob-recede,
+.sc[data-fondo="ink"] .nx-escena--c[data-beat="2"] .nx-c__fuentes,
+.sc[data-fondo="ink"] .nx-escena--d[data-beat="2"] .ob-recede-b { opacity: 0.06; }
+.sc[data-fondo="ink"] .sc__stage { filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.35)); }
