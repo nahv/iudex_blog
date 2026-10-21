@@ -3,6 +3,7 @@
 //   node scripts/social/render.mjs                 # todas
 //   node scripts/social/render.mjs r03 c02         # las que empiezan así
 //   OUT=~/Desktop/redes node scripts/social/render.mjs
+//   SOLO_PORTADA=1 node scripts/social/render.mjs r    # sólo las portadas de los reels
 //
 // Sirve el sitio desde la raíz del repo, abre pieza.html en Chrome headless
 // (Chrome for Testing de la caché de Playwright, o CHROME=<binario>) y lo
@@ -139,6 +140,12 @@ async function hacerReel(pg, pz, dir) {
   const spec = { ...pz, formato: 'reel' };
   const { total } = await pg.ev(`__sc.reel(${J(spec)})`);
   const cuadros = Math.ceil((total / 1000) * FPS);
+  if (process.env.SOLO_PORTADA) {
+    await pg.ev(`__sc.still(${J({ ...spec, modo: 'portada', p: pz.portadaP ?? 1 })})`);
+    await writeFile(join(dir, `${pz.id}-portada.jpg`), await pg.foto(95));
+    console.log(`  ${pz.id} portada`);
+    return;
+  }
   const salida = join(dir, `${pz.id}.mp4`);
   let pipe;
   const ff = correr('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-i', '-',

@@ -188,6 +188,9 @@
     const { textos } = armar(spec);
     const modo = spec.modo || 'portada';
     sc.dataset.modo = modo;
+    // El texto del paso es del reel: en un cuadro quieto no va (la portada
+    // del reel lo heredaba del último cuadro).
+    $('.sc__paso').style.opacity = '0';
     const n = Math.max(1, textos.pasos.length);
     let p = spec.p ?? 1;
     if (modo === 'paso') {
