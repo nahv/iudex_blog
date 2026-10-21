@@ -211,25 +211,32 @@ B = f'''        <div class="nx-chat ob-escala ob-recede-b">
           </div>
         </div>
         <div class="nx-b__hoja" data-estado="entra" data-estados="oculto:0 entra:.64">
-          <div class="ob ob-pildora-esc" data-estado="fin" data-estados="oculto:0 p1:.66 p2:.76 p3:.86 fin:.96">{orbe(14, True)}<span>Nexus está escribiendo · <b class="ob-n1">1</b><b class="ob-n2">2</b><b class="ob-n3">3</b> de 3</span><span class="ob-pildora-esc__det">Detener</span></div>
+          <div class="ob ob-pildora-esc" data-estado="fin" data-estados="oculto:0 p1:.66 p2:.725 p3:.765 p4:.84 p5:.89 fin:.95">{orbe(14, True)}<span>Nexus está escribiendo · <b class="ob-n1">1</b><b class="ob-n2">2</b><b class="ob-n3">3</b><b class="ob-n4">4</b><b class="ob-n5">5</b> de 5</span><span class="ob-pildora-esc__det">Detener</span></div>
           <div class="ob ob-a4">
             <div class="ob-a4__regla" aria-hidden="true"></div>
-            <div class="ob-a4__pag">
-              <p data-tipeo=".66 .68">Señor Juez:</p>
-              <p data-tipeo=".68 .76">LUCÍA FERREYRA, abogada, M.P. 5.812, por la parte actora, en los autos «PARTE ACTORA c/ PARTE DEMANDADA s/ DAÑOS Y PERJUICIOS», respetuosamente digo:</p>
-              <p class="ob-a4__h" data-tipeo=".76 .77">I. OBJETO</p>
-              <p data-tipeo=".77 .86">Que vengo a promover demanda de daños y perjuicios contra PARTE DEMANDADA por el choque del 14/08/2025, con costas.</p>
-              <p class="ob-a4__h" data-tipeo=".86 .87">II. PETITORIO</p>
-              <p data-tipeo=".87 .93">Se tenga por promovida la demanda y se corra traslado. SERÁ JUSTICIA.</p>
+            <div class="ob-a4__pag"><div class="ob-a4__texto">
+              <p data-tipeo=".66 .67">Señor Juez:</p>
+              <p data-tipeo=".67 .72">LUCÍA FERREYRA, abogada, M.P. 5.812, por la parte actora, con domicilio procesal en San Juan 1120 de esta ciudad, en los autos «PARTE ACTORA c/ PARTE DEMANDADA s/ DAÑOS Y PERJUICIOS», respetuosamente digo:</p>
+              <p class="ob-a4__h" data-tipeo=".72 .725">I. OBJETO</p>
+              <p data-tipeo=".725 .76">Que vengo a promover demanda de daños y perjuicios contra PARTE DEMANDADA por el choque del 14/08/2025, por la suma que en más o en menos resulte de la prueba, con intereses y costas.</p>
+              <p class="ob-a4__h" data-tipeo=".76 .765">II. HECHOS</p>
+              <p data-tipeo=".765 .8">El 14/08/2025, a las 8:40, mi mandante circulaba por Av. 3 de Abril cuando el vehículo de la demandada, que venía por la calle transversal, no respetó la prioridad de paso y lo embistió en el lateral derecho.</p>
+              <p data-tipeo=".8 .835">Como consecuencia del impacto, el vehículo sufrió daños en la puerta y el guardabarros, y mi mandante lesiones que requirieron atención médica y quince días de reposo.</p>
+              <p class="ob-a4__h" data-tipeo=".835 .84">III. DERECHO</p>
+              <p data-tipeo=".84 .86">Fundo el derecho en los arts. 1716, 1721, 1757 y 1769 del Código Civil y Comercial de la Nación.</p>
+              <p class="ob-a4__h" data-tipeo=".86 .865">IV. PRUEBA</p>
+              <p data-tipeo=".865 .885">Ofrezco prueba documental, informativa, pericial mecánica y médica, y testimonial.</p>
+              <p class="ob-a4__h" data-tipeo=".885 .89">V. PETITORIO</p>
+              <p data-tipeo=".89 .935">Por lo expuesto, solicito: 1) Se me tenga por presentada, por parte y con domicilio constituido. 2) Se tenga por promovida la demanda y se corra traslado. 3) Oportunamente, se haga lugar a la demanda, con costas. SERÁ JUSTICIA.</p>
               <div class="ob-a4__firma" data-desde=".94"><i>Firmado electrónicamente por</i><b>Dra. Lucía Ferreyra</b><span>Abogada · M.P. 5.812</span></div>
-            </div>
+            </div></div>
           </div>
         </div>'''
 
 ESC_B = escena('cap-nexus-escrito', 'I · Escritos', 'Del pedido al escrito.', '',
                [('Contale qué necesitás.', 'Si no sabe en qué causa, te pregunta.'),
                 ('Te propone el plan.', 'Crear la causa, el movimiento y el escrito. Lo confirmás una vez.'),
-                ('Lo escribe en tu editor.', 'Párrafo por párrafo, con tu firma al pie. Lo podés detener.')],
+                ('Lo escribe en tu editor.', 'Objeto, hechos, derecho, prueba y petitorio, con tu firma al pie. Lo podés detener.')],
                B, 380, 'nx-escena--b')
 
 # ─────────────── II · Con la fuente al lado ───────────────
@@ -379,7 +386,7 @@ TEL = f'''        <div class="nx-tel ob-escala">
           </div>
         </div>'''
 
-ESC_E = escena('cap-nexus-telefono', 'IV · En el teléfono', 'En el teléfono, con el pulgar.', '',
+ESC_E = escena('cap-nexus-telefono', 'IV · En el teléfono', 'En el teléfono, en un toque.', '',
                [('Mantené apretado y hablale.', 'Soltás y se lo pasa a Nexus. Deslizá para cancelar.'),
                 ('Sacale fotos al acta.', 'Las ordenás como van y se unen en un PDF.'),
                 ('Nexus lo lee.', 'Y te contesta sobre la causa que tenés abierta.')],

@@ -357,7 +357,9 @@
 .ob-pildora-esc b { display: none; font-weight: 400; }
 .ob-pildora-esc[data-estado="p1"] .ob-n1,
 .ob-pildora-esc[data-estado="p2"] .ob-n2,
-.ob-pildora-esc:is([data-estado="p3"], [data-estado="fin"], [data-estado="oculto"]) .ob-n3 { display: inline; }
+.ob-pildora-esc[data-estado="p3"] .ob-n3,
+.ob-pildora-esc[data-estado="p4"] .ob-n4,
+.ob-pildora-esc:is([data-estado="p5"], [data-estado="fin"], [data-estado="oculto"]) .ob-n5 { display: inline; }
 .ob-pildora-esc__det { color: var(--gold); font-weight: 500; padding: 6px 10px; }
 
 /* ---- La hoja del escrito (editor A4, márgenes Normal) ---- */
@@ -387,7 +389,11 @@
 }
 .ob-a4__regla::before { left: calc(9% - 5px); }
 .ob-a4__regla::after { right: calc(9% - 5px); }
-.ob-a4__pag { padding: 30px 36px 32px; min-height: 440px; font-size: 10.5px; line-height: 1.6; }
+/* La hoja tiene alto fijo y, como el editor mientras Nexus escribe, «la
+   vista acompaña»: el texto sube cuando llega al pie (2026-10-20). Sin
+   movimiento --p vale 1 y se ve el final, con la firma. */
+.ob-a4__pag { height: 560px; overflow: hidden; font-size: 10.5px; line-height: 1.6; }
+.ob-a4__texto { padding: 30px 36px 32px; transform: translateY(max(-160px, min(0px, (0.86 - var(--p, 1)) * 2000px))); transition: transform 0.3s linear; }
 /* Tamaño propio: el sitio le da a <p> su tamaño de lectura. */
 .ob-a4__pag p { margin: 0 0 9px; font-size: 10.5px; line-height: 1.6; text-align: justify; min-height: 1.6em; }
 .ob-a4__h { font-weight: 700; }
