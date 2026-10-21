@@ -126,24 +126,9 @@ EDITOR = f'''<div class="ml-tarea">
   </div>
 </div>'''
 
-HERO = f'''      <!-- La ventana del frente cuenta el trabajo de todos los días, sola:
-           la ficha de la causa con sus movimientos, «Nuevo escrito» sobre el
-           último, la página de la tarea con el editor y una plantilla que
-           deja el escrito armado con carátula, juzgado y firma. Los mocks
-           siguen la estructura real del CRM. main.js avanza `data-step`. -->
-      <div class="c-window c-window--front" role="img" aria-label="Iudex: la ficha de una causa con sus movimientos; sobre el último se elige «Nuevo escrito», se abre el editor y una plantilla deja el escrito armado con carátula, juzgado y firma.">
-        <div class="hx" data-step="0">
-          <div class="app">
-            {rail('expedientes')}
-            <div class="app__main hx__main">
-              <div class="hx__ficha">{ficha()}</div>
-              <div class="hx__editor">{EDITOR}</div>
-              <svg class="hx__cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 9-6 1.5L16 20l-2.5 1-3-6.5L6 18z" fill="#0f0f0e" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-        </div>
-      </div>
-'''
+# El hero ya no es una ventana: lo genera scripts/gen_nexus_escenas.py
+# con objetos sueltos (2026-10-20).
+HERO = '      <!-- ver scripts/gen_nexus_escenas.py -->\n'
 
 # ───────────────── Capítulos ─────────────────
 CH = []

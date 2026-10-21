@@ -1044,7 +1044,7 @@ if (document.readyState === 'loading') {
   if (navbar) {
     let lastScrolled = false;
     const syncNav = () => {
-      const scrolled = (window.scrollY || document.scrollingElement.scrollTop) > 24;
+      const scrolled = (window.scrollY || document.scrollingElement.scrollTop) > 8;
       if (scrolled !== lastScrolled) {
         navbar.classList.toggle('scrolled', scrolled);
         lastScrolled = scrolled;
@@ -1088,56 +1088,16 @@ if (document.readyState === 'loading') {
     el.insertAdjacentHTML('afterbegin', railHTML(el.dataset.shell));
   });
 
-  /* ----------- Hero entrance + cinematic intro -----------
-     On load the Nexus window plays a conversation alone, front & centre
-     (headline hidden): it types the question, answers it with a cited
-     proveído, then types a follow-up — and only then settles into the hero
-     composition, revealing the headline. Reduced-motion skips straight to
-     the settled state. */
+  /* ----------- Hero entrance -----------
+     Las ventanas entran con un fundido corto. Ya no hay intro que tape el
+     titular (D-03, 2026-10-20): el hero nace asentado (`data-intro="done"`
+     en el HTML) y la escena de Nexus la reproduce nexus-escena.js sin
+     bloquear nada. */
   const hero = document.querySelector('.c-hero');
   if (hero) {
     hero.dataset.state = 'enter';
     requestAnimationFrame(() => requestAnimationFrame(() => { hero.dataset.state = 'in'; }));
 
-    // La escena de la ventana del frente (ver el comentario en index.html):
-    // ficha → «Nuevo escrito» → editor → plantilla → escrito armado. Los
-    // pasos son `data-step` en .hx; el CSS dibuja cada uno.
-    const hx = hero.querySelector('.hx');
-    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-    // Mirror the intro state onto <html> too, so the navbar (not a descendant
-    // of .c-hero) can hide during the intro and reappear when it settles.
-    const setIntro = (s) => { hero.dataset.intro = s; document.documentElement.dataset.heroIntro = s; };
-    // Teléfono/tablet: mientras juega la intro, la ventana se corre hasta
-    // quedar centrada en la pantalla real (no a un -54vh a ciegas).
-    const centrarVentana = () => {
-      const st = hero.querySelector('.c-hero__stage');
-      if (!st || matchMedia('(min-width: 980px)').matches) { document.documentElement.style.removeProperty('--intro-shift'); return; }
-      // Se llama antes de entrar en «play»: la ventana está en su lugar
-      // natural (debajo del titular, que sigue en flujo aunque se oculte).
-      // El inline script ya puso «play» (y con él el corrimiento por
-      // defecto): se mide con el corrimiento en cero y recién después se fija.
-      // Sin transición mientras se mide: si no, el rect devuelve la posición
-      // a mitad de camino.
-      st.style.transition = 'none';
-      document.documentElement.style.setProperty('--intro-shift', '0px');
-      const r = st.getBoundingClientRect();
-      const topDocumento = r.top + scrollY;
-      const objetivo = Math.max(72, (innerHeight - r.height) / 2);
-      document.documentElement.style.setProperty('--intro-shift', `${Math.round(objetivo - topDocumento)}px`);
-      void st.offsetHeight;
-      st.style.transition = '';
-    };
-    const paso = (n) => { if (hx) hx.dataset.step = String(n); };
-    const click = async () => {
-      if (!hx) return;
-      hx.setAttribute('data-click', '');
-      await sleep(140);
-      hx.removeAttribute('data-click');
-    };
-
-    // `?intro=0` salta la secuencia: para revisar los capítulos sin esperar
-    // los diez segundos de la intro cada vez que se recarga.
-    const saltarIntro = /(?:\?|&)intro=0(?:&|$)/.test(location.search);
     // `?go=<id>:<0..1>` deja la página parada en un punto de un capítulo
     // (fracción de su recorrido): sirve para capturar cada beat sin scroll.
     const ir = /(?:\?|&)go=([\w-]+):([\d.]+)/.exec(location.search);
@@ -1150,30 +1110,6 @@ if (document.readyState === 'loading') {
         };
         salto(); setTimeout(salto, 120); setTimeout(salto, 600);
       }
-    }
-    if (reduceMotion || saltarIntro || !hx) {
-      paso(4);
-      setIntro('done');
-    } else {
-      centrarVentana();
-      setIntro('play');
-      paso(0);
-      (async () => {
-        await sleep(1100);           // la ficha, quieta: se lee la causa
-        paso(1);                     // el cursor va a «Nuevo escrito»
-        await sleep(900);
-        await click();
-        await sleep(120);
-        paso(2);                     // se abre el editor, en blanco
-        await sleep(1300);
-        paso(3);                     // Plantilla ▾ → menú
-        await sleep(1000);
-        await click();               // elige «Contesta traslado»
-        await sleep(160);
-        paso(4);                     // el escrito, armado y firmado
-        await sleep(2300);
-        setIntro('done');            // settle into the hero, reveal headline + navbar
-      })();
     }
   }
 
