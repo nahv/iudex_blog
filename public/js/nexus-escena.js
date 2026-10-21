@@ -196,6 +196,18 @@
   }));
   document.querySelectorAll('[data-linea]').forEach(linea);
 
+  // La grilla de la base: cada objeto entra y repite su animación sólo
+  // mientras se ve (se pausa fuera de pantalla).
+  const itemsGrilla = document.querySelectorAll('.nx-grilla__item');
+  if (itemsGrilla.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => {
+      for (const e of es) e.target.classList.toggle('is-visible', e.isIntersecting);
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    itemsGrilla.forEach((n) => io.observe(n));
+  } else {
+    itemsGrilla.forEach((n) => n.classList.add('is-visible'));
+  }
+
   /* ---------- El hero: «Pedíselo a Nexus.» ----------
      0 nada · 1 se escribe el pedido · 2 Nexus piensa (el orbe acelera)
      · 3 responde con las citas · 4 caen las tres tarjetas · 5 la primera

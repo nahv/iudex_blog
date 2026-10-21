@@ -412,6 +412,86 @@ ESC_F = escena('cap-nexus-dia', 'Tu día', 'Abrís Iudex y ya sabés qué toca.'
                 ('Un toque y empezás.', 'Cada paso abre lo que hace falta.')],
                DIA, 300, 'nx-escena--f')
 
+# ─────────────── V · La base: «El expediente, en orden.» ───────────────
+# Los seis capítulos de antes, como seis objetos chicos con su animación en
+# bucle (corre sólo mientras se ven; nexus-escena.js pone `is-visible`).
+def qr():
+    """Un QR de muestra: tres esquinas y puntos fijos (no lleva a nada)."""
+    import random
+    r = random.Random(7)
+    cel = []
+    for y in range(21):
+        for x in range(21):
+            esquina = (x < 8 and y < 8) or (x > 12 and y < 8) or (x < 8 and y > 12)
+            if not esquina and r.random() < 0.45:
+                cel.append(f'M{x} {y}h1v1h-1z')
+    fin = ''.join(f'M{x} {y}h7v7h-7zM{x+1} {y+1}v5h5v-5zM{x+2} {y+2}h3v3h-3z' for x, y in ((0, 0), (14, 0), (0, 14)))
+    return f'<svg class="ob-qr" viewBox="0 0 21 21" shape-rendering="crispEdges" aria-hidden="true"><path fill-rule="evenodd" d="{fin}{"".join(cel)}"/></svg>'
+
+
+def item(etiqueta, titulo, texto, objeto, i):
+    return f'''<article class="nx-grilla__item" style="--i:{i}">
+      <div class="nx-grilla__obj">{objeto}</div>
+      <span class="c-caption">{etiqueta}</span>
+      <h3 class="nx-grilla__t">{titulo}</h3>
+      <p class="nx-grilla__p">{texto}</p>
+    </article>'''
+
+
+MOV = f'''<div class="ob ob-mini ob-mov">
+  <div class="ob-mov__add"><span class="ob-mov__mas">{ic("plus")}</span><span class="ob-mov__in"><b class="ob-mov__tipeo">12/09 Sentencia</b><i class="ob-caret-m"></i></span><span class="ob-mov__enter">Enter</span></div>
+  <div class="ob-mov__card ob-mov__card--nuevo"><span class="ob-mov__top"><b class="ob-mono">12/09/2026</b><span class="ob-mov__kind">Sentencia ▾</span></span><b class="ob-mov__t">Sentencia de trance y remate</b><span class="ob-mov__acts"><span>Subir archivo</span><span class="is-oro">Nuevo escrito</span><span>Hacer cédula</span></span></div>
+  <div class="ob-mov__card"><span class="ob-mov__top"><b class="ob-mono">14/08/2026</b><span class="ob-mov__kind">Escrito ▾</span></span><b class="ob-mov__t">Promueve ejecución de honorarios</b></div>
+</div>'''
+
+FORUM = f'''<div class="ob ob-mini ob-forum">
+  <div class="ob-forum__file"><span class="ob-forum__xls">XLSX</span><span class="ob-forum__nom"><b>notificaciones-19-09.xlsx</b><span class="ob-forum__bar"><i></i></span></span><em>3 causas</em></div>
+  {''.join(f'<div class="ob-forum__fila" style="--i:{i}"><span class="ob-forum__ok">{ic("check")}</span><span class="ob-forum__c"><b class="ob-mono">{n}</b> PARTE ACTORA c/ PARTE DEMANDADA</span><span class="ob-forum__tag">Notificación</span></div>' for i, n in enumerate(['48583/12', '2210/25', '87/24']))}
+</div>'''
+
+PDF = f'''<div class="ob ob-mini ob-datos">
+  <div class="ob-datos__leido">{orbe(14, True)}Leído por Nexus del PDF — revisalo</div>
+  {''.join(f'<div class="ob-datos__f" style="--i:{i}"><small>{k}</small><span>{v}</span><i class="ob-datos__ok{" ob-datos__ok--guia" if g else ""}">{ic("check")}</i></div>' for i, (k, v, g) in enumerate([("Número de expediente", "48583/12", False), ("Carátula", "PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios", False), ("Juzgado donde tramita", "Juzgado Civil y Comercial N° 4", True), ("Secretaría", "Secretaría N° 8", True)]))}
+  <div class="ob-datos__guia">Verificado con la Guía Judicial</div>
+</div>'''
+
+ESCRITO = '''<div class="ob ob-mini ob-escr">
+  <div class="ob-escr__barra"><span class="ob-escr__btn is-on">Plantilla ▾</span><span class="ob-escr__btn">Firmar</span><span class="ob-escr__btn">A4 ▾</span></div>
+  <div class="ob-escr__menu"><span>Contesta demanda</span><span class="is-pick">Contesta traslado</span><span>Ofrece prueba</span><span>Practica planilla</span></div>
+  <div class="ob-escr__hoja"><b>CONTESTA TRASLADO</b><p>Señora Jueza:</p><p><mark>Lucía Ferreyra</mark>, abogada, en autos <mark>«PARTE ACTORA c/ PARTE DEMANDADA s/ Ejecución de honorarios»</mark>, Expte. N° <mark>48583/12</mark>, a V.S. digo:</p><i class="ob-escr__sk"></i><i class="ob-escr__sk" style="width:62%"></i><span class="ob-escr__firma">Firmado electrónicamente por<br><b>Lucía Ferreyra</b></span></div>
+</div>'''
+
+CEDULA = f'''<div class="ob ob-mini ob-ced">
+  <div class="ob-ced__pasos"><span style="--i:0"><i>1</i>Resolución</span><b></b><span style="--i:1"><i>2</i>Encabezado</span><b></b><span style="--i:2"><i>3</i>Notificación</span></div>
+  <div class="ob-ced__hoja">
+    <div class="ob-ced__txt"><small>Cédula de notificación</small><b>Traslado de la demanda por cinco días</b><span>PARTE DEMANDADA · San Juan 1120 · Real</span><span class="ob-ced__copias">{ic("pdf")}Demanda.pdf · Documental (12 fs).pdf</span></div>
+    {qr()}
+  </div>
+</div>'''
+
+PLANI = f'''<div class="ob ob-mini ob-plani">
+  <div class="ob-plani__tiles"><div><small>Capital</small><b>$ 1.250.000,50</b></div><div><small>Intereses</small><b>$ 718.916,54</b></div><div class="is-total"><small>Total</small><b>$ 1.968.917,04</b></div></div>
+  <div class="ob-cifras__serie">{ic("check")}Tasa Activa Banco Nación · serie al 19/09/2026</div>
+  <span class="ob-btn ob-btn--lleno ob-plani__gen">{ic("pdf")}Generar planilla + escrito</span>
+  <div class="ob-plani__toast">{ic("check")}Planilla y escrito guardados en el movimiento</div>
+</div>'''
+
+GRILLA = f'''<section class="nx-grilla" id="en-orden" aria-labelledby="en-orden-t">
+  <div class="nx-grilla__cab">
+    <span class="c-eyebrow">V · La base</span>
+    <h2 id="en-orden-t" class="c-display nx-escena__t">El expediente, en orden.</h2>
+    <p class="nx-escena__sub">Lo de todos los días, cada cosa en su causa. Sobre esto trabaja Nexus.</p>
+  </div>
+  <div class="nx-grilla__lista">
+    {item("Movimientos", "La causa, por momentos.", "«12/09 Sentencia» y Enter. Cada movimiento con sus archivos y sus funciones.", MOV, 0)}
+    {item("ForumNA", "Las notificaciones, en orden.", "Subís el listado y en cada causa queda el movimiento y la tarea.", FORUM, 1)}
+    {item("Desde el PDF", "Los datos, en un click.", "Nexus lee número, carátula, partes y juzgado. Verificado con la Guía Judicial.", PDF, 2)}
+    {item("Escrito", "El escrito, desde tus plantillas.", "Carátula, juzgado y partes ya vienen puestos. Firmado al pie.", ESCRITO, 3)}
+    {item("Cédula", "La cédula, en tres pasos.", "Resolución, encabezado y notificación. Las copias, en tu Drive y con QR.", CEDULA, 4)}
+    {item("Planilla", "La planilla, con las tasas de hoy.", "Planilla y escrito «Practica planilla», listos para presentar.", PLANI, 5)}
+  </div>
+</section>'''
+
 ESCENAS = '\n\n'.join([ESC_A, ESC_B, ESC_C, ESC_D, ESC_E, ESC_F])
 
 
@@ -427,5 +507,6 @@ if __name__ == '__main__':
     html = open(ruta, encoding='utf-8').read()
     html = poner(html, 'nexus:hero', HERO)
     html = poner(html, 'nexus:escenas', ESCENAS)
+    html = poner(html, 'nexus:grilla', GRILLA)
     open(ruta, 'w', encoding='utf-8').write(html)
     print('ok')
