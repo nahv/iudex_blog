@@ -1,0 +1,164 @@
+{
+ "_": "Catálogo de piezas de la campaña «Pedíselo a Nexus» (2026-10-21). Los textos salen de las escenas del sitio salvo que la pieza los pise. Formatos: post 1080×1350 (Instagram y LinkedIn), reel 1080×1920. Ver scripts/social/README.md.",
+ "piezas": [
+  {
+   "id": "r01-pediselo",
+   "tipo": "reel",
+   "escena": "hero",
+   "titulo": "Pedíselo a Nexus.",
+   "eyebrow": "Iudex · Nexus",
+   "pasoB": "Escritos, planillas y tareas.",
+   "pasoT": "Armados desde tu causa. Vos confirmás.",
+   "msPaso": 9000,
+   "portadaP": 1
+  },
+  {
+   "id": "r02-asi-trabaja",
+   "tipo": "reel",
+   "escena": "asi-trabaja",
+   "msPaso": 3900
+  },
+  {
+   "id": "r03-del-pedido-al-escrito",
+   "tipo": "reel",
+   "escena": "cap-nexus-escrito",
+   "msPaso": 5600,
+   "fondo": "ink"
+  },
+  {
+   "id": "r04-con-la-fuente",
+   "tipo": "reel",
+   "escena": "cap-nexus-fuente",
+   "msPaso": 4200
+  },
+  {
+   "id": "r05-la-planilla",
+   "tipo": "reel",
+   "escena": "cap-nexus-planilla",
+   "msPaso": 4200,
+   "fondo": "ink"
+  },
+  {
+   "id": "r06-en-el-telefono",
+   "tipo": "reel",
+   "escena": "cap-nexus-telefono",
+   "msPaso": 4200,
+   "encuadre": [
+    0,
+    0.3,
+    1,
+    1
+   ]
+  },
+  {
+   "id": "r07-cuatro-dimensiones",
+   "tipo": "reel",
+   "escena": "dimensiones",
+   "msPaso": 3600,
+   "tope": 1.6
+  },
+  {
+   "id": "r08-en-orden",
+   "tipo": "reel",
+   "escena": "minis",
+   "eyebrow": "La base",
+   "titulo": "El expediente, en orden.",
+   "msPaso": 3600,
+   "cierre": "El expediente, en orden."
+  },
+  {
+   "id": "p01-pediselo",
+   "tipo": "post",
+   "escena": "hero",
+   "titulo": "Pedíselo a Nexus.",
+   "eyebrow": "Iudex · Nexus"
+  },
+  {
+   "id": "c01-asi-trabaja",
+   "tipo": "carrusel",
+   "escena": "asi-trabaja",
+   "pasosP": [
+    0.24,
+    0.47,
+    0.74,
+    0.97
+   ]
+  },
+  {
+   "id": "c02-del-pedido-al-escrito",
+   "tipo": "carrusel",
+   "escena": "cap-nexus-escrito",
+   "pasosP": [
+    0.24,
+    0.6,
+    0.97
+   ]
+  },
+  {
+   "id": "c03-con-la-fuente",
+   "tipo": "carrusel",
+   "escena": "cap-nexus-fuente",
+   "pasosP": [
+    0.3,
+    0.62,
+    0.97
+   ]
+  },
+  {
+   "id": "c04-la-planilla",
+   "tipo": "carrusel",
+   "escena": "cap-nexus-planilla",
+   "pasosP": [
+    0.3,
+    0.62,
+    0.97
+   ],
+   "fondo": "ink"
+  },
+  {
+   "id": "c05-en-el-telefono",
+   "tipo": "carrusel",
+   "escena": "cap-nexus-telefono",
+   "pasosP": [
+    0.17,
+    0.56,
+    0.95
+   ],
+   "encuadre": [
+    0,
+    0.3,
+    1,
+    1
+   ]
+  },
+  {
+   "id": "c06-cuatro-dimensiones",
+   "tipo": "carrusel",
+   "escena": "dimensiones",
+   "fondo": "ink",
+   "pasosP": [
+    0.24,
+    0.49,
+    0.74,
+    0.995
+   ]
+  },
+  {
+   "id": "c07-en-orden",
+   "tipo": "carrusel-minis",
+   "eyebrow": "La base",
+   "titulo": "El expediente, en orden.",
+   "sub": "Lo de todos los días, cada cosa en su causa.",
+   "cierre": "El expediente, en orden."
+  },
+  {
+   "id": "p02-vos-confirmas",
+   "tipo": "post",
+   "escena": "asi-trabaja",
+   "fondo": "ink",
+   "eyebrow": "Así trabaja Nexus",
+   "titulo": "Queda hecho.",
+   "p": 0.97
+  }
+ ]
+}

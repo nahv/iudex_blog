@@ -135,11 +135,9 @@
     }));
     const pasosLinea = [...el.querySelectorAll('.nx-pasos')];
     let ultimoBeat = -1;
-    const medir = () => {
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight || 800;
-      const total = el.offsetHeight - vh;
-      const p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1;
+    // `aplicar(p)` pone la escena en el avance p sin mirar el scroll: lo usan
+    // las piezas para redes (scripts/social), que la congelan cuadro a cuadro.
+    const aplicar = (p) => {
       const f = Math.min(pasos - 0.0001, p * pasos);
       const beat = Math.floor(f);
       el.style.setProperty('--p', p.toFixed(4));
@@ -170,6 +168,13 @@
         t.n.classList.toggle('is-tipeando', cuantos > 0 && cuantos < t.texto.length);
       }
     };
+    const medir = () => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      const total = el.offsetHeight - vh;
+      aplicar(total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1);
+    };
+    medir.aplicar = aplicar;
     return medir;
   }
 

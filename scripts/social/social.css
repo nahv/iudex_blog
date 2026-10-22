@@ -1,0 +1,114 @@
+/* Piezas para redes (2026-10-21): el marco de 1080 px alrededor de los
+   objetos del sitio. Una sola voz: DM Sans Light; DM Mono en el eyebrow;
+   Playfair sólo en el logotipo; el dorado, en el cursor y en las citas.
+   Lo importante queda dentro de la franja segura (Instagram recorta el
+   perfil a 3:4 y algunos carruseles a 1:1 desde el centro). */
+html, body { margin: 0; padding: 0; overflow: hidden; background: var(--cream); }
+body.cinematic { background: var(--cream); }
+
+.sc {
+  --W: 1080px; --H: 1350px; --m: 120px;
+  --pt: 140px; --pb: 64px; --tf: 76px; --paso-h: 0px;
+  position: relative; width: var(--W); height: var(--H); overflow: hidden; box-sizing: border-box;
+  display: flex; flex-direction: column; padding: var(--pt) var(--m) var(--pb);
+  background: var(--cream); color: var(--ink); font-family: var(--font-body);
+}
+/* Reel: abajo queda libre lo que tapa Instagram (pie, botones). */
+.sc[data-formato="reel"] { --H: 1920px; --pt: 250px; --pb: 380px; --tf: 92px; --paso-h: 250px; }
+.sc[data-formato="cuadrado"] { --H: 1080px; --pt: 120px; --tf: 64px; }
+.sc[data-fondo="ink"] { background: var(--ink); color: var(--cream); }
+
+.sc__foja { opacity: 0.55; }
+
+.sc__cab { display: flex; justify-content: space-between; align-items: baseline; flex: none; }
+.sc__eyebrow, .sc__contador {
+  font-family: var(--font-mono); font-size: 21px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold-deep); font-weight: 500;
+}
+.sc__contador { color: var(--ink-muted); letter-spacing: 0.12em; }
+
+.sc__t {
+  flex: none; margin: 26px 0 0; position: relative; z-index: 2;
+  font-family: var(--font-display); font-weight: 300; font-size: var(--tf);
+  line-height: 1.04; letter-spacing: -0.025em; text-wrap: balance; color: inherit;
+}
+.sc__caret { display: inline-block; width: 4px; height: 0.86em; margin-left: 6px; vertical-align: -0.06em; background: var(--gold); animation: sc-blink 1.06s steps(1) infinite; }
+@keyframes sc-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+.sc__sub { flex: none; margin: 22px 0 0; font-size: 30px; line-height: 1.4; color: var(--ink-soft); font-weight: 300; max-width: 28ch; position: relative; z-index: 2; }
+.sc__sub:empty { display: none; }
+
+/* El escenario: los objetos del sitio a su tamaño de escritorio. social.js
+   mide lo que se ve, le pone zoom para llenar la caja y lo centra. */
+.sc__stage { flex: 1 1 auto; min-height: 0; position: relative; margin: 36px -120px 0; overflow: hidden;
+  /* Lo que se corta en el borde se desvanece: nunca pisa el título. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 36px, #000 calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 36px, #000 calc(100% - 28px), transparent 100%); }
+.sc__stage > .sc__mover { padding: 0; }
+.sc__mover { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.sc__zoom { zoom: var(--zoom, 1); width: 760px; }
+.sc__escena { display: none; }
+.sc__escena.is-activa { display: block; }
+
+/* Las escenas, sin fijarse ni la columna del texto: sólo el escenario. */
+.sc .nx-escena, .motion .sc .nx-escena { height: auto; }
+.sc .nx-escena__fija, .motion .sc .nx-escena__fija { position: static; height: auto; padding: 0; display: block; overflow: visible; }
+.sc .nx-escena__grid { display: block; max-width: none; padding: 0; }
+.sc .nx-escena__copy { display: none; }
+.sc .nx-escena__stage { width: 760px; min-height: 620px; }
+.sc .nx-hero { width: 560px; margin: 0 auto; padding: 60px 0 20px; }
+.sc .nx-hero__col { --z: 1.05; width: 470px; }
+
+/* «Cuatro dimensiones»: el capítulo sin fijar y sin su columna de texto. */
+.sc .c-chapter, .sc .c-chapter--dim { min-height: 0; height: auto; padding: 0; }
+.sc .c-chapter__sticky { position: static; height: auto; display: block; padding: 0; }
+.sc .c-chapter__copy { display: none; }
+.sc .nx-dim { width: 560px; max-width: none; padding: 0; }
+
+/* Los objetos de la base: uno a la vez, grande, sin su leyenda. */
+.sc__minis .sc__mini { display: none; }
+.sc__minis .sc__mini.is-activa { display: block; }
+.sc__mini .nx-grilla__item > :not(.nx-grilla__obj) { display: none; }
+.sc__mini .nx-grilla__obj { width: 360px; margin: 0 auto; }
+
+/* El paso del reel: lo que dice el sitio en cada tramo de la escena. */
+.sc__paso { flex: none; height: var(--paso-h); display: none; padding-top: 34px; box-sizing: border-box; position: relative; z-index: 2; }
+.sc[data-formato="reel"] .sc__paso { display: block; }
+.sc__paso b { display: block; font-weight: 400; font-size: 48px; letter-spacing: -0.015em; line-height: 1.15; }
+.sc__paso span { display: block; margin-top: 12px; font-size: 32px; line-height: 1.4; color: var(--ink-muted); font-weight: 300; max-width: 32ch; }
+
+.sc__pie { flex: none; margin-top: 28px; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; }
+.sc[data-formato="reel"] .sc__pie { display: none; }
+.sc__logo, .sc__cierre-logo { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-logo); font-weight: 500; font-size: 34px; letter-spacing: -0.01em; }
+.sc__logo img { width: 34px; height: 34px; }
+.sc__url, .sc__cierre-url { font-family: var(--font-mono); font-size: 19px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); }
+.sc[data-pie="no"] .sc__pie { visibility: hidden; }
+
+/* Cierre: logotipo, la línea y la dirección, por encima de todo. */
+.sc__cierre { position: absolute; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; background: var(--cream); opacity: 0; pointer-events: none; }
+.sc[data-formato="reel"] .sc__cierre { padding-bottom: 200px; }
+.sc__cierre-logo { font-size: 132px; gap: 26px; }
+.sc__cierre-logo img { width: 112px; height: 112px; }
+.sc__cierre-linea { font-family: var(--font-display); font-weight: 300; font-size: 58px; letter-spacing: -0.025em; }
+.sc__cierre-linea::after { content: ''; display: inline-block; width: 4px; height: 0.86em; margin-left: 6px; vertical-align: -0.06em; background: var(--gold); animation: sc-blink 1.06s steps(1) infinite; }
+.sc__cierre-url { font-size: 24px; margin-top: 10px; }
+
+/* Modos de la pieza */
+.sc[data-modo="portada"] .sc__stage { opacity: 1; }
+.sc[data-modo="cierre"] .sc__cierre { opacity: 1; }
+.sc[data-titulo="no"] .sc__t, .sc[data-titulo="no"] .sc__sub { display: none; }
+
+/* Fondo tinta (2026-10-21): los objetos blancos sobre ink, para darle ritmo a
+   la grilla. La voz pasa a crema; el eyebrow, al dorado claro. */
+.sc[data-fondo="ink"], .sc[data-fondo="ink"] .sc__cierre { background: var(--ink); color: var(--cream); }
+.sc[data-fondo="ink"] .sc__foja { display: none; }
+.sc[data-fondo="ink"] .sc__eyebrow { color: var(--gold); }
+.sc[data-fondo="ink"] .sc__contador, .sc[data-fondo="ink"] .sc__url, .sc[data-fondo="ink"] .sc__cierre-url { color: rgba(247, 244, 238, 0.55); }
+.sc[data-fondo="ink"] .sc__sub, .sc[data-fondo="ink"] .sc__paso span { color: rgba(247, 244, 238, 0.72); }
+.sc[data-fondo="ink"] .sc__logo img, .sc[data-fondo="ink"] .sc__cierre-logo img { filter: brightness(1.15); }
+/* Lo que en crema «retrocede» (opacidad baja) sobre tinta se apaga más. */
+.sc[data-fondo="ink"] .nx-escena--a[data-beat="3"] .ob-recede,
+.sc[data-fondo="ink"] .nx-escena--b[data-beat="2"] .ob-recede-b,
+.sc[data-fondo="ink"] .nx-escena--c[data-beat="2"] .ob-recede,
+.sc[data-fondo="ink"] .nx-escena--c[data-beat="2"] .nx-c__fuentes,
+.sc[data-fondo="ink"] .nx-escena--d[data-beat="2"] .ob-recede-b { opacity: 0.06; }
+.sc[data-fondo="ink"] .sc__stage { filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.35)); }
