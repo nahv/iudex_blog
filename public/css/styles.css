@@ -12,7 +12,6 @@
   --cream: #f7f4ee;
   --cream-dark: #edeae2;
   --gold: #c9a84c;
-  --gold-light: #e8c97a;
   --white: #ffffff;
   --red-accent: #c0392b;
 
@@ -247,7 +246,7 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 
 .navbar__cta:hover {
   background: var(--ink-soft) !important;
-  color: var(--gold-light) !important;
+  color: var(--gold) !important;
   transform: translateY(-1px);
 }
 
@@ -611,7 +610,7 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 
 .btn--primary:hover {
   background: var(--ink-soft);
-  color: var(--gold-light);
+  color: var(--gold);
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgba(15, 15, 14, 0.2);
 }
@@ -633,7 +632,7 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 }
 
 .btn--gold:hover {
-  background: var(--gold-light);
+  background: var(--gold);
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgba(201, 168, 76, 0.3);
 }
@@ -872,7 +871,7 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  background: var(--gold);
   transform: scaleX(0);
   transition: transform 0.3s var(--ease-out);
 }
@@ -4931,7 +4930,7 @@ body.cinematic .navbar.scrolled {
 }
 .iudex-rail__item svg { width: 18px; height: 18px; }
 .iudex-rail__item.is-active {
-  color: var(--gold-light);
+  color: var(--gold);
   background: rgba(247, 244, 238, 0.08);
 }
 .iudex-rail__item.is-active::before {
@@ -5010,7 +5009,7 @@ body.cinematic .navbar.scrolled {
 .prox-row b { display: block; font-size: 0.64rem; color: var(--ink); font-weight: 600; }
 .prox-row span { font-family: var(--font-mono); font-size: 0.52rem; color: var(--ink-muted); }
 .dash__calc { position: absolute; right: 16px; bottom: 14px; background: var(--ink); color: var(--cream); font-size: 0.66rem; padding: 9px 13px; border-radius: 10px; box-shadow: var(--shadow-window-soft); display: flex; align-items: center; gap: 8px; }
-.dash__calc b { color: var(--gold-light); font-size: 0.82rem; }
+.dash__calc b { color: var(--gold); font-size: 0.82rem; }
 
 /* ───────── II · El expediente — workspace + integrity ───────── */
 .exp { position: relative; display: flex; height: 100%; }
@@ -5083,7 +5082,7 @@ body.cinematic .navbar.scrolled {
 .var-row span { font-size: 0.58rem; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .var-row em { font-style: normal; font-family: var(--font-mono); font-size: 0.46rem; letter-spacing: 0.04em; color: var(--ink-muted); white-space: nowrap; }
 .ed__toast { position: absolute; right: 16px; bottom: 14px; display: flex; align-items: center; gap: 9px; background: var(--ink); color: var(--cream); border-radius: 10px; padding: 9px 13px; font-size: 0.66rem; box-shadow: var(--shadow-window-soft); z-index: 7; }
-.ed__toast b { color: var(--gold-light); }
+.ed__toast b { color: var(--gold); }
 
 /* ───────── IV · Investigar — Nexus ───────── */
 .nx { display: flex; height: 100%; }

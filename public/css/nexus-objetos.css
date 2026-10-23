@@ -385,7 +385,7 @@
   position: absolute;
   top: 3px;
   border: 5px solid transparent;
-  border-top: 7px solid #B89438;
+  border-top: 7px solid #C9A84C;
 }
 .ob-a4__regla::before { left: calc(9% - 5px); }
 .ob-a4__regla::after { right: calc(9% - 5px); }

@@ -213,7 +213,7 @@ Las tres viven en `supabase/functions/<name>/index.ts`. Todas tienen `verify_jwt
 | `supabase/functions/send-inscription-email/founder-notify.html` | `send-inscription-email` | Equipo (`RESEND_TEAM_TO`) | DB webhook |
 | `emails/beta-invite.html` | `scripts/send-beta-invite.mjs` | Beta tester individual | Manual desde CLI |
 
-**Estética común**: ver `welcome.html` o `beta-invite.html`. Cream `#f7f4ee` background, card central con linea gold-gradient `linear-gradient(90deg,#c9a84c,#e8c97a)` arriba, Georgia/Playfair en H1, labels uppercase gold con `letter-spacing:0.12em`, CTA ink `#0f0f0e` con texto gold `#c9a84c`. Cuando crear template nuevo, copiar la estructura de uno existente — no reinventar.
+**Estética común**: ver `welcome.html` o `beta-invite.html`. Cream `#f7f4ee` background, card central con linea gold-gradient `#c9a84c` arriba, Georgia/Playfair en H1, labels uppercase gold con `letter-spacing:0.12em`, CTA ink `#0f0f0e` con texto gold `#c9a84c`. Cuando crear template nuevo, copiar la estructura de uno existente — no reinventar.
 
 ### Scripts
 
