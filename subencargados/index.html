@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proveedores que tratan datos — Iudex</title>
+  <meta name="description" content="Lista de los proveedores que pueden recibir datos personales para que Iudex funcione: qué hace cada uno, qué datos recibe y dónde." />
+  <meta name="keywords" content="proveedores Iudex, subencargados, transferencias internacionales, AWS, Ley 25.326" />
+  <meta property="og:title" content="Proveedores que tratan datos — Iudex" />
+  <meta property="og:description" content="Lista de los proveedores que pueden recibir datos personales para que Iudex funcione: qué hace cada uno, qué datos recibe y dónde." />
+  <meta property="og:type" content="website" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://iudex.com.ar/subencargados/" />
+  <link rel="stylesheet" href="../public/css/styles.css" />
+  <link rel="icon" type="image/png" href="../assets/icon.png" />
+</head>
+<body class="cinematic">
+<div class="reading-progress" aria-hidden="true"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+  <div class="container">
+    <div class="navbar__inner">
+      <a href="../index.html" class="navbar__logo" aria-label="Iudex - Inicio">
+        <div class="navbar__logo-mark"><img src="../assets/icon.png" alt="Iudex" /></div>
+        <span class="navbar__logo-text">Iudex</span>
+      </a>
+            <ul class="navbar__links">
+        <li><a href="../investigacion/index.html">Nexus</a></li>
+        <li><a href="../abogados/index.html">Abogados</a></li>
+        <li><a href="../juzgados/index.html">Juzgados</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="https://app.iudex.com.ar/" class="navbar__cta" target="_blank" rel="noopener">Entrar</a></li>
+      </ul>
+      <button class="navbar__toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="contact-hero">
+  <div class="container">
+    <span class="section-tag">Proveedores</span>
+    <h1 class="text-reveal" style="margin-top:16px;max-width:720px;margin-left:auto;margin-right:auto">
+      <span class="text-reveal__inner">Quién nos ayuda <em>y dónde</em></span>
+    </h1>
+    <p class="lead lead-reveal" style="margin-top:20px;max-width:600px;margin-left:auto;margin-right:auto">
+      Todos los proveedores que pueden recibir datos personales para que Iudex funcione.
+    </p>
+    <p class="label" style="margin-top:28px;color:var(--gold)">
+      Última actualización · [[A CONFIRMAR: fecha de publicación]]
+    </p>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<article class="post-content">
+
+  <!-- BORRADOR (2026-10-30): quitar este bloque y todos los [[A CONFIRMAR]] antes de publicar. Requiere revisión legal. -->
+  <blockquote>
+    <p><strong>Borrador para revisión.</strong> No publicar hasta resolver los puntos marcados <code>[[A CONFIRMAR]]</code>.</p>
+  </blockquote>
+
+  <p style="font-size:1.05rem;line-height:1.85"><strong>En una línea:</strong> estos son todos los proveedores que pueden recibir datos personales para que Iudex funcione, qué hace cada uno y dónde.</p>
+
+  <p>Cada proveedor recibe sólo lo necesario para su tarea y está obligado por contrato a protegerlo. Los modelos de lenguaje están configurados para no guardar ni usar los datos para entrenar. Antes de sumar un proveedor que trate el contenido de tu organización, actualizamos esta página y avisamos por correo con treinta (30) días de anticipación (ver el <a href="../tratamiento-de-datos/index.html">Anexo de tratamiento de datos</a>).</p>
+
+  <div style="overflow-x:auto;margin:32px 0">
+    <table>
+      <thead><tr><th>Proveedor</th><th>Para qué</th><th>Qué datos</th><th>Dónde</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Amazon Web Services</strong></td><td>Servidores, base de datos, archivos y búsqueda por significado</td><td>Todo el contenido y las cuentas</td><td>Brasil (São Paulo)</td></tr>
+      <tr><td><strong>Amazon Web Services</strong></td><td>Lectura de documentos escaneados (OCR) y orden de los resultados de búsqueda</td><td>Páginas escaneadas y fragmentos de texto</td><td>Estados Unidos (Virginia)</td></tr>
+      <tr><td><strong>OpenRouter</strong></td><td>Conexión con los modelos de lenguaje de Nexus, sin retención de datos</td><td>Texto de las consultas y de los fragmentos necesarios</td><td>Estados Unidos</td></tr>
+      <tr><td><strong>OpenAI y Microsoft Azure</strong></td><td>Modelo principal de Nexus (a través de OpenRouter)</td><td>Texto de las consultas y de los fragmentos necesarios</td><td>Estados Unidos</td></tr>
+      <tr><td><strong>DeepInfra, Together AI, Fireworks AI y Baseten</strong></td><td>Modelo de respaldo de Nexus (a través de OpenRouter)</td><td>Texto de las consultas y de los fragmentos necesarios</td><td>Estados Unidos</td></tr>
+      <tr><td><strong>OpenAI</strong></td><td>Transcripción de notas de voz</td><td>Audio de la nota</td><td>Estados Unidos</td></tr>
+      <tr><td><strong>Langfuse</strong></td><td>Registro técnico de las consultas de IA para medir calidad</td><td>Texto de consultas y respuestas</td><td>Estados Unidos</td></tr>
+      <tr><td><strong>Resend</strong></td><td>Envío de correos (avisos, invitaciones, newsletter)</td><td>Correo del destinatario y contenido del aviso</td><td>Estados Unidos</td></tr>
+      <tr><td><strong>Google</strong></td><td>Inicio de sesión con Google</td><td>Nombre, correo e identificador de la cuenta</td><td>Estados Unidos</td></tr>
+      <tr><td><strong>Cloudflare</strong></td><td>Dominio, red de distribución y protección contra ataques</td><td>Tráfico y dirección IP</td><td>Red global</td></tr>
+      <tr><td><strong>GitHub</strong></td><td>Publicación del sitio iudex.com.ar (no del producto)</td><td>Tráfico del sitio</td><td>Estados Unidos</td></tr>
+      <tr><td><strong>Supabase</strong></td><td>Formularios del sitio (invitación, contacto)</td><td>Datos del formulario</td><td>[[A CONFIRMAR: región]]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Ningún proveedor recibe las claves de tus sistemas judiciales: Iudex no las ve ni las guarda.</p>
+
+  <div style="text-align:center;margin:64px 0 24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+    <a href="../politica-privacidad/index.html" class="btn btn--outline">Privacidad</a>
+    <a href="../terminos/index.html" class="btn btn--outline">Términos</a>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="../index.html" class="navbar__logo" style="display:inline-flex">
+          <div class="navbar__logo-mark"><img src="../assets/icon.png" alt="Iudex" /></div>
+          <span class="navbar__logo-text" style="color:var(--cream)">Iudex</span>
+        </a>
+        <p>El espacio de trabajo donde el derecho se piensa. Expediente, jurisprudencia argentina y escritura en un mismo hilo.</p>
+      </div>
+      <div class="footer__col"><h5>Producto</h5><ul><li><a href="../abogados/index.html">Abogados</a></li><li><a href="../juzgados/index.html">Juzgados</a></li><li><a href="../investigacion/index.html">Nexus</a></li><li><a href="../releases/index.html">Notas de versión</a></li></ul></div>
+      <div class="footer__col"><h5>Blog</h5><ul><li><a href="../blog/index.html">Todas las notas</a></li></ul></div>
+      <div class="footer__col"><h5>Empresa</h5><ul><li><a href="../about/index.html">Nosotros</a></li><li><a href="../contacto/index.html">Contacto</a></li><li><a href="../politica-privacidad/index.html">Privacidad</a></li><li><a href="../terminos/index.html">Términos</a></li></ul></div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 Iudex. Todos los derechos reservados.</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/iudex.ai" aria-label="Instagram" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="../public/js/env.js"></script>
+<script src="../public/js/main.js"></script>
+</body>
+</html>

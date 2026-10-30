@@ -1613,6 +1613,12 @@ p { font-size: 1.05rem; color: var(--ink-soft); }
 .post-content ol { list-style: decimal; }
 .post-content ol li { padding: 4px 0; color: var(--ink-soft); font-size: 1rem; line-height: 1.7; }
 
+/* Tablas en páginas de texto (proveedores en /subencargados/, 2026-10-30) */
+.post-content table { width: 100%; border-collapse: collapse; }
+.post-content th,
+.post-content td { padding: 12px 14px; border-bottom: 1px solid var(--cream-dark); vertical-align: top; color: var(--ink-soft); line-height: 1.5; }
+.post-content th { text-align: left; font-family: var(--font-mono); font-size: .78rem; font-weight: 400; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-muted); }
+
 .post-content blockquote {
   border-left: 3px solid var(--gold);
   padding: 20px 28px;
